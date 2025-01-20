@@ -11,16 +11,18 @@ This is my personal Kubernetes cluster deployed in my HomeLab. I'm using kubeadm
 - [x] Setup base image with SSH key
 - [x] Install kubeadm, kubelet and kubectl
 - [x] Check Networking is working between nodes and Host
-- [ ] Setup Networking with Internet
+- [x] Setup Networking with Internet
 - [x] Save image and duplicate vms
 - - [x] 3 etcd nodes
 - - [x] 3 control plane nodes
 - - [x] 3 worker nodes
-- [ ] Setup Ansible # ongoing
-- [ ] Setup ETCD
-- [ ] Setup Control Plane
-- - [ ] Setup CNI
-- - [ ] Setup DNS
+- [x] Setup ETCD
+- - [x] Setup Ansible
+- [x] Setup Control Plane
+- - [x] Setup Ansible
+- - [ ] Fix join command automation
+- - [x] Setup CNI
+- - [x] Setup DNS
 - [ ] Setup Worker Nodes
 
 

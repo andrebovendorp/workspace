@@ -1,0 +1,232 @@
+- name: Configure Control Plane on multiple hosts
+  hosts: control_plane_nodes
+  become: yes  # Ensures commands are run as a superuser
+  vars:
+    haproxy_config_path: /etc/haproxy/haproxy.cfg
+    join_command_output: ""
+    join_token: ""
+    cert_hash: ""
+    certificate_key: ""
+  tasks:
+    - name: Reload systemd daemon and enable containerd
+      shell: |
+        systemctl daemon-reload
+        systemctl enable --now containerd
+
+    - name: Disable swap temporarily
+      command: swapoff -a
+
+    - name: Remove swap entries from /etc/fstab
+      replace:
+        path: /etc/fstab
+        regexp: '^(.*\s+swap\s+.*)$'
+        replace: '# \1'
+      notify: Reboot if necessary
+
+    - name: Verify swap is disabled
+      shell: free -h | grep -i swap
+      register: swap_status
+      ignore_errors: true
+
+    - name: Install Dependencies
+      apt:
+        name: "{{ item }}"
+        state: present
+      with_items:
+        - tree
+        - kubeadm
+        - kubelet
+        - kubectl
+
+    - name: Create the directory configurations
+      file:
+        path: "{{ item }}"
+        state: directory
+        owner: root
+        group: root
+        mode: '0755'
+      with_items:
+        - /etc/systemd/system/kubelet.service.d/  # kubelet configuration file
+        - /etc/kubernetes/pki/etcd/               # cert files
+        - /tmp/{{ inventory_hostname }}           # Kubeadm init file
+        - /etc/containerd/
+
+    - name: Setup CRI
+      copy:
+        dest: /etc/containerd/config.toml
+        content: |
+          [plugins]
+            [plugins."io.containerd.grpc.v1.cri".containerd.runtimes.runc]
+              [plugins."io.containerd.grpc.v1.cri".containerd.runtimes.runc.options]
+                SystemdCgroup = true
+        owner: root
+        group: root
+        mode: '0644'
+    
+    - name: Install HAProxy (Debian-based systems)
+      apt:
+        name: haproxy
+        state: present
+        update_cache: no
+      when: inventory_hostname == 'api01'
+
+    - name: Generate HAProxy configuration
+      template:
+        src: haproxy.cfg.j2
+        dest: "{{ haproxy_config_path }}"
+        owner: root
+        group: root
+        mode: '0644'
+      when: inventory_hostname == 'api01'
+
+    - name: Restart HAProxy to apply changes
+      systemd:
+        name: haproxy
+        state: restarted
+        enabled: true
+      when: inventory_hostname == 'api01'
+
+    - name: Add kubelet Configuration file
+      copy:
+        dest: /etc/systemd/system/kubelet.service.d/kubelet.conf
+        content: |
+          apiVersion: kubelet.config.k8s.io/v1beta1
+          kind: KubeletConfiguration
+          authentication:
+            anonymous:
+              enabled: false
+            webhook:
+              enabled: false
+          authorization:
+            mode: AlwaysAllow
+          cgroupDriver: systemd
+          address: 127.0.0.1
+          containerRuntimeEndpoint: unix:///var/run/containerd/containerd.sock
+          staticPodPath: /etc/kubernetes/manifests
+        owner: root
+        group: root
+        mode: '0644'
+
+    - name: Add kubeadm initConfiguration file
+      copy: 
+        dest: /root/kubeadmcfg.yaml
+        content: |
+          ---
+          apiVersion: kubeadm.k8s.io/v1beta4
+          kind: ClusterConfiguration
+          kubernetesVersion: stable
+          controlPlaneEndpoint: "{{ ansible_host }}:443" # change this (see below)
+          etcd:
+            external:
+              endpoints:
+                - https://10.10.1.1:2379
+                - https://10.10.1.2:2379
+                - https://10.10.1.3:2379
+              caFile: /etc/kubernetes/pki/etcd/ca.crt
+              certFile: /etc/kubernetes/pki/apiserver-etcd-client.crt
+              keyFile: /etc/kubernetes/pki/apiserver-etcd-client.key
+        owner: root
+        group: root
+        mode: '0644'
+
+# Send certificates to api01
+
+    - name: Distribute CA cert and key to api01
+      copy:
+        src: "/tmp/etcd_certs/ca/{{ item.dest | basename }}"
+        dest: "{{ item.dest }}"
+        owner: root
+        group: root
+        mode: '0600'
+      with_items:
+        - { dest: '/etc/kubernetes/pki/etcd/ca.crt', src: 'ca.crt' }
+        - { dest: '/etc/kubernetes/pki/apiserver-etcd-client.crt', src: 'apiserver-etcd-client.crt' }
+        - { dest: '/etc/kubernetes/pki/apiserver-etcd-client.key', src: 'apiserver-etcd-client.key' }
+      when: inventory_hostname == 'api01'
+    
+# Setup ipv4 forwarding
+
+    - name: Enable ipv4 forwarding
+      sysctl:
+        name: net.ipv4.ip_forward
+        value: 1
+        state: present
+        reload: yes
+
+# Initialize Apiserver 01
+
+    - name: Check if etcd-server already running
+      stat:
+        path: /etc/kubernetes/pki/front-proxy-ca.crt
+      register: server_started
+
+    - name: Initialize the control plane
+      shell: kubeadm init --config /root/kubeadmcfg.yaml
+      when: inventory_hostname == 'api01' and not server_started.stat.exists
+
+# Copy certificates to host machine
+
+    - name: Fetch API Certs to the control node
+      fetch:
+        src: "/etc/kubernetes/pki/{{ item }}"
+        dest: "/tmp/etcd_certs/api/{{ item }}"
+        flat: yes
+      with_items:
+        - ca.crt
+        - ca.key
+        - sa.key
+        - sa.pub
+        - front-proxy-ca.crt
+        - front-proxy-ca.key
+        - etcd/ca.crt
+        - apiserver-etcd-client.crt
+        - apiserver-etcd-client.key
+      delegate_to: api01
+      when: inventory_hostname == 'api01'
+
+    - name: Distribute API Certs from the control node to the other nodes
+      copy:
+        src: "/tmp/etcd_certs/api/{{ item }}"
+        dest: "/etc/kubernetes/pki/{{ item }}"
+      with_items:
+        - ca.crt
+        - ca.key
+        - sa.key
+        - sa.pub
+        - front-proxy-ca.crt
+        - front-proxy-ca.key
+        - etcd/ca.crt
+        - apiserver-etcd-client.crt
+        - apiserver-etcd-client.key
+      when: inventory_hostname != 'api01'
+
+    - name: Copy kubeconfig to the control node
+      fetch:
+        src: /etc/kubernetes/admin.conf
+        dest: /tmp/etcd_certs/api/admin.conf
+        flat: yes
+      when: inventory_hostname == 'api01'
+
+    - name: Run kubeadm join command on first control plane node
+      command: kubeadm token create --print-join-command
+      register: join_command_output
+      when: inventory_hostname == 'api01'
+    
+    - name: Extract token and certificate key from the join command output
+      set_fact:
+        join_token: "{{ join_command_output.stdout | regex_search('token (\\S+)') }}"
+        cert_hash: "{{ join_command_output.stdout | regex_search('discovery-token-ca-cert-hash (\\S+)') }}"
+        certificate_key: "{{ join_command_output.stdout | regex_search('certificate-key (\\S+)') }}"
+      when: inventory_hostname == 'api01'
+
+    - name: Join other control plane nodes to the cluster
+      command: kubeadm join 10.10.2.1:443 --token c4zm2f.fmx0qh9ks0xbv9qp \
+                --discovery-token-ca-cert-hash sha256:8740556e5110882889bf8ca51e1f41fde1c98887cd4b6923bc8a1d78d39b5867 --control-plane
+      become: yes
+      when: inventory_hostname != 'api01'
+
+
+  handlers:
+    - name: Reboot if necessary
+      command: reboot
+      when: reboot_required | default(false)
