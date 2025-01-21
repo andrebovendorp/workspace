@@ -7,6 +7,9 @@
     HOSTS: ["10.10.1.1", "10.10.1.2", "10.10.1.3"]
     value_string: ""
   tasks:
+    - include_tasks: ../tasks/host.yaml
+      vars:
+        host: "{{ inventory_hostname }}"
     
     - name: Gather hostnames and IPs
       set_fact:
@@ -20,48 +23,6 @@
       vars:
         item_name: "{{ hostvars[groups['etcd_nodes'][item]].inventory_hostname }}"  # Using etcd_nodes group
         item_host: "{{ hostvars[groups['etcd_nodes'][item]].ansible_host }}"  # Using etcd_nodes group
-
-    - name: Reload systemd daemon and enable containerd
-      shell: |
-        systemctl daemon-reload
-        systemctl enable --now containerd
-
-    - name: Disable swap temporarily
-      command: swapoff -a
-
-    - name: Remove swap entries from /etc/fstab
-      replace:
-        path: /etc/fstab
-        regexp: '^(.*\s+swap\s+.*)$'
-        replace: '# \1'
-      notify: Reboot if necessary
-
-    - name: Verify swap is disabled
-      shell: free -h | grep -i swap
-      register: swap_status
-      ignore_errors: true
-
-    - name: Install Dependencies
-      apt:
-        name: "{{ item }}"
-        state: present
-      with_items:
-        - tree
-        - kubeadm
-        - kubelet
-        - kubectl
-
-    - name: Setup CRI
-      copy:
-        dest: /etc/containerd/config.toml
-        content: |
-          [plugins]
-            [plugins."io.containerd.grpc.v1.cri".containerd.runtimes.runc]
-              [plugins."io.containerd.grpc.v1.cri".containerd.runtimes.runc.options]
-                SystemdCgroup = true
-        owner: root
-        group: root
-        mode: '0644'
     
     - name: Create the directory configurations
       file:
@@ -71,30 +32,8 @@
         group: root
         mode: '0755'
       with_items:
-        - /etc/systemd/system/kubelet.service.d/  # kubelet configuration file
-        - /etc/kubernetes/pki/etcd/               # cert files
         - /tmp/{{ inventory_hostname }}           # Kubeadm init file
 
-    - name: Add kubelet Configuration file
-      copy:
-        dest: /etc/systemd/system/kubelet.service.d/kubelet.conf
-        content: |
-          apiVersion: kubelet.config.k8s.io/v1beta1
-          kind: KubeletConfiguration
-          authentication:
-            anonymous:
-              enabled: false
-            webhook:
-              enabled: false
-          authorization:
-            mode: AlwaysAllow
-          cgroupDriver: systemd
-          address: 127.0.0.1
-          containerRuntimeEndpoint: unix:///var/run/containerd/containerd.sock
-          staticPodPath: /etc/kubernetes/manifests
-        owner: root
-        group: root
-        mode: '0644'
 
     - name: Add kubeadm initConfiguration file
       copy:
@@ -135,7 +74,39 @@
         group: root
         mode: '0644'
 
-## Setup Certificates:
+    # We have a requirement to override kubelet config for ETCD since we cannot rely on kubeadm for it (External ETCD)
+    - name: Add kubelet Configuration file
+      copy:
+        dest: /etc/systemd/system/kubelet.service.d/kubelet.conf
+        content: |
+          apiVersion: kubelet.config.k8s.io/v1beta1
+          kind: KubeletConfiguration
+          authentication:
+            anonymous:
+              enabled: false
+            webhook:
+              enabled: false
+          authorization:
+            mode: AlwaysAllow
+          cgroupDriver: systemd
+          address: 127.0.0.1
+          containerRuntimeEndpoint: unix:///var/run/containerd/containerd.sock
+          staticPodPath: /etc/kubernetes/manifests
+        owner: root
+        group: root
+        mode: '0644'
+
+    # We have a requirement to override kubelet config for ETCD since we cannot rely on kubeadm for it (External ETCD)
+    - name: Add Kubelet Systemd File
+      copy:
+        dest: /etc/systemd/system/kubelet.service.d/20-etcd-service-manager.conf
+        content: |
+          [Service]
+          ExecStart=
+          ExecStart=/usr/bin/kubelet --config=/etc/systemd/system/kubelet.service.d/kubelet.conf
+          Restart=always
+
+    ## Setup Certificates:
     - name: Check if ca.crt exists
       stat:
         path: /etc/kubernetes/pki/etcd/ca.crt
@@ -143,7 +114,8 @@
 
     - name: Run kubeadm init phase certs etcd-ca on etcd01
       command: kubeadm init phase certs etcd-ca
-      when: inventory_hostname == 'etcd01' and not ca_crt.stat.exists
+      delegate_to: etcd01
+      when: not ca_crt.stat.exists
 
     - name: Fetch CA cert and key to the control node
       fetch:
@@ -205,7 +177,7 @@
         kubeadm init phase etcd local --config=/tmp/{{ inventory_hostname }}/kubeadmcfg.yaml 
       when: not server_started.stat.exists
 
-# For Api
+    # For Api
     - name: Fetch Certs to the control node
       fetch:
         src: "{{ item.src }}"
