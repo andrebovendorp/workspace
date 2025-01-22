@@ -84,7 +84,7 @@
         reload: yes
 
     - name: Initiate K8s Cluster
-      command: kubeadm init --pod-network-cidr=10.10.0.0/16 --apiserver-advertise-address={{ ansible_host }} --upload-certs 
+      command: kubeadm init --pod-network-cidr=10.10.0.0/16 --apiserver-advertise-address={{ ansible_host }}  --skip-phases=addon/kube-proxy --upload-certs 
       register: kubeadm_init
       run_once: true
 
