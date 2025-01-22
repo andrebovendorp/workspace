@@ -339,7 +339,7 @@ metadata:
     app.kubernetes.io/instance: grafana
     app.kubernetes.io/version: "11.4.0"
   annotations:
-    cert-manager.io/cluster-issuer: "lets-encrypt-prod"
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
     kubernetes.io/tls-acme: "true"
 spec:
   ingressClassName: nginx

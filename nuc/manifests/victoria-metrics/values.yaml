@@ -2,7 +2,7 @@ ingress:
   enabled: true
   annotations:
     kubernetes.io/tls-acme: "true"
-    cert-manager.io/cluster-issuer: lets-encrypt-prod
+    cert-manager.io/cluster-issuer: letsencrypt-prod
   ingressClassName: nginx
   hosts:
     - grafana.k8s.nullservers.com
