@@ -1,0 +1,278 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: victoria-metrics
+
+---
+# Source: victoria-metrics-single/templates/serviceaccount.yaml
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  labels: 
+    app.kubernetes.io/managed-by: Helm
+    helm.sh/chart: victoria-metrics-single-0.13.7
+  name: vm-single
+  namespace: victoria-metrics
+---
+# Source: victoria-metrics-single/templates/scrape-configmap.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: vm-single-scrapeconfig
+  namespace: victoria-metrics
+  labels: 
+    app: server
+    app.kubernetes.io/instance: vmsingle
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: victoria-metrics-single
+    app.kubernetes.io/version: v1.109.1
+    helm.sh/chart: victoria-metrics-single-0.13.7
+data:
+  scrape.yml: |
+    global:
+      scrape_interval: 15s
+    scrape_configs:
+    - job_name: victoriametrics
+      static_configs:
+      - targets:
+        - localhost:8428
+    - bearer_token_file: /var/run/secrets/kubernetes.io/serviceaccount/token
+      job_name: kubernetes-apiservers
+      kubernetes_sd_configs:
+      - role: endpoints
+      relabel_configs:
+      - action: keep
+        regex: default;kubernetes;https
+        source_labels:
+        - __meta_kubernetes_namespace
+        - __meta_kubernetes_service_name
+        - __meta_kubernetes_endpoint_port_name
+      scheme: https
+      tls_config:
+        ca_file: /var/run/secrets/kubernetes.io/serviceaccount/ca.crt
+        insecure_skip_verify: true
+    - bearer_token_file: /var/run/secrets/kubernetes.io/serviceaccount/token
+      job_name: kubernetes-nodes
+      kubernetes_sd_configs:
+      - role: node
+      relabel_configs:
+      - action: labelmap
+        regex: __meta_kubernetes_node_label_(.+)
+      - replacement: kubernetes.default.svc:443
+        target_label: __address__
+      - regex: (.+)
+        replacement: /api/v1/nodes/$1/proxy/metrics
+        source_labels:
+        - __meta_kubernetes_node_name
+        target_label: __metrics_path__
+      scheme: https
+      tls_config:
+        ca_file: /var/run/secrets/kubernetes.io/serviceaccount/ca.crt
+        insecure_skip_verify: true
+    - bearer_token_file: /var/run/secrets/kubernetes.io/serviceaccount/token
+      job_name: kubernetes-nodes-cadvisor
+      kubernetes_sd_configs:
+      - role: node
+      metric_relabel_configs:
+      - action: replace
+        regex: (.+)
+        replacement: ${1}
+        source_labels:
+        - pod
+        target_label: pod_name
+      - action: replace
+        regex: (.+)
+        replacement: ${1}
+        source_labels:
+        - container
+        target_label: container_name
+      - action: replace
+        replacement: k8s_stub
+        target_label: name
+      - action: replace
+        regex: ^/system\.slice/(.+)\.service$
+        replacement: ${1}
+        source_labels:
+        - id
+        target_label: systemd_service_name
+      relabel_configs:
+      - action: labelmap
+        regex: __meta_kubernetes_node_label_(.+)
+      - replacement: kubernetes.default.svc:443
+        target_label: __address__
+      - regex: (.+)
+        replacement: /api/v1/nodes/$1/proxy/metrics/cadvisor
+        source_labels:
+        - __meta_kubernetes_node_name
+        target_label: __metrics_path__
+      scheme: https
+      tls_config:
+        ca_file: /var/run/secrets/kubernetes.io/serviceaccount/ca.crt
+        insecure_skip_verify: true
+---
+# Source: victoria-metrics-single/templates/clusterrole.yaml
+kind: ClusterRole
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: vm-single
+  labels: 
+    app.kubernetes.io/managed-by: Helm
+    helm.sh/chart: victoria-metrics-single-0.13.7
+rules:
+  - apiGroups:
+    - discovery.k8s.io
+    resources:
+    - endpointslices
+    verbs: ["get", "list", "watch"]
+  - apiGroups: [""]
+    resources:
+      - nodes
+      - nodes/proxy
+      - nodes/metrics
+      - services
+      - endpoints
+      - pods
+    verbs: ["get", "list", "watch"]
+  - apiGroups:
+      - networking.k8s.io
+    resources:
+      - ingresses
+    verbs: ["get", "list", "watch"]
+  - nonResourceURLs: ["/metrics"]
+    verbs: ["get"]
+---
+# Source: victoria-metrics-single/templates/clusterrolebinding.yaml
+kind: ClusterRoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: vm-single
+  labels: 
+    app.kubernetes.io/managed-by: Helm
+    helm.sh/chart: victoria-metrics-single-0.13.7
+subjects:
+  - kind: ServiceAccount
+    name: vm-single
+    namespace: victoria-metrics
+roleRef:
+  kind: ClusterRole
+  name: vm-single
+  apiGroup: rbac.authorization.k8s.io
+---
+# Source: victoria-metrics-single/templates/server-service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: victoria-metrics
+  labels: 
+    app: server
+    app.kubernetes.io/instance: vmsingle
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: victoria-metrics-single
+    app.kubernetes.io/version: v1.109.1
+    helm.sh/chart: victoria-metrics-single-0.13.7
+  name: vm-single
+spec:
+  type: ClusterIP
+  clusterIP: None
+  ports:
+    - name: http
+      port: 8428
+      protocol: TCP
+      targetPort: http
+  selector: 
+    app: server
+    app.kubernetes.io/instance: vmsingle
+    app.kubernetes.io/name: victoria-metrics-single
+---
+# Source: victoria-metrics-single/templates/server-statefulset.yaml
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  namespace: victoria-metrics
+  labels: 
+    app: server
+    app.kubernetes.io/instance: vmsingle
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: victoria-metrics-single
+    app.kubernetes.io/version: v1.109.1
+    helm.sh/chart: victoria-metrics-single-0.13.7
+  name: vm-single
+spec:
+  serviceName: vm-single
+  selector:
+    matchLabels: 
+      app: server
+      app.kubernetes.io/instance: vmsingle
+      app.kubernetes.io/name: victoria-metrics-single
+  replicas: 1
+  podManagementPolicy: OrderedReady
+  template:
+    metadata:
+      labels: 
+        app: server
+        app.kubernetes.io/instance: vmsingle
+        app.kubernetes.io/managed-by: Helm
+        app.kubernetes.io/name: victoria-metrics-single
+        app.kubernetes.io/version: v1.109.1
+        helm.sh/chart: victoria-metrics-single-0.13.7
+    spec:
+      containers:
+        - name: vmsingle
+          securityContext: 
+            {}
+          image: victoriametrics/victoria-metrics:v1.109.1
+          imagePullPolicy: IfNotPresent
+          args: 
+            - --envflag.enable
+            - --envflag.prefix=VM_
+            - --httpListenAddr=:8428
+            - --loggerFormat=json
+            - --promscrape.config=/scrapeconfig/scrape.yml
+            - --retentionPeriod=1
+            - --storageDataPath=/storage
+          ports:
+            - name: http
+              containerPort: 8428
+          readinessProbe: 
+            failureThreshold: 3
+            httpGet:
+              path: /health
+              port: http
+              scheme: HTTP
+            initialDelaySeconds: 5
+            periodSeconds: 15
+            timeoutSeconds: 5
+          livenessProbe: 
+            failureThreshold: 10
+            initialDelaySeconds: 30
+            periodSeconds: 30
+            tcpSocket:
+              port: http
+            timeoutSeconds: 5
+          volumeMounts:
+            - name: server-volume
+              mountPath: /storage
+            - name: scrapeconfig
+              mountPath: /scrapeconfig
+            
+      securityContext: 
+        {}
+      serviceAccountName: vm-single
+      automountServiceAccountToken: true
+      terminationGracePeriodSeconds: 60
+      volumes:
+        - name: scrapeconfig
+          configMap:
+            name: vm-single-scrapeconfig
+        
+  volumeClaimTemplates:
+    - apiVersion: v1
+      kind: PersistentVolumeClaim
+      metadata:
+        name: server-volume
+      spec:
+        accessModes: 
+          - ReadWriteOnce
+        resources:
+          requests:
+            storage: 16Gi
