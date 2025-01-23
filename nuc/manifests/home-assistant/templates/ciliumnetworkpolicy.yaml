@@ -1,0 +1,35 @@
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: block-untrusted-traffic
+spec:
+  endpointSelector: {}
+  ingress:
+    - fromCIDRSet:
+        - cidr: 192.168.20.0/24
+        - cidr: 192.168.200.0/24
+    - fromEndpoints:
+        - matchLabels:
+            io.kubernetes.pod.namespace: matter-server
+    - fromEndpoints:
+        - matchLabels:
+            io.kubernetes.pod.namespace: ingress-nginx
+  egress:
+    - toFQDNs:
+        - matchPattern: "*.tuyaeu.com"
+        - matchPattern: "*.*noaa.gov"
+    - toCIDRSet:
+        - cidr: 192.168.20.0/24 # Default Vlan
+        - cidr: 192.168.200.0/24 # IOT Vlan
+        - cidr: 142.250.0.0/15 # Google
+    - toEndpoints:
+        - matchLabels:
+            io.kubernetes.pod.namespace: kube-system
+            k8s-app: kube-dns
+      toPorts:
+        - ports:
+            - port: "53"
+              protocol: UDP
+    - toEndpoints:
+        - matchLabels:
+            io.kubernetes.pod.namespace: matter-server

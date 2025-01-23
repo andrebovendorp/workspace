@@ -1,0 +1,95 @@
+- name: Setup host for kubernetes
+  hosts: nuc
+  become: yes  # Ensures commands are run as a superuser
+  tasks:
+    - name: Reload systemd daemon and enable containerd
+      shell: |
+        systemctl daemon-reload
+        systemctl enable --now containerd
+
+    - name: Disable swap temporarily
+      command: swapoff -a
+
+    - name: Remove swap entries from /etc/fstab
+      replace:
+        path: /etc/fstab
+        regexp: '^(.*\s+swap\s+.*)$'
+        replace: '# \1'
+      notify: Reboot if necessary
+
+    - name: Verify swap is disabled
+      shell: free -h | grep -i swap
+      register: swap_status
+      ignore_errors: true
+
+    - name: Install Dependencies
+      apt:
+        name: "{{ item }}"
+        state: present
+      with_items:
+        - apt-transport-https 
+        - ca-certificates 
+        - curl
+        - gpg
+      
+    - name: Ensure /etc/apt/keyrings directory exists
+      file:
+        path: /etc/apt/keyrings
+        state: directory
+        mode: '0755'
+
+    - name: Download Kubernetes GPG key
+      get_url:
+        url: https://pkgs.k8s.io/core:/stable:/v1.32/deb/Release.key
+        dest: /etc/apt/keyrings/kubernetes-apt-keyring.gpg
+        mode: '0644'
+
+    - name: Convert Kubernetes GPG key to binary format
+      command: gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg /etc/apt/keyrings/kubernetes-apt-keyring.gpg
+      args:
+        creates: /etc/apt/keyrings/kubernetes-apt-keyring.gpg
+
+    - name: Configure k8s apt
+      apt_key:
+        url: https://pkgs.k8s.io/core:/stable:/v1.32/deb/Release.key
+        state: present
+
+    - name: Install Kubernetes related Dependencies
+      apt:
+        name: "{{ item }}"
+        state: present
+        update_cache: yes
+      with_items: 
+        - kubeadm
+        - kubelet
+        - kubectl
+
+    - name: Setup CRI
+      copy:
+        dest: /etc/containerd/config.toml
+        content: |
+          [plugins]
+            [plugins."io.containerd.grpc.v1.cri".containerd.runtimes.runc]
+              [plugins."io.containerd.grpc.v1.cri".containerd.runtimes.runc.options]
+                SystemdCgroup = true
+        owner: root
+        group: root
+        mode: '0644'
+
+    - name: Enable ipv4 forwarding
+      sysctl:
+        name: net.ipv4.ip_forward
+        value: 1
+        state: present
+        reload: yes
+
+    - name: Initiate K8s Cluster
+      command: kubeadm init --pod-network-cidr=10.10.0.0/16 --apiserver-advertise-address={{ ansible_host }}  --skip-phases=addon/kube-proxy --upload-certs 
+      register: kubeadm_init
+      run_once: true
+
+
+  handlers:
+    - name: Reboot if necessary
+      command: reboot
+      when: reboot_required | default(false)

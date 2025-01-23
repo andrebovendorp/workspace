@@ -1,0 +1,13 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: server-tls
+  namespace: 1password
+spec:
+  dnsNames:
+  - onepass.k8s.nullservers.com
+  issuerRef:
+    kind: ClusterIssuer
+    name: letsencrypt-prod
+  secretName: server-tls
+  commonName: onepass.k8s.nullservers.com
