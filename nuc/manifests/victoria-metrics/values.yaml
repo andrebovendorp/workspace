@@ -1,56 +1,22 @@
-ingress:
-  enabled: true
-  annotations:
-    kubernetes.io/tls-acme: "true"
-    cert-manager.io/cluster-issuer: letsencrypt-prod
-  ingressClassName: nginx
-  hosts:
-    - grafana.k8s.nullservers.com
-  tls:
-    - secretName: grafana-tls
+victoria-metrics-k8s-stack:
+  grafana:
+    ingress:
+      enabled: true
+      annotations:
+        kubernetes.io/tls-acme: "true"
+        cert-manager.io/cluster-issuer: letsencrypt-prod
+      ingressClassName: nginx
       hosts:
-        - grafana.k8s.nullservers.com
-admin:        
-  existingSecret: grafana-admin-password
-  userKey: admin-user
-  passwordKey: admin-password
+        - grafana-new.k8s.nullservers.com
+      tls:
+        - secretName: grafana-tls
+          hosts:
+            - grafana-new.k8s.nullservers.com
 
-testFramework:
-  enabled: false
+    admin:
+      existingSecret: grafana-admin-password
+      userKey: admin-user
+      passwordKey: admin-password
 
-datasources:
-  datasources.yaml:
-    apiVersion: 1
-    datasources:
-      - name: victoriametrics
-        type: prometheus
-        orgId: 1
-        url: http://vm-single.victoria-metrics.svc.cluster.local:8428
-        access: proxy
-        isDefault: true
-        updateIntervalSeconds: 10
-        editable: true
-
-dashboardProviders:
-  dashboardproviders.yaml:
-    apiVersion: 1
-    providers:
-      - name: "default"
-        orgId: 1
-        folder: ""
-        type: file
-        disableDeletion: true
-        editable: true
-        options:
-          path: /var/lib/grafana/dashboards/default
-
-dashboards:
-  default:
-    victoriametrics:
-      gnetId: 10229
-      revision: 22
-      datasource: victoriametrics
-    kubernetes:
-      gnetId: 14205
-      revision: 1
-      datasource: victoriametrics
+    testFramework:
+      enabled: false
