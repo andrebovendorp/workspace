@@ -15,6 +15,7 @@ spec:
                 - victoria-metrics
                 - 1password
                 - cert-manager
+                - cloudflare
   egress:
     - toEndpoints:
         - {}
