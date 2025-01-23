@@ -1,0 +1,57 @@
+# deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-deployment
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Release.Name }}
+    spec:
+      containers:
+        - name: {{ .Chart.Name }}
+          image: {{ .Values.image.name }}
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - containerPort: 5580
+          command: {{ .Values.command }}
+          args: {{ .Values.args }}
+          securityContext:
+            privileged: {{ .Values.securityContext.privileged | default false }}
+          volumeMounts:
+            {{- if .Values.persistence.enabled }}
+            - name: {{ .Release.Name }}-pvc
+              mountPath: /data
+            {{ end }}
+            {{- if .Values.volumeMounts }}
+            {{- range .Values.volumeMounts }}
+            - name: {{ .name }}
+              mountPath: {{ .mountPath }}
+              readOnly: {{ .readOnly | default false }}
+              subPath: {{ .subPath | default "" }}
+            {{- end }}
+            {{- end }}
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+      volumes:
+        {{- if .Values.persistence.enabled }}
+        - name: {{ .Release.Name }}-pvc
+          persistentVolumeClaim:
+            claimName: {{ .Release.Name }}-pvc
+        {{ end}}
+        {{- if .Values.volumes }}
+        {{- range .Values.volumes }}
+        - name: {{ .name }}
+          {{- if .persistentVolumeClaim }}
+          persistentVolumeClaim:
+            claimName: {{ .persistentVolumeClaim.claimName }}
+            storageClass: {{ .persistentVolumeClaim.storageClass }}
+          {{- end }}
+        {{- end }}
+        {{- end }}
+
