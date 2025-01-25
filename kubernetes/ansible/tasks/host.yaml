@@ -1,3 +1,7 @@
+- name: Setup Hostname
+  hostname:
+    name: "{{ inventory_hostname }}"
+
 - name: Create the directory configurations
   file:
     path: "{{ item }}"
