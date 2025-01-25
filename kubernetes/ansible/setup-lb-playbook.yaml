@@ -4,6 +4,10 @@
   vars:
     haproxy_config_path: /etc/haproxy/haproxy.cfg
   tasks:
+  - name: Setup Hostname
+    hostname:
+      name: "{{ inventory_hostname }}"
+      
   - name: Install HAProxy
     apt:
       name: haproxy
