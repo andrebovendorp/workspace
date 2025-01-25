@@ -1,0 +1,5 @@
+connect:
+  serviceType: ClusterIP
+  tls: 
+    enabled: false
+    secret: server-tls

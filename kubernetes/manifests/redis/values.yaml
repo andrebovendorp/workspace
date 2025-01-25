@@ -1,0 +1,9 @@
+redis:
+  auth:
+    enabled: true
+    existingSecret: redis-password
+    existingSecretPasswordKey: password
+  metrics:
+    enabled: true
+  replica:
+    replicaCount: 0

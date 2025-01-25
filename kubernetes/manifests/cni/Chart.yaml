@@ -1,0 +1,9 @@
+apiVersion: v2
+name: cilium
+description: Cilium CNI
+version: 0.1.0
+type: application
+dependencies:
+  - name: cilium
+    version: 1.16.6
+    repository: https://helm.cilium.io/

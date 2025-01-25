@@ -1,0 +1,39 @@
+replicaCount: 1
+
+image:
+  name: ghcr.io/home-assistant-libs/python-matter-server:stable
+  pullPolicy: IfNotPresent
+
+service:
+  type: ClusterIP
+
+resources:
+  requests:
+    cpu: 100m
+    memory: 200Mi
+  limits:
+    cpu: 200m
+    memory: 400Mi
+
+volumes:
+  - name: config-volume
+    configMap:
+      name: my-configmap
+
+volumeMounts:
+  - name: config-volume
+    mountPath: /etc/config
+
+configMap:
+  enabled: false
+
+securityContext:
+  privileged: true
+
+persistence:
+  enabled: true
+  accessModes:
+    - ReadWriteOnce
+  size: 1Gi
+  # storageClassName: my-storage-class # Optional
+  #volumeMode: Filesystem # Optional

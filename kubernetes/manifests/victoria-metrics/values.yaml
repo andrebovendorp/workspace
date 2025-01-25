@@ -1,0 +1,22 @@
+victoria-metrics-k8s-stack:
+  grafana:
+    ingress:
+      enabled: true
+      annotations:
+        kubernetes.io/tls-acme: "true"
+        cert-manager.io/cluster-issuer: letsencrypt-prod
+      ingressClassName: nginx
+      hosts:
+        - grafana-new.k8s.nullservers.com
+      tls:
+        - secretName: grafana-tls
+          hosts:
+            - grafana-new.k8s.nullservers.com
+
+    admin:
+      existingSecret: grafana-admin-password
+      userKey: admin-user
+      passwordKey: admin-password
+
+    testFramework:
+      enabled: false

@@ -1,0 +1,18 @@
+apiVersion: external-secrets.io/v1beta1
+kind: ExternalSecret
+metadata:
+  name: cloudflare-tunnel-token
+  namespace: cloudflare
+spec:
+  secretStoreRef:
+    kind: ClusterSecretStore
+    name: onepassword
+  target:
+    creationPolicy: Owner
+    name: cloudflare-tunnel-token
+  data:
+  - secretKey: credentials.json
+    remoteRef:
+      key: cloudflared-token
+      property: credentials.json
+      decodingStrategy: None

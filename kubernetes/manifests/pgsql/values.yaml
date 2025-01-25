@@ -1,0 +1,24 @@
+postgresql:
+  global:
+    postgresql:
+      auth:
+        enablePostgresUser: true
+        existingSecret: pgsql-password
+        username: immich
+        secretKeys:
+          adminPasswordKey: password
+          userPasswordKey: immich-password
+          replicationPasswordKey: replication-password
+  metrics:
+    enabled: true
+  primary:
+    pdb:
+      enabled: false
+    networkPolicy:
+      enabled: false # I have my custom network policy
+    persistence:
+      enabled: true
+      storageClass: ssd-storage-persistent
+      accessMode: ReadWriteOnce
+      size: 10Gi
+      existingClaim: pgsql-data

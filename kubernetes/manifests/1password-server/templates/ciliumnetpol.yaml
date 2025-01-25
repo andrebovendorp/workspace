@@ -1,0 +1,26 @@
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: block-untrusted-traffic
+  namespace: 1password
+spec:
+  endpointSelector: {}
+  ingress:
+    - fromEndpoints:
+        - matchLabels:
+            io.kubernetes.pod.namespace: external-secrets
+      toPorts:
+        - ports:
+            - port: "8080"
+  egress:
+    - toEndpoints:
+        - matchLabels:
+            io.kubernetes.pod.namespace: external-secrets
+      toPorts:
+        - ports:
+            - port: "8080"
+    - toEntities:
+        - world
+      toPorts:
+        - ports:
+            - port: "443"

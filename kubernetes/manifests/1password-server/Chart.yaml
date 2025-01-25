@@ -1,0 +1,9 @@
+apiVersion: v2
+name: 1password-server
+description: Password manager
+version: 0.1.0
+type: application
+dependencies:
+  - name: connect
+    version: 1.17.0
+    repository: https://1password.github.io/connect-helm-charts/
