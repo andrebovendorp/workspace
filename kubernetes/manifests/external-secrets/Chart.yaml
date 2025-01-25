@@ -6,4 +6,4 @@ type: application
 dependencies:
   - name: external-secrets
     version: 0.13.0
-    repository: https://charts.external-secrets.io
+    repository: https://charts.external-secrets.io/

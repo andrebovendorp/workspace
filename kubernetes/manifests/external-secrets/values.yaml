@@ -1,2 +1,2 @@
 external-secrets:
-  installCRDs: true
+  installCRDs: false
