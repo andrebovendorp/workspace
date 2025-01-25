@@ -1,19 +1,20 @@
-# apiVersion: "cilium.io/v2alpha1"
-# kind: CiliumLoadBalancerIPPool
-# metadata:
-#   name: "main-pool"
-# spec:
-#   blocks:
-#   - cidr: "192.168.20.232/29"
+apiVersion: "cilium.io/v2alpha1"
+kind: CiliumLoadBalancerIPPool
+metadata:
+  name: "main-pool"
+spec:
+  blocks:
+  - cidr: "192.168.50.232/29"
 
-# ---
-# apiVersion: "cilium.io/v2alpha1"
-# kind: CiliumL2AnnouncementPolicy
-# metadata:
-#   name: local-l2-announcement
-# spec:
-#   interfaces:
-#   - enp86s0
-#   - eth0
-#   externalIPs: true
-#   loadBalancerIPs: true
+---
+apiVersion: "cilium.io/v2alpha1"
+kind: CiliumL2AnnouncementPolicy
+metadata:
+  name: local-l2-announcement
+spec:
+  interfaces:
+  - enp86s0
+  - eth0
+  - ens18
+  externalIPs: true
+  loadBalancerIPs: true
