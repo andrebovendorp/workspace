@@ -1,0 +1,23 @@
+- name: Configure master
+  hosts: all
+  become: yes  # Ensures commands are run as a superuser
+  vars:
+    join_token: ""
+  tasks:
+    - name: Setup Hostname
+      hostname:
+        name: "{{ inventory_hostname }}"
+
+    - name: Install curl and net-tools
+      apt:
+        name: "{{ item }}"
+        state: present
+        update_cache: yes
+      with_items:
+        - curl
+        - net-tools
+
+    - name: Install AdGuard Home
+      shell: |
+        curl -s -S -L https://raw.githubusercontent.com/AdguardTeam/AdGuardHome/master/scripts/install.sh | sh -s -- -v
+      run_once: true
