@@ -92,7 +92,7 @@ data:
     ingress:
     # The first rule proxies traffic to the httpbin sample Service defined in app.yaml
     - hostname: grafana-tunnel.nullservers.com
-      service: http://vm-grafana.victoria-metrics.svc.cluster.local:80
+      service: http://victoria-metrics-grafana.victoria-metrics.svc.cluster.local:80
     - hostname: nullservers.com
       service: http://nginx-service.bsk-lead.svc.cluster.local:80
     - hostname: api.nullservers.com
