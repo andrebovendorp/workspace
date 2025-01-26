@@ -1,0 +1,3 @@
+ingress-nginx:
+  defaultBackend:
+    enabled: true

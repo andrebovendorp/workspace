@@ -7,8 +7,18 @@
     - name: Setup Hostname
       hostname:
         name: "{{ inventory_hostname }}"
+    
+    - name: Install curl and net-tools
+      apt:
+        name: "{{ item }}"
+        state: present
+        update_cache: yes
+      with_items:
+        - curl
+        - net-tools
+        - iptables
 
-    - name: Install K3s
+    - name: Install K3s Server
       shell: |
         curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC='--flannel-backend=none --disable-network-policy --disable=traefik' sh -
       delegate_to: master

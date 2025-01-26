@@ -5,10 +5,11 @@ home-assistant:
 
   dnsConfig:
     nameservers:
-      - 192.168.20.20
+      - 192.168.50.240
 
   podSecurityContext:
-    privileged: true
+    runAsUser: 0
+    runAsGroup: 0
 
   ingress:
     enabled: true
@@ -29,9 +30,7 @@ home-assistant:
   configuration:
     enabled: true
     trusted_proxies:
-      - 10.0.0.0/8
-      - 192.168.20.0/24
-      - 172.10.0.0/16
+      - 10.10.0.0/16
 
   persistence:
     enabled: true
