@@ -2,7 +2,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: nginx-index-file
-  namespace: bsk
+  namespace: bsk-lead
 data:
   index.html: |-
     <!DOCTYPE html>

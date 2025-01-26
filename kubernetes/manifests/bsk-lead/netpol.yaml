@@ -2,15 +2,12 @@ apiVersion: cilium.io/v2
 kind: CiliumNetworkPolicy
 metadata:
   name: allow-from-tunnel
-  namespace: bsk
+  namespace: bsk-lead
 spec:
-  endpointSelector:
-    matchLabels:
-      app: nginx
+  endpointSelector: { }
   ingress:
     - fromEndpoints:
         - matchLabels:
-            name: tunnel # Replace with the actual labels of your tunnel namespace.
-            io.kubernetes.pod.namespace: tunnel # This is crucial to select pods in the tunnel namespace.F
+            io.kubernetes.pod.namespace: cloudflare # This is crucial to select pods in the tunnel namespace.F
         - matchLabels:
             io.kubernetes.pod.namespace: ingress-nginx # This is crucial to select pods in the tunnel namespace.F

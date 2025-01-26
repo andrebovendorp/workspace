@@ -1,8 +1,8 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: nullservers-ingress
-  namespace: bsk-lead
+  name: bsk-api
+  namespace: bsk-api
   annotations:
     cert-manager.io/cluster-issuer: "letsencrypt-prod" # Replace with your ClusterIssuer name
     nginx.ingress.kubernetes.io/ssl-redirect: "true"
@@ -10,16 +10,16 @@ spec:
   ingressClassName: nginx
   tls:
     - hosts:
-        - nullservers.com
+        - api.nullservers.com
       secretName: nullservers-tls 
   rules:
-    - host: nullservers.com
+    - host: api.nullservers.com
       http:
         paths:
           - path: /
             pathType: Prefix
             backend:
               service:
-                name: nginx-service 
+                name: bsk-api
                 port:
                   number: 80
