@@ -22,15 +22,21 @@ spec:
               - matchPattern: "*"
     - toEndpoints:
         - matchLabels:
-            app.kubernetes.io/name: grafana
-            io.kubernetes.pod.namespace: victoria-metrics
+            io.kubernetes.pod.namespace: bsk-api
       toPorts:
         - ports:
-            - port: "3000"
+            - port: "8080"
+    - toEndpoints:
+        - matchLabels:
+            io.kubernetes.pod.namespace: bsk-lead
+      toPorts:
         - ports:
             - port: "80"
     - toEndpoints:
         - matchLabels:
-            io.kubernetes.pod.namespace: bsk
+            io.kubernetes.pod.namespace: victoria-metrics
+      toPorts:
+        - ports:
+            - port: "80"
     - toCIDRSet:
         - cidr: 198.41.128.0/17
