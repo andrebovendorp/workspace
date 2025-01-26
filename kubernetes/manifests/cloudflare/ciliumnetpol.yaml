@@ -29,5 +29,8 @@ spec:
             - port: "3000"
         - ports:
             - port: "80"
+    - toEndpoints:
+        - matchLabels:
+            io.kubernetes.pod.namespace: bsk
     - toCIDRSet:
         - cidr: 198.41.128.0/17
