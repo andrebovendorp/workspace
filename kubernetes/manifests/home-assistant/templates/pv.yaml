@@ -2,7 +2,7 @@ apiVersion: v1
 kind: PersistentVolume
 metadata:
   annotations:
-    local.path.provisioner/selected-node: nuc
+    local.path.provisioner/selected-node: slave01
     pv.kubernetes.io/provisioned-by: rancher.io/local-path
   name: pv-home-assistant-data
 spec:
@@ -20,7 +20,7 @@ spec:
         - key: kubernetes.io/hostname
           operator: In
           values:
-          - nuc
+          - slave01
   persistentVolumeReclaimPolicy: Retain
   storageClassName: ssd-storage-persistent
   volumeMode: Filesystem

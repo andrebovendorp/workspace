@@ -129,7 +129,7 @@ data:
                 ]
         },
         {
-          "node":"nuc",
+          "node":"slave01",
           "paths":[
             "/opt/kubernetes-storage", 
             "/opt/kubernetes-storage-persistent", 

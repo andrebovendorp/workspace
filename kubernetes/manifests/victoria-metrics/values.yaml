@@ -7,11 +7,11 @@ victoria-metrics-k8s-stack:
         cert-manager.io/cluster-issuer: letsencrypt-prod
       ingressClassName: nginx
       hosts:
-        - grafana-new.k8s.nullservers.com
+        - grafana.k8s.nullservers.com
       tls:
         - secretName: grafana-tls
           hosts:
-            - grafana-new.k8s.nullservers.com
+            - grafana.k8s.nullservers.com
 
     admin:
       existingSecret: grafana-admin-password
@@ -20,3 +20,4 @@ victoria-metrics-k8s-stack:
 
     testFramework:
       enabled: false
+  fullnameOverride: "victoria-metrics"

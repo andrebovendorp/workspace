@@ -8,5 +8,33 @@ spec:
     - ReadWriteOnce
   resources:
     requests:
-      storage: 10Gi # Specify the desired storage size (e.g., 1Gi, 10Gi, 100Gi)
+      storage: 20Gi # Specify the desired storage size (e.g., 1Gi, 10Gi, 100Gi)
   storageClassName: ssd-storage-persistent
+  volumeName: pgsql-data
+--- 
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  annotations:
+    local.path.provisioner/selected-node: slave01
+    pv.kubernetes.io/provisioned-by: rancher.io/local-path
+  name: pgsql-data
+spec:
+  accessModes:
+  - ReadWriteOnce
+  capacity:
+    storage: 20Gi
+  hostPath:
+    path: /opt/kubernetes-storage-persistent/pgsql-data
+    type: DirectoryOrCreate
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+      - matchExpressions:
+        - key: kubernetes.io/hostname
+          operator: In
+          values:
+          - slave01
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: ssd-storage-persistent
+  volumeMode: Filesystem
