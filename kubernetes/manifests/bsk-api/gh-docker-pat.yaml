@@ -1,0 +1,22 @@
+apiVersion: external-secrets.io/v1beta1
+kind: ExternalSecret
+metadata:
+  name: gh-docker-token
+  namespace: bsk-api
+spec:
+  secretStoreRef:
+    kind: ClusterSecretStore
+    name: onepassword
+  target:
+    template:
+      type: kubernetes.io/dockerconfigjson
+      data:
+        .dockerconfigjson: "{{ .token | toString }}"
+
+    name: gh-docker-token
+  data:
+    - secretKey: token
+      remoteRef:
+        key: gh-docker-token
+        property: .dockerconfigjson
+        decodingStrategy: None

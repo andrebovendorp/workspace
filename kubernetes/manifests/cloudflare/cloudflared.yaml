@@ -94,7 +94,9 @@ data:
     - hostname: grafana-tunnel.nullservers.com
       service: http://vm-grafana.victoria-metrics.svc.cluster.local:80
     - hostname: nullservers.com
-      service: http://nginx-service.bsk.svc.cluster.local:80
+      service: http://nginx-service.bsk-lead.svc.cluster.local:80
+    - hostname: api.nullservers.com
+      service: http://bsk-api.bsk-api.svc.cluster.local:80
     # This rule sends traffic to the built-in hello-world HTTP server. This can help debug connectivity
     # issues. If hello.example.com resolves and tunnel.example.com does not, then the problem is
     # in the connection from cloudflared to your local service, not from the internet to cloudflared.
