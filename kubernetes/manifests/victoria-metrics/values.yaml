@@ -1,4 +1,8 @@
 victoria-metrics-k8s-stack:
+  victoria-metrics-operator:
+    enabled: true
+    serviceMonitor:
+      enabled: true
   grafana:
     ingress:
       enabled: true
