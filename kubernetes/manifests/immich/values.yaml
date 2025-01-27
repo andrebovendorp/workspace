@@ -1,0 +1,24 @@
+immich:
+  immich: 
+    env: 
+      REDIS_HOSTNAME: redis-headless.redis.svc.cluster.local
+      DB_HOSTNAME: pgsql-postgresql-hl.pgsql.svc.cluster.local
+      DB_USERNAME: immich
+      DB_PASSWORD:
+        valueFrom:
+          secretKeyRef:
+            name: pgsql-password
+            key: immich-password
+      DB_DATABASE_NAME: immich
+    persistence:
+      library:
+        existingClaim: immich-data
+    metrics:
+      enabled: false
+
+    postgresql:
+      enabled: false
+
+    redis:
+      enabled: false
+

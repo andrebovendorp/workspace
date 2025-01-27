@@ -1,0 +1,9 @@
+apiVersion: v2
+name: external-secrets
+description: external-secrets
+version: 0.1.0
+type: application
+dependencies:
+  - name: external-secrets
+    version: 0.13.0
+    repository: https://charts.external-secrets.io/

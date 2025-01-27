@@ -1,0 +1,74 @@
+- name: Configure master
+  hosts: all
+  become: yes  # Ensures commands are run as a superuser
+  vars:
+    join_token: ""
+  tasks:
+    - name: Setup Hostname
+      hostname:
+        name: "{{ inventory_hostname }}"
+    
+    - name: Install curl and net-tools
+      apt:
+        name: "{{ item }}"
+        state: present
+        update_cache: yes
+      with_items:
+        - curl
+        - net-tools
+        - iptables
+
+    - name: Install K3s Server
+      shell: |
+        curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC='--flannel-backend=none --disable-network-policy --disable=traefik' sh -
+      delegate_to: master
+      when: inventory_hostname == groups['master'][0]
+      
+    - name: Ensure the traefik.yaml.skip file exists
+      file:
+        path: /var/lib/rancher/k3s/server/manifests/traefik.yaml.skip
+        state: touch
+        owner: root
+        group: root
+        mode: '0644'
+      delegate_to: master
+      when: inventory_hostname == groups['master'][0]
+
+    - name: Ensure k3s is running
+      service:
+        name: k3s
+        state: started
+        enabled: yes
+      delegate_to: master
+      when: inventory_hostname == groups['master'][0]
+
+    - name: Copy Kubeconfig to host
+      fetch:
+        src: /etc/rancher/k3s/k3s.yaml
+        dest: /tmp/k3s.yaml
+        flat: yes
+      delegate_to: master
+      when: inventory_hostname == groups['master'][0]
+
+    - name: Generate Join Token
+      shell: |
+        cat /var/lib/rancher/k3s/server/node-token
+      register: join_token
+      delegate_to: master
+      when: inventory_hostname == groups['master'][0]
+
+    - name: Debug
+      debug:
+        var: join_token.stdout
+      when: inventory_hostname == groups['master'][0]
+
+    - name: Add Slaves to Cluster
+      shell: |
+        curl -sfL https://get.k3s.io | K3S_URL=https://{{ hostvars[groups['master'][0]].ansible_host }}:6443 K3S_TOKEN={{ hostvars[groups['master'][0]].join_token.stdout }} sh -
+      when: inventory_hostname in groups['slaves']
+
+    - name: Ensure k3s is running
+      service:
+        name: k3s
+        state: started
+        enabled: yes

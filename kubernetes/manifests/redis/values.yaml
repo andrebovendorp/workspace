@@ -1,0 +1,19 @@
+redis:
+  auth:
+    enabled: true
+    existingSecret: redis-password
+    existingSecretPasswordKey: password
+  metrics:
+    enabled: true
+  replica:
+    replicaCount: 0
+  master:
+    resources:
+      requests:
+        cpu: 0.1
+        memory: 256Mi
+      limits:
+        cpu: 0.5
+        memory: 512Mi
+    nodeSelector: 
+      nodeName: "slave02"

@@ -1,0 +1,12 @@
+cert-manager:
+  crds:
+    enabled: false
+
+  namespace: cert-manager
+  dns01RecursiveNameservers: "1.1.1.1:53"
+  dns01RecursiveNameserversOnly: true
+
+  prometheus:
+    enabled: false
+    servicemonitor:
+      enabled: false
