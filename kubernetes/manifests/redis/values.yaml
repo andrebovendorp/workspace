@@ -1,6 +1,6 @@
 redis:
   auth:
-    enabled: true
+    enabled: false
     existingSecret: redis-password
     existingSecretPasswordKey: password
   metrics:
@@ -15,5 +15,3 @@ redis:
       limits:
         cpu: 0.5
         memory: 512Mi
-    nodeSelector: 
-      nodeName: "slave02"
