@@ -38,5 +38,11 @@ spec:
       toPorts:
         - ports:
             - port: "80"
+    - toEndpoints:
+        - matchLabels:
+            io.kubernetes.pod.namespace: immich
+      toPorts:
+        - ports:
+            - port: "2283"
     - toCIDRSet:
         - cidr: 198.41.128.0/17
