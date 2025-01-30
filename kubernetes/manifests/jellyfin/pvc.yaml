@@ -9,8 +9,8 @@ spec:
   volumeName: pv-jellyfin-data
   resources:
     requests:
-      storage: 200Gi # Specify the desired storage size (e.g., 1Gi, 10Gi, 100Gi)
-  storageClassName: ssd-storage-persistent
+      storage: 20Gi # Specify the desired storage size (e.g., 1Gi, 10Gi, 100Gi)
+  storageClassName: ssd-storage
 --- 
 apiVersion: v1
 kind: PersistentVolume
@@ -23,9 +23,9 @@ spec:
   accessModes:
   - ReadWriteOnce
   capacity:
-    storage: 300Gi
+    storage: 20Gi
   hostPath:
-    path: /opt/kubernetes-storage-persistent/pv-jellyfin-config
+    path: /opt/kubernetes-storage/pv-jellyfin-config
     type: DirectoryOrCreate
   nodeAffinity:
     required:
@@ -35,6 +35,6 @@ spec:
           operator: In
           values:
           - slave01
-  persistentVolumeReclaimPolicy: Retain
-  storageClassName: ssd-storage-persistent
+  persistentVolumeReclaimPolicy: Delete
+  storageClassName: ssd-storage
   volumeMode: Filesystem
