@@ -40,10 +40,15 @@ immich:
             paths:
               - path: /
                 pathType: ImplementationSpecific
+          - host: photos.k8s.nullservers.com
+            paths:
+              - path: /
+                pathType: ImplementationSpecific
         tls:
           - secretName: home-assistant-tls
             hosts:
               - photos.nullservers.com
+              - photos.k8s.nullservers.com
 
     machine-learning:
       enabled: true
