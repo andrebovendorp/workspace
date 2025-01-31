@@ -1,0 +1,45 @@
+common:
+  clusterIssuer: letsencrypt-prod
+
+  deployment:
+    enabled: true
+    port: 80
+    replicaCount: 1
+    image: ghcr.io/advplyr/audiobookshelf:latest
+    nodeSelector:
+      kubernetes.io/hostname: slave01
+    resources:
+      requests:
+        memory: 64Mi
+        cpu: 250m
+      limits:
+        memory: 128Mi
+        cpu: 500m
+
+  hostVolumeMounts:
+  - name: audiobooks
+    hostPath: /mnt/external-drive/audiobooks
+    mountPath: /audiobooks
+
+  pvcVolumeMounts:
+  - name: config
+    mountPath: /config
+    size: 1Gi
+    storageClassName: ssd-storage
+  - name: metadata
+    mountPath: /metadata
+    size: 2Gi
+    storageClassName: ssd-storage
+
+  service:
+    enabled: true
+    ports:
+    - port: 80
+      targetPort: 80
+      name: http
+  ingress:
+    enabled: true
+    class: nginx
+    hosts:
+    - host: bookshelf.k8s.nullservers.com
+    - host: bookshelf.nullservers.com

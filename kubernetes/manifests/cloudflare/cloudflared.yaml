@@ -91,14 +91,14 @@ data:
     # E.g. `cloudflared tunnel route dns example-tunnel tunnel.example.com`.
     ingress:
     # The first rule proxies traffic to the httpbin sample Service defined in app.yaml
-    - hostname: grafana-tunnel.nullservers.com
-      service: http://victoria-metrics-grafana.victoria-metrics.svc.cluster.local:80
     - hostname: nullservers.com
       service: http://nginx-service.bsk-lead.svc.cluster.local:80
     - hostname: api.nullservers.com
       service: http://bsk-api.bsk-api.svc.cluster.local:80
     - hostname: photos.nullservers.com
       service: http://immich-server.immich.svc.cluster.local:2283
+    - hostname: bookshelf.nullservers.com
+      service: http://audiobook.audiobook.svc.cluster.local:80
     # This rule sends traffic to the built-in hello-world HTTP server. This can help debug connectivity
     # issues. If hello.example.com resolves and tunnel.example.com does not, then the problem is
     # in the connection from cloudflared to your local service, not from the internet to cloudflared.
