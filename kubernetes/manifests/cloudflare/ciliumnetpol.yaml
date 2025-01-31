@@ -28,13 +28,13 @@ spec:
             - port: "8080"
     - toEndpoints:
         - matchLabels:
-            io.kubernetes.pod.namespace: bsk-lead
+            io.kubernetes.pod.namespace: audiobook
       toPorts:
         - ports:
             - port: "80"
     - toEndpoints:
         - matchLabels:
-            io.kubernetes.pod.namespace: victoria-metrics
+            io.kubernetes.pod.namespace: bsk-lead
       toPorts:
         - ports:
             - port: "80"

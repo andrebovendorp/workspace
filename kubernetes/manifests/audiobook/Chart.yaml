@@ -1,0 +1,9 @@
+apiVersion: v2
+name: Audiobook
+description: Audiobook
+version: 0.1.0
+type: application
+dependencies:
+- name: common
+  version: 0.1.1
+  repository: https://boveloco.github.io/chart-common/
