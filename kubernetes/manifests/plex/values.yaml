@@ -1,5 +1,5 @@
 chart:
-  enabled: false
+  enabled: true
 common:
   clusterIssuer: letsencrypt-prod
 
@@ -10,13 +10,6 @@ common:
     image: linuxserver/plex
     nodeSelector:
       kubernetes.io/hostname: slave01
-    resources:
-      requests:
-        memory: "500Mi"
-        cpu: "500m"
-      limits:
-        memory: "1024Mi"
-        cpu: "1"
     env:
       - name: PUID
         value: "1000"
