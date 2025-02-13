@@ -3,10 +3,10 @@ ingress-nginx:
     replicaCount: 2
     metrics:
       enabled: true
-  service:
-    enableHttp2: true
-    annotations:
-      service.beta.kubernetes.io/aws-load-balancer-proxy-protocol: "*"
+    service:
+      loadBalancerIP: 192.168.50.239
+      enableHttp2: true
+        
   config:
     use-proxy-protocol: "true"
 
