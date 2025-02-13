@@ -5,7 +5,7 @@ metadata:
   labels:
     app: hass-mdns
 spec:
-  type: NodePort
+  type: LoadBalancer
   selector:
     app.kubernetes.io/name: home-assistant # Ensure this matches the app label of the pods
   ports:

@@ -1,0 +1,8 @@
+chart:
+  enabled: false
+exporter:
+  settings:
+    clusterName: test-server
+  secret:
+    enabled: false
+    name: perfectscale-credentials

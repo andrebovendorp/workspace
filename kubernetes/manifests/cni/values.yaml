@@ -1,10 +1,10 @@
-cilium: 
+cilium:
   ipam:
     operator:
       clusterPoolIPv4PodCIDRList: ["10.10.0.0/16"]
   hubble:
     relay:
-      enabled: true 
+      enabled: true
     ui:
       enabled: true
   kubeProxyReplacement: true
@@ -14,4 +14,9 @@ cilium:
     enabled: true
   operator:
     enabled: true
-    replicas: 1
+    replicas: 2
+  egressGateway:
+    enabled: true
+  bpf:
+    masquerade: true
+  externalTrafficPolicy: Local
