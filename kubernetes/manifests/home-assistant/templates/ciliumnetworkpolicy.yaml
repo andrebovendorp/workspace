@@ -1,13 +1,13 @@
 apiVersion: cilium.io/v2
 kind: CiliumNetworkPolicy
 metadata:
-  name: block-untrusted-traffic
+  name: default
+  namespace: {{ .Release.Namespace }}
 spec:
   endpointSelector: {}
   ingress:
     - fromCIDRSet:
-        - cidr: 192.168.20.0/24
-        - cidr: 192.168.200.0/24
+        - cidr: "192.168.50.0/24"
     - fromEndpoints:
         - matchLabels:
             io.kubernetes.pod.namespace: matter-server
@@ -15,16 +15,6 @@ spec:
         - matchLabels:
             io.kubernetes.pod.namespace: ingress-nginx
   egress:
-    - toEntities:
-        - world
-    - toFQDNs:
-        - matchPattern: "*.tuyaeu.com"
-        - matchPattern: "*.*noaa.gov"
-        - matchPattern: "*.met.no"
-    - toCIDRSet:
-        - cidr: 192.168.20.0/24 # Default Vlan
-        - cidr: 192.168.200.0/24 # IOT Vlan
-        - cidr: 142.250.0.0/15 # Google
     - toEndpoints:
         - matchLabels:
             io.kubernetes.pod.namespace: kube-system
@@ -33,6 +23,21 @@ spec:
         - ports:
             - port: "53"
               protocol: UDP
+          rules:
+            dns:
+              - matchPattern: "*"        
     - toEndpoints:
         - matchLabels:
             io.kubernetes.pod.namespace: matter-server
+    - toEndpoints:
+        - matchLabels:
+            io.kubernetes.pod.namespace: jellyfin
+    - toEntities:
+        - world
+    - toFQDNs:
+        - matchPattern: "*.tuyaeu.com"
+        - matchPattern: "*.*noaa.gov"
+        - matchPattern: "*.met.no"
+        - matchPattern: "*.nullservers.com"
+    - toCIDRSet:
+        - cidr: "192.168.50.240/28"
