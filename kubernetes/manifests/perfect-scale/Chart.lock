@@ -1,0 +1,6 @@
+dependencies:
+- name: exporter
+  repository: https://perfectscale-io.github.io/
+  version: v1.0.48
+digest: sha256:f97e5fef22e9b3f538311aafc9731623e48ea7754a62694a88855e0345d7363c
+generated: "2025-02-04T10:51:06.752832113+01:00"

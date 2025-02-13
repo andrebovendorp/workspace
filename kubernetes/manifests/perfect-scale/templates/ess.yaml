@@ -1,0 +1,23 @@
+apiVersion: external-secrets.io/v1beta1
+kind: ExternalSecret
+metadata:
+  name: perfectscale-credentials
+  namespace: {{ .Release.Namespace }}
+spec:
+  secretStoreRef:
+    kind: ClusterSecretStore
+    name: onepassword
+  target:
+    creationPolicy: Owner
+    name: perfectscale-credentials
+  data:
+    - secretKey: clientId
+      remoteRef:
+        key: perfectscale-credentials
+        property: clientId
+        decodingStrategy: None
+    - secretKey: clientSecret
+      remoteRef:
+        key: perfectscale-credentials
+        property: clientSecret
+        decodingStrategy: None
