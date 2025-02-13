@@ -1,0 +1,41 @@
+common:
+  clusterIssuer: letsencrypt-prod
+
+  deployment:
+    enabled: true
+    port: 8080
+    replicaCount: 1
+    image: drakkan/sftpgo:latest
+    nodeSelector:
+      kubernetes.io/hostname: slave01
+    resources:
+      requests:
+        memory: 64Mi
+        cpu: 250m
+      limits:
+        memory: 128Mi
+        cpu: 2
+
+  hostVolumeMounts:
+  - name: files
+    hostPath: /mnt/external-drive/
+    mountPath: /srv/sftpgo
+
+  pvcVolumeMounts:
+  - name: config
+    mountPath: /var/lib/sftpgo
+    size: 100Mi
+    storageClassName: ssd-storage
+
+  service:
+    enabled: true
+    ports:
+    - port: 80
+      targetPort: 8080
+      name: http
+      type: ClusterIP
+  ingress:
+    enabled: true
+    class: nginx
+    hosts:
+    - host: files.k8s.nullservers.com
