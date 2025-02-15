@@ -1,0 +1,9 @@
+apiVersion: v2
+name: pgadmin
+version: 0.1.0
+type: application
+dependencies:
+  - name: pgadmin4
+    version: 1.34.0
+    repository: https://helm.runix.net
+    condition: chart.enabled
