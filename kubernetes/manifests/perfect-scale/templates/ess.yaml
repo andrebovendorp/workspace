@@ -13,11 +13,15 @@ spec:
   data:
     - secretKey: clientId
       remoteRef:
+        conversionStrategy: Default
+        metadataPolicy: None
         key: perfectscale-credentials
         property: clientId
         decodingStrategy: None
     - secretKey: clientSecret
       remoteRef:
+        conversionStrategy: Default
+        metadataPolicy: None
         key: perfectscale-credentials
         property: clientSecret
         decodingStrategy: None

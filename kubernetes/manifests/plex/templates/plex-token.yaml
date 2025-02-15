@@ -13,6 +13,8 @@ spec:
   data:
   - secretKey: token
     remoteRef:
+      conversionStrategy: Default
+      metadataPolicy: None
       key: plex-claim
       property: token
       decodingStrategy: None

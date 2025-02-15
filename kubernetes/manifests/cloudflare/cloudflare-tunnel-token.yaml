@@ -13,6 +13,8 @@ spec:
   data:
     - secretKey: credentials.json
       remoteRef:
+        conversionStrategy: Default
+        metadataPolicy: None
         key: cloudflared-token
         property: credentials.json
         decodingStrategy: None

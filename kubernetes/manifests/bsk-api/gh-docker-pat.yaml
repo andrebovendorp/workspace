@@ -17,6 +17,8 @@ spec:
   data:
     - secretKey: token
       remoteRef:
+        conversionStrategy: Default
+        metadataPolicy: None
         key: gh-docker-token
         property: .dockerconfigjson
         decodingStrategy: None
