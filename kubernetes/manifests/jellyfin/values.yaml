@@ -1,4 +1,5 @@
 common:
+  enabled: false
   clusterIssuer: letsencrypt-prod
 
   deployment:
