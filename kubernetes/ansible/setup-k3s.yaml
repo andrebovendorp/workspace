@@ -20,7 +20,7 @@
 
     - name: Install K3s Server
       shell: |
-        curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC='--flannel-backend=none --disable-network-policy --disable=traefik' sh -
+        curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC='--flannel-backend=none --disable-network-policy --disable=traefik --disable local-storage' sh -
       delegate_to: master
       when: inventory_hostname == groups['master'][0]
       
@@ -66,9 +66,3 @@
       shell: |
         curl -sfL https://get.k3s.io | K3S_URL=https://{{ hostvars[groups['master'][0]].ansible_host }}:6443 K3S_TOKEN={{ hostvars[groups['master'][0]].join_token.stdout }} sh -
       when: inventory_hostname in groups['slaves']
-
-    - name: Ensure k3s is running
-      service:
-        name: k3s
-        state: started
-        enabled: yes
