@@ -24,6 +24,8 @@ spec:
           rules:
             dns:
               - matchPattern: "*"
+    - toFQDNs:
+      - matchPattern: "*.1password.com"
     - toCIDRSet:
         - cidr: 18.66.122.56/32 # onepassword server IP
       toPorts:
