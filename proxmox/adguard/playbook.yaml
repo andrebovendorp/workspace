@@ -28,10 +28,3 @@
         curl -s -S -L https://raw.githubusercontent.com/AdguardTeam/AdGuardHome/master/scripts/install.sh | sh -s -- -v
       run_once: true
 
-    - name: Template file to /opt/AdGuardHome/AdGuardHome.yaml
-      template:
-        src: AdGuardHome.yaml
-        dest: /opt/AdGuardHome/AdGuardHome.yaml
-        owner: root
-        group: root
-        mode: 0644
