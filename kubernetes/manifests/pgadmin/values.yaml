@@ -15,6 +15,7 @@ common:
         cpu: "100m"
       limits:
         memory: "500Mi"
+        limits: 1
     env:
       - name: PGADMIN_DEFAULT_EMAIL
         valueFrom:
