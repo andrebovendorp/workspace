@@ -3,6 +3,19 @@ grafana:
   additionalHosts:
     - name: grafana.k8s.nullservers.com
 victoria-metrics-k8s-stack:
+  vmsingle:
+    ingress:
+      enabled: true
+      annotations:
+        kubernetes.io/tls-acme: "true"
+        cert-manager.io/cluster-issuer: letsencrypt-prod
+      ingressClassName: nginx
+      hosts:
+        - metrics.k8s.nullservers.com
+      tls:
+        - secretName: grafana-tls
+          hosts:
+            - metrics.k8s.nullservers.com
   victoria-metrics-operator:
     enabled: true
     serviceMonitor:
