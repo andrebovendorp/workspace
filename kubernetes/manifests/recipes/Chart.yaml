@@ -1,0 +1,9 @@
+apiVersion: v2
+name: Qbittorrent
+description: Simple Implementation for Qbittorrent Server on K8S
+version: 0.1.0
+type: application
+dependencies:
+  - name: common
+    version: 0.1.3
+    repository: https://boveloco.github.io/charts/

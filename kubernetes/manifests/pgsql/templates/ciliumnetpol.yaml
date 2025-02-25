@@ -18,6 +18,9 @@ spec:
     - fromEndpoints:
         - matchLabels:
             io.kubernetes.pod.namespace: bsk-api
+    - fromEndpoints:
+        - matchLabels:
+            io.kubernetes.pod.namespace: recipes
   egress:
     - toEndpoints:
         - matchLabels:
