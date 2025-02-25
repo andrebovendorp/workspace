@@ -9,7 +9,7 @@ spec:
   volumeName: pv-immich-data
   resources:
     requests:
-      storage: 200Gi # Specify the desired storage size (e.g., 1Gi, 10Gi, 100Gi)
+      storage: 500Gi # Specify the desired storage size (e.g., 1Gi, 10Gi, 100Gi)
   storageClassName: ssd-storage-persistent
 --- 
 apiVersion: v1
@@ -24,9 +24,9 @@ spec:
   accessModes:
   - ReadWriteOnce
   capacity:
-    storage: 300Gi
+    storage: 500Gi
   hostPath:
-    path: /opt/kubernetes-storage-persistent/pv-immich-data
+    path: /opt/pvcs/kubernetes-storage-persistent/pv-immich-data
     type: DirectoryOrCreate
   nodeAffinity:
     required:

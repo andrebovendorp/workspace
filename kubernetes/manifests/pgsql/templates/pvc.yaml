@@ -25,7 +25,7 @@ spec:
   capacity:
     storage: 20Gi
   hostPath:
-    path: /opt/kubernetes-storage-persistent/pgsql-data
+    path: /opt/pvcs/kubernetes-storage-persistent/pgsql-data
     type: DirectoryOrCreate
   nodeAffinity:
     required:

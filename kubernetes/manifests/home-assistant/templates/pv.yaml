@@ -11,7 +11,7 @@ spec:
   capacity:
     storage: 10Gi
   hostPath:
-    path: /opt/kubernetes-storage-persistent/pv-home-assistant-data
+    path: /opt/pvcs/kubernetes-storage-persistent/pv-home-assistant-data
     type: DirectoryOrCreate
   nodeAffinity:
     required:

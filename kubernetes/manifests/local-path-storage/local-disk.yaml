@@ -125,16 +125,14 @@ data:
         {
                 "node":"DEFAULT_PATH_FOR_NON_LISTED_NODES",
                 "paths":[
-                  "/opt/kubernetes-storage"
+                  "/opt/pvcs/kubernetes-storage"
                 ]
         },
         {
           "node":"slave01",
           "paths":[
-            "/opt/kubernetes-storage", 
-            "/opt/kubernetes-storage-persistent", 
-            "/media/kubernetes-storage", 
-            "/media/kubernetes-storage-persistent"
+            "/opt/pvcs/kubernetes-storage", 
+            "/opt/pvcs/kubernetes-storage-persistent"
           ]
         }
       ]
