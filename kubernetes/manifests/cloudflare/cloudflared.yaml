@@ -62,6 +62,19 @@ spec:
               - key: config.yaml
                 path: config.yaml
 ---
+apiVersion: v1
+kind: Service
+metadata:
+  name: cloudflared-metrics
+  namespace: cloudflare
+spec:
+  selector:
+    app: cloudflared
+  ports:
+    - name: metrics
+      port: 2000
+      targetPort: 2000
+---
 # This ConfigMap is just a way to define the cloudflared config.yaml file in k8s.
 # It's useful to define it in k8s, rather than as a stand-alone .yaml file, because
 # this lets you use various k8s templating solutions (e.g. Helm charts) to
@@ -99,8 +112,8 @@ data:
       service: http://immich-server.immich.svc.cluster.local:2283
     - hostname: bookshelf.nullservers.com
       service: http://audiobook.audiobook.svc.cluster.local:80
-    - hostname: files.nullservers.com
-      service: http://nginx-service.default.svc.cluster.local:80
+    - hostname: recipes.nullservers.com
+      service: http://recipes.recipes.svc.cluster.local:8080
     # This rule sends traffic to the built-in hello-world HTTP server. This can help debug connectivity
     # issues. If hello.example.com resolves and tunnel.example.com does not, then the problem is
     # in the connection from cloudflared to your local service, not from the internet to cloudflared.

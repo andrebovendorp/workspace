@@ -1,0 +1,16 @@
+apiVersion: operator.victoriametrics.com/v1beta1
+kind: VMServiceScrape
+metadata:
+  name: cloudflare-metrics
+  namespace: cloudflare
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: cloudflare
+  namespaceSelector:
+    matchNames:
+      - cloudflare
+  endpoints:
+    - port: metrics
+      path: /metrics
+      interval: 15s

@@ -28,6 +28,12 @@ spec:
             - port: "8080"
     - toEndpoints:
         - matchLabels:
+            io.kubernetes.pod.namespace: recipes
+      toPorts:
+        - ports:
+            - port: "8080"
+    - toEndpoints:
+        - matchLabels:
             io.kubernetes.pod.namespace: audiobook
       toPorts:
         - ports:
