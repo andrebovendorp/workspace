@@ -24,3 +24,5 @@ spec:
             rules:
                 dns:
                   - matchPattern: "*"
+      - toFQDNs:
+          - matchPattern: smtp.resend.com
