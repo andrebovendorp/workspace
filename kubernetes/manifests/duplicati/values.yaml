@@ -43,18 +43,21 @@ common:
       mountPath: /backups/external-drive
       readOnly: true
     - name: pvcs-persistent
-      hostPath: /opt/kubernetes-storage-persistent/
+      hostPath: /opt/pvcs/kubernetes-storage-persistent/
       mountPath: /backups/pvcs-persistent
-      readOnly: true
+      readOnly: "false"
     - name: pvcs-non-persistent
-      hostPath: /opt/kubernetes-storage/
+      hostPath: /opt/pvcs/kubernetes-storage/
       mountPath: /backups/pvcs-non-persistent
-      readOnly: true
 
   pvcVolumeMounts:
     - name: config
       mountPath: /config
       size: 500Mi
+      storageClassName: ssd-storage
+    - name: temp
+      mountPath: /run/duplicati-temp
+      size: 50Gi
       storageClassName: ssd-storage
 
   service:
