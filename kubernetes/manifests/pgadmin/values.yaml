@@ -1,0 +1,52 @@
+common:
+  enabled: true
+  clusterIssuer: letsencrypt-prod
+
+  deployment:
+    enabled: true
+    port: 80
+    replicaCount: 1
+    image: dpage/pgadmin4
+    nodeSelector:
+      kubernetes.io/hostname: pi
+    resources:
+      requests:
+        memory: "500Mi"
+        cpu: "100m"
+      limits:
+        memory: "500Mi"
+    env:
+      - name: PGADMIN_DEFAULT_EMAIL
+        valueFrom:
+          secretKeyRef:
+            name: pgadmin-password
+            key: username
+      - name: PGADMIN_DEFAULT_PASSWORD
+        valueFrom:
+          secretKeyRef:
+            name: pgadmin-password
+            key: password
+      - name: PGADMIN_DISABLE_POSTFIX
+        value: "True"
+
+  hostVolumeMounts:
+
+
+  pvcVolumeMounts:
+    - mountPath: /var/lib/pgadmin
+      name: config
+      storageClassName: ssd-storage
+      size: 2Gi
+
+  service:
+    enabled: true
+    ports:
+      - port: 80
+        targetPort: 80
+        name: http
+        type: ClusterIP
+  ingress:
+    enabled: true
+    class: nginx
+    hosts:
+      - host: pgadmin.k8s.nullservers.com
