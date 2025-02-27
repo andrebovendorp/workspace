@@ -11,3 +11,20 @@ spec:
             io.kubernetes.pod.namespace: cloudflare # This is crucial to select pods in the tunnel namespace.F
         - matchLabels:
             io.kubernetes.pod.namespace: ingress-nginx # This is crucial to select pods in the tunnel namespace.F
+  egress:
+    - toCIDRSet:
+        - cidr: 142.250.74.142/32
+      toPorts:
+        - ports:
+            - port: "80"
+    - toEndpoints:
+        - matchLabels:
+            io.kubernetes.pod.namespace: kube-system
+            k8s-app: kube-dns
+      toPorts:
+        - ports:
+            - port: "53"
+              protocol: UDP
+          rules:
+            dns:
+              - matchPattern: "*"
