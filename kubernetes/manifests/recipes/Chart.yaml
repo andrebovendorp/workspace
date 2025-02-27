@@ -1,6 +1,5 @@
 apiVersion: v2
-name: Qbittorrent
-description: Simple Implementation for Qbittorrent Server on K8S
+name: Recipes Tandoor
 version: 0.1.0
 type: application
 dependencies:
