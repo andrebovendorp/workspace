@@ -1,0 +1,56 @@
+---
+- name: Configure Mailx with Resend and Unattended Upgrades
+  hosts: all
+  become: true
+  vars_files:
+    - vars/secrets.yml # Vault file
+  vars:
+    resend_from_address: "no-reply@nullservers.com"
+    resend_smtp_host: "smtp.resend.com"
+    resend_smtp_port: 587
+    mailx_config_path: "/etc/mail.rc"
+    unattended_upgrades_config_path: "/etc/apt/apt.conf.d/52unattended-upgrades" # Standard path
+    unattended_upgrades_origins:
+      - "${distro_id}:${distro_codename}-updates"
+      - "${distro_id}:${distro_codename}-security"
+    unattended_upgrades_mail: "your_admin_email@example.com" #Email to receive notifications.
+    unattended_upgrades_mail_only_on_error: true # set to false for all notifications.
+
+  tasks:
+    - name: Install mailutils and unattended-upgrades
+      ansible.builtin.package:
+        name:
+          - mailutils
+          - unattended-upgrades
+        state: present
+
+    - name: Configure mailx with Resend settings
+      ansible.builtin.copy:
+        dest: "{{ mailx_config_path }}"
+        content: |
+          set smtp-use-starttls
+          set smtp-auth=login
+          set smtp="{{ resend_smtp_host }}:{{ resend_smtp_port }}"
+          set smtp-auth-user="{{ resend_from_address }}"
+          set smtp-auth-password="{{ resend_api_key }}"
+          set from="{{ resend_from_address }}"
+          set sendmail="/usr/sbin/sendmail -t"
+          set ssl-verify=n
+
+    - name: Template unattended-upgrades configuration
+      ansible.builtin.template:
+        src: upgrades.j2
+        dest: "{{ unattended_upgrades_config_path }}"
+        owner: root
+        group: root
+        mode: '0644'
+
+    - name: Enable unattended upgrades
+      ansible.builtin.copy:
+        dest: /etc/apt/apt.conf.d/10periodic
+        content: |
+          APT::Periodic::Update-Package-Lists "1";
+          APT::Periodic::Unattended-Upgrade "1";
+        owner: root
+        group: root
+        mode: '0644'
