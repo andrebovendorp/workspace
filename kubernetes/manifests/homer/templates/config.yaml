@@ -1,0 +1,104 @@
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: config
+  namespace: {{ .Release.Namespace }}
+data: 
+  config.yml: |-
+    title: Bem Vindo
+    logo: https://static.thenounproject.com/png/1306773-200.png
+    footer: "<p>Powered by <a href=\"https://github.com/bastienwirtz/homer\">Homer</a></p>"
+    defaults:
+      layout: grid 
+      columns: "3" 
+      collapsed: false # for sections
+      target: _blank # _blank, _self, _parent, _top
+      meta: 
+        - name: description
+          content: My Home Lab Dashboard
+      connectivityCheck: true
+      search:
+        provider: google
+        target: _self
+        focus: true
+      colors:
+        light:
+          highlight-primary: "#3367d6"
+          highlight-secondary: "#4285f4"
+          background: "#f5f5f5"
+          card-background: "#ffffff"
+          text: "#202124"
+          text-header: "#202124"
+          text-secondary: "#5f6368"
+          icon: "#5f6368"
+          link: "#3367d6"
+        dark:
+          highlight-primary: "#64b5f6"
+          highlight-secondary: "#90caf9"
+          background: "#1e1e1e"
+          card-background: "#282828"
+          text: "#e8e8e8"
+          text-header: "#e8e8e8"
+          text-secondary: "#b8b8b8"
+          icon: "#b8b8b8"
+          link: "#64b5f6"
+    links:
+      - name: Github
+        icon: fab fa-github
+        url: http://github.com/boveloco
+      - name: Workspace
+        icon: fab fa-github
+        url: http://github.com/boveloco/workspace
+
+    services:
+      - name: Media & Entertainment
+        icon: fas fa-photo-video
+        items:
+          - name: Fotos
+            logo: https://play-lh.googleusercontent.com/nJsRIdtaot1-FKH3kiRem4kjqUU1-_0hd_64qZH0BgtzUecYfWLCDfpk2nNVul8hOrw
+            subtitle: Fotos e Videos
+            url: https://photos.nullservers.com
+          - name: Media
+            logo: https://static-00.iconduck.com/assets.00/jellyfin-icon-256x256-rjpwup8s.png
+            subtitle: Filmes, Músicas e Séries
+            url: https://jellyfin.k8s.nullservers.com
+          - name: Audiobooks
+            logo: https://play-lh.googleusercontent.com/9Qjh1GhRcPcUOQLTt-DdnYV2PS9ENidfvkGZ602QWF36KGvLogzcJwCaKTcWBytVGktP
+            subtitle: Audiobooks
+            url: https://bookshelf.nullservers.com
+      - name: Casa
+        icon: fas fa-house
+        items:
+          - name: Home Assistant
+            logo: https://www.home-assistant.io/images/favicon-192x192.png
+            url: https://home.nullservers.com
+            subtitle: Controle Residencial
+          - name: Receitas
+            logo: https://repository-images.githubusercontent.com/221546437/4d9e5700-6e25-11eb-9c02-4c848eb9b2a9
+            url: https://recipes.nullservers.com
+            subtitle: Receitas
+      - name: Infrastructure
+        icon: fas fa-server
+        items:
+          - name: Grafana
+            logo: https://upload.wikimedia.org/wikipedia/commons/thumb/a/a1/Grafana_logo.svg/1200px-Grafana_logo.svg.png
+            url: https://grafana.k8s.nullservers.com
+          - name: PgAdmin
+            logo: https://static-00.iconduck.com/assets.00/pgadmin-icon-1024x951-qx7ke06d.png
+            url: https://pgadmin.k8s.nullservers.com
+          - name: hubble
+            logo: https://cilium.io/static/hubble-dark-1-91890e273cb3d50a8f520e3cbe178806.svg
+            url: https://hubble.k8s.nullservers.com
+          - name: Duplicatti
+            logo: https://avatars.githubusercontent.com/u/8270231?s=280&v=4
+            url: https://backup.k8s.nullservers.com
+          - name: Storage
+            logo: https://cdn-icons-png.flaticon.com/512/3151/3151254.png
+            url: https://storage.nullservers.com/admin
+          - name: Router
+            logo: https://cdn.prod.website-files.com/622b70d8906c7ab0c03f77f8/63b40a92093c6b2f3767e4e6_tMCv8T-y_400x400.webp
+            url: https://router.nullservers.com
+          - name: Adguard
+            logo: https://avatars3.githubusercontent.com/u/8361145?s=200&v=4
+            url: https://adguard.nullservers.com
