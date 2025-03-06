@@ -6,6 +6,13 @@ common:
     port: 8200
     replicaCount: 1
     image: linuxserver/duplicati
+    resources:
+      requests:
+        cpu: 100m
+        memory: 1Gi
+      limits:
+        cpu: 4
+        memory: 17345Mi
     nodeSelector:
       kubernetes.io/hostname: slave01
     env:

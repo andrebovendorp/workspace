@@ -6,6 +6,14 @@ home-assistant:
   securityContext:
     privileged: true
 
+  resources:
+    requests:
+      memory: 675Mi
+      cpu: 12m
+    limits:
+      memory: 1218Mi
+      cpu: 1
+
   ingress:
     enabled: true
     className: nginx

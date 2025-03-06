@@ -2,6 +2,14 @@ cert-manager:
   crds:
     enabled: false
 
+  resources:
+    requests:
+      cpu: 10m
+      memory: 80Mi
+    limits:
+      cpu: 100m
+      memory: 112Mi
+
   namespace: cert-manager
   dns01RecursiveNameservers: "1.1.1.1:53"
   dns01RecursiveNameserversOnly: true

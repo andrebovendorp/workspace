@@ -2,8 +2,46 @@ grafana:
   hostname: grafana.nullservers.com
   additionalHosts:
     - name: grafana.k8s.nullservers.com
-victoria-metrics-k8s-stack:
+  
+victoria-metrics-k8s-stack: 
+  vmalertmanager:
+    enabled: false
+    spec:
+      resources:
+        requests:
+          cpu: 10m
+          memory: 49Mi
+        limits:
+          cpu: 100m
+          memory: 96Mi
+  vmalert:
+    enabled: false
+    spec:
+      resources:
+        requests:
+          cpu: 10m
+          memory: 96Mi
+        limits:
+          cpu: 100m
+          memory: 179Mi
+  vmagent:
+    spec:
+      resources:
+        requests:
+          cpu: 201m
+          memory: 179Mi
+        limits:
+          cpu: 500m
+          memory: 357Mi
   vmsingle:
+    spec:
+      resources:
+        requests:
+          cpu: 70m
+          memory: 772Mi
+        limits:
+          cpu: 1
+          memory: 1500Mi
     ingress:
       enabled: true
       annotations:
@@ -18,6 +56,33 @@ victoria-metrics-k8s-stack:
             - metrics.k8s.nullservers.com
   victoria-metrics-operator:
     enabled: true
+    image:
+      registry: "quay.io"
+    env:
+      - name: "VM_USECUSTOMCONFIGRELOADER"
+        value: "true"
+      - name: VM_CUSTOMCONFIGRELOADERIMAGE
+        value: "quay.io/victoriametrics/operator:config-reloader-v0.53.0"
+      - name: VM_VLOGSDEFAULT_IMAGE
+        value: "quay.io/victoriametrics/victoria-logs"
+      - name: "VM_VMALERTDEFAULT_IMAGE"
+        value: "quay.io/victoriametrics/vmalert"
+      - name: "VM_VMAGENTDEFAULT_IMAGE"
+        value: "quay.io/victoriametrics/vmagent"
+      - name: "VM_VMSINGLEDEFAULT_IMAGE"
+        value: "quay.io/victoriametrics/victoria-metrics"
+      - name: "VM_VMCLUSTERDEFAULT_VMSELECTDEFAULT_IMAGE"
+        value: "quay.io/victoriametrics/vmselect"
+      - name: "VM_VMCLUSTERDEFAULT_VMSTORAGEDEFAULT_IMAGE"
+        value: "quay.io/victoriametrics/vmstorage"
+      - name: "VM_VMCLUSTERDEFAULT_VMINSERTDEFAULT_IMAGE"
+        value: "quay.io/victoriametrics/vminsert"
+      - name: "VM_VMBACKUP_IMAGE"
+        value: "quay.io/victoriametrics/vmbackupmanager"
+      - name: "VM_VMAUTHDEFAULT_IMAGE"
+        value: "quay.io/victoriametrics/vmauth"
+      - name: "VM_VMALERTMANAGER_ALERTMANAGERDEFAULTBASEIMAGE"
+        value: "quay.io/prometheus/alertmanager"
     serviceMonitor:
       enabled: true
   prometheus-operator-crds:
