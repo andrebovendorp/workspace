@@ -37,8 +37,8 @@ postgresql:
       existingClaim: pgsql-data
     resources:
       requests:
-        memory: 500Mi
+        memory: 618Mi
         cpu: 500m
       limits:
-        memory: 1Gi
+        memory: 1235Mi
         cpu: 1

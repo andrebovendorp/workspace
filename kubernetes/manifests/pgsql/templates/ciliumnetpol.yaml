@@ -21,6 +21,9 @@ spec:
     - fromEndpoints:
         - matchLabels:
             io.kubernetes.pod.namespace: recipes
+    - fromEndpoints:
+        - matchLabels:
+            io.kubernetes.pod.namespace: wallabag
   egress:
     - toEndpoints:
         - matchLabels:
