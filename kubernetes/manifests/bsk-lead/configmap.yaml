@@ -211,7 +211,7 @@ data:
         <body>
             <header>
                 <h1 style="color: #333;">Bluesky PDS by Nullservers.com</h1>
-                <p style='font-size: 1.2em; color: #333;'>Expected Launch Date: March 2025</p>
+                <p style='font-size: 1.2em; color: #333;'>Expected Launch Date: July 2025</p>
             </header>
 
             <main class="container">
@@ -287,7 +287,7 @@ data:
                     <div class="faq-item">
                         <div class="faq-question">3. When will the Bluesky PDS service be available?</div>
                         <div class="faq-answer">
-                            The expected launch date for the Bluesky PDS service is March 2025.
+                            The expected launch date for the Bluesky PDS service is July 2025.
                         </div>
                     </div>
 
