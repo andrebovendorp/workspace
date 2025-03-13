@@ -1,5 +1,5 @@
 common:
-  enabled: true
+  enabled: false
   clusterIssuer: letsencrypt-prod
 
   deployment:
@@ -15,7 +15,7 @@ common:
         cpu: "454m"
       limits:
         memory: "8Gi"
-        cpu: 4
+        cpu: 10
     env:
       - name: PUID
         value: "1000"
