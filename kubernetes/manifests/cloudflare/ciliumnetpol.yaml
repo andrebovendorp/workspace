@@ -23,22 +23,16 @@ spec:
     - toEndpoints:
         - matchLabels:
             io.kubernetes.pod.namespace: bsk-api
-      toPorts:
-        - ports:
-            - port: "8080"
-    - toEndpoints:
         - matchLabels:
             io.kubernetes.pod.namespace: recipes
+        - matchLabels:
+            io.kubernetes.pod.namespace: glance
       toPorts:
         - ports:
             - port: "8080"
     - toEndpoints:
         - matchLabels:
             io.kubernetes.pod.namespace: audiobook
-      toPorts:
-        - ports:
-            - port: "80"
-    - toEndpoints:
         - matchLabels:
             io.kubernetes.pod.namespace: bsk-lead
       toPorts:
@@ -50,6 +44,11 @@ spec:
       toPorts:
         - ports:
             - port: "2283"
+    # Allow Cloudflare 
+    - toFQDNs:
+      - matchPattern: "*.cloudflare.com"
+      - matchPattern: "*.*.cloudflare.com"
+      - matchPattern: "*.*.argotunnel.com"
     - toCIDRSet:
         - cidr: 198.41.128.0/17 # Cloudflare tunnel CIDR
       toPorts:
