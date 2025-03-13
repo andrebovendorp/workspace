@@ -1,0 +1,183 @@
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: glance
+  namespace: {{ .Release.Namespace }}
+data: 
+  glance.yml: |-
+    server:
+      #assets-path: /app/assets
+
+    theme:
+      # Note: assets are cached by the browser, changes to the CSS file
+      # will not be reflected until the browser cache is cleared (Ctrl+F5)
+      # custom-css-file: /assets/user.css
+
+    pages:
+      - name: Home
+        columns:
+          - size: small
+            widgets:
+              - type: rss
+                limit: 20
+                collapse-after: 8
+                cache: 15m
+                feeds:
+                  - url: https://g1.globo.com/rss/g1/politica/
+                    title: G1 Política
+                    limit: 4
+                  - url: https://selfh.st/rss/
+                    title: selfh.st
+                    limit: 2
+              - type: twitch-channels
+                channels:
+                  - krolm009
+                  - gaules
+
+          - size: full
+            widgets:
+              - type: group
+                widgets:
+                  - type: hacker-news
+                  - type: lobsters
+
+              - type: videos
+                channels:
+                  - UCXuqSBlHAE6Xw-yeJA0Tunw # Linus Tech Tips
+                  - UCR-DXc1voovS8nhAvccRZhg # Jeff Geerling
+                  - UCzgA9CBrIXPtkB2yNTTiy1w # Jeff Geerling 2
+                  - UCBJycsmduvYEL83R_U4JriQ # Marques Brownlee
+                  - UCHnyfMqiRRG1u-2MsSQLbXA # Veritasium
+              - type: monitor
+                cache: 1m
+                title: Casa
+                sites:
+                  - title: Home Assistant
+                    url: https://home.nullservers.com
+                    icon: https://www.home-assistant.io/images/favicon-192x192.png
+                  - title: Receitas
+                    url: https://recipes.nullservers.com
+                    icon: https://repository-images.githubusercontent.com/221546437/4d9e5700-6e25-11eb-9c02-4c848eb9b2a9
+              - type: monitor
+                cache: 10m
+                title: Media
+                sites:
+                  - title: Plex
+                    url: https://plex.k8s.nullservers.com
+                    icon: https://i.redd.it/5x93lknmuaw81.jpg
+                  - title: Bookshelf
+                    url: https://bookshelf.nullservers.com
+                    icon: https://play-lh.googleusercontent.com/9Qjh1GhRcPcUOQLTt-DdnYV2PS9ENidfvkGZ602QWF36KGvLogzcJwCaKTcWBytVGktP
+                  - title: Fotos
+                    url: https://photos.nullservers.com
+                    icon: https://play-lh.googleusercontent.com/nJsRIdtaot1-FKH3kiRem4kjqUU1-_0hd_64qZH0BgtzUecYfWLCDfpk2nNVul8hOrw
+              - type: monitor
+                cache: 60m
+                title: Infrastructure
+                sites:
+                  - title: Grafana
+                    url: https://grafana.k8s.nullservers.com
+                    icon: https://upload.wikimedia.org/wikipedia/commons/thumb/a/a1/Grafana_logo.svg/1200px-Grafana_logo.svg.png
+                  - title: PgAdmin
+                    url: https://pgadmin.k8s.nullservers.com
+                    icon: https://static-00.iconduck.com/assets.00/pgadmin-icon-1024x951-qx7ke06d.png
+                  - title: Hubble
+                    url: https://hubble.k8s.nullservers.com
+                    icon: https://cilium.io/static/hubble-dark-1-91890e273cb3d50a8f520e3cbe178806.svg
+                  - title: Duplicati
+                    url: https://backup.k8s.nullservers.com
+                    icon: https://avatars.githubusercontent.com/u/8270231?s=280&v=4
+                  - title: Storage
+                    url: https://storage.nullservers.com
+                    icon: https://cdn-icons-png.flaticon.com/512/3151/3151254.png
+                  - title: Router
+                    url: https://router.nullservers.com
+                    icon: https://cdn.prod.website-files.com/622b70d8906c7ab0c03f77f8/63b40a92093c6b2f3767e4e6_tMCv8T-y_400x400.webp
+                  - title: Adguard
+                    url: https://adguard.nullservers.com
+                    icon: https://avatars3.githubusercontent.com/u/8361145?s=200&v=4
+                  # - title: Proxmox
+                  #   url: https://192.168.20.20:8006
+                  #   icon: https://camo.githubusercontent.com/fdffb57ca7bf0ba2900bab738df7bf002dee35f15e55f2029a97de1d2bdc1e07/68747470733a2f2f7777772e70726f786d6f782e636f6d2f696d616765732f70726f786d6f782f50726f786d6f782d6c6f676f2d737461636b65642d38343070782e706e67
+
+
+          - size: small
+            widgets:
+              - type: weather
+                location: Uppsala, Sweden
+                units: metric
+                hour-format: 24h
+
+              - type: markets
+                markets:
+                  - symbol: SPY
+                    name: S&P 500
+                  - symbol: NVDA
+                    name: NVIDIA
+                  - symbol: AZUL4
+                    name: Azul
+                  - symbol: IBOV
+                    name: Ibovespa
+                  - symbol: HM_B
+                    name: H&M
+                  - symbol: VOLV_A
+                    name: Volvo
+
+              - type: releases
+                cache: 1d
+                repositories:
+                  - glanceapp/glance
+                  - immich-app/immich
+      - name: News
+        columns:
+          - size: small # Noticias Brazil
+            widgets:
+              - type: rss
+                limit: 10
+                collapse-after: 10
+                cache: 15m
+                feeds:
+                  - url: https://g1.globo.com/rss/g1/politica/
+                    title: G1 Política
+                    limit: 4
+                  - url: https://g1.globo.com/dynamo/brasil/rss2.xml
+                    title: G1 Brasil
+                    limit: 4
+                  - url: https://g1.globo.com/dynamo/economia/rss2.xml
+                    title: G1 Economia
+                    limit: 4
+
+          - size: full # Geral
+            widgets: 
+              - type: rss
+                limit: 20
+                collapse-after: 12
+                cache: 15m
+                feeds:
+                  - url: https://feeds.feedburner.com/XadrezVerbal
+                    title: Xadrez Verbal
+                    limit: 4
+                  - url: https://www.unt.se/rss/lokalt/uppsala
+                    title: UNT Uppsala
+                    limit: 4
+              - type: videos
+                channels:
+                  - UCT6Imb3GXhF8GmjpIk6y2lg # Professor Ricardo Marcilio
+                  - UCP5tjEmvPItGyLhmjdwP7Ww # Real Life Lore
+                  - UCBJycsmduvYEL83R_U4JriQ # Marques Brownlee
+                  - UCHnyfMqiRRG1u-2MsSQLbXA # Veritasium
+              
+          - size: small # Noticias Sweden
+            widgets:
+              - type: rss
+                limit: 10
+                collapse-after: 8
+                cache: 15m
+                feeds:
+                  - url: https://www.unt.se/rss/lokalt/uppsala
+                    title: UNT Uppsala
+                    limit: 4
+                  - url: https://www.dn.se/rss/
+                    title: Dagens Nyheter
+                    limit: 2

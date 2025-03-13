@@ -1,0 +1,46 @@
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: default
+  namespace: {{ .Release.Namespace }}
+spec:
+  endpointSelector: {}
+  ingress:
+    - fromEndpoints:
+        - matchLabels:
+            io.kubernetes.pod.namespace: ingress-nginx
+        - matchLabels:
+            io.kubernetes.pod.namespace: cloudflare
+  egress:
+    - toFQDNs:
+      - matchPattern: "*.selfh.st"
+      - matchPattern: "*.twitch.tv"
+      - matchPattern: "*.youtube.com"
+      - matchPattern: "*.googlevideo.com"
+      - matchPattern: "*.*.nullservers.com"
+      - matchPattern: "*.nullservers.com"
+      - matchPattern: "*.finance.yahoo.com"
+      - matchPattern: "*.open-meteo.com"
+      - matchPattern: "*.github.com"
+      - matchPattern: "hacker-news.firebaseio.com"
+      - matchPattern: "selfh.st"
+      - matchPattern: "lobste.rs"
+      - matchPattern: "*.globo.com"
+      - matchPattern: "*.unt.se"
+      - matchPattern: "*.dn.se"
+
+      
+    - toEndpoints:
+      - matchLabels:
+            io.kubernetes.pod.namespace: ingress-nginx
+    - toEndpoints:
+        - matchLabels:
+            io.kubernetes.pod.namespace: kube-system
+            k8s-app: kube-dns
+      toPorts:
+        - ports:
+            - port: "53"
+              protocol: UDP
+          rules:
+            dns:
+              - matchPattern: "*"

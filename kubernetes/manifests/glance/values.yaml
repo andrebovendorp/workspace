@@ -1,5 +1,5 @@
 common:
-  enabled: false
+  enabled: true
   clusterIssuer: letsencrypt-prod
 
   unprivileged: true
@@ -8,7 +8,7 @@ common:
     enabled: true
     port: 8080
     replicaCount: 2
-    image: b4bz/homer
+    image: glanceapp/glance
     resources:
       requests:
         memory: "64Mi"
@@ -22,10 +22,10 @@ common:
       - name: PGID
         value: "1000"
 
-  ConfigMapVolumeMounts:
-    - name: config
-      mountPath: /www/assets/
-      subPath: config.yml
+  configMapVolumeMounts:
+    - name: glance
+      mountPath: /app/config/glance.yml
+      subPath: glance.yml
 
   service:
     enabled: true
@@ -38,4 +38,5 @@ common:
     enabled: true
     class: nginx
     hosts:
-      - host: dashboard.k8s.nullservers.com
+      - host: start.k8s.nullservers.com
+      - host: start.nullservers.com

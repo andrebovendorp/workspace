@@ -59,10 +59,14 @@ data:
             logo: https://play-lh.googleusercontent.com/nJsRIdtaot1-FKH3kiRem4kjqUU1-_0hd_64qZH0BgtzUecYfWLCDfpk2nNVul8hOrw
             subtitle: Fotos e Videos
             url: https://photos.nullservers.com
-          - name: Media
+          - name: Media - Jellyfin
             logo: https://static-00.iconduck.com/assets.00/jellyfin-icon-256x256-rjpwup8s.png
             subtitle: Filmes, Músicas e Séries
             url: https://jellyfin.k8s.nullservers.com
+          - name: Media - Plex
+            logo: https://i.redd.it/5x93lknmuaw81.jpg
+            subtitle: Filmes, Músicas e Séries
+            url: https://plex.k8s.nullservers.com
           - name: Audiobooks
             logo: https://play-lh.googleusercontent.com/9Qjh1GhRcPcUOQLTt-DdnYV2PS9ENidfvkGZ602QWF36KGvLogzcJwCaKTcWBytVGktP
             subtitle: Audiobooks
