@@ -115,13 +115,11 @@ data:
                     name: S&P 500
                   - symbol: NVDA
                     name: NVIDIA
-                  - symbol: AZUL4
+                  - symbol: AZUL4.SA
                     name: Azul
-                  - symbol: IBOV
-                    name: Ibovespa
-                  - symbol: HM_B
+                  - symbol: HM-B.ST
                     name: H&M
-                  - symbol: VOLV_A
+                  - symbol: VOLCAR-B.ST
                     name: Volvo
 
               - type: releases
@@ -129,6 +127,13 @@ data:
                 repositories:
                   - glanceapp/glance
                   - immich-app/immich
+              - type: bookmarks
+                groups: 
+                  - links: 
+                    - title: Github
+                      url: https://github.com/boveloco
+                    - title: Workspace
+                      url: https://github.com/boveloco/workspace
       - name: News
         columns:
           - size: small # Noticias Brazil
