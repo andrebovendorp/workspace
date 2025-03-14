@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: domains
+  namespace: dns-updater
+data:
+  domains.yaml: |-
+    - name: vpn.nullservers.com
+      id: 0dbadc4e75dd23227baa91d6a92dce14
+      proxied: false
