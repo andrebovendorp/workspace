@@ -127,6 +127,7 @@ data:
                 repositories:
                   - glanceapp/glance
                   - immich-app/immich
+                  - TandoorRecipes/recipes
               - type: bookmarks
                 groups: 
                   - links: 
