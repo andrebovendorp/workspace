@@ -9,13 +9,6 @@
     state: present
     update_cache: yes
 
-- name: Add Kubernetes apt repository
-  apt_repository:
-    repo: deb https://apt.kubernetes.io/ kubernetes-{{ ansible_distribution_release }} main
-    state: present
-    filename: kubernetes
-  become: true # needed for apt_repository
-
 - name: Install containerd
   apt:
     name: containerd
@@ -96,14 +89,6 @@
 
 - name: Apply the network configuration
   command: netplan apply
-
-- name: Install Dependencies
-  apt:
-    name: "{{ item }}"
-    state: present
-  with_items:
-    - apt-transport-https 
-    - ca-certificates 
 
 - name: Configure k8s apt
   apt_key:
