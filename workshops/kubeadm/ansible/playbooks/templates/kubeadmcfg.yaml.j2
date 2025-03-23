@@ -6,7 +6,7 @@ controlPlaneEndpoint: "{{ ansible_host }}:443" # change this (see below)
 etcd:
   external:
     endpoints:
-{% for host in groups['control_plane_nodes'] %}
+{% for host in groups['etcd_nodes'] %}
       - https://{{ hostvars[host]['ansible_host'] }}:2379
 {% endfor %}
     caFile: /etc/kubernetes/pki/etcd/ca.crt
