@@ -23,7 +23,7 @@
     state: directory
     owner: root
     group: root
-    mode: '0755'
+    mode: "0755"
   become: true
 
 - name: Generate default containerd config
@@ -37,14 +37,14 @@
     dest: /etc/containerd/config.toml
     owner: root
     group: root
-    mode: '0644'
+    mode: "0644"
   become: true
 
 - name: Enable systemd cgroup
   replace:
     path: /etc/containerd/config.toml
-    regexp: 'SystemdCgroup = false'
-    replace: 'SystemdCgroup = true'
+    regexp: "SystemdCgroup = false"
+    replace: "SystemdCgroup = true"
   become: true
 
 - name: Reload systemd daemon and enable containerd
@@ -73,7 +73,7 @@
     dest: /etc/netplan/50-cloud-init.yaml
     owner: root
     group: root
-    mode: '0600'
+    mode: "0600"
 
 - name: Create the directory configurations
   file:
@@ -81,22 +81,30 @@
     state: directory
     owner: root
     group: root
-    mode: '0755'
+    mode: "0755"
   with_items:
-    - /etc/systemd/system/kubelet.service.d/  # kubelet configuration file
-    - /etc/kubernetes/pki/etcd/               # cert files
-    - /etc/containerd/                        # containerd folder
-    - /etc/apt/keyrings/                      # apt keyrings
+    - /etc/systemd/system/kubelet.service.d/ # kubelet configuration file
+    - /etc/kubernetes/pki/etcd/ # cert files
+    - /etc/containerd/ # containerd folder
+    - /etc/apt/keyrings/ # apt keyrings
 
 - name: Apply the network configuration
   command: netplan apply
 
-- name: Setup K8S apt
-  command: |
-    curl -fsSL https://pkgs.k8s.io/core:/stable:/v1.32/deb/Release.key | sudo gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg
-    sudo chmod 644 /etc/apt/keyrings/kubernetes-apt-keyring.gpg # allow unprivileged APT programs to read this keyring
-    echo 'deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v1.32/deb/ /' | sudo tee /etc/apt/sources.list.d/kubernetes.list
-    sudo chmod 644 /etc/apt/sources.list.d/kubernetes.list   # helps tools such as command-not-found to work correctly
+- name: Add Kubernetes APT repository GPG key
+  apt_key:
+    url: https://packages.cloud.google.com/apt/doc/apt-key.gpg
+    state: present
+
+- name: Add Kubernetes APT repository
+  apt_repository:
+    repo: "deb https://apt.kubernetes.io/ kubernetes-xenial main"
+    state: present
+    filename: "kubernetes"
+
+- name: Update APT cache
+  apt:
+    update_cache: yes
 
 - name: Update APT package cache
   apt:
@@ -107,7 +115,7 @@
     name: "{{ item }}"
     state: present
     update_cache: yes
-  with_items: 
+  with_items:
     - kubeadm
     - kubelet
     - kubectl
@@ -122,7 +130,7 @@
             SystemdCgroup = true
     owner: root
     group: root
-    mode: '0644'
+    mode: "0644"
 
 - name: Enable ipv4 forwarding
   sysctl:
