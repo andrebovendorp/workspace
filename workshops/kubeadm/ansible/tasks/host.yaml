@@ -91,33 +91,16 @@
 - name: Apply the network configuration
   command: netplan apply
 
-- name: Download Kubernetes APT GPG key
-  ansible.builtin.get_url:
-    url: https://pkgs.k8s.io/core:/stable:/v1.32/deb/Release.key
-    dest: /etc/apt/keyrings/kubernetes-apt-keyring.gpg.tmp
-    mode: '0644'
-  become: true
-
-- name: Convert GPG key to proper format
-  command:
-    cmd: "gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg.tmp /etc/apt/keyrings/kubernetes-apt-keyring.gpg && mv /etc/apt/keyrings/kubernetes-apt-keyring.gpg.tmp /etc/apt/keyrings/kubernetes-apt-keyring.gpg"
-    creates: /etc/apt/keyrings/kubernetes-apt-keyring.gpg
-  become: true
-
-- name: Add Kubernetes APT repository
-  lineinfile:
-    path: /etc/apt/sources.list.d/kubernetes.list
-    line: "deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v1.32/deb/ /"
-    create: true
-    mode: '0644'
-  become: true
+- name: Setup K8S apt
+  command: |
+    curl -fsSL https://pkgs.k8s.io/core:/stable:/v1.32/deb/Release.key | sudo gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg
+    sudo chmod 644 /etc/apt/keyrings/kubernetes-apt-keyring.gpg # allow unprivileged APT programs to read this keyring
+    echo 'deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v1.32/deb/ /' | sudo tee /etc/apt/sources.list.d/kubernetes.list
+    sudo chmod 644 /etc/apt/sources.list.d/kubernetes.list   # helps tools such as command-not-found to work correctly
 
 - name: Update APT package cache
   apt:
     update_cache: yes
-    
-#curl -fsSL https://pkgs.k8s.io/core:/stable:/v1.32/deb/Release.key | sudo gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg
-#echo 'deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v1.32/deb/ /' | sudo tee /etc/apt/sources.list.d/kubernetes.list
 
 - name: Install Kubernetes related Dependencies
   apt:
