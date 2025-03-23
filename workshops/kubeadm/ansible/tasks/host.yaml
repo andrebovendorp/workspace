@@ -93,13 +93,13 @@
 - name: Download Kubernetes APT GPG key
   ansible.builtin.get_url:
     url: https://pkgs.k8s.io/core:/stable:/v1.32/deb/Release.key
-    dest: /etc/apt/keyrings/kubernetes-apt-keyring.gpg
+    dest: /etc/apt/keyrings/kubernetes-apt-keyring.gpg.tmp
     mode: '0644'
   become: true
 
 - name: Convert GPG key to proper format
   command:
-    cmd: "gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg /etc/apt/keyrings/kubernetes-apt-keyring.gpg"
+    cmd: "gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg.tmp /etc/apt/keyrings/kubernetes-apt-keyring.gpg && mv /etc/apt/keyrings/kubernetes-apt-keyring.gpg.tmp /etc/apt/keyrings/kubernetes-apt-keyring.gpg"
     creates: /etc/apt/keyrings/kubernetes-apt-keyring.gpg
   become: true
 
