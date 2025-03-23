@@ -8,7 +8,7 @@
     line: "{{ hostvars[item].ansible_host }} {{ item }}"
     state: present
     backup: yes
-  loop: "{{ groups['instances'] }}"
+  loop: "{{ groups['all'] }}"
 
 - name: Install containerd dependencies
   apt:
