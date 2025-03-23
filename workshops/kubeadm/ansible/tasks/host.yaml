@@ -99,11 +99,11 @@
   apt:
     name: "{{ item }}"
     state: present
+    update_cache: yes
   with_items:
     - kubeadm
     - kubelet
     - kubectl
-  update_cache: yes
 
 - name: Setup CRI
   copy:
