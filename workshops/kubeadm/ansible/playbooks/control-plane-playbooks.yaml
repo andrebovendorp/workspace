@@ -59,9 +59,9 @@
           etcd:
             external:
               endpoints:
-                - https://10.10.1.1:2379
-                - https://10.10.1.2:2379
-                - https://10.10.1.3:2379
+                {% for host in groups['control_plane_nodes'] %}
+                - https://{{ hostvars[host]['ansible_host'] }}:2379
+                {% endfor %}
               caFile: /etc/kubernetes/pki/etcd/ca.crt
               certFile: /etc/kubernetes/pki/apiserver-etcd-client.crt
               keyFile: /etc/kubernetes/pki/apiserver-etcd-client.key
