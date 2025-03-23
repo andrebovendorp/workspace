@@ -2,14 +2,9 @@ network:
   version: 2
   renderer: networkd
   ethernets:
-    enp0s3:
+    eth0:
       addresses:
-        - {{hostvars[host]['ansible_host']}}/16
-    enp0s8:
-      addresses:
-        - {{hostvars[host]['local_network']}}/24
-      nameservers:
-          addresses: [192.168.20.20]
+        - {{hostvars[host]['ansible_host']}}/24
       routes:
         - to: default
-          via: 192.168.20.1
+          via: 192.168.1.1

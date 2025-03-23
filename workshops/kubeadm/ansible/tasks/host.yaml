@@ -1,10 +1,58 @@
+- name: Install containerd dependencies
+  apt:
+    name:
+      - apt-transport-https
+      - ca-certificates
+      - curl
+      - gnupg-agent
+      - software-properties-common
+    state: present
+    update_cache: yes
+
+- name: Add Kubernetes apt repository
+  apt_repository:
+    repo: deb https://apt.kubernetes.io/ kubernetes-{{ ansible_distribution_release }} main
+    state: present
+    filename: kubernetes
+  become: true # needed for apt_repository
+
 - name: Install containerd
   apt:
-    name: "{{ item }}"
+    name: containerd
     state: present
-  with_items:
-    - containerd
-    - containerd.io
+    update_cache: yes
+  become: true
+
+- name: Create containerd configuration directory
+  file:
+    path: /etc/containerd
+    state: directory
+    owner: root
+    group: root
+    mode: '0755'
+  become: true
+
+- name: Generate default containerd config
+  command: containerd config default
+  register: containerd_default_config
+  become: true
+
+- name: Write containerd config
+  copy:
+    content: "{{ containerd_default_config.stdout }}"
+    dest: /etc/containerd/config.toml
+    owner: root
+    group: root
+    mode: '0644'
+  become: true
+
+- name: Enable systemd cgroup
+  replace:
+    path: /etc/containerd/config.toml
+    regexp: 'SystemdCgroup = false'
+    replace: 'SystemdCgroup = true'
+  become: true
+
 - name: Reload systemd daemon and enable containerd
   shell: |
     systemctl daemon-reload
