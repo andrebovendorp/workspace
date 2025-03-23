@@ -1,0 +1,14 @@
+---
+apiVersion: kubeadm.k8s.io/v1beta4
+kind: ClusterConfiguration
+kubernetesVersion: stable
+controlPlaneEndpoint: "{{ ansible_host }}:443" # change this (see below)
+etcd:
+  external:
+    endpoints:
+      {% for host in groups['control_plane_nodes'] %}
+      - https://{{ hostvars[host]['ansible_host'] }}:2379
+      {% endfor %}
+    caFile: /etc/kubernetes/pki/etcd/ca.crt
+    certFile: /etc/kubernetes/pki/apiserver-etcd-client.crt
+    keyFile: /etc/kubernetes/pki/apiserver-etcd-client.key
