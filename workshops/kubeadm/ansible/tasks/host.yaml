@@ -98,8 +98,8 @@
 
 - name: Install Kubernetes repository
   apt_repository:
-  filename: kubernetes
-  repo: "deb [signed-by=/usr/share/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v1.28/deb/ /"
+    filename: kubernetes
+    repo: "deb [signed-by=/usr/share/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v1.28/deb/ /"
 
 - name: Update APT cache
   apt:
