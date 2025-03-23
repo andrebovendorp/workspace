@@ -267,7 +267,7 @@ module "api-server" {
 module "worker" {
   source = "Azure/avm-res-compute-virtualmachine/azurerm"
 
-  count = 3 # Spawn 3 instances
+  count = 1 # Spawn 3 instances
 
   enable_telemetry      = false
   location              = azurerm_resource_group.this_rg.location
