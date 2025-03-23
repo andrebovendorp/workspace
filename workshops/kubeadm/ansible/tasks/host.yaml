@@ -91,11 +91,17 @@
 - name: Apply the network configuration
   command: netplan apply
 
+- name: Check if GPG Key exists
+  stat: 
+    path: /usr/share/keyrings/kubernetes-apt-keyring.gpg
+  register: gpg_key
+
 - name: Get Kubernetes package key
   shell: curl -fsSL https://pkgs.k8s.io/core:/stable:/v1.32/deb/Release.key | gpg --dearmor -o /usr/share/keyrings/kubernetes-apt-keyring.gpg
   args:
     creates: "https://pkgs.k8s.io/core:/stable:/v1.32/deb/"
   run_once: true
+  when: not gpg_key.stat.exists
 
 - name: Install Kubernetes repository
   apt_repository:
@@ -103,6 +109,7 @@
     repo: "deb [signed-by=/usr/share/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v1.32/deb/ /"
     state: present
   run_once: true
+  when: not gpg_key.stat.exists
 
 - name: Update APT cache
   apt:
