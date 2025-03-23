@@ -98,19 +98,23 @@
   become: true
 
 - name: Convert GPG key to proper format
-  ansible.builtin.command:
+  command:
     cmd: "gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg /etc/apt/keyrings/kubernetes-apt-keyring.gpg"
     creates: /etc/apt/keyrings/kubernetes-apt-keyring.gpg
   become: true
 
 - name: Add Kubernetes APT repository
-  ansible.builtin.lineinfile:
+  lineinfile:
     path: /etc/apt/sources.list.d/kubernetes.list
     line: "deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v1.32/deb/ /"
     create: true
     mode: '0644'
   become: true
-  
+
+- name: Update APT package cache
+  apt:
+    update_cache: yes
+
 - name: Install Kubernetes related Dependencies
   apt:
     name: "{{ item }}"
