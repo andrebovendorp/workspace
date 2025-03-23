@@ -49,7 +49,7 @@
 
     - name: Add kubeadm initConfiguration file
       copy: 
-        dest: /root/kubeadmcfg.yaml
+        dest: /tmp/kubeadmcfg.yaml
         content: |
           ---
           apiVersion: kubeadm.k8s.io/v1beta4
@@ -106,7 +106,7 @@
       when: inventory_hostname == 'api01' and not initialized.stat.exists 
 
     - name: Initialize the control plane
-      shell: kubeadm init --config /root/kubeadmcfg.yaml
+      shell: kubeadm init --config /tmp/kubeadmcfg.yaml
       delegate_to: api01
       register: init_result
       when: inventory_hostname == 'api01' and not initialized.stat.exists
