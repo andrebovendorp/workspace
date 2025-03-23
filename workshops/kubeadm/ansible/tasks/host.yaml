@@ -90,10 +90,12 @@
 - name: Apply the network configuration
   command: netplan apply
 
-- name: Configure k8s apt
-  apt_key:
+- name: Download Kubernetes APT GPG key
+  ansible.builtin.get_url:
     url: https://pkgs.k8s.io/core:/stable:/v1.32/deb/Release.key
-    state: present
+    dest: /etc/apt/keyrings/kubernetes-apt-keyring.gpg
+    mode: '0644'
+  become: true
 
 - name: Add Kubernetes APT repository
   ansible.builtin.lineinfile:
