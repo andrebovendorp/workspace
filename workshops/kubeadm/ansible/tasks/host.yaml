@@ -97,6 +97,12 @@
     mode: '0644'
   become: true
 
+- name: Convert GPG key to proper format
+  ansible.builtin.command:
+    cmd: "gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg /etc/apt/keyrings/kubernetes-apt-keyring.gpg"
+    creates: /etc/apt/keyrings/kubernetes-apt-keyring.gpg
+  become: true
+
 - name: Add Kubernetes APT repository
   ansible.builtin.lineinfile:
     path: /etc/apt/sources.list.d/kubernetes.list
