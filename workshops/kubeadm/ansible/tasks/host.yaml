@@ -106,10 +106,6 @@
   apt:
     update_cache: yes
 
-- name: Update APT package cache
-  apt:
-    update_cache: yes
-
 - name: Install Kubernetes related Dependencies
   apt:
     name: "{{ item }}"
