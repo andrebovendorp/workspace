@@ -91,17 +91,9 @@
   command: netplan apply
 
 - name: Configure k8s apt
-  apt_key:
-    url: https://pkgs.k8s.io/core:/stable:/v1.32/deb/Release.key
-    state: present
-
-- name: Add Kubernetes APT repository
-  ansible.builtin.lineinfile:
-    path: /etc/apt/sources.list.d/kubernetes.list
-    line: "deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v1.32/deb/ /"
-    create: true
-    mode: "0644"
-  become: true
+  command: |
+      curl -fsSL https://pkgs.k8s.io/core:/stable:/v1.32/deb/Release.key | sudo gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg
+      echo 'deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v1.32/deb/ /' | sudo tee /etc/apt/sources.list.d/kubernetes.list
 
 - name: Install Kubernetes related Dependencies
   apt:
@@ -111,6 +103,7 @@
     - kubeadm
     - kubelet
     - kubectl
+  update_cache: yes
 
 - name: Setup CRI
   copy:
