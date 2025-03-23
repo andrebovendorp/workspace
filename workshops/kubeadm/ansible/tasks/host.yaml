@@ -1,3 +1,15 @@
+- name: Set hostname from inventory
+  ansible.builtin.hostname:
+    name: "{{ inventory_hostname }}"
+
+- name: Update /etc/hosts with instance IPs
+  ansible.builtin.lineinfile:
+    path: /etc/hosts
+    line: "{{ hostvars[item].ansible_host }} {{ item }}"
+    state: present
+    backup: yes
+  loop: "{{ groups['instances'] }}"
+
 - name: Install containerd dependencies
   apt:
     name:
