@@ -22,7 +22,7 @@
     state: directory
     owner: root
     group: root
-    mode: '0755'
+    mode: "0755"
   become: true
 
 - name: Generate default containerd config
@@ -36,14 +36,14 @@
     dest: /etc/containerd/config.toml
     owner: root
     group: root
-    mode: '0644'
+    mode: "0644"
   become: true
 
 - name: Enable systemd cgroup
   replace:
     path: /etc/containerd/config.toml
-    regexp: 'SystemdCgroup = false'
-    replace: 'SystemdCgroup = true'
+    regexp: "SystemdCgroup = false"
+    replace: "SystemdCgroup = true"
   become: true
 
 - name: Reload systemd daemon and enable containerd
@@ -72,7 +72,7 @@
     dest: /etc/netplan/50-cloud-init.yaml
     owner: root
     group: root
-    mode: '0600'
+    mode: "0600"
 
 - name: Create the directory configurations
   file:
@@ -80,12 +80,12 @@
     state: directory
     owner: root
     group: root
-    mode: '0755'
+    mode: "0755"
   with_items:
-    - /etc/systemd/system/kubelet.service.d/  # kubelet configuration file
-    - /etc/kubernetes/pki/etcd/               # cert files
-    - /etc/containerd/                        # containerd folder
-    - /etc/apt/keyrings/                      # apt keyrings
+    - /etc/systemd/system/kubelet.service.d/ # kubelet configuration file
+    - /etc/kubernetes/pki/etcd/ # cert files
+    - /etc/containerd/ # containerd folder
+    - /etc/apt/keyrings/ # apt keyrings
 
 - name: Apply the network configuration
   command: netplan apply
@@ -95,11 +95,19 @@
     url: https://pkgs.k8s.io/core:/stable:/v1.32/deb/Release.key
     state: present
 
+- name: Add Kubernetes APT repository
+  ansible.builtin.lineinfile:
+    path: /etc/apt/sources.list.d/kubernetes.list
+    line: "deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v1.32/deb/ /"
+    create: true
+    mode: "0644"
+  become: true
+
 - name: Install Kubernetes related Dependencies
   apt:
     name: "{{ item }}"
     state: present
-  with_items: 
+  with_items:
     - kubeadm
     - kubelet
     - kubectl
@@ -114,7 +122,7 @@
             SystemdCgroup = true
     owner: root
     group: root
-    mode: '0644'
+    mode: "0644"
 
 - name: Enable ipv4 forwarding
   sysctl:
