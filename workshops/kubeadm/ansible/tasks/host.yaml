@@ -91,16 +91,15 @@
 - name: Apply the network configuration
   command: netplan apply
 
-- name: Add Kubernetes APT repository GPG key
-  apt_key:
-    url: https://packages.cloud.google.com/apt/doc/apt-key.gpg
-    state: present
+- name: Get Kubernetes package key
+  shell: curl -fsSL https://pkgs.k8s.io/core:/stable:/v1.32/deb/Release.key | gpg --dearmor -o /usr/share/keyrings/kubernetes-apt-keyring.gpg
+  args:
+    creates: "https://pkgs.k8s.io/core:/stable:/v1.28/deb/"
 
-- name: Add Kubernetes APT repository
+- name: Install Kubernetes repository
   apt_repository:
-    repo: "deb https://apt.kubernetes.io/ kubernetes-xenial main"
-    state: present
-    filename: "kubernetes"
+  filename: kubernetes
+  repo: "deb [signed-by=/usr/share/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v1.28/deb/ /"
 
 - name: Update APT cache
   apt:
