@@ -48,26 +48,13 @@
       when: inventory_hostname == 'api01'
 
     - name: Add kubeadm initConfiguration file
-      copy: 
-        dest: /tmp/kubeadmcfg.yaml
-        content: |
-          ---
-          apiVersion: kubeadm.k8s.io/v1beta4
-          kind: ClusterConfiguration
-          kubernetesVersion: stable
-          controlPlaneEndpoint: "{{ ansible_host }}:443" # change this (see below)
-          etcd:
-            external:
-              endpoints:
-                {% for host in groups['control_plane_nodes'] %}
-                - https://{{ hostvars[host]['ansible_host'] }}:2379
-                {% endfor %}
-              caFile: /etc/kubernetes/pki/etcd/ca.crt
-              certFile: /etc/kubernetes/pki/apiserver-etcd-client.crt
-              keyFile: /etc/kubernetes/pki/apiserver-etcd-client.key
+      template:
+        src: kubeadmcfg.yaml.j2
+        dest: /tmp/{{ inventory_hostname }}/kubeadmcfg.yaml
         owner: root
         group: root
-        mode: '0644'
+        mode: '0640'
+      when: inventory_hostname == 'api01'
 
     - name: Check if Kubernetes is initialized
       stat:
@@ -106,7 +93,7 @@
       when: inventory_hostname == 'api01' and not initialized.stat.exists 
 
     - name: Initialize the control plane
-      shell: kubeadm init --config /tmp/kubeadmcfg.yaml
+      shell: kubeadm init --config /tmp/{{ inventory_hostname }}/kubeadmcfg.yaml
       delegate_to: api01
       register: init_result
       when: inventory_hostname == 'api01' and not initialized.stat.exists
