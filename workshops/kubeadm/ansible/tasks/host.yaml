@@ -6,6 +6,7 @@
       - curl
       - gnupg-agent
       - software-properties-common
+      - net-tools
     state: present
     update_cache: yes
 
@@ -114,6 +115,9 @@
 - name: Update APT package cache
   apt:
     update_cache: yes
+    
+#curl -fsSL https://pkgs.k8s.io/core:/stable:/v1.32/deb/Release.key | sudo gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg
+#echo 'deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v1.32/deb/ /' | sudo tee /etc/apt/sources.list.d/kubernetes.list
 
 - name: Install Kubernetes related Dependencies
   apt:
