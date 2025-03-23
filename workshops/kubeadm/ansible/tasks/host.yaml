@@ -99,6 +99,7 @@
     - /etc/kubernetes/pki/etcd/ # cert files
     - /etc/containerd/ # containerd folder
     - /etc/apt/keyrings/ # apt keyrings
+    - /etc/kubelet/ # kubelet folder
 
 - name: Apply the network configuration
   command: netplan apply
