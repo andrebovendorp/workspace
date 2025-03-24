@@ -21,19 +21,13 @@
       - net-tools
     state: present
     update_cache: yes
+  become: true
 
 - name: Install containerd
   apt:
     name: containerd
     state: present
     update_cache: yes
-  become: true
-
-- name: Enable systemd cgroup
-  replace:
-    path: /etc/containerd/config.toml
-    regexp: "SystemdCgroup = false"
-    replace: "SystemdCgroup = true"
   become: true
 
 - name: Reload systemd daemon and enable containerd
@@ -133,7 +127,9 @@
     state: present
     reload: yes
 
-- name: Restart kubelet
+- name: Restart kubelet and containerd
   shell: |2
     systemctl daemon-reload
     systemctl restart kubelet
+    systemctl restart containerd
+
