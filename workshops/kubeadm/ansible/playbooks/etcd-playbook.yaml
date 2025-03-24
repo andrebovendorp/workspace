@@ -117,7 +117,7 @@
       delegate_to: etcd01
       when: not ca_crt.stat.exists
 
-    - name: Fetch CA cert and key to the control node
+    - name: Fetch CA cert and key to the host node
       fetch:
         src: "{{ item.src }}"
         dest: "/tmp/etcd_certs/ca/{{ item.dest | basename }}"

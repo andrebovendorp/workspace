@@ -100,6 +100,7 @@
     - /etc/containerd/ # containerd folder
     - /etc/apt/keyrings/ # apt keyrings
     - /etc/kubelet/ # kubelet folder
+    - /var/lib/etcd/ # etcd data folder
 
 - name: Apply the network configuration
   command: netplan apply
