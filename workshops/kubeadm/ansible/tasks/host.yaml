@@ -1,0 +1,137 @@
+- name: Set hostname from inventory
+  ansible.builtin.hostname:
+    name: "{{ inventory_hostname }}"
+
+- name: Update /etc/hosts with instance IPs
+  ansible.builtin.lineinfile:
+    path: /etc/hosts
+    line: "{{ hostvars[item].ansible_host }} {{ item }}"
+    state: present
+    backup: yes
+  loop: "{{ groups['all'] }}"
+
+- name: Install containerd dependencies
+  apt:
+    name:
+      - apt-transport-https
+      - ca-certificates
+      - curl
+      - gnupg-agent
+      - software-properties-common
+      - net-tools
+    state: present
+    update_cache: yes
+  become: true
+
+- name: Install containerd
+  apt:
+    name: containerd
+    state: present
+    update_cache: yes
+  become: true
+
+- name: Reload systemd daemon and enable containerd
+  shell: |
+    systemctl daemon-reload
+    systemctl enable --now containerd
+
+- name: Disable swap temporarily
+  command: swapoff -a
+
+- name: Remove swap entries from /etc/fstab
+  replace:
+    path: /etc/fstab
+    regexp: '^(.*\s+swap\s+.*)$'
+    replace: '# \1'
+  notify: Reboot if necessary
+
+- name: Verify swap is disabled
+  shell: free -h | grep -i swap
+  register: swap_status
+  ignore_errors: true
+
+- name: Setup Network (Netplan)
+  template:
+    src: netplan.yaml.j2
+    dest: /etc/netplan/50-cloud-init.yaml
+    owner: root
+    group: root
+    mode: "0600"
+
+- name: Create the directory configurations
+  file:
+    path: "{{ item }}"
+    state: directory
+    owner: root
+    group: root
+    mode: "0755"
+  with_items:
+    - /etc/systemd/system/kubelet.service.d/ # kubelet configuration file
+    - /etc/kubernetes/pki/etcd/ # cert files
+    - /etc/containerd/ # containerd folder
+    - /etc/apt/keyrings/ # apt keyrings
+    - /etc/kubelet/ # kubelet folder
+    - /var/lib/etcd/ # etcd data folder
+
+- name: Apply the network configuration
+  command: netplan apply
+
+- name: Check if GPG Key exists
+  stat: 
+    path: /usr/share/keyrings/kubernetes-apt-keyring.gpg
+  register: gpg_key
+
+- name: Get Kubernetes package key
+  shell: curl -fsSL https://pkgs.k8s.io/core:/stable:/v1.32/deb/Release.key | gpg --dearmor -o /usr/share/keyrings/kubernetes-apt-keyring.gpg
+  args:
+    creates: "https://pkgs.k8s.io/core:/stable:/v1.32/deb/"
+  when: not gpg_key.stat.exists
+
+- name: Install Kubernetes repository
+  apt_repository:
+    filename: kubernetes
+    repo: "deb [signed-by=/usr/share/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v1.32/deb/ /"
+    state: present
+  when: not gpg_key.stat.exists
+
+- name: Update APT cache
+  apt:
+    update_cache: yes
+
+- name: Install Kubernetes related Dependencies
+  apt:
+    name: "{{ item }}"
+    state: present
+    update_cache: yes
+  with_items:
+    - kubeadm
+    - kubelet
+    - kubectl
+
+- name: Setup CRI
+  copy:
+    dest: /etc/containerd/config.toml
+    content: |
+      [plugins]
+        [plugins."io.containerd.grpc.v1.cri"]
+          sandbox_image = "registry.k8s.io/pause:3.10"
+          [plugins."io.containerd.grpc.v1.cri".containerd.runtimes.runc]
+            [plugins."io.containerd.grpc.v1.cri".containerd.runtimes.runc.options]
+              SystemdCgroup = true
+    owner: root
+    group: root
+    mode: "0644"
+
+- name: Enable ipv4 forwarding
+  sysctl:
+    name: net.ipv4.ip_forward
+    value: 1
+    state: present
+    reload: yes
+
+- name: Restart kubelet and containerd
+  shell: |2
+    systemctl daemon-reload
+    systemctl restart kubelet
+    systemctl restart containerd
+
