@@ -1,5 +1,7 @@
 ingress-nginx:
   controller:
+  image:
+    tag: "v1.12.1"
     replicaCount: 2
     metrics:
       enabled: true
