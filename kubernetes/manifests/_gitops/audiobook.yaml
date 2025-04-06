@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: audiobook-application
+  name: audiobook
   namespace: argocd
 spec:
   project: platform
