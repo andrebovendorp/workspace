@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: matter-server-application
+  name: matter-server
   namespace: argocd
 spec:
   project: platform

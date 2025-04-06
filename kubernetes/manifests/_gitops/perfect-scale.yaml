@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: perfect-scale-application
+  name: perfect-scale
   namespace: argocd
 spec:
   project: platform

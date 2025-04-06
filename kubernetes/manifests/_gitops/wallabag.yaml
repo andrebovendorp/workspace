@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: wallabag-application
+  name: wallabag
   namespace: argocd
 spec:
   project: platform

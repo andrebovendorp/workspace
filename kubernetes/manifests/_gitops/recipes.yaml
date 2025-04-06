@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: recipes-application
+  name: recipes
   namespace: argocd
 spec:
   project: platform
