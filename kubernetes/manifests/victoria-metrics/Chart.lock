@@ -1,9 +1,0 @@
-dependencies:
-- name: victoria-metrics-k8s-stack
-  repository: https://victoriametrics.github.io/helm-charts/
-  version: 0.34.0
-- name: grafana-operator
-  repository: oci://ghcr.io/grafana/helm-charts
-  version: v5.16.0
-digest: sha256:7b144b2f25725d12cbe220c10c69f3f35859ca31ad9a539b854cba6f9ddf0cd8
-generated: "2025-02-06T11:25:51.419724444+01:00"
