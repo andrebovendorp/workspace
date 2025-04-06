@@ -1,0 +1,20 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: intel-application
+  namespace: argocd
+spec:
+  project: platform
+  source:
+    repoURL: https://github.com/boveloco/workspace.git
+    targetRevision: main
+    path: kubernetes/manifests/intel
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: intel
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true

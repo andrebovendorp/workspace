@@ -1,0 +1,20 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: matter-server-application
+  namespace: argocd
+spec:
+  project: platform
+  source:
+    repoURL: https://github.com/boveloco/workspace.git
+    targetRevision: main
+    path: kubernetes/manifests/matter-server
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: matter-server
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true

@@ -1,0 +1,20 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: recipes-application
+  namespace: argocd
+spec:
+  project: platform
+  source:
+    repoURL: https://github.com/boveloco/workspace.git
+    targetRevision: main
+    path: kubernetes/manifests/recipes
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: recipes
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
