@@ -3,6 +3,9 @@ kind: ExternalSecret
 metadata:
   name: grafana-login
   namespace: {{ .Release.Namespace }}
+  annotations:
+    argocd.argoproj.io/sync-options: SkipDryRunOnLocalSchema=true # For CRDs
+    argocd.argoproj.io/compare-options: IgnoreExtraneous=true # Ignore resources not in Git
 spec:
   secretStoreRef:
     kind: ClusterSecretStore
