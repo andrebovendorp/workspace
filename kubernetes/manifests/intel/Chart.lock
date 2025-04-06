@@ -1,9 +1,0 @@
-dependencies:
-- name: node-feature-discovery
-  repository: https://kubernetes-sigs.github.io/node-feature-discovery/charts
-  version: 0.17.1
-- name: intel-device-plugins-operator
-  repository: https://intel.github.io/helm-charts/
-  version: 0.32.0
-digest: sha256:a7f993de33d29092ee296370cdf9fe0cd21598cd3ddc074addadc91bd69c0cf7
-generated: "2025-02-09T14:28:47.048268142+01:00"
