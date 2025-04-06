@@ -1,0 +1,20 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: wallabag-application
+  namespace: argocd
+spec:
+  project: platform
+  source:
+    repoURL: https://github.com/boveloco/workspace.git
+    targetRevision: main
+    path: kubernetes/manifests/wallabag
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: wallabag
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
