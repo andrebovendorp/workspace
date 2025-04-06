@@ -10,7 +10,7 @@ immich:
 
   env:
     REDIS_HOSTNAME: redis-headless.redis.svc.cluster.local
-    DB_HOSTNAME: pgsql-postgresql-hl.pgsql.svc.cluster.local
+    DB_HOSTNAME: pgsql-postgresql.pgsql.svc.cluster.local
     DB_USERNAME:
       valueFrom:
         secretKeyRef:
