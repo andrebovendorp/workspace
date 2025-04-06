@@ -18,11 +18,13 @@ spec:
     remoteRef:
       conversionStrategy: Default
       metadataPolicy: None
+      decodingStrategy: None
       key: grafana-login
       property: username
   - secretKey: admin-password
     remoteRef:
       conversionStrategy: Default
       metadataPolicy: None
+      decodingStrategy: None
       key: grafana-login
       property: password
