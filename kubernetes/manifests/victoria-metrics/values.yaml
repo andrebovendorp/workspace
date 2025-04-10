@@ -4,6 +4,7 @@ grafana:
     - name: grafana.k8s.nullservers.com
   
 victoria-metrics-k8s-stack: 
+  argocdReleaseOverride: "victoria-metrics"
   vmalertmanager:
     enabled: false
     spec:
