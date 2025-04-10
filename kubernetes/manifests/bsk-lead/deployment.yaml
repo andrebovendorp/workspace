@@ -29,6 +29,8 @@ spec:
             limits:
               memory: "128Mi"
               cpu: "100m"
+      imagePullSecrets:
+        - name: dockerhub-token
       volumes:
         - name: nginx-index-file
           configMap:

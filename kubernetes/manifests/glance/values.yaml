@@ -5,6 +5,7 @@ common:
   unprivileged: true
 
   deployment:
+    imagePullSecrets: dockerhub-token
     enabled: true
     port: 8080
     replicaCount: 2
