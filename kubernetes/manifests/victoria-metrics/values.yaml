@@ -56,6 +56,7 @@ victoria-metrics-k8s-stack:
             - metrics.k8s.nullservers.com
   victoria-metrics-operator:
     enabled: true
+    prometheus_converter_add_argocd_ignore_annotations: true
     image:
       registry: "quay.io"
     env:
