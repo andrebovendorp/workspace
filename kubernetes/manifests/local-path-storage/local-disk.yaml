@@ -158,5 +158,5 @@ data:
           effect: NoSchedule
       containers:
       - name: helper-pod
-        image: busybox
+        image: quay.io/prometheus/busybox
         imagePullPolicy: IfNotPresent
