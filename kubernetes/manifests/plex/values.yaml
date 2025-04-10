@@ -4,6 +4,7 @@ common:
   clusterIssuer: letsencrypt-prod
 
   deployment:
+    imagePullSecrets: dockerhub-token
     enabled: true
     port: 32400
     replicaCount: 1

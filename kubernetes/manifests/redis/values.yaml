@@ -1,4 +1,7 @@
 redis:
+  global:
+    imagePullSecrets:
+      - name: dockerhub-token
   auth:
     enabled: false
     existingSecret: redis-password
