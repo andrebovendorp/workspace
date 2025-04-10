@@ -1,4 +1,6 @@
 ingress-nginx:
+  imagePullSecrets:
+    - name: dockerhub-token
   controller:
     image:
       tag: "v1.12.1"
