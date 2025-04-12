@@ -25,11 +25,11 @@ common:
   hostVolumeMounts:
     - mountPath: /home/arm/media
       name: movies
-      hostPath: /mnt/external-drive/movies
+      hostPath: /mnt/external-drive/filmes
       readOnly: false
     - mountPath: /home/arm/music
       name: music
-      hostPath: /mnt/external-drive/music
+      hostPath: /mnt/external-drive/musicas
       readOnly: false
     - mountPath: /dev/dri
       name: quicksync
