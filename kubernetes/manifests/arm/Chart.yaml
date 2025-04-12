@@ -1,9 +1,9 @@
 apiVersion: v2
-name: Homer
+name: arm
 version: 0.1.0
 type: application
 dependencies:
 - name: common
-  version: 0.1.5
+  version: 0.1.6
   repository: https://boveloco.github.io/charts/
   condition: common.enabled

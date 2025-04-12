@@ -6,11 +6,17 @@ common:
 
   deployment:
     enabled: true
+    imagePullSecrets: dockerhub-token
     port: 8080
     replicaCount: 1
     image: ghcr.io/boveloco/boveloco/arm-qs:latest
     nodeSelector:
       kubernetes.io/hostname: slave01
+
+    initContainers:
+      - name: permissions-init
+        image: busybox:latest
+        command: ["chown", "-R", "1000:1000","/etc/container_environment"]
     resources:
       requests:
         memory: "1Gi"
