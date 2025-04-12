@@ -49,7 +49,7 @@ common:
     - mountPath: /etc/container_environment
       name: container-environment
       storageClassName: ssd-storage
-      size: 10Mi
+      size: 100Mi
 
   service:
     enabled: true
