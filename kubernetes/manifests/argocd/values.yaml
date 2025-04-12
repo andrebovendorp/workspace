@@ -7,7 +7,7 @@ argo-cd:
       fsGroup: 1000
       runAsGroup: 1000
     nodeSelector:
-      kubernetes.io/hostname: slave01
+      kubernetes.io/hostname: pi
   configs:
     cm:
       timeout.hard.reconciliation: 1m
