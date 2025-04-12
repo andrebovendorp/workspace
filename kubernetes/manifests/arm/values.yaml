@@ -23,13 +23,9 @@ common:
         value: "1000"
 
   hostVolumeMounts:
-    - mountPath: /home/arm/media
-      name: movies
+    - mountPath: /media/external-drive
+      name: external-drive
       hostPath: /mnt/external-drive/filmes
-      readOnly: false
-    - mountPath: /home/arm/music
-      name: music
-      hostPath: /mnt/external-drive/musicas
       readOnly: false
     - mountPath: /dev/dri
       name: quicksync
@@ -44,6 +40,9 @@ common:
       name: configs
       storageClassName: ssd-storage
       size: 300Mi
+    - mountPath: /home/arm/media
+      name: media
+      storageClassName: ssd-storage
 
   service:
     enabled: true
