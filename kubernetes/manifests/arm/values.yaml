@@ -1,0 +1,59 @@
+common:
+  enabled: true
+  clusterIssuer: letsencrypt-prod
+
+  unprivileged: true
+
+  deployment:
+    enabled: true
+    port: 8080
+    replicaCount: 1
+    image: ghcr.io/boveloco/boveloco/arm-qs:latest
+    nodeSelector:
+      kubernetes.io/hostname: slave01
+    resources:
+      requests:
+        memory: "1Gi"
+        cpu: 100m
+
+    env:
+      - name: ARM_UID
+        value: "1000"
+      - name: ARM_GID
+        value: "1000"
+
+  hostVolumeMounts:
+    - mountPath: /home/arm/media
+      name: movies
+      hostPath: /mnt/external-drive/movies
+      readOnly: false
+    - mountPath: /home/arm/music
+      name: music
+      hostPath: /mnt/external-drive/music
+      readOnly: false
+    - mountPath: /dev/dri
+      name: quicksync
+      hostPath: /dev/dri
+    - mountPath: /dev/sr0
+      name: dvd
+      hostPath: /dev/sr0
+
+  pvcVolumeMounts:
+    - mountPath: /etc/arm/config
+      name: configs
+      storageClassName: ssd-storage
+      size: 300Mi
+
+  service:
+    enabled: true
+    ports:
+      - port: 80
+        targetPort: 8080
+        name: http
+        type: ClusterIP
+
+  ingress:
+    enabled: true
+    class: nginx
+    hosts:
+      - host: arm.nullservers.com
