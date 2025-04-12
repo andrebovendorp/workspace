@@ -37,7 +37,7 @@ common:
     - mountPath: /dev/sr0
       name: dvd
       hostPath: /dev/sr0
-      type: CharDevice
+      type: BlockDevice
 
   pvcVolumeMounts:
     - mountPath: /etc/arm/config
