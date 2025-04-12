@@ -43,6 +43,7 @@ common:
     - mountPath: /home/arm/media
       name: media
       storageClassName: ssd-storage
+      size: 200Gi
 
   service:
     enabled: true
