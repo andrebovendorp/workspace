@@ -46,6 +46,10 @@ common:
       name: media
       storageClassName: ssd-storage
       size: 200Gi
+    - mountPath: /etc/container_environment
+      name: container-environment
+      storageClassName: ssd-storage
+      size: 10Mi
 
   service:
     enabled: true
