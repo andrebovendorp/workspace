@@ -2,7 +2,7 @@ common:
   enabled: true
   clusterIssuer: letsencrypt-prod
 
-  unprivileged: true
+  unprivileged: false
 
   deployment:
     enabled: true
