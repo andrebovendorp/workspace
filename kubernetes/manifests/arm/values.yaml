@@ -16,8 +16,8 @@ common:
           - /bin/sh
           - -c
           - |
-            touch "/etc/container_environment.sh" || { echo "Error creating /etc/container_environment.sh"; }
-            touch "/etc/container_environment.json" || { echo "Error creating /etc/container_environment.json"; }
+            touch "/etc/container_environment.sh"
+            touch "/etc/container_environment.json"
             chown -R 1000:1000 /home/arm/media
             chown -R 1000:1000 /etc/arm/config
             chown -R 1000:1000 /etc/container_environment
