@@ -10,6 +10,7 @@ common:
       runAsUser: 1000
       runAsGroup: 1000
       fsGroup: 1000
+
     initContainers:
       - command:
           - /bin/sh
@@ -47,6 +48,13 @@ common:
           - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
             name: kube-api-access-whv5r
             readOnly: true
+          - mountPath: /etc/container_environment.sh
+            subPath: config/container_environment.sh
+            name: container-environment-sh
+          - mountPath: /etc/container_environment.json
+            subPath: config/container_environment.json
+            name: container-environment-json
+    
     imagePullSecrets: dockerhub-token
     port: 8080
     replicaCount: 1
