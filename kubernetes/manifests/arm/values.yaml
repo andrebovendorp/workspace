@@ -45,9 +45,6 @@ common:
             name: media
           - mountPath: /etc/container_environment
             name: container-environment
-          - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
-            name: kube-api-access-whv5r
-            readOnly: true
           - mountPath: /etc/container_environment.sh
             subPath: config/container_environment.sh
             name: container-environment-sh
