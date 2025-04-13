@@ -16,13 +16,9 @@ common:
           - /bin/sh
           - -c
           - |
-            touch "/etc/container_environment.sh"
-            touch "/etc/container_environment.json"
             chown -R 1000:1000 /home/arm/media
             chown -R 1000:1000 /etc/arm/config
             chown -R 1000:1000 /etc/container_environment
-            chown 1000:1000 /etc/container_environment.sh
-            chown 1000:1000 /etc/container_environment.json
         image: busybox:latest
         imagePullPolicy: Always
         name: permissions-init
