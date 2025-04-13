@@ -34,13 +34,13 @@ common:
         volumeMounts:
           - mountPath: /etc/arm/config
             name: configs
-            readOnly: false
+            readOnly: "false"
           - mountPath: /home/arm/media
             name: media
-            readOnly: false
+            readOnly: "false"
           - mountPath: /etc/container_environment
             name: container-environment
-            readOnly: false
+            readOnly: "false"
           
     imagePullSecrets: dockerhub-token
     port: 8080
@@ -64,7 +64,7 @@ common:
     - mountPath: /media/external-drive
       name: external-drive
       hostPath: /mnt/external-drive/filmes
-      readOnly: false
+      readOnly: "false"
     - mountPath: /dev/dri
       name: quicksync
       hostPath: /dev/dri
