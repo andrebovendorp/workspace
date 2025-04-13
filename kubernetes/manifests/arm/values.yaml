@@ -16,6 +16,12 @@ common:
           - /bin/sh
           - -c
           - |
+            if [ ! -f "/etc/container_environment.sh" ]; then
+              touch "/etc/container_environment.sh"
+            fi
+            if [ ! -f "/etc/container_environment.json" ]; then
+              touch "/etc/container_environment.json"
+            fi
             chown -R 1000:1000 /home/arm/media
             chown -R 1000:1000 /etc/arm/config
             chown -R 1000:1000 /etc/container_environment
@@ -51,7 +57,7 @@ common:
           - mountPath: /etc/container_environment.json
             subPath: config/container_environment.json
             name: container-environment-json
-    
+
     imagePullSecrets: dockerhub-token
     port: 8080
     replicaCount: 1
