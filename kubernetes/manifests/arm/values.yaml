@@ -6,6 +6,47 @@ common:
 
   deployment:
     enabled: true
+    securityContext:
+      runAsUser: 1000
+      runAsGroup: 1000
+      fsGroup: 1000
+    initContainers:
+      - command:
+          - /bin/sh
+          - -c
+          - |
+            chown -R 1000:1000 /home/arm/media
+            chown -R 1000:1000 /etc/arm/config
+            chown -R 1000:1000 /etc/container_environment
+            chown 1000:1000 /etc/container_environment.sh
+            chown 1000:1000 /etc/container_environment.json
+        image: busybox:latest
+        imagePullPolicy: Always
+        name: permissions-init
+        resources: {}
+        securityContext:
+          runAsUser: 0
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+        volumeMounts:
+          - mountPath: /media/external-drive
+            name: external-drive
+            readOnly: true
+          - mountPath: /dev/dri
+            name: quicksync
+            readOnly: true
+          - mountPath: /dev/sr0
+            name: dvd
+            readOnly: true
+          - mountPath: /etc/arm/config
+            name: configs
+          - mountPath: /home/arm/media
+            name: media
+          - mountPath: /etc/container_environment
+            name: container-environment
+          - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+            name: kube-api-access-whv5r
+            readOnly: true
     imagePullSecrets: dockerhub-token
     port: 8080
     replicaCount: 1
@@ -50,6 +91,16 @@ common:
       name: container-environment
       storageClassName: ssd-storage
       size: 100Mi
+    - mountPath: /etc/container_environment.sh
+      subPath: config/container_environment.sh
+      name: container-environment-sh
+      storageClassName: ssd-storage
+      size: 10Mi
+    - mountPath: /etc/container_environment.json
+      subPath: config/container_environment.json
+      name: container-environment-json
+      storageClassName: ssd-storage
+      size: 10Mi
 
   service:
     enabled: true
