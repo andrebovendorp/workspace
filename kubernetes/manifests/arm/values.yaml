@@ -34,10 +34,13 @@ common:
         volumeMounts:
           - mountPath: /etc/arm/config
             name: configs
+            readOnly: false
           - mountPath: /home/arm/media
             name: media
+            readOnly: false
           - mountPath: /etc/container_environment
             name: container-environment
+            readOnly: false
           
     imagePullSecrets: dockerhub-token
     port: 8080
