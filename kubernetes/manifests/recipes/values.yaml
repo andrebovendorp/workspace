@@ -54,9 +54,12 @@ common:
         value: "1"
       - name: DEFAULT_FROM_EMAIL
         value: "no-reply@nullservers.com"
-
-  hostVolumeMounts:
-
+        
+  emptyDirVolumeMounts:
+    - name: tmp
+      mountPath: /tmp
+      size: 500Mi
+      
   pvcVolumeMounts:
     - mountPath: /opt/recipes/staticfiles
       name: static-files
