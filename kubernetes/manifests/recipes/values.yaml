@@ -54,6 +54,8 @@ common:
         value: "1"
       - name: DEFAULT_FROM_EMAIL
         value: "no-reply@nullservers.com"
+      - name: GUNICORN_MEDIA
+        value: "1"
         
   emptyDirVolumeMounts:
     - name: tmp
