@@ -5,14 +5,11 @@ metadata:
   namespace: {{ .Release.Namespace }}
 spec:
   endpointSelector: {}
-  ingress:
+  ingress: 
     - fromCIDRSet:
         - cidr: 192.168.20.0/24
     - fromCIDRSet:
         - cidr: 192.168.250.0/24
-    - fromEndpoints:
-        - matchLabels:
-            io.kubernetes.pod.namespace: home-assistant
   egress:
     - toEndpoints:
         - matchLabels:
@@ -25,5 +22,6 @@ spec:
           rules:
             dns:
               - matchPattern: "*"
-    - toEntities:
-        - world
+    - toFQDNs:
+      - matchPattern: "*.plex.tv"
+

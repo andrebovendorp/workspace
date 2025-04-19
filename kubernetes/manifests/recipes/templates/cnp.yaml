@@ -12,6 +12,10 @@ spec:
       toPorts:
         - ports:
             - port: "8080"
+    - fromCIDRSet:
+        - cidr: 192.168.20.0/24
+    - fromCIDRSet:
+        - cidr: 192.168.250.0/24
   egress:
     - toEndpoints:
         - matchLabels:
