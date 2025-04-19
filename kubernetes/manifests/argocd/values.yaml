@@ -13,7 +13,7 @@ argo-cd:
       timeout.hard.reconciliation: 1m
       resource.ignoreResourceUpdatesEnabled: "true"
     params:
-      controller.status.processors: 1
+      controller.status.processors: 2
       controller.opertation.processors: 1
       controller.self.heal.timeout.seconds: 120
       server.insecure: true

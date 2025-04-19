@@ -50,6 +50,6 @@ common:
         type: ClusterIP
   ingress:
     enabled: true
-    class: nginx
+    class: cilium
     hosts:
       - host: jellyfin.k8s.nullservers.com

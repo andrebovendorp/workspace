@@ -8,8 +8,6 @@ spec:
   ingress:
     - fromEndpoints:
         - matchLabels:
-            io.kubernetes.pod.namespace: ingress-nginx
-        - matchLabels:
             io.kubernetes.pod.namespace: cloudflare
   egress:
     - toFQDNs:
@@ -29,10 +27,6 @@ spec:
       - matchPattern: "*.unt.se"
       - matchPattern: "*.dn.se"
 
-      
-    - toEndpoints:
-      - matchLabels:
-            io.kubernetes.pod.namespace: ingress-nginx
     - toEndpoints:
         - matchLabels:
             io.kubernetes.pod.namespace: kube-system

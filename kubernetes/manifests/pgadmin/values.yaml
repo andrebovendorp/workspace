@@ -49,6 +49,6 @@ common:
         type: ClusterIP
   ingress:
     enabled: true
-    class: nginx
+    class: cilium
     hosts:
       - host: pgadmin.k8s.nullservers.com

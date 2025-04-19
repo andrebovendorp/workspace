@@ -82,6 +82,6 @@ common:
 
   ingress:
     enabled: false
-    class: nginx
+    class: cilium
     hosts:
       - host: recipes.k8s.nullservers.com

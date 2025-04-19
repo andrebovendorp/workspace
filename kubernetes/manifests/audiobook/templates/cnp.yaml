@@ -8,9 +8,6 @@ spec:
     ingress:
       - fromEndpoints:
           - matchLabels:
-                io.kubernetes.pod.namespace: ingress-nginx
-      - fromEndpoints:
-          - matchLabels:
                 io.kubernetes.pod.namespace: cloudflare
     egress:
       - toEndpoints:
