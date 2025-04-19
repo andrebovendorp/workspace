@@ -9,6 +9,8 @@ spec:
     - fromEndpoints:
         - matchLabels:
             io.kubernetes.pod.namespace: cloudflare # This is crucial to select pods in the tunnel namespace.F
+        - matchLabels:
+            io.kubernetes.pod.namespace: ingress-nginx # This is crucial to select pods in the tunnel namespace.F
   egress:
     - toCIDRSet:
         - cidr: 142.250.74.142/32

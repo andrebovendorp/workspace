@@ -54,6 +54,6 @@ common:
         type: ClusterIP
   ingress:
     enabled: true
-    class: cilium
+    class: nginx
     hosts:
       - host: wallabag.k8s.nullservers.com

@@ -4,7 +4,10 @@ metadata:
   name: default
 spec:
   endpointSelector: {}
-  ingress: {}
+  ingress:
+    - fromEndpoints:
+        - matchLabels:
+            io.kubernetes.pod.namespace: ingress-nginx
   egress:
     - toEndpoints:
         - matchLabels:

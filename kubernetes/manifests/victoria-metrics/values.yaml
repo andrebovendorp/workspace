@@ -48,7 +48,7 @@ victoria-metrics-k8s-stack:
       annotations:
         kubernetes.io/tls-acme: "true"
         cert-manager.io/cluster-issuer: letsencrypt-prod
-      ingressClassName: cilium
+      ingressClassName: nginx
       hosts:
         - metrics.k8s.nullservers.com
       tls:
@@ -140,7 +140,7 @@ victoria-metrics-k8s-stack:
       annotations:
         kubernetes.io/tls-acme: "true"
         cert-manager.io/cluster-issuer: letsencrypt-prod
-      ingressClassName: cilium
+      ingressClassName: nginx
       hosts:
         - grafana.k8s.nullservers.com
       tls:

@@ -45,7 +45,7 @@ immich:
           kubernetes.io/tls-acme: "true"
           cert-manager.io/cluster-issuer: letsencrypt-prod
           nginx.ingress.kubernetes.io/proxy-body-size: "0"
-        ingressClassName: cilium
+        ingressClassName: nginx
         hosts:
           - host: photos.nullservers.com
             paths:

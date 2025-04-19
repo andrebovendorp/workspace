@@ -17,4 +17,4 @@ cert-manager:
   prometheus:
     enabled: false
     servicemonitor:
-      enabled: true
+      enabled: false

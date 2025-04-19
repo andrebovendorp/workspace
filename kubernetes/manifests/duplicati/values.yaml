@@ -78,6 +78,6 @@ common:
 
   ingress:
     enabled: true
-    class: cilium
+    class: nginx
     hosts:
       - host: backup.k8s.nullservers.com
