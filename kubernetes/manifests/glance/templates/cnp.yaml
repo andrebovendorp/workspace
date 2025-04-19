@@ -9,10 +9,6 @@ spec:
     - fromEndpoints:
         - matchLabels:
             io.kubernetes.pod.namespace: cloudflare
-    - fromCIDRSet:
-        - cidr: 192.168.20.0/24
-    - fromCIDRSet:
-        - cidr: 192.168.250.0/24
   egress:
     - toFQDNs:
       - matchPattern: "*.selfh.st"

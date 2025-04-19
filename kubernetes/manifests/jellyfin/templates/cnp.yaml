@@ -6,10 +6,6 @@ metadata:
 spec:
   endpointSelector: {}
   ingress:
-    - fromCIDRSet:
-        - cidr: 192.168.20.0/24
-    - fromCIDRSet:
-        - cidr: 192.168.250.0/24
     - fromEndpoints:
         - matchLabels:
             io.kubernetes.pod.namespace: home-assistant

@@ -10,10 +10,6 @@ spec:
             io.kubernetes.pod.namespace: victoria-metrics
     - fromEndpoints:
         - {}
-    - fromCIDRSet:
-        - cidr: 192.168.20.0/24
-    - fromCIDRSet:
-        - cidr: 192.168.250.0/24
   egress:
     - toEndpoints:
         - matchLabels:
