@@ -36,7 +36,6 @@ immich:
         cpu: 31m
         memory: 757Mi
       limits:
-        cpu: 1
         memory: 1514Mi
     ingress:
       main:
@@ -74,5 +73,4 @@ immich:
               cpu: 1
               memory: 500Mi
             limits:
-              cpu: 2
               memory: 1Gi
