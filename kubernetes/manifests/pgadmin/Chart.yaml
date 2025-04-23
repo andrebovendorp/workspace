@@ -1,6 +1,5 @@
 apiVersion: v2
-name: JellyfinServer
-description: Simple Implementation for Jellyfin Server on K8S
+name: pgadmin
 version: 0.1.0
 type: application
 dependencies:
