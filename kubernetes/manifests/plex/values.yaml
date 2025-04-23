@@ -11,6 +11,12 @@ common:
     image: linuxserver/plex
     nodeSelector:
       kubernetes.io/hostname: slave01
+    resources:
+      requests:
+        cpu: 500m
+        memory: 4Gi
+      limits:
+        memory: 8Gi
     env:
       - name: PUID
         value: "1000"
