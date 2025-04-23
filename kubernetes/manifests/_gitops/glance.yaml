@@ -1,7 +1,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: glance 
+  name: glance
   namespace: glance
 spec:
   interval: 5m
@@ -10,8 +10,7 @@ spec:
       chart: kubernetes/manifests/glance
       sourceRef:
         kind: GitRepository
-        name: workspace 
+        name: workspace
         namespace: fluxcd
-      version: '>=0.1.0'
-  valuesFile: "kubernetes/manifests/glance/values.yaml" 
-
+      version: ">=0.1.0"
+  valuesFile: "kubernetes/manifests/glance/values.yaml"
