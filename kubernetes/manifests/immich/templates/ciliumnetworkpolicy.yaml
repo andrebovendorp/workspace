@@ -6,15 +6,11 @@ metadata:
 spec:
   endpointSelector: {}
   ingress:
+    - fromEntities:
+        - ingress
     - fromEndpoints:
         - matchLabels:
             io.kubernetes.pod.namespace: cloudflare
-      toPorts:
-        - ports:
-            - port: "2283"
-    - fromEndpoints:
-        - matchLabels:
-            io.kubernetes.pod.namespace: ingress-nginx
       toPorts:
         - ports:
             - port: "2283"

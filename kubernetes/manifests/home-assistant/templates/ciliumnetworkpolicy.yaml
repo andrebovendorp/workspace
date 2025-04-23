@@ -6,14 +6,11 @@ metadata:
 spec:
   endpointSelector: {}
   ingress:
-    - fromCIDRSet:
-        - cidr: "192.168.50.0/24"
+    - fromEntities:
+        - ingress
     - fromEndpoints:
         - matchLabels:
             io.kubernetes.pod.namespace: matter-server
-    - fromEndpoints:
-        - matchLabels:
-            io.kubernetes.pod.namespace: ingress-nginx
   egress:
     - toEndpoints:
         - matchLabels:
@@ -32,8 +29,6 @@ spec:
     - toEndpoints:
         - matchLabels:
             io.kubernetes.pod.namespace: jellyfin
-    - toEntities:
-        - world
     - toFQDNs:
         - matchPattern: "*.tuyaeu.com"
         - matchPattern: "*.*noaa.gov"

@@ -7,18 +7,18 @@ argo-cd:
       fsGroup: 1000
       runAsGroup: 1000
     nodeSelector:
-      kubernetes.io/hostname: pi
+      kubernetes.io/hostname: slave01
   configs:
     cm:
       timeout.hard.reconciliation: 1m
       resource.ignoreResourceUpdatesEnabled: "true"
     params:
-      controller.status.processors: 1
-      controller.opertation.processors: 1
+      controller.status.processors: 5
+      controller.opertation.processors: 5
       controller.self.heal.timeout.seconds: 120
       server.insecure: true
       server.disable.auth: false
-      reposerverver.parallelism.limit: 5
+      reposerverver.parallelism.limit: 10
       controller.resource.health.persist: true
   controller:
     metrics:

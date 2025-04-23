@@ -1,8 +1,26 @@
 cilium:
+  ingressController:
+     enabled: true
+     default: true
+     loadbalancerMode: shared
+     service:
+       loadBalancerIP: 192.168.50.239
   ipam:
     operator:
       clusterPoolIPv4PodCIDRList: ["10.10.0.0/16"]
   hubble:
+    enableOpenMetrics: true
+    metrics:
+      enabled: 
+      - dns:query
+      - drop
+      - tcp
+      - flow
+      - port-distribution
+      - icmp
+      - http
+      serviceMonitor:
+        enabled: true
     relay:
       enabled: true
     ui:

@@ -9,19 +9,14 @@ spec:
     - fromEndpoints:
         - matchLabels:
             io.kubernetes.pod.namespace: victoria-metrics
-    - fromEndpoints:
         - matchLabels:
             io.kubernetes.pod.namespace: immich
-    - fromEndpoints:
         - matchLabels:
             io.kubernetes.pod.namespace: pgadmin
-    - fromEndpoints:
         - matchLabels:
             io.kubernetes.pod.namespace: bsk-api
-    - fromEndpoints:
         - matchLabels:
             io.kubernetes.pod.namespace: recipes
-    - fromEndpoints:
         - matchLabels:
             io.kubernetes.pod.namespace: wallabag
   egress:

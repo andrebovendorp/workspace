@@ -1,3 +1,8 @@
+# Migrate From Ingress Nginx to Cilium Ingress
+ This will allow me to have more control over the ingress traffic and also to use the Cilium network policies to secure the ingress traffic. This will help to reduce the attack surface of the cluster and make it more secure.
+ 
+ Also will remove one of the components from the cluster and reduce the resource usage. This will help to make the setup more efficient and reduce the cost of running the cluster.
+
 # Migrate ArgoCD to FluxCD
 ArgoCD Is using a lot of resources and is not needed for the current setup. We can use FluxCD to manage our GitOps workflow. This will help us to reduce the resource usage and make the setup more efficient.
 

@@ -32,8 +32,3 @@ spec:
             - port: "5432"
     - toFQDNs:
           - matchPattern: smtp.resend.com
-    - toEntities:
-        - world
-      toPorts:
-        - ports:
-            - port: "443"

@@ -40,7 +40,7 @@ spec:
                       name: grafana-admin-password
   ingress:
     spec:
-      ingressClassName: nginx
+      ingressClassName: cilium
       rules:
         - host: {{ .Values.grafana.hostname }}
           http:

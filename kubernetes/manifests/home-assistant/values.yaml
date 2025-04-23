@@ -16,7 +16,7 @@ home-assistant:
 
   ingress:
     enabled: true
-    className: nginx
+    className: cilium
     annotations:
       kubernetes.io/tls-acme: "true"
       cert-manager.io/cluster-issuer: letsencrypt-prod

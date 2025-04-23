@@ -39,7 +39,7 @@ common:
       name: http
   ingress:
     enabled: true
-    class: nginx
+    class: cilium
     hosts:
     - host: bookshelf.k8s.nullservers.com
     - host: bookshelf.nullservers.com
