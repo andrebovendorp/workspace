@@ -4,7 +4,7 @@ postgresql:
     tag: pg14-v0.2.0
   global:
     imagePullSecrets:
-      - name: dockerhub-token
+      - dockerhub-token
     security:
       allowInsecureImages: true
     postgresql:
