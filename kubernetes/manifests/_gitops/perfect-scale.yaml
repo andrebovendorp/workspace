@@ -1,0 +1,17 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: perfect-scale
+  namespace: perfect-scale
+spec:
+  interval: 1h
+  chart:
+    spec:
+      chart: kubernetes/manifests/perfect-scale
+      sourceRef:
+        kind: GitRepository
+        name: workspace
+        namespace: fluxcd
+      version: ">=0.1.0"
+  values:
+    
