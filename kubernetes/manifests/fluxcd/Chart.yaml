@@ -1,0 +1,8 @@
+apiVersion: v2
+name: fluxcd
+version: 0.1.0
+type: application
+dependencies:
+  - name: flux2
+    version: 2.15.0
+    repository: https://fluxcd-community.github.io/helm-charts

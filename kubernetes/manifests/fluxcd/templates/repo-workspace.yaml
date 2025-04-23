@@ -1,0 +1,9 @@
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: GitRepository
+metadata:
+  name: workspace
+spec:
+  interval: 1m
+  url: https://github.com/boveloco/workspace
+  ref:
+    branch: main

@@ -1,20 +1,17 @@
-apiVersion: argoproj.io/v1alpha1
-kind: Application
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
 metadata:
-  name: glance
-  namespace: argocd
+  name: glance 
+  namespace: glance
 spec:
-  project: platform
-  source:
-    repoURL: https://github.com/boveloco/workspace.git
-    targetRevision: main
-    path: kubernetes/manifests/glance
-  destination:
-    server: https://kubernetes.default.svc
-    namespace: glance
-  syncPolicy:
-    automated:
-      prune: true
-      selfHeal: true
-    syncOptions:
-      - CreateNamespace=true
+  interval: 5m
+  chart:
+    spec:
+      chart: kubernetes/manifests/glance
+      sourceRef:
+        kind: GitRepository
+        name: workspace 
+        namespace: fluxcd
+      version: '>=0.1.0'
+  valuesFile: "kubernetes/manifests/glance/values.yaml" 
+
