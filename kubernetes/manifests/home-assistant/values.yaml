@@ -20,11 +20,12 @@ home-assistant:
     annotations:
       kubernetes.io/tls-acme: "true"
       cert-manager.io/cluster-issuer: letsencrypt-prod
+      cilium.io/service-upstream: "true"
     hosts:
       - host: home.nullservers.com
         paths:
           - path: /
-            pathType: ImplementationSpecific
+            pathType: Prefix
     tls:
       - secretName: home-assistant-tls
         hosts:
