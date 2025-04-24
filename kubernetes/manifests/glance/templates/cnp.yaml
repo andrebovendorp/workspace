@@ -28,6 +28,8 @@ spec:
       - matchPattern: "*.globo.com"
       - matchPattern: "*.unt.se"
       - matchPattern: "*.dn.se"
+    - toCIDRSet:
+        - cidr: 192.168.20.0/24 # Internal network 
     - toEndpoints:
         - matchLabels:
             io.kubernetes.pod.namespace: kube-system

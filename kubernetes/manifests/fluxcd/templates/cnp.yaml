@@ -17,6 +17,9 @@ spec:
     - toFQDNs:
         - matchPattern: "*.ghcr.io"
         - matchPattern: "*.github.com"
+        - matchPattern: "*.github.io"
+        - matchName: "charts.jetstack.io"
+        - matchName: "charts.external-secrets.io"
     - toEndpoints:
         - matchLabels:
             io.kubernetes.pod.namespace: kube-system
