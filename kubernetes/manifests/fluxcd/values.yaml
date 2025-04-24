@@ -1,0 +1,22 @@
+flux2:
+  cli:
+    nodeSelector:
+      kubernetes.io/hostname: pi
+  imageAutomationController:
+    nodeSelector:
+      kubernetes.io/hostname: pi
+  imageReflectionController:
+    nodeSelector:
+      kubernetes.io/hostname: pi
+  kustomizeController:
+    nodeSelector:
+      kubernetes.io/hostname: pi
+  notificationController:
+    nodeSelector:
+      kubernetes.io/hostname: pi
+  sourceController:
+    nodeSelector:
+      kubernetes.io/hostname: pi
+  helmController:
+    nodeSelector:
+      kubernetes.io/hostname: pi
