@@ -1,6 +1,6 @@
 # 2025
-- [ ] Migrate Ingress Nginx to Cilium API GW
-- [ ] Migrate ArgoCD to FluxCD
+- [x] Migrate Ingress Nginx to Cilium API GW
+- [x] Migrate ArgoCD to FluxCD
 - [ ] Migrate resources to Helmchart
 - - [ ] dns-updater
 - - [ ] cloudflare
