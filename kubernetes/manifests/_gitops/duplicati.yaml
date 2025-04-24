@@ -1,0 +1,16 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: duplicati
+  namespace: duplicati
+spec:
+  interval: 1h
+  chart:
+    spec:
+      chart: kubernetes/manifests/duplicati
+      sourceRef:
+        kind: GitRepository
+        name: workspace
+        namespace: fluxcd
+      version: ">=0.1.0"
+  values:
