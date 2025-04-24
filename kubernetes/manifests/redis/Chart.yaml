@@ -6,4 +6,4 @@ type: application
 dependencies:
   - name: redis
     version: 20.6.3
-    repository: https://charts.bitnami.com/bitnami
+    repository: oci://registry-1.docker.io/bitnamicharts
