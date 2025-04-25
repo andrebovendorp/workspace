@@ -43,17 +43,16 @@ immich:
         annotations:
           kubernetes.io/tls-acme: "true"
           cert-manager.io/cluster-issuer: letsencrypt-prod
-          nginx.ingress.kubernetes.io/proxy-body-size: "0"
         ingressClassName: cilium
         hosts:
           - host: photos.nullservers.com
             paths:
               - path: /
-                pathType: ImplementationSpecific
+                pathType: Prefix
           - host: photos.k8s.nullservers.com
             paths:
               - path: /
-                pathType: ImplementationSpecific
+                pathType: Prefix
         tls:
           - secretName: immich-tls
             hosts:
