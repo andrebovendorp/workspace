@@ -22,7 +22,7 @@ data:
               - type: rss
                 limit: 20
                 collapse-after: 8
-                cache: 15m
+                cache: 1h
                 feeds:
                   - url: https://g1.globo.com/rss/g1/politica/
                     title: G1 Política
@@ -50,7 +50,7 @@ data:
                   - UCBJycsmduvYEL83R_U4JriQ # Marques Brownlee
                   - UCHnyfMqiRRG1u-2MsSQLbXA # Veritasium
               - type: monitor
-                cache: 1m
+                cache: 30m
                 title: Casa
                 sites:
                   - title: Home Assistant
@@ -100,9 +100,9 @@ data:
                   - title: Proxmox
                     url: https://192.168.20.20:8006
                     icon: https://camo.githubusercontent.com/fdffb57ca7bf0ba2900bab738df7bf002dee35f15e55f2029a97de1d2bdc1e07/68747470733a2f2f7777772e70726f786d6f782e636f6d2f696d616765732f70726f786d6f782f50726f786d6f782d6c6f676f2d737461636b65642d38343070782e706e67
-                  - title: ArgoCD
-                    url: https://argocd.nullservers.com
-                    icon: https://argo-cd.readthedocs.io/en/stable/assets/logo.png
+                  - title: FluxCD
+                    url: https://flux.k8s.nullservers.com
+                    icon: https://avatars.githubusercontent.com/u/52158677
                   - title: Wallabag
                     url: https://wallabag.k8s.nullservers.com
                     icon: https://wallabag.org/img/logo-wallabag.svg
@@ -129,7 +129,7 @@ data:
                     name: Volvo
 
               - type: releases
-                cache: 1d
+                cache: 1h
                 repositories:
                   - glanceapp/glance
                   - immich-app/immich
@@ -148,7 +148,7 @@ data:
               - type: rss
                 limit: 10
                 collapse-after: 10
-                cache: 15m
+                cache: 1h
                 feeds:
                   - url: https://g1.globo.com/rss/g1/politica/
                     title: G1 Política
@@ -165,7 +165,7 @@ data:
               - type: rss
                 limit: 20
                 collapse-after: 12
-                cache: 15m
+                cache: 1h
                 feeds:
                   - url: https://feeds.feedburner.com/XadrezVerbal
                     title: Xadrez Verbal
@@ -185,7 +185,7 @@ data:
               - type: rss
                 limit: 10
                 collapse-after: 8
-                cache: 15m
+                cache: 1h
                 feeds:
                   - url: https://www.unt.se/rss/lokalt/uppsala
                     title: UNT Uppsala
