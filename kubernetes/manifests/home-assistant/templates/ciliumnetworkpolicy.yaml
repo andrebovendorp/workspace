@@ -26,13 +26,19 @@ spec:
     - toEndpoints:
         - matchLabels:
             io.kubernetes.pod.namespace: matter-server
-    - toEndpoints:
         - matchLabels:
             io.kubernetes.pod.namespace: jellyfin
     - toFQDNs:
         - matchPattern: "*.tuyaeu.com"
-        - matchPattern: "*.*noaa.gov"
+        - matchPattern: "*.*.noaa.gov"
         - matchPattern: "*.met.no"
+        - matchPattern: "*.*.met.no"
         - matchPattern: "*.nullservers.com"
+        - matchPattern: "*.open-meteo.com"
+        - matchPattern: "*.*.radio-browser.info"
+        - matchPattern: "*.googleapis.com"
     - toCIDRSet:
-        - cidr: "192.168.50.240/28"
+        - cidr: "192.168.50.240/32" # DNS
+        - cidr: "192.168.200.0/24" # IOT network
+    - toEntities:
+        - ingress
