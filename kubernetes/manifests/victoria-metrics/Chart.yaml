@@ -10,3 +10,6 @@ dependencies:
   - name: grafana-operator
     version: v5.16.0
     repository: oci://ghcr.io/grafana/helm-charts
+  - name: victoria-logs-single
+    version: ">=0.9.7"
+    repository: https://victoriametrics.github.io/helm-charts/

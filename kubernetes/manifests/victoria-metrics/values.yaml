@@ -156,3 +156,22 @@ victoria-metrics-k8s-stack:
     testFramework:
       enabled: false
   fullnameOverride: "victoria-metrics"
+
+victoria-logs-single:
+  server:
+    serviceMonitor:
+      enabled: true
+  global:
+    imagePullSecrets: 
+    - name: dockerhub-token
+  serviceAccount:
+    create: true
+  vmServiceScrape:
+    enabled: true
+  vector:
+    enabled: false
+  dashboards:
+    enabled: true
+    namespace: victoria-metrics
+    grafanaOperator:
+      enabled: true
