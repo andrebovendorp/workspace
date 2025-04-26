@@ -1,0 +1,7 @@
+apiVersion: v2
+name: loki
+version: 0.1.0
+dependencies:
+  - name: loki
+    version: ">= 3.0.0" # Specify a compatible version range
+    repository: https://grafana.github.io/helm-charts
