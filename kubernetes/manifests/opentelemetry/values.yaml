@@ -1,5 +1,7 @@
 opentelemetry-operator:
   manager:
+    serviceMonitor:
+      enabled: true
     collectorImage:
       repository: "otel/opentelemetry-collector-contrib"
       tag: "latest"
