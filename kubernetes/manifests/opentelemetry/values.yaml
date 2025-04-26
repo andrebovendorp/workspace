@@ -1,0 +1,16 @@
+opentelemetry-operator:
+  manager:
+    collectorImage:
+      repository: "otel/opentelemetry-collector-contrib"
+      tag: "latest"
+    resources:
+      limits:
+        memory: 180Mi
+      requests:
+        cpu: 100m
+        memory: 180Mi
+  admissionWebhooks:
+    autoGenerateCert:
+      enabled: false
+    certManager:
+      enabled: true
