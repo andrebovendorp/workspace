@@ -1,4 +1,6 @@
 opentelemetry-operator:
+  crds:
+    create: true
   manager:
     serviceMonitor:
       enabled: true

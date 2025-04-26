@@ -82,6 +82,8 @@ spec:
           type: severity_parser
           if: 'body?.level != nil'
           parse_from: body.level
+        - id: noop
+          type: noop
         poll_interval: 200ms
         retry_on_failure:
           enabled: true
