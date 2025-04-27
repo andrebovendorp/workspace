@@ -1,0 +1,80 @@
+shlink-server:
+  unprivileged: true
+
+  deployment:
+    enabled: true
+    ports:
+      - containerPort: 8080
+    replicaCount: 1
+    image: ghcr.io/shlinkio/shlink:4.4.6
+    resources:
+      requests:
+        memory: "50Mi"
+        cpu: "50m"
+      limits:
+        memory: "256Mi"
+        cpu: "200m"
+    env:
+      - name: WEB_WORKER_NUM
+        value: "1"
+      - name: TASK_WORKER_NUM
+        value: "1"
+      - name: INITIAL_API_KEY
+        valueFrom:
+          secretKeyRef:
+            name: shlink-apikey
+            key: password
+      - name: SKIP_INITIAL_GEOLITE_DOWNLOAD
+        value: "true"
+      - name: TIMEZONE
+        value: Europe/Stockholm
+      - name: SHELL_VERBOSITY
+        value: "1"
+      - name: DEFAULT_DOMAIN
+        value: nullsrv.com
+      - name: IS_HTTPS_ENABLED
+        value: "false"
+      - name: GEOLITE_LICENSE_KEY
+        valueFrom:
+          secretKeyRef:
+            name: geoip-license-key
+            key: password
+      - name: DB_DRIVER
+        value: postgres
+      - name: DB_NAME
+        value: shlink
+      - name: DB_PORT
+        value: "5432"
+      - name: DB_USER
+        valueFrom:
+          secretKeyRef:
+            name: shlink-db-credentials
+            key: username
+      - name: DB_PASSWORD
+        valueFrom:
+          secretKeyRef:
+            name: shlink-db-credentials
+            key: password
+      - name: DB_HOST
+        value: pgsql-postgresql-hl.pgsql.svc.cluster.local
+      - name: REDIS_SERVERS
+        value: "redis://redis-headless.redis.svc.cluster.local,"
+      - name: REDIS_PUB_SUB_ENABLED
+        value: "true"
+
+  emptyDirVolumeMounts:
+    - name: data
+      mountPath: /etc/shlink/data/
+      size: 100Mi
+
+  service:
+    enabled: true
+    ports:
+      - port: 80
+        targetPort: 8080
+        name: http
+        type: ClusterIP
+
+  # Only external access via cloudflared tunnel
+  ingress:
+    enabled: false

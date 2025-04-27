@@ -1,25 +1,24 @@
 apiVersion: cilium.io/v2
 kind: CiliumNetworkPolicy
 metadata:
-  name: block-untrusted-traffic
+  name: default
+  namespace: {{ .Release.Namespace }}
 spec:
   endpointSelector: {}
   ingress:
     - fromEndpoints:
         - matchLabels:
-            io.kubernetes.pod.namespace: victoria-metrics
-    - fromEndpoints:
-        - matchLabels:
-            io.kubernetes.pod.namespace: immich
-    - fromEndpoints:
-        - matchLabels:
-            io.kubernetes.pod.namespace: external-secrets
-    - fromEndpoints:
+            io.kubernetes.pod.namespace: cloudflare
         - matchLabels:
             io.kubernetes.pod.namespace: shlink
   egress:
-    - toEntities:
-        - cluster
+    - toEndpoints:
+        - matchLabels:
+            io.kubernetes.pod.namespace: victoria-metrics
+        - matchLabels:
+            io.kubernetes.pod.namespace: pgsql
+        - matchLabels:
+            io.kubernetes.pod.namespace: redis
     - toEndpoints:
         - matchLabels:
             io.kubernetes.pod.namespace: kube-system

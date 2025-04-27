@@ -1,0 +1,33 @@
+shlink-webserver:
+  unprivileged: true
+  deployment:
+    enabled: true
+    ports:
+      - containerPort: 8080
+    replicaCount: 1
+    image: ghcr.io/shlinkio/shlink-web-client
+    resources:
+      requests:
+        memory: "50Mi"
+        cpu: "50m"
+      limits:
+        memory: "256Mi"
+        cpu: "200m"
+  service:
+    enabled: true
+    ports:
+      - port: 80
+        targetPort: 8080
+        name: http
+        type: ClusterIP
+
+  emptyDirVolumeMounts:
+    - name: tmp
+      mountPath: /tmp
+      size: 100Mi
+    # Only external access via cloudflared tunnel
+  ingress:
+    enabled: true
+    class: cilium
+    hosts:
+      - host: shlink.k8s.nullservers.com

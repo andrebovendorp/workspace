@@ -1,0 +1,20 @@
+apiVersion: external-secrets.io/v1beta1
+kind: ExternalSecret
+metadata:
+  name: shlink-apikey
+  namespace: {{ .Release.namespace }}
+spec:
+  secretStoreRef:
+    kind: ClusterSecretStore
+    name: onepassword
+  target:
+    creationPolicy: Owner
+    name: shlink-apikey
+  data:
+  - secretKey: password
+    remoteRef:
+      conversionStrategy: Default
+      metadataPolicy: None
+      key: shlink-apikey
+      property: password
+      decodingStrategy: None
