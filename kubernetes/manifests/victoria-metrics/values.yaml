@@ -161,6 +161,21 @@ victoria-logs-single:
   server:
     serviceMonitor:
       enabled: true
+    ingress:
+      enabled: true
+      annotations:
+        kubernetes.io/tls-acme: "true"
+        cert-manager.io/cluster-issuer: letsencrypt-prod
+      ingressClassName: cilium
+      hosts:
+        - name: logs.k8s.nullservers.com
+          path:
+            - /
+          port: http
+      tls:
+        - secretName: vm-logs--tls
+          hosts:
+            - logs.k8s.nullservers.com
   global:
     imagePullSecrets: 
     - name: dockerhub-token

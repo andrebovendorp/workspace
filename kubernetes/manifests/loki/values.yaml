@@ -62,7 +62,6 @@ loki:
     replicas: 0
   write:
     replicas: 0
-
   ingester:
     replicas: 0
   querier:
@@ -81,26 +80,3 @@ loki:
     replicas: 0
   bloomGateway:
     replicas: 0
-
-opentelemetry-operator:
-  enabled: false
-  monitoring:
-    dashboards:
-      enabled: true
-    serviceMonitor:
-      enabled: true
-  manager:
-    collectorImage:
-      repository: "otel/opentelemetry-collector-contrib"
-      tag: "latest"
-    resources:
-      limits:
-        memory: 180Mi
-      requests:
-        cpu: 100m
-        memory: 180Mi
-  admissionWebhooks:
-    autoGenerateCert:
-      enabled: false
-    certManager:
-      enabled: true
