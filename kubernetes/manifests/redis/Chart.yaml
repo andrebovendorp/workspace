@@ -1,7 +1,6 @@
 apiVersion: v2
 name: redis
-description: Basic redis for cluster
-version: 0.1.0
+version: 0.1.1
 type: application
 dependencies:
   - name: redis
