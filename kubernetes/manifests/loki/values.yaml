@@ -1,4 +1,6 @@
 loki:
+  lokiCanary:
+    enabled: false
   loki:
     auth_enabled: false
     ingress:
