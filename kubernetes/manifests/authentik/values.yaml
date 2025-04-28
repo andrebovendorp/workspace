@@ -1,0 +1,60 @@
+authentik:
+  securityContext:
+    fsGroup: 1000
+    runAsUser: 1000
+    runAsGroup: 1000
+  authentik:
+    env:
+      - name: AUTHENTIK_SECRET_KEY
+        valueFrom:
+          secretKeyRef:
+            name: authentik-credentials
+            key: secret-key
+      - name: AUTHENTIK_POSTGRESQL__USER
+        valueFrom:
+          secretKeyRef:
+            name: authentik-credentials
+            key: username
+      - name: AUTHENTIK_POSTGRESQL__PASSWORD
+        valueFrom:
+          secretKeyRef:
+            name: authentik-credentials
+            key: password
+      - name: AUTHENTIK_EMAIL__PASSWORD
+        valueFrom:
+          secretKeyRef:
+            name: authentik-credentials
+            key: resend-key
+    email:
+      host: smtp.resend.com
+      port: 587
+      user: resend
+      # password: env
+      use_tls: true
+    postgresql:
+      host: pgsql-postgresql-hl.pgsql.svc.cluster.local
+      name: authentik
+      # user: env
+      # password: env
+    redis:
+      host: redis.redis.svc.cluster.local
+  server:
+    metrics:
+      enabled: true
+    serviceMonitor: 
+      enabled: true
+    ingress:
+      enabled: true
+      ingressClassName: cilium
+      hosts:
+        - auth.nullservers.com
+      tls:
+        - secretName: authentik-ingress-tls
+          hosts:
+            - auth.nullservers.com
+  geoip:
+    enabled: true
+    existingSecret:
+      secretName: geoip-license-key
+      accountId: accountid
+      licenseKey: password
