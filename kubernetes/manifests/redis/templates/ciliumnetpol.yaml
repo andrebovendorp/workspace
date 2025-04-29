@@ -17,6 +17,9 @@ spec:
     - fromEndpoints:
         - matchLabels:
             io.kubernetes.pod.namespace: shlink
+    - fromEndpoints:
+        - matchLabels:
+            io.kubernetes.pod.namespace: authentik
   egress:
     - toEntities:
         - cluster
