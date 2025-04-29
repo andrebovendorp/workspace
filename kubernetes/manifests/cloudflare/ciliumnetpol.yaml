@@ -35,6 +35,8 @@ spec:
             io.kubernetes.pod.namespace: shlink
         - matchLabels:
             io.kubernetes.pod.namespace: immich
+        - matchLabels:
+            io.kubernetes.pod.namespace: authentik
     # Allow Cloudflare 
     - toFQDNs:
       - matchPattern: "*.cloudflare.com"
