@@ -14,6 +14,18 @@ spec:
   egress:
   - toEndpoints:
     - matchLabels:
+        io.kubernetes.pod.namespace: pgsql
+    - matchLabels:
+        io.kubernetes.pod.namespace: redis
+  - toFQDNs:
+    # https://docs.goauthentik.io/docs/install-config/air-gapped#outbound-connections
+    - matchName: updates.maxmind.com
+    - matchName: version.goauthentik.io # Version check
+    - matchName: secure.gravatar.com # Avatar for users
+    # - matchName: goauthentik.io ## Analytics
+    - matchName: mm-prod-geoip-databases.a2649acb697e2c09b632799562c076f2.r2.cloudflarestorage.com 
+  - toEndpoints:
+    - matchLabels:
         io.kubernetes.pod.namespace: kube-system
         k8s-app: kube-dns
     toPorts:
