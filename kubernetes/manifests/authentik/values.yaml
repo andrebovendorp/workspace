@@ -1,0 +1,77 @@
+authentik:
+  securityContext:
+    fsGroup: 1000
+    runAsUser: 1000
+    runAsGroup: 1000
+  authentik:
+    secret_key: file:///authentik-credentials/encryption-key
+    email:
+      host: smtp.resend.com
+      port: 587
+      user: resend
+      password: file:///authentik-credentials/resend-key
+      use_tls: true
+    postgresql:
+      host: pgsql-postgresql-hl.pgsql.svc.cluster.local
+      name: authentik
+      user: file:///authentik-credentials/username
+      password: file:///authentik-credentials/password
+    redis:
+      host: redis-headless.redis.svc.cluster.local
+  worker:
+    volumes:
+      - name: authentik-credentials
+        secret:
+          secretName: authentik-credentials
+    volumeMounts:
+      - name: authentik-credentials
+        mountPath: /authentik-credentials
+        readOnly: true
+    metrics:
+      enabled: true
+  server:
+    env:
+      - name: AUTHENTIK_DISABLE_STARTUP_ANALYTICS
+        value: "true"
+      - name: AUTHENTIK_ERROR_REPORTING__ENABLED
+        value: "false"
+      - name: AUTHENTIK_DISABLE_UPDATE_CHECK
+        value: "true"
+    volumes:
+      - name: authentik-credentials
+        secret:
+          secretName: authentik-credentials
+      - name: authentik-data
+        persistentVolumeClaim:
+          claimName: authentik-data
+    volumeMounts:
+      - name: authentik-credentials
+        mountPath: /authentik-credentials
+        readOnly: true
+      - name: authentik-data
+        mountPath: /data    
+    metrics: 
+      enabled: true
+    serviceMonitor:
+      enabled: true
+    ingress:
+      enabled: true
+      annotations:
+        kubernetes.io/tls-acme: "true"
+        cert-manager.io/cluster-issuer: letsencrypt-prod
+      ingressClassName: cilium
+      hosts:
+        - auth.nullservers.com
+      tls:
+        - secretName: authentik-ingress-tls
+          hosts:
+            - auth.nullservers.com
+  geoip:
+    enabled: true
+    existingSecret:
+      secretName: geoip-license-key
+      accountId: accountid
+      licenseKey: password
+
+storage:
+  size: 10Gi

@@ -1,0 +1,42 @@
+apiVersion: external-secrets.io/v1beta1
+kind: ExternalSecret
+metadata:
+  name: authentik-credentials
+  namespace: {{ .Release.Namespace }}
+spec:
+  secretStoreRef:
+    kind: ClusterSecretStore
+    name: onepassword
+  target:
+    creationPolicy: Owner
+    name: authentik-credentials
+  data:
+    - secretKey: password
+      remoteRef:
+        conversionStrategy: Default
+        metadataPolicy: None
+        key: authentik-credentials
+        property: password
+        decodingStrategy: None
+    - secretKey: username
+      remoteRef:
+        conversionStrategy: Default
+        metadataPolicy: None
+        key: authentik-credentials
+        property: username
+        decodingStrategy: None
+    - secretKey: encryption-key
+      remoteRef:
+        conversionStrategy: Default
+        metadataPolicy: None
+        key: authentik-credentials
+        property: secret-key
+        decodingStrategy: None
+    - secretKey: resend-key
+      remoteRef:
+        conversionStrategy: Default
+        metadataPolicy: None
+        key: authentik-credentials
+        property: resend-key
+        decodingStrategy: None
+

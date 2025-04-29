@@ -1,0 +1,38 @@
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: default
+  namespace: {{ .Release.Namespace }}
+spec:
+  endpointSelector: {}
+  ingress:
+  - fromEntities:
+    - ingress
+  - fromEndpoints:
+    - matchLabels:
+        io.kubernetes.pod.namespace: cloudflare
+  egress:
+  - toEndpoints:
+    - matchLabels:
+        io.kubernetes.pod.namespace: pgsql
+    - matchLabels:
+        io.kubernetes.pod.namespace: redis
+  - toFQDNs:
+    # https://docs.goauthentik.io/docs/install-config/air-gapped#outbound-connections
+    - matchName: updates.maxmind.com
+    - matchName: version.goauthentik.io # Version check
+    - matchName: secure.gravatar.com # Avatar for users
+    - matchName: smtp.resend.com # Email
+    - matchName: mm-prod-geoip-databases.a2649acb697e2c09b632799562c076f2.r2.cloudflarestorage.com 
+    # - matchName: goauthentik.io ## Analytics
+  - toEndpoints:
+    - matchLabels:
+        io.kubernetes.pod.namespace: kube-system
+        k8s-app: kube-dns
+    toPorts:
+    - ports:
+      - port: "53"
+        protocol: UDP
+      rules:
+        dns:
+        - matchPattern: "*"
