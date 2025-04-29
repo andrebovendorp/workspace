@@ -1,6 +1,6 @@
 apiVersion: v2
 name: loki
-version: 0.1.0
+version: 0.1.2
 dependencies:
   - name: loki
     version: ">= 3.0.0" # Specify a compatible version range
