@@ -21,6 +21,9 @@ spec:
         io.kubernetes.pod.namespace: pgsql
     - matchLabels:
         io.kubernetes.pod.namespace: redis
+    ## Reverse proxy OAUTH
+    - matchLabels:
+        io.kubernetes.pod.namespace: duplicati
   - toFQDNs:
     # https://docs.goauthentik.io/docs/install-config/air-gapped#outbound-connections
     - matchName: updates.maxmind.com
