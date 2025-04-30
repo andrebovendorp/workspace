@@ -12,7 +12,7 @@ spec:
   capacity:
     storage: {{ .Values.storage.size | default "10Gi" }}
   hostPath:
-    path: /opt/pvcs/kubernetes-storage-persistent/pv-home-assistant-data
+    path: "/opt/pvcs/kubernetes-storage-persistent/authentik"
     type: DirectoryOrCreate
   nodeAffinity:
     required:
@@ -30,6 +30,9 @@ spec:
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
+  annotations:
+    volume.kubernetes.io/selected-node: slave01
+    local.path.provisioner/selected-node: slave01
   name: authentik-data
   namespace: {{ .Release.Namespace }}
 spec:

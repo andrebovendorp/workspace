@@ -67,7 +67,7 @@ authentik:
           hosts:
             - auth.nullservers.com
   geoip:
-    enabled: true
+    enabled: false
     existingSecret:
       secretName: geoip-license-key
       accountId: accountid
