@@ -10,7 +10,7 @@ spec:
         - ingress
     - fromEndpoints:
         - matchLabels:
-            io.kubernetes.pod.namespace: cloudflare
+            io.kubernetes.pod.namespace: authentik
   egress:
     - toEndpoints:
         - matchLabels:
