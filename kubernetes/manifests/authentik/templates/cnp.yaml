@@ -12,6 +12,8 @@ spec:
     - matchLabels:
         io.kubernetes.pod.namespace: cloudflare
   egress:
+  - toEntities:
+    - kube-apiserver
   - toEndpoints:
     - matchLabels:
         io.kubernetes.pod.namespace: pgsql
