@@ -11,6 +11,8 @@ spec:
   - fromEndpoints:
     - matchLabels:
         io.kubernetes.pod.namespace: cloudflare
+    - matchLabels:
+        io.kubernetes.pod.namespace: victoria-metrics
   egress:
   - toEntities:
     - kube-apiserver
