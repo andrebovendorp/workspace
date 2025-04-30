@@ -46,19 +46,19 @@ common:
             key: client-secret
           
       - name: PGADMIN_CONFIG_OAUTH2_TOKEN_URL
-        value: '"https://auth.nullservers.com/application/o/token"'
+        value: '"https://auth.nullservers.com/application/o/token/"'
       - name: PGADMIN_CONFIG_OAUTH2_AUTHORIZATION_URL
-        value: '"https://auth.nullservers.com/application/o/authorize"'
+        value: '"https://auth.nullservers.com/application/o/authorize/"'
       - name: PGADMIN_CONFIG_OAUTH2_SERVER_METADATA_URL
-        value: '"https://auth.nullservers.com/application/o/pgadmin/.well-known/openid-configuration"'
+        value: '"https://auth.nullservers.com/application/o/pgadmin/.well-known/openid-configuration/"'
       - name: PGADMIN_CONFIG_OAUTH2_API_BASE_URL
-        value: '"https://auth.nullservers.com"'
+        value: '"https://auth.nullservers.com/"'
       - name: PGADMIN_CONFIG_OAUTH2_USERINFO_ENDPOINT
-        value: '"https://auth.nullservers.com/application/o/userinfo"'
+        value: '"https://auth.nullservers.com/application/o/userinfo/"'
       - name: PGADMIN_CONFIG_OAUTH2_SCOPE
         value: '"openid email profile"'
       - name: PGADMIN_CONFIG_OIDC_REDIRECT_URI
-        value: '"https://pgadmin.k8s.nullservers.com/oauth2/callback"'
+        value: '"https://pgadmin.k8s.nullservers.com/oauth2/callback/"'
       - name: PGADMIN_DISABLE_POSTFIX
         value: "True"
 
