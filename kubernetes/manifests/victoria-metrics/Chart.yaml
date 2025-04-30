@@ -1,7 +1,7 @@
 apiVersion: v2
 name: victoria-metrics
 description: Observability
-version: 0.1.1
+version: 0.1.2
 type: application
 dependencies:
   - name: victoria-metrics-k8s-stack
