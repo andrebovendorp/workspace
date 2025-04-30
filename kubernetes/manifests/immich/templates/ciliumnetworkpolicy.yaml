@@ -40,6 +40,7 @@ spec:
             - port: "6379"
     - toFQDNs:
         - matchName: api.github.com
+        - matchName: auth.nullservers.com
       toPorts:
         - ports:
             - port: "443"
