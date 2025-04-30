@@ -1,13 +1,13 @@
 apiVersion: grafana.integreatly.org/v1beta1
 kind: GrafanaDashboard
 metadata:
-  name: {{ .Release.Name }}-ingress-controller-dashboard
+  name: {{ .Release.Name }}-hubble-dashboard
 spec:
   instanceSelector:
     matchLabels:
       dashboards: "grafana"
   grafanaCom:
-    id: 9614
+    id: 16613
   datasources:
-  - inputName: DS_PROMETHEUS
+  - inputName: prometheus
     datasourceName: prometheus
