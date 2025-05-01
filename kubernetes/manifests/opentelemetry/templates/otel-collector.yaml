@@ -154,10 +154,6 @@ spec:
           paging: null
           processes: null
     processors:
-      filter/drop-loki-namespace:
-        logs:
-          log_record:
-            - 'attributes["k8s.namespace.name"] == "loki"'
       memory_limiter:
         check_interval: 1s
         limit_percentage: 75
@@ -247,10 +243,6 @@ spec:
     exporters:
       debug:
         verbosity: basic
-      otlphttp/loki:
-        endpoint: http://loki.loki.svc.cluster.local:3100/otlp/
-        tls:
-          insecure: true
       otlphttp/victoria-logs:
         endpoint: "http://victoria-metrics-victoria-logs-single-server.victoria-metrics.svc.cluster.local:9428/insert/opentelemetry"
         tls:
@@ -263,10 +255,8 @@ spec:
         logs/filelog:
           exporters:
           - debug
-          - otlphttp/loki
           - otlphttp/victoria-logs
           processors:
-          - filter/drop-loki-namespace
           - memory_limiter
           - k8sattributes
           - resourcedetection
