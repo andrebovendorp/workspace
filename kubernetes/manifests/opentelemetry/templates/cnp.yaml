@@ -14,9 +14,6 @@ spec:
         - matchLabels:
             io.kubernetes.pod.namespace: victoria-metrics
     - toEndpoints:
-        - matchLabels:
-            io.kubernetes.pod.namespace: loki
-    - toEndpoints:
         - {}
     - toEndpoints:
         - matchLabels:
