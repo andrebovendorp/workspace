@@ -16,6 +16,7 @@ common:
         cpu: 500m
         memory: 4Gi
       limits:
+        cpu: 11
         memory: 8Gi
     env:
       - name: PUID
