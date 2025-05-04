@@ -13,11 +13,13 @@ common:
       kubernetes.io/hostname: slave01
     resources:
       requests:
+        gpu.intel.com/i915: "1" 
         cpu: 500m
         memory: 4Gi
       limits:
         cpu: 11
         memory: 8Gi
+        gpu.intel.com/i915: "1" 
     env:
       - name: PUID
         value: "1000"
