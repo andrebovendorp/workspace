@@ -3,6 +3,7 @@
   become: yes  # Ensures commands are run as a superuser
   vars:
     join_token: ""
+    k8s_version: "v1.32.4+k3s1"
   tasks:
     - name: Setup Hostname
       hostname:
@@ -20,7 +21,7 @@
 
     - name: Install K3s Server
       shell: |
-        curl -sfL https://get.k3s.io | INSTALL_K3S_VERSION=v1.32.2+k3s1 INSTALL_K3S_EXEC='--flannel-backend=none --disable-network-policy --disable=traefik --disable local-storage' sh -
+        curl -sfL https://get.k3s.io | INSTALL_K3S_VERSION={{k8s_version}} INSTALL_K3S_EXEC='--flannel-backend=none --disable-network-policy --disable=traefik --disable local-storage' sh -
       delegate_to: master
       when: inventory_hostname == groups['master'][0]
       
@@ -64,5 +65,5 @@
 
     - name: Add Slaves to Cluster
       shell: |
-        curl -sfL https://get.k3s.io | INSTALL_K3S_VERSION=v1.32.2+k3s1 K3S_URL=https://{{ hostvars[groups['master'][0]].ansible_host }}:6443 K3S_TOKEN={{ hostvars[groups['master'][0]].join_token.stdout }} sh -
+        curl -sfL https://get.k3s.io | INSTALL_K3S_VERSION={{k8s_version}} K3S_URL=https://{{ hostvars[groups['master'][0]].ansible_host }}:6443 K3S_TOKEN={{ hostvars[groups['master'][0]].join_token.stdout }} sh -
       when: inventory_hostname in groups['slaves']
