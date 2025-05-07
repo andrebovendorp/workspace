@@ -4,7 +4,7 @@ version: 0.1.2
 type: application
 dependencies:
 - name: common
-  version: 0.1.5
+  version: 0.1.7
   repository: https://boveloco.github.io/charts/
   condition: chart.enabled
   
