@@ -5,6 +5,6 @@ version: 0.1.0
 type: application
 dependencies:
   - name: exporter
-    version: v1.0.48
+    version: v1.0.59
     repository: https://perfectscale-io.github.io/
     condition: chart.enabled
