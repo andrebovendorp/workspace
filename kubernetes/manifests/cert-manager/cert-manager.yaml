@@ -13329,7 +13329,7 @@ spec:
           type: RuntimeDefault
       containers:
         - name: cert-manager-webhook
-          image: "quay.io/jetstack/cert-manager-webhook:v1.16.3"
+          image: "quay.io/jetstack/cert-manager-webhook:v1.17.2"
           imagePullPolicy: IfNotPresent
           args:
             - --v=2
