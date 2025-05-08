@@ -13,6 +13,6 @@ spec:
         name: workspace
         namespace: fluxcd
       version: ">=0.1.0"
-  reconcileStrategy: Revision
+      reconcileStrategy: Revision
   values:
     
