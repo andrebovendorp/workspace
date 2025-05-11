@@ -1,0 +1,53 @@
+common:
+  clusterIssuer: letsencrypt-prod
+
+  unprivileged: false
+
+  deployment:
+    enabled: true
+    port: 80
+    replicaCount: 1
+    image: lscr.io/linuxserver/emulatorjs:latest
+    nodeSelector:
+      kubernetes.io/hostname: slave01
+    resources:
+      requests:
+        memory: 64Mi
+        cpu: 250m
+      limits:
+        memory: 512Mi
+        cpu: 10
+    env:
+      - name: PUID
+        value: "1000"
+      - name: PGID
+        value: "1000"
+      - name: TZ
+        value: Europe/Stockholm
+
+  hostVolumeMounts:
+  - name: roms
+    hostPath: /mnt/external-drive/roms
+    mountPath: /roms
+
+  pvcVolumeMounts:
+  - name: config
+    mountPath: /config
+    size: 1Gi
+    storageClassName: ssd-storage
+  - name: data
+    mountPath: /data
+    size: 2Gi
+    storageClassName: ssd-storage
+
+  service:
+    enabled: true
+    ports:
+    - port: 80
+      targetPort: 80
+      name: http
+  ingress:
+    enabled: true
+    class: cilium
+    hosts:
+    - host: play.k8s.nullservers.com
