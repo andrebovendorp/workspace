@@ -1,12 +1,17 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": [ "config:recommended" ],
+  "extends": [
+    "config:recommended"
+  ],
   "timezone": "Europe/Stockholm",
   "commitMessagePrefix": "Renovate/",
   "commitMessageTopic": "{{depName}}",
   "dependencyDashboard": true,
   "dependencyDashboardTitle": "Renovate",
-  "labels": [ "kind/update", "renovate" ],
+  "labels": [
+    "kind/update",
+    "renovate"
+  ],
   "ignorePaths": [
     ".vscode/",
     "studies/",
@@ -14,7 +19,9 @@
   ],
   "packageRules": [
     {
-      "matchUpdateTypes": [ "patch" ],
+      "matchUpdateTypes": [
+        "patch"
+      ],
       "matchCurrentVersion": "!/^0/",
       "automerge": true
     },
@@ -29,6 +36,8 @@
     }
   ],
   "kubernetes": {
-    "fileMatch": [ "kubernetes/manifests/.+\\.yaml" ]
+    "managerFilePatterns": [
+      "/kubernetes/manifests/.+\\.yaml/"
+    ]
   }
 }
