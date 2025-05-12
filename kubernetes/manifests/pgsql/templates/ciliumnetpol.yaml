@@ -23,6 +23,8 @@ spec:
             io.kubernetes.pod.namespace: shlink
         - matchLabels:
             io.kubernetes.pod.namespace: authentik
+        - matchLabels:
+            io.kubernetes.pod.namespace: freshrss
 
   egress:
     - toEndpoints:
