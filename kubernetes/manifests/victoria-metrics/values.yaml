@@ -88,7 +88,7 @@ victoria-metrics-k8s-stack:
     serviceMonitor:
       enabled: true
   prometheus-operator-crds:
-    enabled: true
+    enabled: false
   defaultDashboards:
     grafanaOperator:
       enabled: true
@@ -189,4 +189,4 @@ victoria-logs-single:
     enabled: true
     namespace: victoria-metrics
     grafanaOperator:
-      enabled: true
+      enabled: false
