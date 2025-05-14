@@ -162,8 +162,6 @@ spec:
         send_batch_size: 10000
         timeout: 10s
       k8sattributes:
-        filter:
-          node_from_env_var: ${K8S_NODE_NAME}
         extract:
           metadata:
             - k8s.daemonset.name
