@@ -134,6 +134,13 @@ data:
             "/opt/pvcs/kubernetes-storage", 
             "/opt/pvcs/kubernetes-storage-persistent"
           ]
+        },
+        {
+          "node":"slave02",
+          "paths":[
+            "/opt/pvcs/kubernetes-storage", 
+            "/opt/pvcs/kubernetes-storage-persistent"
+          ]
         }
       ]
     }
