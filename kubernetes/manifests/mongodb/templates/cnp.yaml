@@ -11,6 +11,8 @@ spec:
     - fromEndpoints:
         - matchLabels:
             io.kubernetes.pod.namespace: victoria-metrics
+        - matchLabels:
+            io.kubernetes.pod.namespace: tibia-statistics
   egress:
     - toEndpoints:
         - matchLabels:

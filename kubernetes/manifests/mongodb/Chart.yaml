@@ -1,8 +1,8 @@
 apiVersion: v2
 name: mongodb
-version: 0.1.0
+version: 0.1.1
 type: application
 dependencies:
-  - name: mongodb
-    version: 16.5.7
-    repository: oci://registry-1.docker.io/bitnamicharts
+- name: mongodb
+  version: 16.5.7
+  repository: oci://registry-1.docker.io/bitnamicharts
