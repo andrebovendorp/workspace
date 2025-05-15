@@ -1,4 +1,6 @@
 mongodb:
+  useStatefulSet: true
+  usePasswordFiles: false
   tolerations:
   - key: "network"
     operator: "Equal"
@@ -6,7 +8,7 @@ mongodb:
     effect: "NoSchedule"
 
   diagnosticMode:
-    enabled: true
+    enabled: false
   image:
     debug: true
 
@@ -15,14 +17,16 @@ mongodb:
 
   global:
     imagePullSecrets:
-      - name: dockerhub-token
+    - name: dockerhub-token
     defaultStorageClass: ssd-storage-persistent
   auth:
+    enabled: true
+    existingSecret: mongo-db-credentials
     usernames:
-      - boveloco
+    - boveloco
     databases:
-      - statistics
-    
+    - statistics
+
   metrics:
     enabled: true
     serviceMonitor:
