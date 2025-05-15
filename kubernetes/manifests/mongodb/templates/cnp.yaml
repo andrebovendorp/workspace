@@ -18,8 +18,6 @@ spec:
         - matchLabels:
             io.kubernetes.pod.namespace: kube-system
             k8s-app: kube-dns
-        - matchLabels:
-            io.kubernetes.pod.namespace: redis
       toPorts:
         - ports:
             - port: "53"
