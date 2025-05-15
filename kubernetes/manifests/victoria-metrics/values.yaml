@@ -1,10 +1,9 @@
 grafana:
   hostname: grafana.nullservers.com
   additionalHosts:
-    - name: grafana.k8s.nullservers.com
-  
-victoria-metrics-k8s-stack: 
-  argocdReleaseOverride: "victoria-metrics"
+  - name: grafana.k8s.nullservers.com
+
+victoria-metrics-k8s-stack:
   vmalertmanager:
     enabled: false
     spec:
@@ -50,41 +49,40 @@ victoria-metrics-k8s-stack:
         cert-manager.io/cluster-issuer: letsencrypt-prod
       ingressClassName: cilium
       hosts:
-        - metrics.k8s.nullservers.com
+      - metrics.k8s.nullservers.com
       tls:
-        - secretName: grafana-tls
-          hosts:
-            - metrics.k8s.nullservers.com
+      - secretName: grafana-tls
+        hosts:
+        - metrics.k8s.nullservers.com
   victoria-metrics-operator:
     enabled: true
-    prometheus_converter_add_argocd_ignore_annotations: true
     image:
       registry: "quay.io"
     env:
-      - name: "VM_USECUSTOMCONFIGRELOADER"
-        value: "true"
-      - name: VM_CUSTOMCONFIGRELOADERIMAGE
-        value: "quay.io/victoriametrics/operator:config-reloader-v0.53.0"
-      - name: VM_VLOGSDEFAULT_IMAGE
-        value: "quay.io/victoriametrics/victoria-logs"
-      - name: "VM_VMALERTDEFAULT_IMAGE"
-        value: "quay.io/victoriametrics/vmalert"
-      - name: "VM_VMAGENTDEFAULT_IMAGE"
-        value: "quay.io/victoriametrics/vmagent"
-      - name: "VM_VMSINGLEDEFAULT_IMAGE"
-        value: "quay.io/victoriametrics/victoria-metrics"
-      - name: "VM_VMCLUSTERDEFAULT_VMSELECTDEFAULT_IMAGE"
-        value: "quay.io/victoriametrics/vmselect"
-      - name: "VM_VMCLUSTERDEFAULT_VMSTORAGEDEFAULT_IMAGE"
-        value: "quay.io/victoriametrics/vmstorage"
-      - name: "VM_VMCLUSTERDEFAULT_VMINSERTDEFAULT_IMAGE"
-        value: "quay.io/victoriametrics/vminsert"
-      - name: "VM_VMBACKUP_IMAGE"
-        value: "quay.io/victoriametrics/vmbackupmanager"
-      - name: "VM_VMAUTHDEFAULT_IMAGE"
-        value: "quay.io/victoriametrics/vmauth"
-      - name: "VM_VMALERTMANAGER_ALERTMANAGERDEFAULTBASEIMAGE"
-        value: "quay.io/prometheus/alertmanager"
+    - name: "VM_USECUSTOMCONFIGRELOADER"
+      value: "true"
+    - name: VM_CUSTOMCONFIGRELOADERIMAGE
+      value: "quay.io/victoriametrics/operator:config-reloader-v0.53.0"
+    - name: VM_VLOGSDEFAULT_IMAGE
+      value: "quay.io/victoriametrics/victoria-logs"
+    - name: "VM_VMALERTDEFAULT_IMAGE"
+      value: "quay.io/victoriametrics/vmalert"
+    - name: "VM_VMAGENTDEFAULT_IMAGE"
+      value: "quay.io/victoriametrics/vmagent"
+    - name: "VM_VMSINGLEDEFAULT_IMAGE"
+      value: "quay.io/victoriametrics/victoria-metrics"
+    - name: "VM_VMCLUSTERDEFAULT_VMSELECTDEFAULT_IMAGE"
+      value: "quay.io/victoriametrics/vmselect"
+    - name: "VM_VMCLUSTERDEFAULT_VMSTORAGEDEFAULT_IMAGE"
+      value: "quay.io/victoriametrics/vmstorage"
+    - name: "VM_VMCLUSTERDEFAULT_VMINSERTDEFAULT_IMAGE"
+      value: "quay.io/victoriametrics/vminsert"
+    - name: "VM_VMBACKUP_IMAGE"
+      value: "quay.io/victoriametrics/vmbackupmanager"
+    - name: "VM_VMAUTHDEFAULT_IMAGE"
+      value: "quay.io/victoriametrics/vmauth"
+    - name: "VM_VMALERTMANAGER_ALERTMANAGERDEFAULTBASEIMAGE"
+      value: "quay.io/prometheus/alertmanager"
     serviceMonitor:
       enabled: true
   prometheus-operator-crds:
@@ -105,12 +103,12 @@ victoria-metrics-k8s-stack:
     victoriametrics:
       perReplica: false
       datasources:
-        - name: VictoriaMetrics
-          type: prometheus
-          access: proxy
-        - name: VictoriaMetrics-vm
-          access: proxy
-          type: victoriametrics-metrics-datasource
+      - name: VictoriaMetrics
+        type: prometheus
+        access: proxy
+      - name: VictoriaMetrics-vm
+        access: proxy
+        type: victoriametrics-metrics-datasource
   grafana:
     enabled: false
     sidecar:
@@ -133,8 +131,8 @@ victoria-metrics-k8s-stack:
         enabled: true
         multicluster: false
     plugins:
-      - redis-datasource
-      - victoriametrics-metrics-datasource
+    - redis-datasource
+    - victoriametrics-metrics-datasource
     ingress:
       enabled: true
       annotations:
@@ -142,11 +140,11 @@ victoria-metrics-k8s-stack:
         cert-manager.io/cluster-issuer: letsencrypt-prod
       ingressClassName: cilium
       hosts:
-        - grafana.k8s.nullservers.com
+      - grafana.k8s.nullservers.com
       tls:
-        - secretName: grafana-tls
-          hosts:
-            - grafana.k8s.nullservers.com
+      - secretName: grafana-tls
+        hosts:
+        - grafana.k8s.nullservers.com
 
     admin:
       existingSecret: grafana-admin-password
@@ -168,16 +166,16 @@ victoria-logs-single:
         cert-manager.io/cluster-issuer: letsencrypt-prod
       ingressClassName: cilium
       hosts:
-        - name: logs.k8s.nullservers.com
-          path:
-            - /
-          port: http
+      - name: logs.k8s.nullservers.com
+        path:
+        - /
+        port: http
       tls:
-        - secretName: vm-logs--tls
-          hosts:
-            - logs.k8s.nullservers.com
+      - secretName: vm-logs--tls
+        hosts:
+        - logs.k8s.nullservers.com
   global:
-    imagePullSecrets: 
+    imagePullSecrets:
     - name: dockerhub-token
   serviceAccount:
     create: true
