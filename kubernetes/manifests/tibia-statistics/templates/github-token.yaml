@@ -1,0 +1,33 @@
+apiVersion: external-secrets.io/v1beta1
+kind: ExternalSecret
+metadata:
+  name: gh-docker-pat
+spec:
+  refreshInterval: 1m
+  secretStoreRef:
+    name: onepassword
+    kind: ClusterSecretStore
+  target:
+    name: gh-docker-pat
+    template:
+      type: kubernetes.io/dockerconfigjson
+      data:
+        .dockerconfigjson: |
+          {
+            "auths": {
+              "ghcr.io": {
+                "username": "{{ `{{ .username }}` }}",
+                "password": "{{ `{{ .password }}` }}"
+              }
+            }
+          }
+    creationPolicy: Owner
+  data:
+  - secretKey: password
+    remoteRef:
+      key: gh-docker-pat
+      property: password
+  - secretKey: username
+    remoteRef:
+      key: gh-docker-pat
+      property: username

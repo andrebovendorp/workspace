@@ -1,0 +1,62 @@
+common:
+  # clusterIssuer: letsencrypt-prod
+
+  unprivileged: true
+
+  global:
+    imagePullSecrets:
+    - name: "gh-docker-pat"
+    labels:
+      # project: my-shiny-project
+
+  tolerations:
+    # - key: test
+    #   operator: Equal
+    #   value: test
+    #   effect: NoSchedule
+
+  cronjob:
+    enabled: true
+    annotations:
+      # my-annotation: "my-value"
+      # my-annotation2: "my-value2"
+    schedule: "0 12,23 * * *"
+    successfulJobsHistoryLimit: 3
+    failedJobsHistoryLimit: 2
+    image: ghcr.io/boveloco/tibia-statistics:latest
+    env:
+    - name: DB_TYPE
+      value: mongodb
+    - name: MONGO_DB_HOST
+      value: mongodb.mongodb.svc.cluster.local
+    - name: MONGO_DB_PASSWORD
+      valueFrom:
+        secretKeyRef:
+          name: tibia-statistics-mongo-credentials
+          key: password
+    - name: MONGO_DB_USER
+      valueFrom:
+        secretKeyRef:
+          name: tibia-statistics-mongo-credentials
+          key: username
+    - name: MONGO_DB_NAME
+      value: statistics
+
+  hostVolumeMounts: # Same as Deployment
+
+  emptyDirVolumeMounts:
+
+  pvcVolumeMounts:
+
+  configMapVolumeMounts:
+
+  secretVolumeMounts:
+
+  deployment:
+    enabled: false
+
+  service:
+    enabled: false
+
+  ingress:
+    enabled: false
