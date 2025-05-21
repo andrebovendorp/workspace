@@ -1,9 +1,9 @@
 apiVersion: v2
 name: shlink-webserver
-version: 0.1.1
+version: 0.1.2
 type: application
 dependencies:
-  - name: common
-    alias: shlink-webserver
-    version: 0.1.9
-    repository: https://boveloco.github.io/charts/
+- name: common
+  alias: shlink-webserver
+  version: 0.1.9
+  repository: https://boveloco.github.io/charts/
