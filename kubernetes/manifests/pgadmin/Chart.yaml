@@ -1,9 +1,0 @@
-apiVersion: v2
-name: pgadmin
-version: 0.1.1
-type: application
-dependencies:
-- name: common
-  version: 0.1.9
-  repository: https://boveloco.github.io/charts/
-  condition: common.enabled
