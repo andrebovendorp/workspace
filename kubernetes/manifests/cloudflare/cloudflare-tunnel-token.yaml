@@ -1,4 +1,4 @@
-apiVersion: external-secrets.io/v1beta1
+apiVersion: external-secrets.io/v1
 kind: ExternalSecret
 metadata:
   name: cloudflare-tunnel-token
@@ -11,10 +11,10 @@ spec:
     creationPolicy: Owner
     name: cloudflare-tunnel-token
   data:
-    - secretKey: credentials.json
-      remoteRef:
-        conversionStrategy: Default
-        metadataPolicy: None
-        key: cloudflared-token
-        property: credentials.json
-        decodingStrategy: None
+  - secretKey: credentials.json
+    remoteRef:
+      conversionStrategy: Default
+      metadataPolicy: None
+      key: cloudflared-token
+      property: credentials.json
+      decodingStrategy: None

@@ -1,4 +1,4 @@
-apiVersion: external-secrets.io/v1beta1
+apiVersion: external-secrets.io/v1
 kind: ExternalSecret
 metadata:
   name: cf-dns-updater-credentials
@@ -11,26 +11,24 @@ spec:
     creationPolicy: Owner
     name: cf-dns-updater-credentials
   data:
-    - secretKey: zone-id
-      remoteRef:
-        conversionStrategy: Default
-        metadataPolicy: None
-        key: cloudflare-dns-updater
-        property: zone-id
-        decodingStrategy: None
-    - secretKey: account-id
-      remoteRef:
-        conversionStrategy: Default
-        metadataPolicy: None
-        key: cloudflare-dns-updater
-        property: account-id
-        decodingStrategy: None
-    - secretKey: api-key
-      remoteRef: 
-        conversionStrategy: Default
-        metadataPolicy: None
-        key: cloudflare-dns-updater
-        property: api-key
-        decodingStrategy: None
-    
-    
+  - secretKey: zone-id
+    remoteRef:
+      conversionStrategy: Default
+      metadataPolicy: None
+      key: cloudflare-dns-updater
+      property: zone-id
+      decodingStrategy: None
+  - secretKey: account-id
+    remoteRef:
+      conversionStrategy: Default
+      metadataPolicy: None
+      key: cloudflare-dns-updater
+      property: account-id
+      decodingStrategy: None
+  - secretKey: api-key
+    remoteRef:
+      conversionStrategy: Default
+      metadataPolicy: None
+      key: cloudflare-dns-updater
+      property: api-key
+      decodingStrategy: None

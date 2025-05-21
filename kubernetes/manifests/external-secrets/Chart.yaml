@@ -1,7 +1,7 @@
 apiVersion: v2
 name: external-secrets
 description: external-secrets
-version: 0.1.0
+version: 0.1.1
 type: application
 dependencies:
   - name: external-secrets

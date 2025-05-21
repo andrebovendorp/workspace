@@ -1,4 +1,4 @@
-apiVersion: external-secrets.io/v1beta1
+apiVersion: external-secrets.io/v1
 kind: ExternalSecret
 metadata:
   name: gh-docker-token
@@ -15,10 +15,10 @@ spec:
 
     name: gh-docker-token
   data:
-    - secretKey: token
-      remoteRef:
-        conversionStrategy: Default
-        metadataPolicy: None
-        key: gh-docker-token
-        property: .dockerconfigjson
-        decodingStrategy: None
+  - secretKey: token
+    remoteRef:
+      conversionStrategy: Default
+      metadataPolicy: None
+      key: gh-docker-token
+      property: .dockerconfigjson
+      decodingStrategy: None
