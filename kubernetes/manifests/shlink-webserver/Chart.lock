@@ -1,6 +1,6 @@
 dependencies:
 - name: common
   repository: https://boveloco.github.io/charts/
-  version: 0.1.9
-digest: sha256:f7d1731d4ae88290885c55cd6cf77c78cc2c397004c58565d093e9cda25be1a6
-generated: "2025-05-14T01:09:10.784196138Z"
+  version: 0.2.1
+digest: sha256:e7d451cfc1ce9607da47bbd1235a70f2ab8ff48d9a16250c35c01dee20156bd5
+generated: "2025-05-21T14:27:22.624055363Z"
