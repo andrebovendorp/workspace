@@ -1,23 +1,21 @@
 apiVersion: external-secrets.io/v1beta1
 kind: ExternalSecret
 metadata:
-  name: dockerhub-token
-  annotations:
-    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
+  name: gh-docker-pat
 spec:
   refreshInterval: 1m
   secretStoreRef:
     name: onepassword
     kind: ClusterSecretStore
   target:
-    name: dockerhub-token
+    name: gh-docker-pat
     template:
       type: kubernetes.io/dockerconfigjson
       data:
         .dockerconfigjson: |
           {
             "auths": {
-              "https://index.docker.io/v1/": {
+              "ghcr.io": {
                 "username": "{{ `{{ .username }}` }}",
                 "password": "{{ `{{ .password }}` }}"
               }
@@ -27,9 +25,9 @@ spec:
   data:
   - secretKey: password
     remoteRef:
-      key: dockerhub-token
+      key: gh-docker-pat
       property: password
   - secretKey: username
     remoteRef:
-      key: dockerhub-token
+      key: gh-docker-pat
       property: username

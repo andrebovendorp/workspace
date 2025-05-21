@@ -11,13 +11,13 @@ spec:
     - fromEndpoints:
         - matchLabels:
             io.kubernetes.pod.namespace: victoria-metrics
+        - matchLabels:
+            io.kubernetes.pod.namespace: tibia-statistics
   egress:
     - toEndpoints:
         - matchLabels:
             io.kubernetes.pod.namespace: kube-system
             k8s-app: kube-dns
-        - matchLabels:
-            io.kubernetes.pod.namespace: redis
       toPorts:
         - ports:
             - port: "53"

@@ -8,6 +8,13 @@ All servers runs in my house. This means that I have to take care of the power c
 
 
 ----------------------------------------
+# Usage of Database Visualization Tools - 2025-05-21
+
+From now on, all Database vissualization tools will NOT be deployed into the cluster and any need to visualize the data will be done using port-forwarding to the database and using the local machine to visualize the data. This will help to reduce the resource usage and make the setup more efficient.
+
+If it gets to a point where I need to visualize the data from outside the cluster, I will use a VPN to connect to the cluster and use the local machine to visualize the data.
+
+In the case there is a need to save visualization queries, this should be done inside this repository and documented into the documentation. This will help to keep track of the queries and make it easier to share with others.
 
 # Use Victoria Logs instead of Loki for Log Aggregator - 2025-05-01
 That loki is a great tool, we all know but based on my priorities, Loki uses too much resources and is not efficient for my setup.
