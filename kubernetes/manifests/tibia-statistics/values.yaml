@@ -3,6 +3,9 @@ common:
 
   unprivileged: true
 
+  defaultImagePullSecrets:
+    enabled: true
+
   global:
     imagePullSecrets:
     - name: "gh-docker-pat"
