@@ -8,18 +8,16 @@ spec:
     - fromEndpoints:
         - matchLabels:
             io.kubernetes.pod.namespace: victoria-metrics
-    - fromEndpoints:
         - matchLabels:
             io.kubernetes.pod.namespace: immich
-    - fromEndpoints:
         - matchLabels:
             io.kubernetes.pod.namespace: external-secrets
-    - fromEndpoints:
         - matchLabels:
             io.kubernetes.pod.namespace: shlink
-    - fromEndpoints:
         - matchLabels:
             io.kubernetes.pod.namespace: authentik
+        - matchLabels:
+            io.kubernetes.pod.namespace: nextcloud
   egress:
     - toEntities:
         - cluster

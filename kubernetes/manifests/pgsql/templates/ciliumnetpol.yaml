@@ -25,6 +25,8 @@ spec:
             io.kubernetes.pod.namespace: authentik
         - matchLabels:
             io.kubernetes.pod.namespace: freshrss
+        - matchLabels:
+            io.kubernetes.pod.namespace: nextcloud
 
   egress:
     - toEndpoints:
