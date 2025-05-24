@@ -7,9 +7,9 @@ spec:
   ingress:
     - fromEntities:
         - ingress
-    - fromEndpoints:
-        - matchLabels:
-            io.kubernetes.pod.namespace: ingress-nginx
+    - fromCIDRSet:
+        - cidr: 192.168.20.0/24
+
   egress:
     - toEntities:
         - kube-apiserver
