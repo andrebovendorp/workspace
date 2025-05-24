@@ -1,0 +1,40 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: mariadb-data
+  namespace: {{ .Release.Namespace }}
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 50Gi
+  storageClassName: ssd-storage-persistent
+  volumeName: mariadb-data
+--- 
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  annotations:
+    local.path.provisioner/selected-node: slave02
+    pv.kubernetes.io/provisioned-by: rancher.io/local-path
+  name: mariadb-data
+spec:
+  accessModes:
+  - ReadWriteOnce
+  capacity:
+    storage: 50Gi
+  hostPath:
+    path: /opt/pvcs/kubernetes-storage-persistent/mariadb-data
+    type: DirectoryOrCreate
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+      - matchExpressions:
+        - key: kubernetes.io/hostname
+          operator: In
+          values:
+          - slave02
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: ssd-storage-persistent
+  volumeMode: Filesystem

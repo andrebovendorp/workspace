@@ -1,0 +1,38 @@
+mariadb:
+  resources:
+    requests:
+      cpu: 100m
+      memory: 256Mi
+    limits:
+      cpu: 1
+      memory: 1Gi
+
+  useStatefulSet: true
+  usePasswordFiles: false
+  tolerations:
+  - key: "network"
+    operator: "Equal"
+    value: "nordvpn"
+    effect: "NoSchedule"
+
+  diagnosticMode:
+    enabled: false
+  image:
+    debug: true
+
+  nodeSelector:
+    kubernetes.io/hostname: slave02
+
+  global:
+    imagePullSecrets:
+    - name: dockerhub-token
+    defaultStorageClass: ssd-storage-persistent
+
+  auth:
+    enabled: true
+    existingSecret: mariadb-credentials
+    username: boveloco
+    database: default
+
+  persistence:
+    existingClaim: mariadb-data
