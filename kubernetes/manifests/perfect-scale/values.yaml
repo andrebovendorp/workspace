@@ -1,8 +1,0 @@
-chart:
-  enabled: true
-exporter:
-  settings:
-    clusterName: home-server
-  secret:
-    enabled: false
-    name: perfectscale-credentials
