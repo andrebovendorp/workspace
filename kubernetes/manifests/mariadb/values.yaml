@@ -1,4 +1,5 @@
 mariadb:
+  enabled: false
   resources:
     requests:
       cpu: 100m

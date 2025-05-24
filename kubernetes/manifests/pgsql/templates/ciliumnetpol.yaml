@@ -20,8 +20,6 @@ spec:
         - matchLabels:
             io.kubernetes.pod.namespace: wallabag
         - matchLabels:
-            io.kubernetes.pod.namespace: shlink
-        - matchLabels:
             io.kubernetes.pod.namespace: authentik
         - matchLabels:
             io.kubernetes.pod.namespace: freshrss

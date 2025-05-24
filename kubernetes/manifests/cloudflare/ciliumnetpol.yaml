@@ -32,8 +32,6 @@ spec:
         - matchLabels:
             io.kubernetes.pod.namespace: bsk-lead
         - matchLabels:
-            io.kubernetes.pod.namespace: shlink
-        - matchLabels:
             io.kubernetes.pod.namespace: immich
         - matchLabels:
             io.kubernetes.pod.namespace: authentik
