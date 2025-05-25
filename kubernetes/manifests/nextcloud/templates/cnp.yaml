@@ -18,6 +18,7 @@ spec:
     - toFQDNs:
         - matchName: "auth.nullservers.com"
         - matchName: "www.thunderbird.net"
+        - matchName: "api.met.no"
     - toEndpoints:
         - matchLabels:
             io.kubernetes.pod.namespace: pgsql
