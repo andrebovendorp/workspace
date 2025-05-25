@@ -6,6 +6,8 @@ spec:
   endpointSelector: {}
   ingress:
     - fromEndpoints:
+        - {}
+    - fromEndpoints:
         - matchLabels:
             io.kubernetes.pod.namespace: cloudflare
         - matchLabels:
