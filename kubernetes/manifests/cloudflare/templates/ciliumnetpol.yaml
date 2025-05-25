@@ -35,6 +35,9 @@ spec:
             io.kubernetes.pod.namespace: immich
         - matchLabels:
             io.kubernetes.pod.namespace: authentik
+        - matchLabels:
+            io.kubernetes.pod.namespace: nextcloud
+        
     # Allow Cloudflare 
     - toFQDNs:
       - matchPattern: "*.cloudflare.com"
