@@ -3,6 +3,6 @@ name: Authentik
 version: 0.1.5
 type: application
 dependencies:
-  - name: authentik
-    version: 2025.4.1
-    repository: https://charts.goauthentik.io/
+- name: authentik
+  version: 2025.4.1
+  repository: https://charts.goauthentik.io/

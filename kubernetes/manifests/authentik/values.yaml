@@ -11,6 +11,7 @@ authentik:
       user: resend
       password: file:///authentik-credentials/resend-key
       use_tls: true
+      from: "no-reply@nullservers.com"
     postgresql:
       host: pgsql-postgresql-hl.pgsql.svc.cluster.local
       name: authentik
@@ -20,37 +21,37 @@ authentik:
       host: redis-headless.redis.svc.cluster.local
   worker:
     volumes:
-      - name: authentik-credentials
-        secret:
-          secretName: authentik-credentials
+    - name: authentik-credentials
+      secret:
+        secretName: authentik-credentials
     volumeMounts:
-      - name: authentik-credentials
-        mountPath: /authentik-credentials
-        readOnly: true
+    - name: authentik-credentials
+      mountPath: /authentik-credentials
+      readOnly: true
     metrics:
       enabled: true
   server:
     env:
-      - name: AUTHENTIK_DISABLE_STARTUP_ANALYTICS
-        value: "true"
-      - name: AUTHENTIK_ERROR_REPORTING__ENABLED
-        value: "false"
-      - name: AUTHENTIK_DISABLE_UPDATE_CHECK
-        value: "true"
+    - name: AUTHENTIK_DISABLE_STARTUP_ANALYTICS
+      value: "true"
+    - name: AUTHENTIK_ERROR_REPORTING__ENABLED
+      value: "false"
+    - name: AUTHENTIK_DISABLE_UPDATE_CHECK
+      value: "true"
     volumes:
-      - name: authentik-credentials
-        secret:
-          secretName: authentik-credentials
-      - name: authentik-data
-        persistentVolumeClaim:
-          claimName: authentik-data
+    - name: authentik-credentials
+      secret:
+        secretName: authentik-credentials
+    - name: authentik-data
+      persistentVolumeClaim:
+        claimName: authentik-data
     volumeMounts:
-      - name: authentik-credentials
-        mountPath: /authentik-credentials
-        readOnly: true
-      - name: authentik-data
-        mountPath: /data    
-    metrics: 
+    - name: authentik-credentials
+      mountPath: /authentik-credentials
+      readOnly: true
+    - name: authentik-data
+      mountPath: /data
+    metrics:
       enabled: true
     serviceMonitor:
       enabled: true
@@ -61,11 +62,11 @@ authentik:
         cert-manager.io/cluster-issuer: letsencrypt-prod
       ingressClassName: cilium
       hosts:
-        - auth.nullservers.com
+      - auth.nullservers.com
       tls:
-        - secretName: authentik-ingress-tls
-          hosts:
-            - auth.nullservers.com
+      - secretName: authentik-ingress-tls
+        hosts:
+        - auth.nullservers.com
   geoip:
     enabled: false
     existingSecret:
