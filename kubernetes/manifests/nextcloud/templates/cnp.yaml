@@ -1,0 +1,34 @@
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: default
+spec:
+  endpointSelector: {}
+  ingress:
+    - fromEndpoints:
+        - matchLabels:
+            io.kubernetes.pod.namespace: cloudflare
+        - matchLabels:
+            io.kubernetes.pod.namespace: victoria-metrics
+    - fromEntities:
+        - ingress
+  egress:
+    - toEndpoints:
+        - {}
+    - toFQDNs:
+        - matchName: "auth.nullservers.com"
+        - matchName: "www.thunderbird.net"
+    - toEndpoints:
+        - matchLabels:
+            io.kubernetes.pod.namespace: pgsql
+    - toEndpoints:
+        - matchLabels:
+            io.kubernetes.pod.namespace: kube-system
+            k8s-app: kube-dns
+      toPorts:
+        - ports:
+            - port: "53"
+              protocol: UDP
+          rules:
+            dns:
+              - matchPattern: "*"

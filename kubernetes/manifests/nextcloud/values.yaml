@@ -1,0 +1,70 @@
+nextcloud:
+  phpClientHttpsFix:
+    enabled: true
+  image:
+    flavor: apache
+    pullSecrets:
+    - dockerhub-token
+  ingress:
+    enabled: true
+    annotations:
+      cert-manager.io/cluster-issuer: letsencrypt-prod
+      kubernetes.io/tls-acme: "true"
+    className: cilium
+    hosts:
+    - host: drive.nullservers.com
+      paths:
+      - /
+    tls:
+    - secretName: nextcloud-tls
+      hosts:
+      - drive.nullservers.com
+  nextcloud:
+    host: drive.nullservers.com
+    existingSecret:
+      enabled: true
+      secretName: nextcloud-credentials
+      usernameKey: username
+      passwordKey: password
+      smtpPasswordKey: resend-apikey
+    mail:
+      enabled: true
+      fromAddress: no-reply@nullservers.com
+      domain: nullservers.com
+      smtp:
+        host: smtp.resend.com
+        port: 587
+        username: resend
+
+  internalDatabase:
+    enabled: false
+
+  externalDatabase:
+    enabled: true
+    type: postgresql
+    host: pgsql-postgresql-hl.pgsql.svc.cluster.local
+    existingSecret:
+      enabled: true
+      secretName: nextcloud-credentials
+      usernameKey: dbUsername
+      passwordKey: dbPassword
+
+  persistence:
+    enabled: true
+    storageClass: ssd-storage
+    nextcloudData:
+      enabled: true
+      size: 200Gi
+      storageClass: ssd-storage-persistent
+
+  nodeSelector:
+    kubernetes.io/hostname: slave01
+
+  metrics:
+    enabled: true
+    serviceMonitor:
+      enabled: true
+      namespace: victoria-metrics
+
+  rbac:
+    enabled: true

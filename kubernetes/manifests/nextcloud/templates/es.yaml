@@ -1,0 +1,62 @@
+apiVersion: external-secrets.io/v1
+kind: ExternalSecret
+metadata:
+  name: nextcloud-credentials
+  namespace: {{ .Release.Namespace }}
+spec:
+  secretStoreRef:
+    kind: ClusterSecretStore
+    name: onepassword
+  target:
+    creationPolicy: Owner
+    name: nextcloud-credentials
+  data:
+  - secretKey: username
+    remoteRef:
+      conversionStrategy: Default
+      metadataPolicy: None
+      key: nextcloud-credentials
+      property: username
+      decodingStrategy: None
+  - secretKey: password
+    remoteRef:
+      conversionStrategy: Default
+      metadataPolicy: None
+      key: nextcloud-credentials
+      property: password
+      decodingStrategy: None
+  - secretKey: dbUsername
+    remoteRef:
+      conversionStrategy: Default
+      metadataPolicy: None
+      key: nextcloud-credentials
+      property: dbUsername
+      decodingStrategy: None
+  - secretKey: dbPassword
+    remoteRef:
+      conversionStrategy: Default
+      metadataPolicy: None
+      key: nextcloud-credentials
+      property: dbPassword
+      decodingStrategy: None
+  - secretKey: resend-apikey
+    remoteRef:
+      conversionStrategy: Default
+      metadataPolicy: None
+      key: nextcloud-credentials
+      property: resend-apikey
+      decodingStrategy: None
+  - secretKey: smtp-host
+    remoteRef:
+      conversionStrategy: Default
+      metadataPolicy: None
+      key: nextcloud-credentials
+      property: smtp-host
+      decodingStrategy: None
+  - secretKey: smtp-username
+    remoteRef:
+      conversionStrategy: Default
+      metadataPolicy: None
+      key: nextcloud-credentials
+      property: smtp-username
+      decodingStrategy: None
