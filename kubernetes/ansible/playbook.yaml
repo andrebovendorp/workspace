@@ -9,7 +9,7 @@
       hostname:
         name: "{{ inventory_hostname }}"
     
-    - name: Install curl and net-tools
+    - name: Install Dependencies
       apt:
         name: "{{ item }}"
         state: present
@@ -18,6 +18,7 @@
         - curl
         - net-tools
         - iptables
+        - nfs-common
 
     - name: Install K3s Server
       shell: |

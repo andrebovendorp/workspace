@@ -1,0 +1,23 @@
+csi-driver-nfs:
+  driver:
+    mountPermissions: "1000"
+
+  controller:
+    tollerations:
+    - key: "network"
+    operator: "Equal"
+    value: "nordvpn"
+    effect: "NoSchedule"
+    workingMountDir: /mnt/pvcs
+    enableSnapshotter: false
+    runOnMaster: true
+
+  storageClass:
+    create: true
+    name: nfs
+    parameters:
+      server: nfs.nullservers.com
+      share: /data/kubernetes
+      mountPermissions: "1000"
+    reclaimPolicy: Delete
+    volumeBindingMode: Immediate
