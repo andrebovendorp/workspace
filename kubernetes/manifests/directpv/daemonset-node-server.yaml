@@ -27,6 +27,11 @@ spec:
       name: node-server
       namespace: directpv
     spec:
+      tolerations:
+      - key: "network"
+        operator: "Equal"
+        value: "nordvpn"
+        effect: "NoSchedule"
       containers:
       - args:
         - --v=3

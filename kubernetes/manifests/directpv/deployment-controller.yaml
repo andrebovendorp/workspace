@@ -13,7 +13,7 @@ metadata:
   name: controller
   namespace: directpv
 spec:
-  replicas: 3
+  replicas: 2
   selector:
     matchLabels:
       selector.directpv.min.io: controller-us24k
@@ -29,6 +29,11 @@ spec:
       name: controller
       namespace: directpv
     spec:
+      tolerations:
+      - key: "network"
+        operator: "Equal"
+        value: "nordvpn"
+        effect: "NoSchedule"
       containers:
       - args:
         - --v=3
