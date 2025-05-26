@@ -7,5 +7,4 @@ spec:
   url: https://github.com/boveloco/workspace
   ref:
     branch: main
-  ignore: |
-    kubernetes/manifests/directpv/crds/*
+    
