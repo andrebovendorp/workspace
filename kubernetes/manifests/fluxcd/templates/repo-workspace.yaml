@@ -8,4 +8,4 @@ spec:
   ref:
     branch: main
   ignore: |
-    kubernetes/manifests/directpv/crds/
+    kubernetes/manifests/directpv/crds/*
