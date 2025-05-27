@@ -51,14 +51,12 @@ nextcloud:
 
   persistence:
     enabled: true
-    storageClass: ssd-storage
+    size: 200Mi
+    storageClass: nfs
     nextcloudData:
       enabled: true
       size: 200Gi
-      storageClass: ssd-storage-persistent
-
-  nodeSelector:
-    kubernetes.io/hostname: slave01
+      storageClass: nfs
 
   metrics:
     enabled: true
