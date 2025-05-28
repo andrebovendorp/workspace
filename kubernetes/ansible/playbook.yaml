@@ -3,7 +3,7 @@
   become: yes  # Ensures commands are run as a superuser
   vars:
     join_token: ""
-    k8s_version: "v1.33.0+k3s1"
+    k8s_version: "v1.33.1+k3s1"
   tasks:
     - name: Setup Hostname
       hostname:
