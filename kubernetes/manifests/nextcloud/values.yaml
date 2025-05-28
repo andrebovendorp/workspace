@@ -20,6 +20,16 @@ nextcloud:
       hosts:
       - drive.nullservers.com
   nextcloud:
+    securityContext:
+      runAsUser: 1000
+      runAsGroup: 1000
+      runAsNonRoot: true
+      fsGroup: 1000
+    podSecurityContext:
+      runAsUser: 1000
+      runAsGroup: 1000
+      fsGroup: 1000
+      runAsNonRoot: true
     host: drive.nullservers.com
     existingSecret:
       enabled: true
@@ -51,12 +61,12 @@ nextcloud:
 
   persistence:
     enabled: true
-    size: 200Mi
     storageClass: nfs
+    existingClaim: nextcloud-config
     nextcloudData:
       enabled: true
-      size: 200Gi
       storageClass: nfs
+      existingClaim: nextcloud-data
 
   metrics:
     enabled: true
