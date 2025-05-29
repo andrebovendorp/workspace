@@ -4,5 +4,5 @@ version: 0.1.1
 type: application
 dependencies:
 - name: mongodb
-  version: 16.5.11
+  version: 16.5.12
   repository: oci://registry-1.docker.io/bitnamicharts
