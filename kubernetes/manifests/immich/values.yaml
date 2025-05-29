@@ -1,6 +1,6 @@
 immich:
   image:
-    tag: v1.131.3
+    tag: v1.134.0
   immich:
     metrics:
       enabled: false
@@ -45,19 +45,19 @@ immich:
           cert-manager.io/cluster-issuer: letsencrypt-prod
         ingressClassName: cilium
         hosts:
-          - host: photos.nullservers.com
-            paths:
-              - path: /
-                pathType: Prefix
-          - host: photos.k8s.nullservers.com
-            paths:
-              - path: /
-                pathType: Prefix
+        - host: photos.nullservers.com
+          paths:
+          - path: /
+            pathType: Prefix
+        - host: photos.k8s.nullservers.com
+          paths:
+          - path: /
+            pathType: Prefix
         tls:
-          - secretName: immich-tls
-            hosts:
-              - photos.nullservers.com
-              - photos.k8s.nullservers.com
+        - secretName: immich-tls
+          hosts:
+          - photos.nullservers.com
+          - photos.k8s.nullservers.com
 
     machine-learning:
       enabled: true
