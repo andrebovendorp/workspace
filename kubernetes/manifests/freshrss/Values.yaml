@@ -1,7 +1,13 @@
 common:
   clusterIssuer: letsencrypt-prod
 
+  defaultImagePullSecrets:
+    enabled: true
+
   unprivileged: false
+
+  cronjob:
+    enabled: false
 
   deployment:
     enabled: true
@@ -18,44 +24,40 @@ common:
         memory: 512Mi
         cpu: 1
     env:
-      - name: BASE_URL
-        value: https://rss.k8s.nullservers.com
-      #OIDC
-      - name: CRON_MIN
-        value: "*/15"
-      - name: OIDC_ENABLED
-        value: "1"
-      - name: OIDC_PROVIDER_METADATA_URL
-        value: https://auth.nullservers.com/application/o/rssfeed/.well-known/openid-configuration
-      - name: OIDC_CLIENT_SECRET
-        valueFrom:
-          secretKeyRef:
-            name: freshrss-oidc-credentials
-            key: client-secret
-      - name: OIDC_CLIENT_ID
-        valueFrom:
-          secretKeyRef:
-            name: freshrss-oidc-credentials
-            key: client-id
-      - name: OIDC_X_FORWARDED_HEADERS
-        value: "X-Forwarded-Proto"
-      - name: OIDC_SCOPES
-        value: "openid profile email"
-      - name: OIDC_REMOTE_USER_CLAIM
-        value: preferred
-      - name: OIDC_CLIENT_CRYPTO_KEY
-        valueFrom:
-          secretKeyRef:
-            name: freshrss-oidc-credentials
-            key: crypto-key
-
-
+    - name: BASE_URL
+      value: https://rss.k8s.nullservers.com
+    #OIDC
+    - name: CRON_MIN
+      value: "*/15"
+    - name: OIDC_ENABLED
+      value: "1"
+    - name: OIDC_PROVIDER_METADATA_URL
+      value: https://auth.nullservers.com/application/o/rssfeed/.well-known/openid-configuration
+    - name: OIDC_CLIENT_SECRET
+      valueFrom:
+        secretKeyRef:
+          name: freshrss-oidc-credentials
+          key: client-secret
+    - name: OIDC_CLIENT_ID
+      valueFrom:
+        secretKeyRef:
+          name: freshrss-oidc-credentials
+          key: client-id
+    - name: OIDC_SCOPES
+      value: "openid profile email"
+    - name: OIDC_REMOTE_USER_CLAIM
+      value: preferred_username
+    - name: OIDC_CLIENT_CRYPTO_KEY
+      valueFrom:
+        secretKeyRef:
+          name: freshrss-oidc-credentials
+          key: crypto-key
 
   pvcVolumeMounts:
   - name: config
     mountPath: /config
     size: 100Mi
-    storageClassName: ssd-storage
+    storageClassName: nfs
 
   service:
     enabled: true
@@ -67,4 +69,4 @@ common:
     enabled: true
     class: cilium
     hosts:
-    - host: rss.k8s.nullservers.com
+    - host: rss.nullservers.com

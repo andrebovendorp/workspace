@@ -31,6 +31,7 @@ spec:
     - matchName: secure.gravatar.com # Avatar for users
     - matchName: smtp.resend.com # Email
     - matchName: mm-prod-geoip-databases.a2649acb697e2c09b632799562c076f2.r2.cloudflarestorage.com 
+    - matchExpression: "*.nullservers.com" # Auth
     # - matchName: goauthentik.io ## Analytics
   - toEndpoints:
     - matchLabels:
