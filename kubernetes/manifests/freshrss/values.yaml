@@ -25,7 +25,7 @@ common:
         cpu: 1
     env:
     - name: BASE_URL
-      value: https://rss.k8s.nullservers.com
+      value: https://rss.nullservers.com
     #OIDC
     - name: CRON_MIN
       value: "*/15"
