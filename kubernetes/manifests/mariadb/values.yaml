@@ -21,9 +21,6 @@ mariadb:
   image:
     debug: true
 
-  nodeSelector:
-    kubernetes.io/hostname: slave02
-
   global:
     imagePullSecrets:
     - name: dockerhub-token
@@ -35,5 +32,6 @@ mariadb:
     username: boveloco
     database: default
 
-  persistence:
-    existingClaim: mariadb-data
+  primary:
+    persistence:
+      storageClass: nfs
