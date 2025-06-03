@@ -23,8 +23,6 @@ mongodb:
     kubernetes.io/hostname: slave02
 
   global:
-    imagePullSecrets:
-    - name: dockerhub-token
     defaultStorageClass: ssd-storage-persistent
   auth:
     enabled: true
