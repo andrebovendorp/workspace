@@ -2,14 +2,14 @@
   hosts: control_plane_nodes
   become: yes  # Ensures commands are run as a superuser
   vars:
+    k8s_version: "1.32"  # Define the Kubernetes version to be used
     haproxy_config_path: /etc/haproxy/haproxy.cfg
     join_command_output: ""
     join_token: ""
     cert_hash: ""
   tasks:
-    - include_tasks: ../tasks/host.yaml
-      vars:
-        host: "{{ inventory_hostname }}"
+    - include_tasks: ../tasks/network-setup.yaml
+    - include_tasks: ../tasks/kubernetes-dependencies.yaml
 
     - name: Create the directory configurations
       file:
