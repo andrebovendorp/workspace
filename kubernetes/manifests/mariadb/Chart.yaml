@@ -4,6 +4,6 @@ version: 0.1.2
 type: application
 dependencies:
 - name: mariadb
-  version: 20.5.6
+  version: 20.5.7
   repository: oci://registry-1.docker.io/bitnamicharts
   condition: mariadb.enabled
