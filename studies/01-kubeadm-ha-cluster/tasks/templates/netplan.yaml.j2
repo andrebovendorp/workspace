@@ -2,9 +2,12 @@ network:
   version: 2
   renderer: networkd
   ethernets:
-    eth0:
+    {{ ansible_default_ipv4.interface }}:
       addresses:
-        - {{hostvars[host]['ansible_host']}}/24
+        - {{ ansible_default_ipv4.address }}/24
       routes:
         - to: default
-          via: 192.168.1.1
+          via: "{{ ansible_default_ipv4.gateway }}"
+      nameservers:
+        addresses:
+          - "{{ ansible_default_ipv4.gateway }}"

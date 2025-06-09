@@ -1,0 +1,24 @@
+- name: Show IP Addresses, Hostname, and Gateway IP
+  ansible.builtin.debug:
+    msg: |
+      Hostname: {{ ansible_hostname }}
+      Main IP Address: {{ ansible_default_ipv4.address }}
+      All IPv4 Addresses: {{ ansible_all_ipv4_addresses | join(', ') }}
+      Default Gateway IP: {{ ansible_default_ipv4.gateway }}
+      NIC: {{ ansible_default_ipv4.interface }}
+
+- name: Configure Netplan
+  template:
+    src: templates/netplan.yaml.j2
+    dest: /etc/netplan/50-cloud-init.yaml
+    owner: root
+    group: root
+    mode: '0600'
+
+- name: Apply Netplan
+  command: netplan apply
+ 
+- name: Set Hostname
+  hostname:
+    name: "{{ ansible_hostname }}"
+  when: ansible_hostname is defined

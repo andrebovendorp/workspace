@@ -1,0 +1,81 @@
+- name: Install Dependencies
+  apt:
+    name: "{{ item }}"
+    state: present
+    update_cache: yes
+  with_items:
+  - apt-transport-https
+  - ca-certificates
+  - curl
+  - containerd
+
+- name: Disable swap temporarily
+  command: swapoff -a
+
+- name: Remove swap entries from /etc/fstab
+  replace:
+    path: /etc/fstab
+    regexp: '^(.*\s+swap\s+.*)$'
+    replace: '# \1'
+  notify: Reboot if necessary
+
+- name: Verify swap is disabled
+  shell: free -h | grep -i swap
+  register: swap_status
+  ignore_errors: true
+
+- name: Create the directory configurations
+  file:
+    path: "{{ item }}"
+    state: directory
+    owner: root
+    group: root
+    mode: '0755'
+  with_items:
+  - /etc/systemd/system/kubelet.service.d/ # kubelet configuration file
+  - /etc/kubernetes/pki/etcd/ # cert files
+  - /etc/containerd/ # containerd folder
+  - /etc/apt/keyrings/ # apt keyrings
+
+- name: Add Kubernetes GPG key
+  ansible.builtin.apt_key:
+    url: https://pkgs.k8s.io/core:/stable:/v{{ k8s_version }}/deb/Release.key # Check for the latest stable version key
+    state: present
+    keyring: /etc/apt/keyrings/kubernetes-apt-keyring.gpg # Recommended path for Debian 12+
+
+- name: Add Kubernetes APT repository
+  ansible.builtin.apt_repository:
+    repo: "deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v{{ k8s_version }}/deb/ /" # Check for the latest stable version
+    state: present
+    filename: kubernetes
+
+- name: Install Kubernetes related Dependencies
+  apt:
+    name: "{{ item }}"
+    state: present
+    update_cache: yes
+  with_items:
+  - kubeadm
+  - kubelet
+  - kubectl
+
+- name: Configure Containerd with template
+  copy:
+    dest: /etc/containerd/config.toml
+    content: "{{ lookup('template', 'containerd.toml') }}"
+    owner: root
+    group: root
+    mode: '0644'
+
+- name: Enable ipv4 forwarding
+  sysctl:
+    name: net.ipv4.ip_forward
+    value: 1
+    state: present
+    reload: yes
+
+- name: Reload systemd daemon, enable and start containerd, restart kubelet
+  shell: |
+    systemctl daemon-reload
+    systemctl enable --now containerd
+    systemctl restart kubelet
