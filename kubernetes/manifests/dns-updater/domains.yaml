@@ -8,3 +8,6 @@ data:
     - name: vpn.nullservers.com
       id: 0dbadc4e75dd23227baa91d6a92dce14
       proxied: false
+    - name: mail.nullservers.com
+      id: a2df9f11aa74dd0fcf44544924baadfa
+      proxied: false
