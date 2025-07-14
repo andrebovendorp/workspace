@@ -9,7 +9,7 @@ spec:
   accessModes:
     - ReadWriteMany
   persistentVolumeReclaimPolicy: Retain
-  storageClassName: nfs-csi-retain
+  storageClassName: nfs-retain
   csi:
     driver: nfs.csi.k8s.io
     volumeHandle: pgsql-nfs-retail
@@ -28,4 +28,4 @@ spec:
   resources:
     requests:
       storage: 100Gi
-  storageClassName: nfs-csi-retain
+  storageClassName: nfs-retain
