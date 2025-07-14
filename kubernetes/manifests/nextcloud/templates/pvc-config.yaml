@@ -8,6 +8,7 @@ spec:
   resources:
     requests:
       storage: 200Mi
+  volumeName: nextcloud-config-pv
   storageClassName: nfs-retain
 ---
 apiVersion: v1
@@ -19,5 +20,42 @@ spec:
     - ReadWriteMany 
   resources:
     requests:
-      storage: 200Mi
+      storage: 200Gi
+  volumeName: nextcloud-data-pv
   storageClassName: nfs-retain
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: nextcloud-data-pv
+spec:
+  capacity:
+    storage: 200Gi
+  accessModes:
+    - ReadWriteMany
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: nfs-retain
+  csi:
+    driver: nfs.csi.k8s.io
+    volumeHandle: nextcloud-data
+    volumeAttributes:
+      server: nfs.nullservers.com
+      share: /data/kubernetes-retain/nextcloud-data
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: nextcloud-config-pv
+spec:
+  capacity:
+    storage: 200Mi
+  accessModes:
+    - ReadWriteMany
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: nfs-retain
+  csi:
+    driver: nfs.csi.k8s.io
+    volumeHandle: nextcloud-config
+    volumeAttributes:
+      server: nfs.nullservers.com
+      share: /data/kubernetes-retain/nextcloud-config

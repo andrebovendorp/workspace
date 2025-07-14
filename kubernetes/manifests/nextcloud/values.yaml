@@ -61,11 +61,11 @@ nextcloud:
 
   persistence:
     enabled: true
-    storageClass: nfs
+    storageClass: nfs-retain
     existingClaim: nextcloud-config
     nextcloudData:
       enabled: true
-      storageClass: nfs
+      storageClass: nfs-retain
       existingClaim: nextcloud-data
 
   metrics:
