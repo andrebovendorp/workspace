@@ -1,6 +1,11 @@
 common:
   clusterIssuer: letsencrypt-prod
- 
+  defaultImagePullSecrets:
+    enabled: true
+
+  cronjob:
+    enabled: false
+
   deployment:
     imagePullSecrets: dockerhub-token
     enabled: true
@@ -17,67 +22,70 @@ common:
     nodeSelector:
       kubernetes.io/hostname: slave01
     env:
-      - name: PUID
-        value: "0"
-      - name: PGID
-        value: "0"
-      - name: TZ
-        value: "Europe/Stockholm"
-      - name: DUPLICATI_PASS
-        valueFrom:
-          secretKeyRef:
-            name: duplicati-credentials
-            key: password
-      - name: DUPLICATI_USER
-        valueFrom:
-          secretKeyRef:
-            name: duplicati-credentials
-            key: username
-      - name: SETTINGS_ENCRYPTION_KEY
-        valueFrom:
-          secretKeyRef:
-            name: duplicati-credentials
-            key: encryption-key
-      - name: DUPLICATI__WEBSERVICE_PASSWORD
-        valueFrom:
-          secretKeyRef:
-            name: duplicati-credentials
-            key: ui-credentials
-      
+    - name: PUID
+      value: "0"
+    - name: PGID
+      value: "0"
+    - name: TZ
+      value: "Europe/Stockholm"
+    - name: DUPLICATI_PASS
+      valueFrom:
+        secretKeyRef:
+          name: duplicati-credentials
+          key: password
+    - name: DUPLICATI_USER
+      valueFrom:
+        secretKeyRef:
+          name: duplicati-credentials
+          key: username
+    - name: SETTINGS_ENCRYPTION_KEY
+      valueFrom:
+        secretKeyRef:
+          name: duplicati-credentials
+          key: encryption-key
+    - name: DUPLICATI__WEBSERVICE_PASSWORD
+      valueFrom:
+        secretKeyRef:
+          name: duplicati-credentials
+          key: ui-credentials
 
   hostVolumeMounts:
-    - name: external-drive
-      hostPath: /mnt/external-drive/
-      mountPath: /backups/external-drive
-      readOnly: true
-    - name: pvcs-persistent
-      hostPath: /opt/pvcs/kubernetes-storage-persistent/
-      mountPath: /backups/pvcs-persistent
-      readOnly: "false"
-    - name: pvcs-non-persistent
-      hostPath: /opt/pvcs/kubernetes-storage/
-      mountPath: /backups/pvcs-non-persistent
+  - name: external-drive
+    hostPath: /mnt/external-drive/
+    mountPath: /backups/external-drive
+    readOnly: true
+  - name: pvcs-persistent
+    hostPath: /opt/pvcs/kubernetes-storage-persistent/
+    mountPath: /backups/pvcs-persistent
+    readOnly: "false"
+  - name: pvcs-non-persistent
+    hostPath: /opt/pvcs/kubernetes-storage/
+    mountPath: /backups/pvcs-non-persistent
 
   pvcVolumeMounts:
-    - name: config
-      mountPath: /config
-      size: 500Mi
-      storageClassName: ssd-storage
-    - name: temp
-      mountPath: /run/duplicati-temp
-      size: 50Gi
-      storageClassName: ssd-storage
+  - name: config
+    mountPath: /config
+    size: 500Mi
+    storageClassName: ssd-storage
+  - name: temp
+    mountPath: /run/duplicati-temp
+    size: 50Gi
+    storageClassName: ssd-storage
+
+  existingClaimVolumeMounts:
+  - name: nfs-retain-pvc
+    mountPath: /backups/nfs/kuberenetes-retain
 
   service:
     enabled: true
     ports:
-      - port: 80
-        targetPort: 8200
-        name: http
-        type: ClusterIP
+    - port: 80
+      targetPort: 8200
+      name: http
+      type: ClusterIP
 
   ingress:
     enabled: true
     class: cilium
     hosts:
-      - host: backup.k8s.nullservers.com
+    - host: backup.k8s.nullservers.com

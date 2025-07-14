@@ -1,0 +1,31 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: mongodb-nfs-retain-pv
+  namespace: mongodb
+spec:
+  capacity:
+    storage: 100Gi
+  accessModes:
+    - ReadWriteMany
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: nfs-csi-retain
+  csi:
+    driver: nfs.csi.k8s.io
+    volumeHandle: mongodb-nfs-retain
+    volumeAttributes:
+      server: nfs.nullservers.com
+      share: /data/kubernetes-retain/mongo-data
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: mongodb-nfs-retain-pvc
+  namespace: mongodb
+spec:
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 100Gi
+  storageClassName: nfs-csi-retain

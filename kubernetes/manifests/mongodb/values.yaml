@@ -19,11 +19,9 @@ mongodb:
   image:
     debug: true
 
-  nodeSelector:
-    kubernetes.io/hostname: slave02
-
   global:
-    defaultStorageClass: ssd-storage-persistent
+    defaultStorageClass: nfs-retain
+
   auth:
     enabled: true
     existingSecret: mongo-db-credentials
@@ -40,4 +38,5 @@ mongodb:
       scrapeTimeout: 10s
 
   persistence:
-    existingClaim: mongo-data
+    existingClaim: mongodb-nfs-retain-pvc
+    storageClass: nfs-retain

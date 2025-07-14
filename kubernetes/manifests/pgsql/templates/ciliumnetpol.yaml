@@ -12,20 +12,15 @@ spec:
         - matchLabels:
             io.kubernetes.pod.namespace: immich
         - matchLabels:
-            io.kubernetes.pod.namespace: pgadmin
-        - matchLabels:
             io.kubernetes.pod.namespace: bsk-api
         - matchLabels:
             io.kubernetes.pod.namespace: recipes
-        - matchLabels:
-            io.kubernetes.pod.namespace: wallabag
         - matchLabels:
             io.kubernetes.pod.namespace: authentik
         - matchLabels:
             io.kubernetes.pod.namespace: freshrss
         - matchLabels:
             io.kubernetes.pod.namespace: nextcloud
-
   egress:
     - toEndpoints:
         - matchLabels:

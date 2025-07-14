@@ -4,7 +4,7 @@ postgresql:
     tag: pg14-v0.2.0
   global:
     imagePullSecrets:
-      - dockerhub-token
+    - dockerhub-token
     security:
       allowInsecureImages: true
     postgresql:
@@ -33,10 +33,10 @@ postgresql:
       enabled: false # I have my custom network policy
     persistence:
       enabled: true
-      storageClass: ssd-storage-persistent
+      storageClass: nfs-retain
       accessMode: ReadWriteOnce
-      size: 20Gi
-      existingClaim: pgsql-data
+      size: 100Gi
+      existingClaim: pgsql-nfs-retail-pvc
     resources:
       requests:
         memory: 618Mi

@@ -26,3 +26,4 @@ spec:
     - toFQDNs:
         - matchName: storage.nullservers.com
         - matchName: api.telegram.org
+        - matchName: nfs.nullservers.com
