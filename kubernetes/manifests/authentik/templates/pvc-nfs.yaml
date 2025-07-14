@@ -1,0 +1,30 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: authentik-data-nfs
+spec:
+  accessModes:
+  - ReadWriteMany
+  volumeName: pv-authentik-data-nfs
+  resources:
+    requests:
+      storage: 5Gi
+  storageClassName: nfs
+--- 
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: pv-authentik-data-nfs
+spec:
+  capacity:
+    storage: 5Gi
+  accessModes:
+    - ReadWriteMany
+  persistentVolumeReclaimPolicy: Delete
+  storageClassName: nfs
+  csi:
+    driver: nfs.csi.k8s.io
+    volumeHandle: pv-authentik-data-nfs
+    volumeAttributes:
+      server: nfs.nullservers.com
+      share: /data/kubernetes/authentik-data

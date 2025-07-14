@@ -42,14 +42,14 @@ authentik:
     - name: authentik-credentials
       secret:
         secretName: authentik-credentials
-    - name: authentik-data
+    - name: authentik-data-nfs
       persistentVolumeClaim:
-        claimName: authentik-data
+        claimName: authentik-data-nfs
     volumeMounts:
     - name: authentik-credentials
       mountPath: /authentik-credentials
       readOnly: true
-    - name: authentik-data
+    - name: authentik-data-nfs
       mountPath: /data
     metrics:
       enabled: true
