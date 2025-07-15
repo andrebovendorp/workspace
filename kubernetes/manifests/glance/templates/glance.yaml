@@ -79,9 +79,6 @@ data:
                   - title: Grafana
                     url: https://grafana.k8s.nullservers.com
                     icon: https://upload.wikimedia.org/wikipedia/commons/thumb/a/a1/Grafana_logo.svg/1200px-Grafana_logo.svg.png
-                  - title: PgAdmin
-                    url: https://pgadmin.k8s.nullservers.com
-                    icon: https://static-00.iconduck.com/assets.00/pgadmin-icon-1024x951-qx7ke06d.png
                   - title: Hubble
                     url: https://hubble.k8s.nullservers.com
                     icon: https://cilium.io/static/hubble-dark-1-91890e273cb3d50a8f520e3cbe178806.svg
@@ -98,14 +95,11 @@ data:
                     url: https://adguard.nullservers.com
                     icon: https://avatars3.githubusercontent.com/u/8361145?s=200&v=4
                   - title: Proxmox
-                    url: https://192.168.20.20:8006
+                    url: https://px.nullservers.com:8006
                     icon: https://camo.githubusercontent.com/fdffb57ca7bf0ba2900bab738df7bf002dee35f15e55f2029a97de1d2bdc1e07/68747470733a2f2f7777772e70726f786d6f782e636f6d2f696d616765732f70726f786d6f782f50726f786d6f782d6c6f676f2d737461636b65642d38343070782e706e67
                   - title: FluxCD
                     url: https://flux.k8s.nullservers.com
                     icon: https://avatars.githubusercontent.com/u/52158677
-                  - title: Wallabag
-                    url: https://wallabag.k8s.nullservers.com
-                    icon: https://wallabag.org/img/logo-wallabag.svg
 
 
           - size: small
