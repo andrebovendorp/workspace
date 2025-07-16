@@ -13,56 +13,56 @@ common:
       kubernetes.io/hostname: slave01
     resources:
       requests:
-        gpu.intel.com/i915: "1" 
+        gpu.intel.com/i915: "1"
         cpu: 500m
         memory: 4Gi
       limits:
         cpu: 11
         memory: 8Gi
-        gpu.intel.com/i915: "1" 
+        gpu.intel.com/i915: "1"
     env:
-      - name: PUID
-        value: "1000"
-      - name: PGID
-        value: "1000"
-      - name: VERSION
-        value: "docker"
-      - name: PLEX_CLAIM
-        valueFrom:
-          secretKeyRef:
-            name: plex-claim-token
-            key: token
-      - name: TZ
-        value: "Stockholm/Europe"
+    - name: PUID
+      value: "1000"
+    - name: PGID
+      value: "1000"
+    - name: VERSION
+      value: "docker"
+    - name: PLEX_CLAIM
+      valueFrom:
+        secretKeyRef:
+          name: plex-claim-token
+          key: token
+    - name: TZ
+      value: "Stockholm/Europe"
 
   hostVolumeMounts:
-    - mountPath: /data/media
-      name: plex-media
-      hostPath: /mnt/external-drive/
-      readOnly: true
-    - mountPath: /dev/dri
-      name: quicksync
-      hostPath: /dev/dri
+  - mountPath: /data/media
+    name: plex-media
+    hostPath: /mnt/external-drive/
+    readOnly: true
+  - mountPath: /dev/dri
+    name: quicksync
+    hostPath: /dev/dri
 
   pvcVolumeMounts:
-    - mountPath: /config
-      name: plex-config
-      storageClassName: ssd-storage
-      size: 2Gi
-    - mountPath: /transcode
-      name: plex-transcode
-      storageClassName: ssd-storage
-      size: 5Gi
+  - mountPath: /config
+    name: plex-config
+    storageClassName: nfs
+    size: 2Gi
+  - mountPath: /transcode
+    name: plex-transcode
+    storageClassName: nfs
+    size: 10Gi
 
   service:
     enabled: true
     ports:
-      - port: 80
-        targetPort: 32400
-        name: http
-        type: ClusterIP
+    - port: 80
+      targetPort: 32400
+      name: http
+      type: ClusterIP
   ingress:
     enabled: true
     class: cilium
     hosts:
-      - host: plex.k8s.nullservers.com
+    - host: plex.k8s.nullservers.com
