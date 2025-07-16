@@ -1,7 +1,8 @@
 redis:
   global:
     imagePullSecrets:
-      - dockerhub-token
+    - dockerhub-token
+    storageClass: nfs
   auth:
     enabled: false
     existingSecret: redis-password
