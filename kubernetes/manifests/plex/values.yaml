@@ -3,6 +3,12 @@ chart:
 common:
   clusterIssuer: letsencrypt-prod
 
+  defaultImagePullSecrets:
+    enabled: true
+
+  cronjob:
+    enabled: false
+
   deployment:
     imagePullSecrets: dockerhub-token
     enabled: true
