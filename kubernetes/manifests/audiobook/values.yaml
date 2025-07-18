@@ -31,7 +31,7 @@ common:
   - name: config
     mountPath: /config
     size: 1Gi
-    storageClassName: nfs
+    storageClassName: nfs-retain
   - name: metadata
     mountPath: /metadata
     size: 2Gi
