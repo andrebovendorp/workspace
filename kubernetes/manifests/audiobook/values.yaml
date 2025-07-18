@@ -1,6 +1,12 @@
 common:
   clusterIssuer: letsencrypt-prod
 
+  defaultImagePullSecrets:
+    enabled: true
+
+  cronjob:
+    enabled: false
+
   deployment:
     enabled: true
     port: 80
