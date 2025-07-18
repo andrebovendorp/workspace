@@ -7,7 +7,6 @@ common:
     enabled: false
 
   deployment:
-    imagePullSecrets: dockerhub-token
     enabled: true
     port: 8200
     replicaCount: 1
@@ -54,23 +53,17 @@ common:
     hostPath: /mnt/external-drive/
     mountPath: /backups/external-drive
     readOnly: true
-  - name: pvcs-persistent
-    hostPath: /opt/pvcs/kubernetes-storage-persistent/
-    mountPath: /backups/pvcs-persistent
-    readOnly: "false"
-  - name: pvcs-non-persistent
-    hostPath: /opt/pvcs/kubernetes-storage/
-    mountPath: /backups/pvcs-non-persistent
 
   pvcVolumeMounts:
   - name: config
     mountPath: /config
     size: 500Mi
-    storageClassName: ssd-storage
+    storageClassName: nfs-retain
+
+  emptyDirVolumeMounts:
   - name: temp
     mountPath: /run/duplicati-temp
     size: 50Gi
-    storageClassName: ssd-storage
 
   existingClaimVolumeMounts:
   - name: nfs-retain-pvc
