@@ -25,11 +25,11 @@ common:
   - name: config
     mountPath: /config
     size: 1Gi
-    storageClassName: ssd-storage
+    storageClassName: nfs
   - name: metadata
     mountPath: /metadata
     size: 2Gi
-    storageClassName: ssd-storage
+    storageClassName: nfs
 
   service:
     enabled: true
