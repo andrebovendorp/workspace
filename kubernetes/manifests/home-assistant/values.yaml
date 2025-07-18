@@ -1,7 +1,7 @@
 home-assistant:
   env:
-    - name: TZ
-      value: Europe/Stockholm
+  - name: TZ
+    value: Europe/Stockholm
 
   securityContext:
     privileged: true
@@ -22,35 +22,35 @@ home-assistant:
       cert-manager.io/cluster-issuer: letsencrypt-prod
       cilium.io/service-upstream: "true"
     hosts:
-      - host: home.nullservers.com
-        paths:
-          - path: /
-            pathType: Prefix
+    - host: home.nullservers.com
+      paths:
+      - path: /
+        pathType: Prefix
     tls:
-      - secretName: home-assistant-tls
-        hosts:
-          - home.nullservers.com
+    - secretName: home-assistant-tls
+      hosts:
+      - home.nullservers.com
 
   configuration:
     enabled: true
     trusted_proxies:
-      - 10.10.0.0/16
+    - 10.10.0.0/16
 
   persistence:
     enabled: true
     existingVolume: pv-home-assistant-data # Created on templates
-    storageClass: ssd-storage-persistent
+    storageClass: nfs-retain
   additionalVolumes:
-    - name: bluetooth
-      hostPath:
-        path: /run/dbus/system_bus_socket
-        type: Socket
-    - name: zigbee-usb
-      hostPath:
-        path: /dev/ttyACM0
-        type: CharDevice
+  - name: bluetooth
+    hostPath:
+      path: /run/dbus/system_bus_socket
+      type: Socket
+  - name: zigbee-usb
+    hostPath:
+      path: /dev/ttyACM0
+      type: CharDevice
   additionalMounts:
-    - mountPath: /dev/ttyACM0
-      name: zigbee-usb
-    - mountPath: /run/dbus/system_bus_socket
-      name: bluetooth
+  - mountPath: /dev/ttyACM0
+    name: zigbee-usb
+  - mountPath: /run/dbus/system_bus_socket
+    name: bluetooth
