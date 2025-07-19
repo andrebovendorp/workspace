@@ -1,7 +1,7 @@
 apiVersion: v2
 name: home-assistant
 description: Home assistant implementation
-version: 0.1.4
+version: 0.1.5
 type: application
 dependencies:
 - name: home-assistant

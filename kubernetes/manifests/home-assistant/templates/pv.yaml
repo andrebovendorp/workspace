@@ -1,26 +1,17 @@
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  annotations:
-    local.path.provisioner/selected-node: slave01
-    pv.kubernetes.io/provisioned-by: rancher.io/local-path
-  name: pv-home-assistant-data
+  name: pv-home-assistant-data-nfs
 spec:
-  accessModes:
-  - ReadWriteOnce
   capacity:
     storage: 10Gi
-  hostPath:
-    path: /opt/pvcs/kubernetes-storage-persistent/pv-home-assistant-data
-    type: DirectoryOrCreate
-  nodeAffinity:
-    required:
-      nodeSelectorTerms:
-      - matchExpressions:
-        - key: kubernetes.io/hostname
-          operator: In
-          values:
-          - slave01
+  accessModes:
+    - ReadWriteOnce
   persistentVolumeReclaimPolicy: Retain
-  storageClassName: ssd-storage-persistent
-  volumeMode: Filesystem
+  storageClassName: nfs-retain
+  csi:
+    driver: nfs.csi.k8s.io
+    volumeHandle: pgsql-nfs-retail
+    volumeAttributes:
+      server: nfs.nullservers.com
+      share: /data/kubernetes-retain/homeassistant-data

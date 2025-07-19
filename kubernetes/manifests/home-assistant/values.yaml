@@ -38,8 +38,9 @@ home-assistant:
 
   persistence:
     enabled: true
-    existingVolume: pv-home-assistant-data # Created on templates
+    existingVolume: pv-home-assistant-data-nfs
     storageClass: nfs-retain
+
   additionalVolumes:
   - name: bluetooth
     hostPath:
