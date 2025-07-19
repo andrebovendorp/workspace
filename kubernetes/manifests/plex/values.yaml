@@ -1,5 +1,6 @@
 chart:
   enabled: true
+
 common:
   clusterIssuer: letsencrypt-prod
 
@@ -28,9 +29,9 @@ common:
         gpu.intel.com/i915: "1"
     env:
     - name: PUID
-      value: "1000"
+      value: "0"
     - name: PGID
-      value: "1000"
+      value: "0"
     - name: VERSION
       value: "docker"
     - name: PLEX_CLAIM
@@ -53,11 +54,12 @@ common:
   pvcVolumeMounts:
   - mountPath: /config
     name: plex-config
-    storageClassName: nfs
+    storageClassName: nfs-retain
     size: 2Gi
+
+  emptyDirVolumeMounts:
   - mountPath: /transcode
     name: plex-transcode
-    storageClassName: nfs
     size: 10Gi
 
   service:
