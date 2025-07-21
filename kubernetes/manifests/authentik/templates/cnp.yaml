@@ -23,7 +23,7 @@ spec:
         io.kubernetes.pod.namespace: redis
     ## Reverse proxy OAUTH
     - matchLabels:
-        io.kubernetes.pod.namespace: duplicati
+        io.kubernetes.pod.namespace: home-assistant
   - toFQDNs:
     # https://docs.goauthentik.io/docs/install-config/air-gapped#outbound-connections
     - matchName: updates.maxmind.com
