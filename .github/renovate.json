@@ -1,7 +1,7 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
-    "config:recommended"
+    "config:basic"
   ],
   "timezone": "Europe/Stockholm",
   "commitMessagePrefix": "Renovate/",
@@ -35,7 +35,10 @@
       "automerge": false
     }
   ],
-  "helm": {
+  "helmv3": {
+    "updateVersion": true
+  },
+  "helmfile": {
     "updateVersion": true
   },
   "kubernetes": {
