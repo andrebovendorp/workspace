@@ -15,7 +15,7 @@ home-assistant:
       cpu: 1
 
   ingress:
-    enabled: false
+    enabled: true
     className: cilium
     annotations:
       kubernetes.io/tls-acme: "true"
