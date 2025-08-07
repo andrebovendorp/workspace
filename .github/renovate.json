@@ -33,10 +33,13 @@
         "k3s"
       ],
       "automerge": false
-    },
+    }
+  ],
+  "bumpVersions": [
     {
-      "matchManagers": ["helm"],
-      "rangeStrategy": "bump"
+      "file": "Chart.yaml",
+      "field": "version",
+      "bump": "patch"
     }
   ],
   "kubernetes": {
