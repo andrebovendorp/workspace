@@ -56,7 +56,7 @@ spec:
       tolerations: []
       containers:
         - name: connect-api
-          image: 1password/connect-api:1.7.3
+          image: 1password/connect-api:1.7.4
           imagePullPolicy: IfNotPresent
           securityContext:
             runAsUser: 999
@@ -103,7 +103,7 @@ spec:
             - mountPath: /home/opuser/.op/data
               name: shared-data
         - name: connect-sync
-          image: 1password/connect-sync:1.7.3
+          image: 1password/connect-sync:1.7.4
           imagePullPolicy: IfNotPresent
           securityContext:
             runAsUser: 999
