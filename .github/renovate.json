@@ -20,7 +20,8 @@
   "packageRules": [
     {
       "matchUpdateTypes": [
-        "patch"
+        "patch",
+        "minor"
       ],
       "matchCurrentVersion": "!/^0/",
       "automerge": true
@@ -29,12 +30,14 @@
       "matchDepNames": [
         "immich",
         "cilium",
-        "home-assistant",
         "k3s"
       ],
       "automerge": false
     }
   ],
+  "helm": {
+    "updateVersion": true
+  },
   "kubernetes": {
     "managerFilePatterns": [
       "/kubernetes/manifests/.+\\.yaml/"
