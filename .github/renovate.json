@@ -35,9 +35,6 @@
       "automerge": false
     }
   ],
-  "helmv3": {
-    "updateVersion": true
-  },
   "helmfile": {
     "updateVersion": true
   },
