@@ -33,11 +33,12 @@
         "k3s"
       ],
       "automerge": false
+    },
+    {
+      "matchManagers": ["helm"],
+      "rangeStrategy": "bump"
     }
   ],
-  "helmfile": {
-    "updateVersion": true
-  },
   "kubernetes": {
     "managerFilePatterns": [
       "/kubernetes/manifests/.+\\.yaml/"
