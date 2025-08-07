@@ -37,7 +37,7 @@
   ],
   "bumpVersions": [
     {
-      "filePattern": ["Chart.yaml"],
+      "filePatterns": ["Chart.yaml"],
       "matchStrings": [
         "version: (\\d+\\.\\d+\\.\\d+)"
       ],
