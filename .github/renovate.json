@@ -39,7 +39,7 @@
     {
       "filePatterns": ["Chart.yaml"],
       "matchStrings": [
-        "version: (\\d+\\.\\d+\\.\\d+)"
+        "^(?<version>.+)$"
       ],
       "name": "Chart version bump.",
       "bumpType": "patch"
