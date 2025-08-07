@@ -37,9 +37,12 @@
   ],
   "bumpVersions": [
     {
-      "file": "Chart.yaml",
-      "field": "version",
-      "bump": "patch"
+      "filePattern": ["Chart.yaml"],
+      "matchStrings": [
+        "version: (\\d+\\.\\d+\\.\\d+)"
+      ],
+      "name": "Chart version bump.",
+      "bumpType": "patch"
     }
   ],
   "kubernetes": {
