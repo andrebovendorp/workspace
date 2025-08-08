@@ -1,6 +1,6 @@
 dependencies:
 - name: flux2
   repository: https://fluxcd-community.github.io/helm-charts
-  version: 2.16.3
-digest: sha256:0af373ea314080148a4bc0b1aafc5725efd47adf2772c1ec32cdda5f705d2d59
-generated: "2025-07-16T18:35:15.068038169Z"
+  version: 2.16.4
+digest: sha256:b5fce85a6bf4bb0eb902c9979319be8ad631cdba3ad64b22a635294b7d7945ea
+generated: "2025-08-08T09:33:42.55718761Z"
