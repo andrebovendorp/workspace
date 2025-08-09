@@ -4,8 +4,7 @@
     "config:recommended",
     ":dependencyDashboard",
     ":prHourlyLimitNone",
-    ":prConcurrentLimitNone",
-    "helm:recommended"
+    ":prConcurrentLimitNone"
   ],
   "timezone": "Europe/Stockholm",
   "commitMessagePrefix": "Renovate/",
