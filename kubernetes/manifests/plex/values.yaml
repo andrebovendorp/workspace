@@ -56,6 +56,10 @@ common:
     name: plex-config
     storageClassName: nfs-retain
     size: 2Gi
+  - mountPath: /data/nfs-media
+    name: plex-nfs-media
+    storageClassName: nfs-retain
+    size: 200Gi
 
   emptyDirVolumeMounts:
   - mountPath: /transcode
