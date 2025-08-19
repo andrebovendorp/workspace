@@ -1,4 +1,7 @@
 home-assistant:
+  nodeSelector:
+    kubernetes.io/hostname: slave01
+
   env:
   - name: TZ
     value: Europe/Stockholm
