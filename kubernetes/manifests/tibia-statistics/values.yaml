@@ -31,7 +31,7 @@ common:
     - name: DB_TYPE
       value: mongodb
     - name: MONGO_DB_HOST
-      value: mongodb.mongodb.svc.cluster.local
+      value: mongodb.nullservers.com
     - name: MONGO_DB_PASSWORD
       valueFrom:
         secretKeyRef:
@@ -43,7 +43,7 @@ common:
           name: tibia-statistics-mongo-credentials
           key: username
     - name: MONGO_DB_NAME
-      value: statistics
+      value: tibia-statistics
 
   hostVolumeMounts: # Same as Deployment
 
