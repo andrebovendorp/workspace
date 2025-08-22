@@ -1,4 +1,5 @@
 mongodb:
+  enabled: false
   resources:
     requests:
       cpu: 100m
