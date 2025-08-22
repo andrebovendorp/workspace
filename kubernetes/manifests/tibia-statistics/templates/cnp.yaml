@@ -10,9 +10,6 @@ spec:
   egress:
     - toEndpoints:
         - matchLabels:
-            io.kubernetes.pod.namespace: mongodb
-    - toEndpoints:
-        - matchLabels:
             io.kubernetes.pod.namespace: kube-system
             k8s-app: kube-dns
       toPorts:
@@ -24,3 +21,4 @@ spec:
               - matchPattern: "*"
     - toFQDNs:
         - matchName: "api.tibiadata.com"
+        - matchName: "mongodb.nullservers.com"
