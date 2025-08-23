@@ -27,9 +27,6 @@ data:
                   - url: https://g1.globo.com/rss/g1/politica/
                     title: G1 Política
                     limit: 4
-                  - url: https://selfh.st/rss/
-                    title: selfh.st
-                    limit: 2
               - type: twitch-channels
                 channels:
                   - krolm009
@@ -39,8 +36,16 @@ data:
             widgets:
               - type: group
                 widgets:
-                  - type: hacker-news
-                  - type: lobsters
+                  - type: rss
+                    feeds:
+                      - url: https://selfh.st/rss/
+                        title: Selfhost
+                        limit: 3
+                  - type: rss
+                    feeds:
+                      - url: https://g1.globo.com/rss/g1/politica/
+                        title: G1 Política
+                        limit: 3
 
               - type: videos
                 channels:
@@ -61,17 +66,23 @@ data:
                     icon: https://repository-images.githubusercontent.com/221546437/4d9e5700-6e25-11eb-9c02-4c848eb9b2a9
               - type: monitor
                 cache: 10m
-                title: Media
+                title: Services
                 sites:
                   - title: Plex
                     url: https://plex.k8s.nullservers.com
                     icon: https://i.redd.it/5x93lknmuaw81.jpg
-                  - title: Bookshelf
+                  - title: Drive
+                    url: https://drive.nullservers.com
+                    icon: https://upload.wikimedia.org/wikipedia/commons/6/60/Nextcloud_Logo.svg
+                  - title: Audiobooks
                     url: https://bookshelf.nullservers.com
                     icon: https://play-lh.googleusercontent.com/9Qjh1GhRcPcUOQLTt-DdnYV2PS9ENidfvkGZ602QWF36KGvLogzcJwCaKTcWBytVGktP
                   - title: Fotos
                     url: https://photos.nullservers.com
                     icon: https://play-lh.googleusercontent.com/nJsRIdtaot1-FKH3kiRem4kjqUU1-_0hd_64qZH0BgtzUecYfWLCDfpk2nNVul8hOrw
+                  - title: Receitas
+                    url: https://recipes.nullservers.com
+                    icon: https://recipes.nullservers.com/static/vue3/assets/brand_logo-B3nCJMk0.svg
               - type: monitor
                 cache: 60m
                 title: Infrastructure
@@ -82,7 +93,7 @@ data:
                   - title: Hubble
                     url: https://hubble.k8s.nullservers.com
                     icon: https://cilium.io/static/hubble-dark-1-91890e273cb3d50a8f520e3cbe178806.svg
-                  - title: Duplicati
+                  - title: Backups
                     url: https://backup.k8s.nullservers.com
                     icon: https://avatars.githubusercontent.com/u/8270231?s=280&v=4
                   - title: Storage
