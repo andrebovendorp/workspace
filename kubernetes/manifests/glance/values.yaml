@@ -4,6 +4,12 @@ common:
 
   unprivileged: true
 
+  defaultImagePullSecrets:
+    enabled: true
+
+  cronjob:
+    enabled: false
+
   deployment:
     imagePullSecrets: dockerhub-token
     enabled: true
@@ -18,26 +24,26 @@ common:
         memory: "256Mi"
         cpu: 200m
     env:
-      - name: PUID
-        value: "1000"
-      - name: PGID
-        value: "1000"
+    - name: PUID
+      value: "1000"
+    - name: PGID
+      value: "1000"
 
   configMapVolumeMounts:
-    - name: glance
-      mountPath: /app/config/glance.yml
-      subPath: glance.yml
+  - name: glance
+    mountPath: /app/config/glance.yml
+    subPath: glance.yml
 
   service:
     enabled: true
     ports:
-      - port: 80
-        targetPort: 8080
-        name: http
-        type: ClusterIP
+    - port: 80
+      targetPort: 8080
+      name: http
+      type: ClusterIP
   ingress:
     enabled: true
     class: cilium
     hosts:
-      - host: start.k8s.nullservers.com
-      - host: start.nullservers.com
+    - host: start.k8s.nullservers.com
+    - host: start.nullservers.com
