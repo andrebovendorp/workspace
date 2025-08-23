@@ -3,35 +3,45 @@ kind: CiliumNetworkPolicy
 metadata:
   name: default
 spec:
+  egress:
+  - toEntities:
+    - ingress
+  - toEndpoints:
+    - {}
+  - toFQDNs:
+    - matchName: auth.nullservers.com
+    - matchName: api.met.no
+    - matchPattern: '*.nextcloud.com'
+    - matchName: nextcloud.com
+    - matchName: github.com
+    - matchName: nominatim.openstreetmap.org
+    - matchName: api.opentopodata.org
+    - matchName: api.met.no
+    - matchName: smtp.resend.com
+    - matchName: raw.githubusercontent.com
+  - toEndpoints:
+    - matchLabels:
+        io.kubernetes.pod.namespace: pgsql
+    - matchLabels:
+        io.kubernetes.pod.namespace: collabora
+    - matchLabels:
+        io.kubernetes.pod.namespace: kube-system
+        k8s-app: kube-dns
+    toPorts:
+    - ports:
+      - port: "53"
+        protocol: UDP
+      rules:
+        dns:
+        - matchPattern: '*'
   endpointSelector: {}
   ingress:
-    - fromEndpoints:
-        - {}
-    - fromEndpoints:
-        - matchLabels:
-            io.kubernetes.pod.namespace: cloudflare
-        - matchLabels:
-            io.kubernetes.pod.namespace: victoria-metrics
-    - fromEntities:
-        - ingress
-  egress:
-    - toEndpoints:
-        - {}
-    - toFQDNs:
-        - matchName: "auth.nullservers.com"
-        - matchName: "www.thunderbird.net"
-        - matchName: "api.met.no"
-    - toEndpoints:
-        - matchLabels:
-            io.kubernetes.pod.namespace: pgsql
-    - toEndpoints:
-        - matchLabels:
-            io.kubernetes.pod.namespace: kube-system
-            k8s-app: kube-dns
-      toPorts:
-        - ports:
-            - port: "53"
-              protocol: UDP
-          rules:
-            dns:
-              - matchPattern: "*"
+  - fromEndpoints:
+    - {}
+  - fromEndpoints:
+    - matchLabels:
+        io.kubernetes.pod.namespace: cloudflare
+    - matchLabels:
+        io.kubernetes.pod.namespace: victoria-metrics
+  - fromEntities:
+    - ingress

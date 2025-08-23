@@ -1,8 +1,8 @@
 apiVersion: v2
 name: nextcloud
-version: 0.1.4
+version: 1.0.0
 type: application
 dependencies:
-- name: nextcloud
-  version: 7.0.2
-  repository: https://nextcloud.github.io/helm/
+- name: common
+  version: 0.2.2
+  repository: https://boveloco.github.io/charts/
