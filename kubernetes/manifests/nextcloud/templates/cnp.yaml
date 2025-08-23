@@ -22,8 +22,7 @@ spec:
   - toEndpoints:
     - matchLabels:
         io.kubernetes.pod.namespace: pgsql
-    - matchLabels:
-        io.kubernetes.pod.namespace: collabora
+  - toEndpoints:
     - matchLabels:
         io.kubernetes.pod.namespace: kube-system
         k8s-app: kube-dns
