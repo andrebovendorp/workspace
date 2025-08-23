@@ -1,0 +1,8 @@
+apiVersion: v2
+name: Collabora
+version: 0.0.1
+type: application
+dependencies:
+- name: collabora-online
+  version: 1.1.46
+  repository: https://collaboraonline.github.io/online/
