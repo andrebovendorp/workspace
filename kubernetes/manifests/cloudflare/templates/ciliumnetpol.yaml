@@ -37,6 +37,8 @@ spec:
             io.kubernetes.pod.namespace: authentik
         - matchLabels:
             io.kubernetes.pod.namespace: nextcloud
+        - matchLabels:
+            io.kubernetes.pod.namespace: collabora
         
     # Allow Cloudflare 
     - toFQDNs:
