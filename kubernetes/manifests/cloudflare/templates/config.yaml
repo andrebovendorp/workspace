@@ -42,11 +42,11 @@ data:
     - hostname: auth.nullservers.com
       service: http://authentik-server.authentik.svc.cluster.local:80
     - hostname: drive.nullservers.com
-      service: http://nextcloud.nextcloud.svc.cluster.local:8080
+      service: http://nextcloud.nextcloud.svc.cluster.local:80
     - hostname: rss.nullservers.com
       service: http://freshrss.freshrss.svc.cluster.local:80
     - hostname: docs.nullservers.com
-      service: http://collabora-collabora-online.collabora.svc.cluster.local:80
+      service: http://collabora-collabora-online.collabora.svc.cluster.local:9980
     # This rule sends traffic to the built-in hello-world HTTP server. This can help debug connectivity
     # issues. If hello.example.com resolves and tunnel.example.com does not, then the problem is
     # in the connection from cloudflared to your local service, not from the internet to cloudflared.

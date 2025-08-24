@@ -12,6 +12,8 @@ spec:
                 io.kubernetes.pod.namespace: victoria-metrics
           - matchLabels:
                 io.kubernetes.pod.namespace: nextcloud
+          - matchLabels:
+                io.kubernetes.pod.namespace: cloudflare
       - fromEntities:
           - ingress
     egress:
