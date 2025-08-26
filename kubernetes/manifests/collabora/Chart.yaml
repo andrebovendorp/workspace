@@ -4,5 +4,5 @@ version: 0.0.2
 type: application
 dependencies:
 - name: collabora-online
-  version: 1.1.46
+  version: 1.1.47
   repository: https://collaboraonline.github.io/online/
