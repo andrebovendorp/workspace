@@ -21,6 +21,8 @@ spec:
             - port: "2283"
   egress:
     - toEndpoints:
+        - {}
+    - toEndpoints:
         - matchLabels:
             io.kubernetes.pod.namespace: kube-system
             k8s-app: kube-dns
@@ -46,6 +48,7 @@ spec:
     - toFQDNs:
         - matchName: api.github.com
         - matchName: auth.nullservers.com
+        - matchName: huggingface.co
       toPorts:
         - ports:
             - port: "443"
