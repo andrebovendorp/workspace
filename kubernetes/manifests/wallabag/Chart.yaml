@@ -1,9 +1,0 @@
-apiVersion: v2
-name: Wallabag
-version: 0.1.2
-type: application
-dependencies:
-- name: common
-  version: 0.2.2
-  repository: https://boveloco.github.io/charts/
-  condition: common.enabled

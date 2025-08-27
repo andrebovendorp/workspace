@@ -22,7 +22,7 @@ collabora-online:
       secretName: docs-tls
 
   autoscaling:
-    enabled: true
+    enabled: false
 
   collabora:
     aliasgroups:
