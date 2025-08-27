@@ -9,6 +9,11 @@ spec:
     - fromEntities:
         - ingress
     - fromEndpoints:
+        - {}
+    - fromEndpoints:
+        - matchLabels:
+            io.kubernetes.pod.namespace: victoria-metrics
+    - fromEndpoints:
         - matchLabels:
             io.kubernetes.pod.namespace: cloudflare
       toPorts:
