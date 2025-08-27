@@ -49,6 +49,7 @@ spec:
         - matchName: api.github.com
         - matchName: auth.nullservers.com
         - matchName: huggingface.co
+        - matchName: cas-server.xethub.hf.co
       toPorts:
         - ports:
             - port: "443"
