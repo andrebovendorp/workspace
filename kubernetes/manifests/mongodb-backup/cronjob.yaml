@@ -1,0 +1,129 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: mongodb-backup-cronjob
+  namespace: mongodb-backup
+spec:
+  schedule: "0 11 * * *"
+  successfulJobsHistoryLimit: 10
+  failedJobsHistoryLimit: 10
+
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: mongodb-backup
+            image: ghcr.io/boveloco/images/mongodb-backup:latest
+            command: [ "/bin/sh", "-c" ]
+            args:
+            - |
+              # This script performs a MongoDB dump, compresses it, and transfers
+              # the compressed archive to an FTP server.
+
+              # Set the script to exit on any error.
+              set -e
+
+              # Use a trap to ensure we always clean up temporary files, even on failure.
+              trap "rm -rf /backup/mongo_dump_* /backup/*.tar.gz /tmp/backup_list.txt" EXIT
+
+              # 1. Install necessary packages: `mongodb-tools`, `lftp`, and `gzip`.
+              # Disabled since its already pre-installed on the image
+              # echo "Installing necessary packages..."
+              # apk add --no-cache mongodb-tools lftp gzip coreutils;
+
+              # 2. Define a timestamp variable for the backup folder and archive name.
+              TIMESTAMP=$(date +'%Y-%m-%d-%H-%M-%S');
+
+              # Calculate the date for 7 days ago in Unix timestamp format for easy comparison.
+              SEVEN_DAYS_AGO=$(date -d "7 days ago" +%s);
+
+              BACKUP_DIR="/backup/mongo_dump_$TIMESTAMP";
+              BACKUP_FILE="backup_$TIMESTAMP.tar.gz";
+
+              # 3. Perform the `mongodump` into the timestamped directory.
+              echo "Creating backup dump..."
+              mkdir -p "$BACKUP_DIR";
+              mongodump --uri="$MONGO_URI" --out="$BACKUP_DIR";
+
+              # 4. Zip the entire dump directory into a single tar.gz file.
+              echo "Compressing the backup..."
+              tar -czf "/backup/$BACKUP_FILE" -C "$BACKUP_DIR" . ;
+
+              # 5. Transfer the zipped backup to the FTP server.
+              echo "Connecting to FTP server to transfer backup..."
+              lftp -p 21 -u "$FTP_USER,$FTP_PASSWORD" "$FTP_HOST" -e "
+                set ftp:ssl-allow no;
+                set cmd:fail-exit yes;
+                cd /backup/mongodb-cron/;
+                put /backup/$BACKUP_FILE;
+                bye
+              ";
+
+              # 6. Perform backup rotation on the remote FTP server.
+              # This logic lists all files on the FTP server and performs the date check locally.
+
+              echo "Performing backup rotation..."
+
+              # First, get a list of all .tar.gz files from the remote directory and save it locally.
+              # We use `ls -1` for a single-column list of filenames, which is easier to parse.
+              lftp -p 21 -u "$FTP_USER,$FTP_PASSWORD" "$FTP_HOST" -e "
+                set ftp:ssl-allow no;
+                set cmd:fail-exit yes;
+                cd /backup/mongodb-cron/;
+                ls -1 *.tar.gz;
+                bye
+              " > /tmp/backup_list.txt;
+
+              echo "List of backups acquired!"
+              cat /tmp/backup_list.txt
+
+              # Loop through each filename in the temporary file.
+              while read -r filename; do
+                # Extract the timestamp part from the filename (e.g., '2023-10-27-14-30-00').
+                # This pattern assumes a consistent filename format.
+                file_date=$(echo "$filename" | sed -E 's/.*_([0-9]{4}-[0-9]{2}-[0-9]{2}-[0-9]{2}-[0-9]{2}-[0-9]{2}).*/\1/');
+
+                # Convert the filename's timestamp to Unix timestamp format.
+                file_date_unix=$(echo "$file_date" | sed 's/-/ /3; s/-/:/3; s/-/:/3');
+                
+                file_date_ts=$(date -d "$file_date_unix" +%s);
+
+                # Compare the two timestamps. If the file is older than 7 days, delete it.
+                if [ "$file_date_ts" -lt "$SEVEN_DAYS_AGO" ]; then
+                  echo "Deleting old backup: $filename";
+                  # Use a separate lftp session for each deletion, as a single command is more
+                  # reliable on older FTP servers than a complex script.
+                  lftp -p 21 -u "$FTP_USER,$FTP_PASSWORD" "$FTP_HOST" -e "
+                    set ftp:ssl-allow no;
+                    set cmd:fail-exit yes;
+                    cd /backup/mongodb-cron/;
+                    rm $filename;
+                    bye
+                  ";
+                else
+                  echo "Keeping backup: $filename";
+                fi
+              done < /tmp/backup_list.txt;
+
+              # 7. Final success message. The trap command handles the cleanup.
+              echo "Backup and rotation completed successfully."
+            # The environment variables are populated from the Kubernetes Secret
+            # that is automatically created and synced by the ExternalSecret Operator.
+            env:
+            - name: MONGO_URI
+              valueFrom:
+                secretKeyRef:
+                  name: mongodb-backup-creds
+                  key: MONGO_URI
+            - name: FTP_HOST
+              value: storage.nullservers.com
+            - name: FTP_USER
+              value: kube
+            - name: FTP_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mongodb-backup-creds
+                  key: FTP_PASSWORD
+
+          restartPolicy: OnFailure
