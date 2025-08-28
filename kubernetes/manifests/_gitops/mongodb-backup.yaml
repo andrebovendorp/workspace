@@ -2,6 +2,7 @@ apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
 kind: Kustomization
 metadata:
   name: mongodb-backup
+  namespace: fluxcd
 spec:
   interval: 1h
   path: ./kubernetes/manifests/mongodb-backup
@@ -10,4 +11,4 @@ spec:
     kind: GitRepository
     name: workspace
     namespace: fluxcd
-  targetNamespace: mongodb-backup # Change this to the namespace where you want to deploy the app
+  targetNamespace: mongodb-backup
