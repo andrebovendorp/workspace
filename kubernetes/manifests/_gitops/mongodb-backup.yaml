@@ -3,10 +3,11 @@ kind: Kustomization
 metadata:
   name: mongodb-backup
 spec:
-  interval: 5m0s
+  interval: 1h
   path: ./kubernetes/manifests/mongodb-backup
   prune: true
   sourceRef:
     kind: GitRepository
     name: workspace
+    namespace: fluxcd
   targetNamespace: mongodb-backup # Change this to the namespace where you want to deploy the app
