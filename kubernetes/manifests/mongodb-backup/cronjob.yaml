@@ -4,7 +4,7 @@ metadata:
   name: mongodb-backup-cronjob
   namespace: mongodb-backup
 spec:
-  schedule: "0 11 * * *"
+  schedule: "0 10 * * *"
   successfulJobsHistoryLimit: 10
   failedJobsHistoryLimit: 10
 
