@@ -6,8 +6,10 @@ All servers runs in my house. This means that I have to take care of the power c
 - Efficiency
 - Usability
 
-
 ----------------------------------------
+# Deprecation of RaspPI for K8s
+I'm removing my Raspi from K8s to use it in other projects. Soon I'll have another server running that will pose as a replacement.
+
 # Usage of Database Visualization Tools - 2025-05-21
 
 From now on, all Database vissualization tools will NOT be deployed into the cluster and any need to visualize the data will be done using port-forwarding to the database and using the local machine to visualize the data. This will help to reduce the resource usage and make the setup more efficient.
