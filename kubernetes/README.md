@@ -10,10 +10,10 @@ For more information about the cluster architecture, please refer to the SVG fil
 
 | Specification       | Details          |
 | ------------------- | ---------------- |
-| **Cluster Version** | v1.32.2          |
+| **Cluster Version** | v1.33.3          |
 | **CNI**             | Cilium           |
-| **CSI**             | LocalPathStorage |
+| **CSI**             | LocalPathStorage/NFS |
 | **Master Nodes**    | 1                |
-| **Slaves Nodes**    | 3                |
+| **Slaves Nodes**    | 2                |
 | **Database**        | SQLite           |
 | **HA**              | No               |

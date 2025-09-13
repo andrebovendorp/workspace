@@ -7,6 +7,11 @@ All servers runs in my house. This means that I have to take care of the power c
 - Usability
 
 ----------------------------------------
+# Stop spreading Helmcharts as default
+Helmcharts are great but they also come with a cost. 
+For simple configurations like cronjobs or such, instead of using a helmchart, the recommended way now is to create a `kustomization` on FluxCD and leave it as yaml files only. 
+This make simpler to configure and there is no creation of layers and layers of configuration.
+
 # Deprecation of RaspPI for K8s
 I'm removing my Raspi from K8s to use it in other projects. Soon I'll have another server running that will pose as a replacement.
 
