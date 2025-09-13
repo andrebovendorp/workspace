@@ -1,0 +1,62 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: adguard-sync-sts
+  namespace: adguard-sync
+spec:
+  serviceName: "adguard-sync-service"
+  replicas: 1
+  selector:
+    matchLabels:
+      app: adguard-sync
+  template:
+    metadata:
+      labels:
+        app: adguard-sync
+    spec:
+      containers:
+      - name: adguard-sync
+        image: ghcr.io/bakito/adguardhome-sync
+        # The command for a long-running service might be different. 
+        # You'll need to know the command to keep the container running
+        # and not exit after a single run.
+        env:
+        - name: CRON
+          value: "0 * * * *"
+        - name: ORIGIN_URL
+          value: https://172.16.0.240
+        - name: ORIGIN_INSECURE_SKIP_VERIFY
+          value: "true"
+        - name: ORIGIN_USERNAME
+          valueFrom:
+            secretKeyRef:
+              name: adguard-credentials
+              key: username
+        - name: ORIGIN_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: adguard-credentials
+              key: password
+        - name: REPLICA1_URL
+          value: https://192.168.50.240
+        - name: REPLICA1_INSECURE_SKIP_VERIFY
+          value: "true"
+        - name: REPLICA1_USERNAME
+          valueFrom:
+            secretKeyRef:
+              name: adguard-credentials
+              key: username
+        - name: REPLICA1_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: adguard-credentials
+              key: password
+        - name: FEATURES_DNS_REWRITES
+          value: "true"
+        - name: FEATURES_DNS_SERVER_CONFIG
+          value: "true"
+        - name: PRINT_CONFIG_ONLY
+          value: "false"
+        - name: LOG_LEVEL
+          value: debug
+      restartPolicy: Always

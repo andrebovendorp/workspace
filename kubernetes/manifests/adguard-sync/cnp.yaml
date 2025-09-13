@@ -1,0 +1,29 @@
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+    name: default
+    namespace: adguard-sync
+spec:
+    endpointSelector: {}
+    ingress:
+      - fromEndpoints:
+          - {}
+    egress:
+      - toFQDNs:
+          - matchPattern: "*.nullservers.com"
+      - toCIDRSet:
+          - cidr: "192.168.50.240/32"
+          - cidr: "172.16.0.240/32"
+      - toEndpoints:
+          - {}
+      - toEndpoints:
+          - matchLabels:
+                io.kubernetes.pod.namespace: kube-system
+                k8s-app: kube-dns
+        toPorts:
+          - ports:
+              - port: "53"
+                protocol: UDP
+            rules:
+                dns:
+                  - matchPattern: "*"
