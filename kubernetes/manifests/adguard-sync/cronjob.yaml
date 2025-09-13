@@ -1,0 +1,57 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: adguard-sync
+  namespace: adguard-sync
+spec:
+  schedule: "0 * * * *" # Runs every hour
+  successfulJobsHistoryLimit: 3 # Keep last 3 successful jobs
+  failedJobsHistoryLimit: 3 # Keep last 3 failed jobs
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: adguard-sync
+            image: ghcr.io/bakito/adguardhome-sync
+            command: [ "/opt/go/adguardhome-sync", "run", "--config", "/config.yaml" ]
+            env:
+            - name: ORIGIN_URL
+              value: https://172.16.0.240
+            - name: ORIGIN_INSECURE_SKIP_VERIFY
+              value: "true"
+            - name: ORIGIN_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: adguard-credentials
+                  key: username
+            - name: ORIGIN_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: adguard-credentials
+                  key: password
+            - name: REPLICA1_URL
+              value: https://192.168.50.240
+            - name: REPLICA1_INSECURE_SKIP_VERIFY
+              value: "true"
+            - name: REPLICA1_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: adguard-credentials
+                  key: username
+            - name: REPLICA1_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: adguard-credentials
+                  key: password
+            - name: FEATURES_DNS_REWRITES
+              value: "true"
+            - name: FEATURES_DNS_SERVER_CONFIG
+              value: "true"
+            - name: PRINT_CONFIG_ONLY
+              value: "false"
+            - name: LOG_LEVEL
+              value: debug
+            - name: API_PORT
+              value: "0"
+          restartPolicy: OnFailure
