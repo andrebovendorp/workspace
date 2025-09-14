@@ -21,6 +21,8 @@ spec:
             io.kubernetes.pod.namespace: freshrss
         - matchLabels:
             io.kubernetes.pod.namespace: nextcloud
+        - matchLabels:
+            io.kubernetes.pod.namespace: postgresql-backup
   egress:
     - toEndpoints:
         - matchLabels:
