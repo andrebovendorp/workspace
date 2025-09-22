@@ -11,7 +11,7 @@ spec:
       sourceRef:
         kind: GitRepository
         name: workspace
-        namespace: flux-cd
+        namespace: flux-system
       version: ">=0.1.0"
 
   values:
