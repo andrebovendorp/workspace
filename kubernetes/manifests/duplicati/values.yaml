@@ -55,10 +55,6 @@ common:
     readOnly: true
 
   pvcVolumeMounts:
-  - name: config
-    mountPath: /config
-    size: 500Mi
-    storageClassName: nfs-retain
 
   emptyDirVolumeMounts:
   - name: temp
@@ -67,7 +63,9 @@ common:
 
   existingClaimVolumeMounts:
   - name: nfs-retain-pvc
-    mountPath: /backups/nfs/kuberenetes-retain
+    mountPath: /backups/nfs/kuberenetes-retain.
+  - name: config
+    mountPath: /config
 
   service:
     enabled: true
