@@ -1,8 +1,10 @@
 csi-driver-nfs:
+
   driver:
     mountPermissions: "1000"
 
   controller:
+    priorityClassName: high-priority
     tollerations:
     - key: "network"
     operator: "Equal"
