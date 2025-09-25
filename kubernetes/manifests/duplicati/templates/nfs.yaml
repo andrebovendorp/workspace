@@ -14,7 +14,7 @@ spec:
     volumeHandle: nfs-retain-vol        # Unique name across cluster
     volumeAttributes:
       server: nfs.nullservers.com
-      share: /data/kubernetes-retain
+      share: /data/kubernetes-retain/duplicati-data
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
