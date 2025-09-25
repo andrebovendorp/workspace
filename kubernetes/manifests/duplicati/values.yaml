@@ -64,7 +64,7 @@ common:
   existingClaimVolumeMounts:
   - name: nfs-retain-pvc
     mountPath: /backups/nfs/kuberenetes-retain.
-  - name: config
+  - name: duplicati-config-pvc
     mountPath: /config
 
   service:
