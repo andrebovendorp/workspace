@@ -1,6 +1,6 @@
 immich:
   image:
-    tag: v1.139.4
+    tag: v1.143.1
   immich:
     metrics:
       enabled: true
