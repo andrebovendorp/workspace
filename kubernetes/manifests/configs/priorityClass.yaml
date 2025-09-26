@@ -1,0 +1,15 @@
+apiVersion: scheduling.k8s.io/v1
+kind: PriorityClass
+metadata:
+  name: high-priority
+value: 1000000
+globalDefault: false
+description: "This priority class should be used for critical system components that must be scheduled even under resource pressure."
+---
+apiVersion: scheduling.k8s.io/v1
+kind: PriorityClass
+metadata:
+  name: low-priority-default
+value: -5
+globalDefault: true
+description: "This is the default priority class for all pods that do not have a specified priority. It is used for non-critical workloads."
