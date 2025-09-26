@@ -1,9 +1,9 @@
 apiVersion: v2
 name: duplicati
 description: Backup service with a web interface
-version: 0.1.7
+version: 0.1.8
 type: application
 dependencies:
 - name: common
-  version: 0.2.2
+  version: 0.2.3
   repository: https://boveloco.github.io/charts/

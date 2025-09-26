@@ -48,6 +48,12 @@ common:
           name: duplicati-credentials
           key: ui-credentials
 
+  volumeMounts:
+  - name: nfs-retain-pvc
+    mountPath: /config
+    subPath: "./duplicati-config"
+    readOnly: "false"
+
   hostVolumeMounts:
   - name: external-drive
     hostPath: /mnt/external-drive/
@@ -63,9 +69,8 @@ common:
 
   existingClaimVolumeMounts:
   - name: nfs-retain-pvc
-    mountPath: /backups/nfs/kuberenetes-retain.
-  - name: duplicati-config-pvc
-    mountPath: /config
+    mountPath: /backups/nfs/kuberenetes-retain
+    subPath: "."
 
   service:
     enabled: true
