@@ -3,7 +3,7 @@ apiVersion: source.toolkit.fluxcd.io/v1
 kind: HelmRepository
 metadata:
   name: boveloco-charts
-  namespace: {{ .Release.Namespace }}
+  namespace: flux-system
 spec:
   url: https://boveloco.github.io/charts/
   interval: 5m 
