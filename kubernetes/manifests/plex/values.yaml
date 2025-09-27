@@ -52,10 +52,6 @@ common:
     hostPath: /dev/dri
 
   pvcVolumeMounts:
-  - mountPath: /config
-    name: plex-config
-    storageClassName: nfs-retain
-    size: 2Gi
 
   emptyDirVolumeMounts:
   - mountPath: /transcode
@@ -63,8 +59,8 @@ common:
     size: 10Gi
 
   existingClaimVolumeMounts:
-  - name: nfs-plex-data
-    mountPath: /data/media-nfs
+  - name: nfs-plex-config
+    mountPath: /config
 
   service:
     enabled: true

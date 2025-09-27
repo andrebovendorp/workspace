@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: nfs-plex-data
+  name: nfs-plex-config
 spec:
   capacity:
     storage: 500Gi
@@ -14,12 +14,12 @@ spec:
     volumeHandle: nfs-retain-vol        # Unique name across cluster
     volumeAttributes:
       server: nfs.nullservers.com
-      share: /media/kubernetes-retain/plex-media
+      share: /data/kubernetes-retain/plex-config
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: nfs-plex-data
+  name: nfs-plex-config
 spec:
   accessModes:
     - ReadWriteMany
@@ -27,4 +27,4 @@ spec:
     requests:
       storage: 500Gi
   storageClassName: nfs-csi-retain
-  volumeName: nfs-plex-data
+  volumeName: nfs-plex-config
