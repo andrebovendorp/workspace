@@ -1,0 +1,30 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: nfs-plex-data
+spec:
+  capacity:
+    storage: 500Gi
+  accessModes:
+    - ReadWriteMany
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: nfs-csi-retain
+  csi:
+    driver: nfs.csi.k8s.io
+    volumeHandle: nfs-retain-vol        # Unique name across cluster
+    volumeAttributes:
+      server: nfs.nullservers.com
+      share: /media/kubernetes-retain/plex-media/
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: nfs-plex-data
+spec:
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 500Gi
+  storageClassName: nfs-csi-retain
+  volumeName: nfs-plex-data
