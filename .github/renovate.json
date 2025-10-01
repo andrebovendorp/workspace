@@ -18,15 +18,12 @@
   "ignorePaths": [
     ".vscode/",
     "studies/",
-    "workshops"
+    "workshops/",
+    "brand/"
   ],
   "enabledManagers": [
-    "helm-requirements",
     "helmv3"
   ],
-  "helmv3": {
-    "enabled": true
-  },
   "customManagers": [
     {
       "customType": "regex",
@@ -44,14 +41,21 @@
   ],
   "packageRules": [
     {
+      "description": "Automerge everything except specific critical apps and versions ending in .0",
+      "matchDepNames": [
+        "!immich",
+        "!cilium",
+        "!k3s"
+      ],
+      "matchCurrentVersion": "!/\\.\\d+\\.0$/",
       "matchUpdateTypes": [
         "patch",
         "minor"
       ],
-      "matchCurrentVersion": "!/^0/",
       "automerge": true
     },
     {
+      "description": "Do not automerge specific critical apps (immich, cilium, k3s)",
       "matchDepNames": [
         "immich",
         "cilium",
