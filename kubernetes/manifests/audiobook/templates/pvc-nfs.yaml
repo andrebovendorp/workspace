@@ -1,0 +1,62 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: audiobook-data-nfs
+spec:
+  accessModes:
+  - ReadWriteMany
+  volumeName: audiobook-data-nfs-pv
+  resources:
+    requests:
+      storage: 10Gi
+  storageClassName: nfs
+--- 
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: audiobook-data-nfs-pv
+spec:
+  capacity:
+    storage: 10Gi
+  accessModes:
+    - ReadWriteMany
+  persistentVolumeReclaimPolicy: Delete
+  storageClassName: nfs
+  csi:
+    driver: nfs.csi.k8s.io
+    volumeHandle: pv-authentik-data-nfs
+    volumeAttributes:
+      server: nfs.nullservers.com
+      share: /data/kubernetes-retain/audiobook-data
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: audiobook-config-nfs
+spec:
+  accessModes:
+  - ReadWriteMany
+  volumeName: audiobook-config-nfs-pv
+  resources:
+    requests:
+      storage: 1Gi
+  storageClassName: nfs
+--- 
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: audiobook-config-nfs-pv
+spec:
+  capacity:
+    storage: 1Gi
+  accessModes:
+    - ReadWriteMany
+  persistentVolumeReclaimPolicy: Delete
+  storageClassName: nfs
+  csi:
+    driver: nfs.csi.k8s.io
+    volumeHandle: pv-authentik-config-nfs
+    volumeAttributes:
+      server: nfs.nullservers.com
+      share: /data/kubernetes-retain/audiobook-config
+---

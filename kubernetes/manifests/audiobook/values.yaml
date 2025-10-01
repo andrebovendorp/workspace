@@ -27,15 +27,15 @@ common:
     hostPath: /mnt/external-drive/audiobooks
     mountPath: /audiobooks
 
-  pvcVolumeMounts:
-  - name: config
+  existingClaimVolumeMounts:
+  - name: audiobook-config-nfs
     mountPath: /config
     size: 1Gi
     storageClassName: nfs-retain
-  - name: metadata
-    mountPath: /metadata
-    size: 2Gi
-    storageClassName: nfs
+  - name: audiobook-data-nfs
+    mountPath: /data
+    size: 10Gi
+    storageClassName: nfs-retain
 
   service:
     enabled: true
