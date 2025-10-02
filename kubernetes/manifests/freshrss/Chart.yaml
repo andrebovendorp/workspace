@@ -1,8 +1,0 @@
-apiVersion: v2
-name: freshrss
-version: 1.0.2
-type: application
-dependencies:
-- name: common
-  version: 0.2.3
-  repository: https://boveloco.github.io/charts/

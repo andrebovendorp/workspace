@@ -1,0 +1,15 @@
+external-dns:
+  serviceMonitor:
+    enabled: true
+  logLevel: debug
+  logFormat: json
+  sources:
+  - service
+  - ingress
+  provider: pihole
+  policy: upsert-only
+  txtPrefix: external-dns-
+  extraArgs:
+  - --ignore-ingress-tls-spec
+  - --pihole-server=http://172.16.0.240
+  - --pihole-api-version=6

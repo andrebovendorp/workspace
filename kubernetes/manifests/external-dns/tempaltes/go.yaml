@@ -1,0 +1,90 @@
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: external-dns
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: external-dns
+rules:
+- apiGroups: [ "" ]
+  resources: [ "services", "pods" ]
+  verbs: [ "get", "watch", "list" ]
+- apiGroups: [ "discovery.k8s.io" ]
+  resources: [ "endpointslices" ]
+  verbs: [ "get", "watch", "list" ]
+- apiGroups: [ "extensions", "networking.k8s.io" ]
+  resources: [ "ingresses" ]
+  verbs: [ "get", "watch", "list" ]
+- apiGroups: [ "" ]
+  resources: [ "nodes" ]
+  verbs: [ "get", "list", "watch" ]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: external-dns-viewer
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: external-dns
+subjects:
+- kind: ServiceAccount
+  name: external-dns
+  namespace: default
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: external-dns
+spec:
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: external-dns
+  template:
+    metadata:
+      labels:
+        app: external-dns
+    spec:
+      serviceAccountName: external-dns
+      containers:
+      - name: external-dns
+        image: registry.k8s.io/external-dns/external-dns:v0.19.0
+        args:
+        - --source=service
+        - --source=ingress
+        - --registry=noop
+        - --policy=upsert-only
+        - --provider=pihole
+        - --pihole-api-version=6
+        - --pihole-server=https://dns.nullservers.com
+        - --pihole-tls-skip-verify
+      securityContext:
+        fsGroup: 65534
+---
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: untitled-policy
+spec:
+  endpointSelector: {}
+  ingress:
+  - {}
+  egress:
+  - toEndpoints:
+    - matchLabels:
+        io.kubernetes.pod.namespace: kube-system
+        k8s-app: kube-dns
+    toPorts:
+    - ports:
+      - port: "53"
+        protocol: UDP
+      rules:
+        dns:
+        - matchPattern: "*"
+  - toEntities:
+    - kube-apiserver

@@ -45,5 +45,5 @@ common:
     enabled: true
     class: cilium
     hosts:
-    - host: start.k8s.nullservers.com
+    - host: start.nullservers.com
     - host: start.nullservers.com

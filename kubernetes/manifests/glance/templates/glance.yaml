@@ -66,7 +66,7 @@ data:
                     url: https://recipes.nullservers.com
                     icon: https://repository-images.githubusercontent.com/221546437/4d9e5700-6e25-11eb-9c02-4c848eb9b2a9
                   - title: Plex
-                    url: https://plex.k8s.nullservers.com
+                    url: https://plex.nullservers.com
                     icon: https://i.redd.it/5x93lknmuaw81.jpg
                   - title: Drive
                     url: https://drive.nullservers.com
@@ -85,13 +85,13 @@ data:
                 title: Infrastructure
                 sites:
                   - title: Grafana
-                    url: https://grafana.k8s.nullservers.com
+                    url: https://grafana.nullservers.com
                     icon: https://upload.wikimedia.org/wikipedia/commons/thumb/a/a1/Grafana_logo.svg/1200px-Grafana_logo.svg.png
                   - title: Hubble
-                    url: https://hubble.k8s.nullservers.com
+                    url: https://hubble.nullservers.com
                     icon: https://cilium.io/static/hubble-dark-1-91890e273cb3d50a8f520e3cbe178806.svg
                   - title: Backups
-                    url: https://backup.k8s.nullservers.com
+                    url: https://backup.nullservers.com
                     icon: https://avatars.githubusercontent.com/u/8270231?s=280&v=4
                   - title: Storage
                     url: https://storage.nullservers.com
@@ -106,7 +106,7 @@ data:
                     url: https://px.nullservers.com:8006
                     icon: https://camo.githubusercontent.com/fdffb57ca7bf0ba2900bab738df7bf002dee35f15e55f2029a97de1d2bdc1e07/68747470733a2f2f7777772e70726f786d6f782e636f6d2f696d616765732f70726f786d6f782f50726f786d6f782d6c6f676f2d737461636b65642d38343070782e706e67
                   - title: FluxCD
-                    url: https://flux.k8s.nullservers.com
+                    url: https://flux.nullservers.com
                     icon: https://avatars.githubusercontent.com/u/52158677
 
 

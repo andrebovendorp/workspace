@@ -10,6 +10,6 @@ spec:
     name: letsencrypt-prod
   dnsNames:
     - grafana.nullservers.com
-    - grafana.k8s.nullservers.com
+    - grafana.nullservers.com
   secretName: {{ .Release.Name }}-grafana-tls
   revisionHistoryLimit: 1

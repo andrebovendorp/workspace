@@ -49,7 +49,7 @@ immich:
           paths:
           - path: /
             pathType: Prefix
-        - host: photos.k8s.nullservers.com
+        - host: photos.nullservers.com
           paths:
           - path: /
             pathType: Prefix
@@ -57,7 +57,7 @@ immich:
         - secretName: immich-tls
           hosts:
           - photos.nullservers.com
-          - photos.k8s.nullservers.com
+          - photos.nullservers.com
 
     machine-learning:
       enabled: true

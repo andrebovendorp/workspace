@@ -97,4 +97,4 @@ common:
     enabled: false
     class: cilium
     hosts:
-    - host: recipes.k8s.nullservers.com
+    - host: recipes.nullservers.com

@@ -54,6 +54,3 @@ common:
 
   ingress:
     enabled: false
-    class: cilium
-    hosts:
-    - host: homepage.k8s.nullservers.com

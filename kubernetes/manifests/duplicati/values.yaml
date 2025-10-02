@@ -84,4 +84,4 @@ common:
     enabled: true
     class: cilium
     hosts:
-    - host: backup.k8s.nullservers.com
+    - host: backup.nullservers.com

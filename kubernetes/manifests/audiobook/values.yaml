@@ -47,5 +47,5 @@ common:
     enabled: true
     class: cilium
     hosts:
-    - host: bookshelf.k8s.nullservers.com
+    - host: bookshelf.nullservers.com
     - host: bookshelf.nullservers.com

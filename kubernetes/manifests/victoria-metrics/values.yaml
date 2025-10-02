@@ -1,7 +1,5 @@
 grafana:
   hostname: grafana.nullservers.com
-  additionalHosts:
-  - name: grafana.k8s.nullservers.com
 
 victoria-metrics-k8s-stack:
   vmalertmanager:
@@ -49,11 +47,11 @@ victoria-metrics-k8s-stack:
         cert-manager.io/cluster-issuer: letsencrypt-prod
       ingressClassName: cilium
       hosts:
-      - metrics.k8s.nullservers.com
+      - metrics.nullservers.com
       tls:
       - secretName: grafana-tls
         hosts:
-        - metrics.k8s.nullservers.com
+        - metrics.nullservers.com
   victoria-metrics-operator:
     enabled: true
     image:
@@ -140,11 +138,11 @@ victoria-metrics-k8s-stack:
         cert-manager.io/cluster-issuer: letsencrypt-prod
       ingressClassName: cilium
       hosts:
-      - grafana.k8s.nullservers.com
+      - grafana.nullservers.com
       tls:
       - secretName: grafana-tls
         hosts:
-        - grafana.k8s.nullservers.com
+        - grafana.nullservers.com
 
     admin:
       existingSecret: grafana-admin-password
@@ -166,14 +164,14 @@ victoria-logs-single:
         cert-manager.io/cluster-issuer: letsencrypt-prod
       ingressClassName: cilium
       hosts:
-      - name: logs.k8s.nullservers.com
+      - name: logs.nullservers.com
         path:
         - /
         port: http
       tls:
       - secretName: vm-logs--tls
         hosts:
-        - logs.k8s.nullservers.com
+        - logs.nullservers.com
   global:
     imagePullSecrets:
     - name: dockerhub-token
