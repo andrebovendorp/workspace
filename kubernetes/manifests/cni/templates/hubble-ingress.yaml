@@ -9,10 +9,10 @@ spec:
   ingressClassName: cilium # Change if using a different ingress controller
   tls:
     - hosts:
-        - hubble.k8s.nullservers.com
+        - hubble.nullservers.com
       secretName: hubble-ui-tls # Name of the TLS secret for HTTPS
   rules:
-    - host: hubble.k8s.nullservers.com
+    - host: hubble.nullservers.com
       http:
         paths:
           - path: /
