@@ -49,10 +49,6 @@ immich:
           paths:
           - path: /
             pathType: Prefix
-        - host: photos.nullservers.com
-          paths:
-          - path: /
-            pathType: Prefix
         tls:
         - secretName: immich-tls
           hosts:
