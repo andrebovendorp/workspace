@@ -46,4 +46,3 @@ common:
     class: cilium
     hosts:
     - host: start.nullservers.com
-    - host: start.nullservers.com

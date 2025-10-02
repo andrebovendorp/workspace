@@ -48,4 +48,3 @@ common:
     class: cilium
     hosts:
     - host: bookshelf.nullservers.com
-    - host: bookshelf.nullservers.com
