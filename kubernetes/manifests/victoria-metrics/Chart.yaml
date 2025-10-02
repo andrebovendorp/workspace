@@ -1,6 +1,6 @@
 apiVersion: v2
 name: victoria-metrics
-version: 0.1.7
+version: 0.1.8
 type: application
 dependencies:
 - name: victoria-metrics-k8s-stack

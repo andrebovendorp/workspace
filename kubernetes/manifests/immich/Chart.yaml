@@ -1,7 +1,7 @@
 apiVersion: v2
 name: immich
 description: Photos storage
-version: 0.1.10
+version: 0.1.11
 type: application
 dependencies:
 - name: immich
