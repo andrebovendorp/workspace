@@ -26,3 +26,5 @@ spec:
       - toFQDNs:
           - matchPattern: smtp.resend.com
           - matchName: auth.nullservers.com # Oauth2
+          - matchName: api.audible.com
+          - matchName: api.audnex.us
