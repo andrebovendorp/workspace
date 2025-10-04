@@ -65,7 +65,7 @@ common:
   emptyDirVolumeMounts:
   - name: temp
     mountPath: /run/duplicati-temp
-    size: 50Gi
+    sizeLimit: 50Gi
 
   existingClaimVolumeMounts:
   - name: nfs-retain-pvc
