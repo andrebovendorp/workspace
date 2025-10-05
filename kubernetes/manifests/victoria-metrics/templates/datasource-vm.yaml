@@ -10,7 +10,7 @@ spec:
     name: prometheus
     type: prometheus
     access: proxy
-    url: "http://vmsingle-victoria-metrics.victoria-metrics.svc.cluster.local:8429"
+    url: "http://vmsingle-victoria-metrics.victoria-metrics.svc.cluster.local:8428"
     isDefault: true
 
 ---
@@ -26,7 +26,7 @@ spec:
     name: vm
     type: victoriametrics-metrics-datasource
     access: proxy
-    url: "http://vmsingle-victoria-metrics.victoria-metrics.svc.cluster.local:8429"
+    url: "http://vmsingle-victoria-metrics.victoria-metrics.svc.cluster.local:8428"
   plugins:
   - name: victoriametrics-metrics-datasource
     version: 0.13.1
