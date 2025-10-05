@@ -133,11 +133,6 @@ spec:
         auth_type: "serviceAccount"
         endpoint: "https://${env:K8S_NODE_NAME}:10250"
         insecure_skip_verify: true
-        extra_metadata_labels:
-        - container.id
-        - container.image.name
-        - pod.name
-        - pod.namespace
         metric_groups:
         - container
         - pod
@@ -145,14 +140,94 @@ spec:
       hostmetrics:
         collection_interval: 60s
         scrapers:
-          cpu: null
-          disk: null
-          filesystem: null
-          load: null
-          memory: null
-          network: null
-          paging: null
-          processes: null
+          cpu:
+            metrics:
+              system.cpu.utilization:
+                enabled: true
+              system.cpu.time:
+                enabled: true
+          disk:
+            include:
+              devices: [ "re:^/dev/[sv]d.+", "re:^/dev/nvme.+" ]
+              match_type: regexp
+            exclude:
+              devices: [ "re:^/dev/loop.+" ]
+              match_type: regexp
+            metrics:
+              system.disk.io:
+                enabled: true
+              system.disk.operations:
+                enabled: true
+              system.disk.io_time:
+                enabled: true
+          filesystem:
+            include_devices:
+              devices: [ "re:^/dev/[sv]d.+", "re:^/dev/nvme.+", "tmpfs" ]
+              match_type: regexp
+            exclude_mount_points:
+              mount_points: [ "re:^/(dev|proc|sys|var/lib/docker/.+)($|/)" ]
+              match_type: regexp
+            metrics:
+              system.filesystem.usage:
+                enabled: true
+              system.filesystem.utilization:
+                enabled: true
+          load:
+            cpu_average: true
+          memory:
+            metrics:
+              system.memory.usage:
+                enabled: true
+              system.memory.utilization:
+                enabled: true
+          network:
+            exclude:
+              interfaces: [ "re:^lo", "re:^docker.+", "re:^br-.+", "re:^veth.+" ]
+              match_type: regexp
+            metrics:
+              system.network.io:
+                enabled: true
+              system.network.packets:
+                enabled: true
+              system.network.errors:
+                enabled: true
+      k8s_cluster:
+        collection_interval: 60s
+        auth_type: serviceAccount
+        allocatable_types_to_report:
+          - cpu
+          - memory
+          - storage
+          - ephemeral-storage
+        metadata_exporters:
+          - k8sattributes
+      prometheus:
+        config:
+          global:
+            scrape_interval: 60s
+          scrape_configs:
+            # Scrape kubelet cAdvisor metrics for container_cpu_usage_seconds_total
+            - job_name: 'kubelet-cadvisor'
+              scheme: https
+              tls_config:
+                ca_file: /var/run/secrets/kubernetes.io/serviceaccount/ca.crt
+                insecure_skip_verify: true
+              bearer_token_file: /var/run/secrets/kubernetes.io/serviceaccount/token
+              kubernetes_sd_configs:
+                - role: node
+              relabel_configs:
+                - action: labelmap
+                  regex: __meta_kubernetes_node_label_(.+)
+                - target_label: __address__
+                  replacement: kubernetes.default.svc:443
+                - source_labels: [__meta_kubernetes_node_name]
+                  regex: (.+)
+                  target_label: __metrics_path__
+                  replacement: /api/v1/nodes/$1/proxy/metrics/cadvisor
+              metric_relabel_configs:
+                - source_labels: [__name__]
+                  regex: 'container_cpu_usage_seconds_total|container_memory_usage_bytes|container_network_.*|container_fs_.*'
+                  action: keep
     processors:
       memory_limiter:
         check_interval: 1s
@@ -245,6 +320,10 @@ spec:
         endpoint: "http://victoria-metrics-victoria-logs-single-server.victoria-metrics.svc.cluster.local:9428/insert/opentelemetry"
         tls:
           insecure: true
+      prometheusremotewrite/victoria-metrics:
+        endpoint: "http://victoria-metrics-k8s-stack-vmsingle.victoria-metrics.svc.cluster.local:8429/api/v1/write"
+        tls:
+          insecure: true
     service:
       extensions:
         - health_check
@@ -265,4 +344,20 @@ spec:
           - batch
           receivers:
           - filelog
+        metrics/kubernetes:
+          exporters:
+          - debug
+          - prometheusremotewrite/victoria-metrics
+          processors:
+          - memory_limiter
+          - k8sattributes
+          - resourcedetection
+          - resource/common
+          - resource/remove-attributes
+          - batch
+          receivers:
+          - kubeletstats
+          - hostmetrics
+          - prometheus
+          - otlp
   mode: daemonset
