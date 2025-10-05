@@ -56,7 +56,7 @@ authentik:
     serviceMonitor:
       enabled: true
     ingress:
-      enabled: true
+      enabled: false
       annotations:
         kubernetes.io/tls-acme: "true"
         cert-manager.io/cluster-issuer: letsencrypt-prod
