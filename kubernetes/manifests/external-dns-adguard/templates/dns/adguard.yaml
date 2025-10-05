@@ -1,0 +1,11 @@
+apiVersion: externaldns.k8s.io/v1alpha1
+kind: DNSEndpoint
+metadata:
+  name: adguard
+spec:
+  endpoints:
+  - dnsName: adguard.nullservers.com
+    recordTTL: 300
+    recordType: A
+    targets:
+    - 172.16.0.240

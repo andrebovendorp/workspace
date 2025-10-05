@@ -1,13 +1,13 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: external-dns
-  namespace: external-dns
+  name: external-dns-adguard
+  namespace: external-dns-adguard
 spec:
   interval: 1h
   chart:
     spec:
-      chart: kubernetes/manifests/external-dns
+      chart: kubernetes/manifests/external-dns-adguard
       sourceRef:
         kind: GitRepository
         name: workspace
