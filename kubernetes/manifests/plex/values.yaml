@@ -22,9 +22,9 @@ common:
       requests:
         gpu.intel.com/i915: "1"
         cpu: 500m
-        memory: 4Gi
+        memory: 1Gi
       limits:
-        cpu: 11
+        cpu: 4
         memory: 8Gi
         gpu.intel.com/i915: "1"
     env:
