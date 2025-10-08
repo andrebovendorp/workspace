@@ -1,6 +1,8 @@
 - name: Configure master
   hosts: all
   become: yes  # Ensures commands are run as a superuser
+  vars_files:
+    - secrets.yml
   vars:
     join_token: ""
     k8s_version: "v1.33.3+k3s1"
@@ -9,6 +11,31 @@
       hostname:
         name: "{{ inventory_hostname }}"
     
+    - name: Disable swap on node permanently
+      command: swapoff -a
+
+    - name: Set nofile limit for the root user
+      ansible.builtin.lineinfile:
+        path: /etc/security/limits.conf
+        line: "root       hard      nofile      65536"
+        regexp: "^root\\s+hard\\s+nofile"
+        state: present
+    
+    - name: Set nofile limit for the root user (soft limit)
+      ansible.builtin.lineinfile:
+        path: /etc/security/limits.conf
+        line: "root       soft      nofile      65536"
+        regexp: "^root\\s+soft\\s+nofile"
+        state: present
+    
+    - name: Create k3s config directory
+      file:
+        path: /etc/rancher/k3s
+        state: directory
+        owner: root
+        group: root
+        mode: '0755'
+
     - name: Install Dependencies
       apt:
         name: "{{ item }}"
