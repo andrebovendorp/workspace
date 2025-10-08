@@ -46,6 +46,16 @@
         - net-tools
         - iptables
         - nfs-common
+    
+        - name: Install config file
+      template:
+        src: config.yaml.j2
+        dest: /etc/rancher/k3s/config.yaml
+        owner: root
+        group: root
+        mode: '0644'
+      delegate_to: master
+      when: inventory_hostname == groups['master'][0]
 
     - name: Install K3s Server
       shell: |
