@@ -80,7 +80,7 @@ common:
 
   existingClaimVolumeMounts:
   - mountPath: /opt/recipes/mediafiles
-    name: recipes-media
+    name: recipes-media-pvc
 
   service:
     enabled: true
