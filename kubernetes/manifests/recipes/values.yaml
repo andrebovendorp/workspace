@@ -74,16 +74,13 @@ common:
   - name: tmp
     mountPath: /tmp
     size: 500Mi
+  - name: static-files
+    mountPath: /opt/recipes/staticfiles
+    size: 1Gi
 
-  pvcVolumeMounts:
-  - mountPath: /opt/recipes/staticfiles
-    name: static-files
-    storageClassName: nfs-retain
-    size: 1Gi
+  existingClaimVolumeMounts:
   - mountPath: /opt/recipes/mediafiles
-    name: media-files
-    storageClassName: nfs-retain
-    size: 1Gi
+    name: recipes-media
 
   service:
     enabled: true
