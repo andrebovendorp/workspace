@@ -28,6 +28,7 @@ spec:
           - matchName: auth.nullservers.com
           - matchPattern: "api.audible.*"
           - matchPattern: "*.googleapis.com"
+          - matchName: books.google.com
           - matchName: openlibrary.org
           - matchName: api.audnex.us
           - matchName: m.media-amazon.com
