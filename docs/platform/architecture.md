@@ -55,7 +55,7 @@ Three tiers map to different workload characteristics:
 Backups leverage ZFS snapshots + offsite replication (see resilience docs).
 
 ## Security (Overview)
-See consolidated details in `../operations/security.md`.
+See consolidated details in `security.md`.
 
 Highlights:
 - Authentik SSO + RBAC per namespace
@@ -82,8 +82,8 @@ Potential future enhancements: multi-server control plane, distributed storage l
 This architecture emphasizes operational simplicity, resource efficiency, and incremental hardening. Detailed implementation manifests are managed through GitOps and intentionally excluded here.
 
 Related pages:
-- [K3s Implementation](k3s.md)
-- [Networking](networking.md)
-- [Storage](storage.md)
-- [Load Balancing](load-balancing.md)
-- [Security Architecture](../operations/security.md)
+- [K3s Implementation](../kubernetes/k3s.md)
+- [Networking](../kubernetes/networking.md)
+- [Storage](../kubernetes/storage.md)
+- [Load Balancing](../kubernetes/load-balancing.md)
+- [Security Architecture](security.md)

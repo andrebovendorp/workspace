@@ -310,4 +310,4 @@ This homelab demonstrates practical expertise in:
 
 ---
 
-**Ready to explore?** Start with the [Kubernetes Overview](kubernetes/index.md) for technical specifications, or dive into [Architecture](kubernetes/architecture.md) for detailed component interactions.
+**Ready to explore?** Start with the [Kubernetes Overview](kubernetes/index.md) for technical specifications, or dive into [Architecture](platform/architecture.md) for detailed component interactions.
