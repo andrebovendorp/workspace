@@ -7,7 +7,7 @@ spec:
   - toEndpoints:
     - {}
   - toFQDNs:
-    - matchname: docs.nullservers.com
+    - matchName: docs.nullservers.com
     - matchName: auth.nullservers.com
     - matchName: api.met.no
     - matchPattern: '*.nextcloud.com'
