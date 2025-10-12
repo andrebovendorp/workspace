@@ -52,7 +52,6 @@ jobs:
 
       - name: Build MkDocs
         run: |
-          cd docs
           mkdocs build --clean --strict
         env:
           # Override the base URL for GitHub Pages

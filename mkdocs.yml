@@ -57,26 +57,30 @@ plugins:
 
 nav:
 - Home: index.md
-- Architecture:
-  - Overview: architecture/index.md
-  - Infrastructure: architecture/infrastructure.md
-  - Applications: architecture/applications.md
+- Platform:
+  - Overview: platform/index.md
+  - Architecture: platform/architecture.md
+  - Decisions: platform/decisions.md
+  - Security: platform/security.md
+  - Observability: platform/observability.md
+  - Non-Functional Requirements: platform/nfr.md
+  - Risk Register: decisions/risk-register.md
 - Kubernetes:
   - Overview: kubernetes/index.md
-  - Setup: kubernetes/setup.md
+  - K3s Implementation: kubernetes/k3s.md
+  - Networking (CNI): kubernetes/networking.md
+  - Storage (CSI): kubernetes/storage.md
+  - Load Balancing: kubernetes/load-balancing.md
   - Applications: kubernetes/applications.md
-  - Decisions: kubernetes/decisions.md
-- Proxmox:
-  - Overview: proxmox/index.md
-  - Setup: proxmox/setup.md
-- Studies:
-  - Overview: studies/index.md
-  - Kubeadm HA Cluster: studies/kubeadm-ha.md
-  - CI/CD: studies/cicd.md
-- Workshops:
-  - Overview: workshops/index.md
-  - Kubeadm: workshops/kubeadm.md
-  - Kubernetes for Developers: workshops/k8s-developers.md
+- Infrastructure:
+  - Overview: infrastructure/index.md
+  - Proxmox Platform: infrastructure/proxmox.md
+  - Networking: infrastructure/networking.md
+  - Storage: infrastructure/storage.md
+- Learning:
+  - Overview: learning/index.md
+  - Research & Studies: learning/studies.md
+  - Training Workshops: learning/workshops.md
 
 extra:
   social:
