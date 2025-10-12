@@ -34,17 +34,8 @@
 
 ## 🧪 Testing
 
-### Testing Performed
-<!-- Describe how you tested these changes -->
-- [ ] Local testing completed
-- [ ] Deployed to development environment
-- [ ] Tested in production-like environment
-- [ ] Manual validation performed
-- [ ] Automated tests pass
-
 ### Test Results
 <!-- Provide details about test results, screenshots, or logs if applicable -->
-
 
 ## 📦 Deployment
 
@@ -53,55 +44,3 @@
 - [ ] Manual deployment required
 - [ ] Infrastructure change (Ansible/Terraform)
 - [ ] No deployment needed
-
-### Deployment Notes
-<!-- Any special deployment considerations or steps -->
-
-
-### Rollback Plan
-<!-- How can this change be rolled back if needed? -->
-
-
-## ✅ Checklist
-
-### Code Quality
-- [ ] Code follows project conventions and style
-- [ ] Comments added where necessary
-- [ ] No sensitive information exposed (passwords, tokens, etc.)
-- [ ] Resource requests/limits specified (for K8s resources)
-- [ ] Security considerations addressed
-
-### Documentation
-- [ ] Documentation updated (if applicable)
-- [ ] Configuration changes documented
-- [ ] README updated (if applicable)
-- [ ] Architecture diagrams updated (if applicable)
-
-### Operations
-- [ ] Monitoring/alerting configured (if applicable)
-- [ ] Backup considerations addressed
-- [ ] Security implications reviewed
-- [ ] Performance impact assessed
-
-## 🔍 Additional Notes
-
-### Dependencies
-<!-- List any dependencies this change has -->
-
-
-### Migration Required
-<!-- Any migration steps or data changes needed -->
-
-
-### Follow-up Tasks
-<!-- Any follow-up work or improvements planned -->
-
-
----
-
-### For Reviewers
-<!-- Any specific areas you'd like reviewers to focus on -->
-
-
-### Screenshots/Diagrams
-<!-- Add screenshots, architecture diagrams, or other visual aids if helpful -->
