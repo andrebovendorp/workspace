@@ -23,11 +23,6 @@ spec:
           rules:
             dns:
               - matchPattern: "*"        
-    - toEndpoints:
-        - matchLabels:
-            io.kubernetes.pod.namespace: matter-server
-        - matchLabels:
-            io.kubernetes.pod.namespace: jellyfin
     - toFQDNs:
         - matchPattern: "*.tuyaeu.com"
         - matchPattern: "*.*.noaa.gov"
@@ -40,5 +35,6 @@ spec:
     - toCIDRSet:
         - cidr: "192.168.50.240/32" # DNS
         - cidr: "192.168.200.0/24" # IOT network
+        - cidr: "192.168.20.0/24" # default Netowrk
     - toEntities:
         - ingress
