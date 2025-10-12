@@ -1,0 +1,88 @@
+site_name: Workspace Documentation
+site_description: Documentation for the workspace infrastructure and applications
+site_author: boveloco
+site_url: https://boveloco.github.io/workspace
+
+repo_name: boveloco/workspace
+repo_url: https://github.com/boveloco/workspace
+edit_uri: edit/main/docs/
+
+theme:
+  name: material
+  features:
+  - navigation.tabs
+  - navigation.sections
+  - navigation.expand
+  - navigation.path
+  - navigation.top
+  - search.highlight
+  - search.share
+  - toc.integrate
+  - content.code.annotate
+  - content.code.copy
+  palette:
+  - scheme: default
+    primary: blue
+    accent: blue
+    toggle:
+      icon: material/brightness-7
+      name: Switch to dark mode
+  - scheme: slate
+    primary: blue
+    accent: blue
+    toggle:
+      icon: material/brightness-4
+      name: Switch to light mode
+
+markdown_extensions:
+- admonition
+- pymdownx.details
+- pymdownx.superfences
+- pymdownx.tabbed:
+    alternate_style: true
+- pymdownx.highlight:
+    anchor_linenums: true
+- pymdownx.inlinehilite
+- pymdownx.snippets
+- attr_list
+- md_in_html
+- tables
+- toc:
+    permalink: true
+
+plugins:
+- search
+- git-revision-date-localized:
+    enable_creation_date: true
+
+nav:
+- Home: index.md
+- Platform:
+  - Overview: platform/index.md
+  - Architecture: platform/architecture.md
+  - Decisions: platform/decisions.md
+  - Security: platform/security.md
+  - Observability: platform/observability.md
+  - Non-Functional Requirements: platform/nfr.md
+  - Risk Register: decisions/risk-register.md
+- Kubernetes:
+  - Overview: kubernetes/index.md
+  - K3s Implementation: kubernetes/k3s.md
+  - Networking (CNI): kubernetes/networking.md
+  - Storage (CSI): kubernetes/storage.md
+  - Load Balancing: kubernetes/load-balancing.md
+  - Applications: kubernetes/applications.md
+- Infrastructure:
+  - Overview: infrastructure/index.md
+  - Proxmox Platform: infrastructure/proxmox.md
+  - Networking: infrastructure/networking.md
+  - Storage: infrastructure/storage.md
+- Learning:
+  - Overview: learning/index.md
+  - Research & Studies: learning/studies.md
+  - Training Workshops: learning/workshops.md
+
+extra:
+  social:
+  - icon: fontawesome/brands/github
+    link: https://github.com/boveloco

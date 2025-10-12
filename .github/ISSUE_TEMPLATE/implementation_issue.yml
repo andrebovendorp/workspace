@@ -1,0 +1,177 @@
+name: 🐛 Implementation Issue
+description: Report problems encountered while implementing or deploying homelab components
+title: "[ISSUE] "
+labels: [ "bug", "implementation", "help-wanted" ]
+assignees:
+- boveloco
+
+body:
+- type: markdown
+  attributes:
+    value: |
+      Thanks for reporting an implementation issue! Please provide detailed information to help diagnose and resolve the problem.
+
+- type: textarea
+  id: problem-description
+  attributes:
+    label: Problem Description
+    description: A clear and concise description of the issue you encountered
+    placeholder: Describe what went wrong during implementation...
+  validations:
+    required: true
+
+- type: dropdown
+  id: component
+  attributes:
+    label: Component/Service Affected
+    description: Which component or service is experiencing the issue?
+    options:
+    - Kubernetes Cluster Setup
+    - Application Deployment
+    - Flux GitOps
+    - Monitoring (Victoria Metrics)
+    - Authentication (Authentik)
+    - Networking/Ingress
+    - Storage/Persistent Volumes
+    - Backup Solutions
+    - Security/Certificates
+    - Proxmox Infrastructure
+    - CI/CD Pipeline
+    - Documentation
+    - Other (specify in description)
+    default: 0
+  validations:
+    required: true
+
+- type: textarea
+  id: steps-to-reproduce
+  attributes:
+    label: Steps to Reproduce
+    description: Detailed steps to reproduce the issue
+    placeholder: |
+      1. Go to...
+      2. Run command...
+      3. See error...
+    value: |
+      1. 
+      2. 
+      3. 
+  validations:
+    required: true
+
+- type: textarea
+  id: expected-behavior
+  attributes:
+    label: Expected Behavior
+    description: What you expected to happen
+    placeholder: Describe what should have happened...
+  validations:
+    required: true
+
+- type: textarea
+  id: actual-behavior
+  attributes:
+    label: Actual Behavior
+    description: What actually happened instead
+    placeholder: Describe what actually happened...
+  validations:
+    required: true
+
+- type: textarea
+  id: error-logs
+  attributes:
+    label: Error Logs/Output
+    description: Relevant error messages, logs, or command output
+    placeholder: |
+      Paste error logs here...
+
+      Use `kubectl logs` for pod logs
+      Use `journalctl` for system logs
+      Use `docker logs` for container logs
+    render: shell
+  validations:
+    required: false
+
+- type: textarea
+  id: environment-info
+  attributes:
+    label: Environment Information
+    description: Information about your environment
+    placeholder: |
+      - OS: Ubuntu 22.04
+      - Kubernetes Version: 1.29.x
+      - Node Count: 3 masters, 2 workers
+      - CNI: Calico/Flannel/etc
+      - Storage: Local-path/NFS/etc
+    value: |
+      - OS: 
+      - Kubernetes Version: 
+      - Node Count: 
+      - CNI: 
+      - Storage: 
+  validations:
+    required: true
+
+- type: textarea
+  id: configuration-files
+  attributes:
+    label: Relevant Configuration
+    description: Relevant configuration files, manifests, or settings (sanitize sensitive data)
+    placeholder: |
+      Paste relevant YAML manifests, config files, or commands here...
+
+      Remember to remove sensitive information like passwords, tokens, etc.
+    render: yaml
+  validations:
+    required: false
+
+- type: dropdown
+  id: urgency
+  attributes:
+    label: Issue Urgency
+    description: How urgent is this issue?
+    options:
+    - Low - Working around the issue
+    - Medium - Impacting development
+    - High - Blocking progress
+    - Critical - Production down
+    default: 1
+  validations:
+    required: true
+
+- type: checkboxes
+  id: troubleshooting
+  attributes:
+    label: Troubleshooting Steps Attempted
+    description: What have you already tried to fix this issue?
+    options:
+    - label: Checked the documentation
+    - label: Searched existing issues
+    - label: Reviewed Kubernetes events (`kubectl get events`)
+    - label: Checked pod/container logs
+    - label: Verified resource quotas and limits
+    - label: Checked network connectivity
+    - label: Verified storage/persistent volume status
+    - label: Restarted affected components
+    - label: Checked cluster node status
+
+- type: textarea
+  id: additional-context
+  attributes:
+    label: Additional Context
+    description: Any other context, screenshots, or information that might help
+    placeholder: Add any other context about the problem here...
+  validations:
+    required: false
+
+- type: checkboxes
+  id: assistance
+  attributes:
+    label: Support Needed
+    description: What kind of assistance would be most helpful?
+    options:
+    - label: Help with troubleshooting/diagnosis
+    - label: Configuration review
+    - label: Implementation guidance
+    - label: Alternative solution suggestions
+    - label: Documentation improvements
