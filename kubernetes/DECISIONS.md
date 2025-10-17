@@ -7,12 +7,33 @@ All servers runs in my house. This means that I have to take care of the power c
 - Usability
 
 ----------------------------------------
-# Stop spreading Helmcharts as default
+# Database Strategy: Run Databases on Proxmox Level - 2025-10-17
+
+All databases should be deployed and managed at the Proxmox virtualization level rather than within the Kubernetes cluster. This decision applies to all stateful database workloads including PostgreSQL, MongoDB, and any other persistent data stores.
+
+## IAC
+All configuration and instalation for these databases should be done via Ansible.
+
+## PostgreSQL migration
+MongoDB and Mysql were already migrated. Its backups as well. (MariaDB don't need backup yet.)
+PGSQL still requires a bit of work to function. 
+- Database backup setup
+- Databases Migrated.
+
+Follow [this](https://github.com/boveloco/workspace/issues/253) Issue to be up to date.
+
+## Rationale
+
+**High Availability Concerns**: The current Kubernetes cluster runs as a single-master (non-HA) configuration using K3s with SQLite as the datastore. This creates a single point of failure for the entire cluster, making it unsuitable for hosting critical database workloads that require high availability guarantees.
+
+**Resource Management Efficiency**: Managing database resources at the Proxmox level provides better control over CPU, memory, and storage allocation. Database workloads can be isolated on dedicated VMs or CTs with specific resource profiles optimized for their performance characteristics, without competing with other Kubernetes workloads for resources.
+
+# Stop spreading Helmcharts as default - 2025-09-13
 Helmcharts are great but they also come with a cost. 
 For simple configurations like cronjobs or such, instead of using a helmchart, the recommended way now is to create a `kustomization` on FluxCD and leave it as yaml files only. 
 This make simpler to configure and there is no creation of layers and layers of configuration.
 
-# Deprecation of RaspPI for K8s
+# Deprecation of RaspPI for K8s - 2025-08-30
 I'm removing my Raspi from K8s to use it in other projects. Soon I'll have another server running that will pose as a replacement.
 
 # Usage of Database Visualization Tools - 2025-05-21
@@ -78,4 +99,4 @@ On the following images, it shows the CPU consumption and Thermal thermal thrott
 I currently run my raspberry PI with passive cooling and I don't want to add noise through extra cooling for my setup.
 
 ## Solution
-Migrate ArgoCD to FluxCD. This will help to reduce the resource usage and make the setup more efficient. 
+Migrate ArgoCD to FluxCD. This will help to reduce the resource usage and make the setup more efficient.
