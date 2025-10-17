@@ -5,48 +5,46 @@ external-dns:
   logLevel: debug
   logFormat: json
   sources:
-    - service
-    - ingress
+  - service
+  - ingress
+  - gateway-httproute
   provider:
     name: webhook
     webhook:
-      command: wait 1000000
-      image: 
+      image:
         repository: ghcr.io/muhlba91/external-dns-provider-adguard
         tag: latest
         pullPolicy: IfNotPresent
       service:
         port: 8080
       env:
-        - name: LOG_LEVEL
-          value: debug
-        - name: ADGUARD_URL
-          value: "https://adguard.nullservers.com/control/"
-        - name: ADGUARD_USER
-          valueFrom:
-            secretKeyRef:
-              name: adguard-credentials
-              key: username
-        - name: ADGUARD_PASSWORD
-          valueFrom:
-            secretKeyRef:
-              name: adguard-credentials
-              key: password
-        - name: DRY_RUN
-          value: "false"
+      - name: LOG_LEVEL
+        value: debug
+      - name: ADGUARD_URL
+        value: "https://adguard.nullservers.com/control/"
+      - name: ADGUARD_USER
+        valueFrom:
+          secretKeyRef:
+            name: adguard-credentials
+            key: username
+      - name: ADGUARD_PASSWORD
+        valueFrom:
+          secretKeyRef:
+            name: adguard-credentials
+            key: password
+      - name: DRY_RUN
+        value: "false"
 
   txtPrefix: ed-
   extraArgs:
-    - --webhook-provider-url=http://localhost:8888
+  - --webhook-provider-url=http://localhost:8888
 
   sidecars:
-    - name: adguard-webhook
-      image: -adguard:latest
-      imagePullPolicy: IfNotPresent
-      ports:
-        - containerPort: 8888
-          name: http
-        - containerPort: 8080
-          name: healthz
-      
-      
+  - name: adguard-webhook
+    image: -adguard:latest
+    imagePullPolicy: IfNotPresent
+    ports:
+    - containerPort: 8888
+      name: http
+    - containerPort: 8080
+      name: healthz

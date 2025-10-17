@@ -1,12 +1,12 @@
 apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
-  name: hubble-tls
+  name: homepage-tls
   namespace: cilium-gateway-system
 spec:
-  secretName: hubble-tls
+  secretName: homepage-tls
   issuerRef:
     name: letsencrypt-prod
     kind: ClusterIssuer
   dnsNames:
-  - hubble.k8s.nullservers.com
+  - homepage.nullservers.com

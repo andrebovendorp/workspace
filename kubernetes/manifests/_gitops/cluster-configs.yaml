@@ -1,0 +1,13 @@
+apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
+kind: Kustomization
+metadata:
+  name: cluster-configs
+  namespace: flux-system
+spec:
+  interval: 1h
+  path: ./kubernetes/manifests/cluster-configs
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: workspace
+    namespace: flux-system

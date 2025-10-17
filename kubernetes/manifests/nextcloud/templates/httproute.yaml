@@ -4,13 +4,13 @@ metadata:
   name: nextcloud-http-route
   namespace: kube-system
   annotations:
-    external-dns.alpha.kubernetes.io/hostname: nextcloud.k8s.nullservers.com
+    external-dns.alpha.kubernetes.io/hostname: nextcloud.nullservers.com
 spec:
   parentRefs:
   - name: cilium-gateway
     namespace: cilium-gateway-system
   hostnames:
-  - "nextcloud.k8s.nullservers.com"
+  - "nextcloud.nullservers.com"
   rules:
   - matches:
     - path:

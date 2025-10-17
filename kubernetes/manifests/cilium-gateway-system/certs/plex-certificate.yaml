@@ -1,12 +1,12 @@
 apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
-  name: nextcloud-tls
+  name: plex-tls
   namespace: cilium-gateway-system
 spec:
-  secretName: nextcloud-tls
+  secretName: plex-tls
   issuerRef:
     name: letsencrypt-prod
     kind: ClusterIssuer
   dnsNames:
-  - nextcloud.k8s.nullservers.com
+  - plex.nullservers.com

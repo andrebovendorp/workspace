@@ -4,13 +4,13 @@ metadata:
   name: immich-http-route
   namespace: kube-system
   annotations:
-    external-dns.alpha.kubernetes.io/hostname: immich.k8s.nullservers.com
+    external-dns.alpha.kubernetes.io/hostname: immich.nullservers.com
 spec:
   parentRefs:
   - name: cilium-gateway
     namespace: cilium-gateway-system
   hostnames:
-  - "immich.k8s.nullservers.com"
+  - "immich.nullservers.com"
   rules:
   - matches:
     - path:

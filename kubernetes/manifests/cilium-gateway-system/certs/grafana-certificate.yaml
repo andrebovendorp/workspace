@@ -9,4 +9,4 @@ spec:
     name: letsencrypt-prod
     kind: ClusterIssuer
   dnsNames:
-  - grafana.k8s.nullservers.com
+  - grafana.nullservers.com

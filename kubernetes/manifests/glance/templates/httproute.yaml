@@ -4,13 +4,13 @@ metadata:
   name: glance-http-route
   namespace: kube-system
   annotations:
-    external-dns.alpha.kubernetes.io/hostname: glance.k8s.nullservers.com
+    external-dns.alpha.kubernetes.io/hostname: glance.nullservers.com
 spec:
   parentRefs:
   - name: cilium-gateway
     namespace: cilium-gateway-system
   hostnames:
-  - "glance.k8s.nullservers.com"
+  - "glance.nullservers.com"
   rules:
   - matches:
     - path:

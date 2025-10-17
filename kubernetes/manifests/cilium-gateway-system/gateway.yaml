@@ -7,7 +7,7 @@ spec:
   gatewayClassName: cilium
   listeners:
   - name: https-glance
-    hostname: "start.k8s.nullservers.com"
+    hostname: "start.nullservers.com"
     port: 443
     protocol: HTTPS
     tls:
@@ -20,7 +20,7 @@ spec:
       namespaces:
         from: All
   - name: https-plex
-    hostname: "plex.k8s.nullservers.com"
+    hostname: "plex.nullservers.com"
     port: 443
     protocol: HTTPS
     tls:
@@ -33,7 +33,7 @@ spec:
       namespaces:
         from: All
   - name: https-hubble
-    hostname: "hubble.k8s.nullservers.com"
+    hostname: "hubble.nullservers.com"
     port: 443
     protocol: HTTPS
     tls:
@@ -46,7 +46,7 @@ spec:
       namespaces:
         from: All
   - name: https-grafana
-    hostname: "grafana.k8s.nullservers.com"
+    hostname: "grafana.nullservers.com"
     port: 443
     protocol: HTTPS
     tls:
@@ -59,7 +59,7 @@ spec:
       namespaces:
         from: All
   - name: https-victoria-logs
-    hostname: "logs.k8s.nullservers.com"
+    hostname: "logs.nullservers.com"
     port: 443
     protocol: HTTPS
     tls:
@@ -72,7 +72,7 @@ spec:
       namespaces:
         from: All
   - name: https-flux
-    hostname: "flux.k8s.nullservers.com"
+    hostname: "flux.nullservers.com"
     port: 443
     protocol: HTTPS
     tls:
@@ -85,7 +85,7 @@ spec:
       namespaces:
         from: All
   - name: https-homepage
-    hostname: "homepage.k8s.nullservers.com"
+    hostname: "homepage.nullservers.com"
     port: 443
     protocol: HTTPS
     tls:
@@ -98,7 +98,7 @@ spec:
       namespaces:
         from: All
   - name: https-immich
-    hostname: "immich.k8s.nullservers.com"
+    hostname: "immich.nullservers.com"
     port: 443
     protocol: HTTPS
     tls:
@@ -111,7 +111,7 @@ spec:
       namespaces:
         from: All
   - name: https-nextcloud
-    hostname: "nextcloud.k8s.nullservers.com"
+    hostname: "nextcloud.nullservers.com"
     port: 443
     protocol: HTTPS
     tls:
@@ -124,7 +124,7 @@ spec:
       namespaces:
         from: All
   - name: https-recipes
-    hostname: "recipes.k8s.nullservers.com"
+    hostname: "recipes.nullservers.com"
     port: 443
     protocol: HTTPS
     tls:
@@ -137,7 +137,7 @@ spec:
       namespaces:
         from: All
   - name: https-qbittorrent
-    hostname: "qbittorrent.k8s.nullservers.com"
+    hostname: "qbittorrent.nullservers.com"
     port: 443
     protocol: HTTPS
     tls:
@@ -150,7 +150,7 @@ spec:
       namespaces:
         from: All
   - name: https-duplicati
-    hostname: "duplicati.k8s.nullservers.com"
+    hostname: "duplicati.nullservers.com"
     port: 443
     protocol: HTTPS
     tls:
@@ -163,7 +163,7 @@ spec:
       namespaces:
         from: All
   - name: https-collabora
-    hostname: "collabora.k8s.nullservers.com"
+    hostname: "collabora.nullservers.com"
     port: 443
     protocol: HTTPS
     tls:
@@ -176,7 +176,7 @@ spec:
       namespaces:
         from: All
   - name: https-audiobook
-    hostname: "audiobook.k8s.nullservers.com"
+    hostname: "audiobook.nullservers.com"
     port: 443
     protocol: HTTPS
     tls:

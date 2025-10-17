@@ -1,12 +1,12 @@
 apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
-  name: plex-tls
+  name: victoria-logs-tls
   namespace: cilium-gateway-system
 spec:
-  secretName: plex-tls
+  secretName: victoria-logs-tls
   issuerRef:
     name: letsencrypt-prod
     kind: ClusterIssuer
   dnsNames:
-  - plex.k8s.nullservers.com
+  - logs.nullservers.com

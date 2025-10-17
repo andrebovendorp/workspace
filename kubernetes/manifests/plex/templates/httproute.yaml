@@ -4,13 +4,13 @@ metadata:
   name: plex-http-route
   namespace: kube-system
   annotations:
-    external-dns.alpha.kubernetes.io/hostname: plex.k8s.nullservers.com
+    external-dns.alpha.kubernetes.io/hostname: plex.nullservers.com
 spec:
   parentRefs:
   - name: cilium-gateway
     namespace: cilium-gateway-system
   hostnames:
-  - "plex.k8s.nullservers.com"
+  - "plex.nullservers.com"
   rules:
   - matches:
     - path:
