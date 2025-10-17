@@ -12,6 +12,9 @@ spec:
     - fromEntities:
         - ingress
   egress:
+    - toEntities:
+      - ingress
+      - cluster
     - toFQDNs:
       - matchPattern: "*.selfh.st"
       - matchPattern: "*.twitch.tv"
