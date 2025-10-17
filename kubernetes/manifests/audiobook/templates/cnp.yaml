@@ -25,6 +25,11 @@ spec:
                   - matchPattern: "*"
       - toFQDNs:
           - matchPattern: smtp.resend.com
-          - matchName: auth.nullservers.com # Oauth2
-          - matchName: api.audible.com
+          - matchName: auth.nullservers.com
+          - matchPattern: "api.audible.*"
+          - matchPattern: "*.googleapis.com"
+          - matchName: books.google.com
+          - matchName: openlibrary.org
           - matchName: api.audnex.us
+          - matchName: m.media-amazon.com
+          - matchName: itunes.apple.com

@@ -1,0 +1,12 @@
+# /etc/exports
+
+/data {{ default_network_cidr }}(rw,sync,no_subtree_check,no_root_squash,anonuid=1000,anongid=1000) \
+      {{ Kubernetes_network_cidr }}(rw,sync,no_subtree_check,no_root_squash,anonuid=1000,anongid=1000)
+
+/data/kubernetes {{ default_network_cidr }}(rw,sync,no_subtree_check,no_root_squash,anonuid=1000,anongid=1000) \
+                 {{ Kubernetes_network_cidr }}(rw,sync,no_subtree_check,no_root_squash,anonuid=1000,anongid=1000) \
+                 {{ vpn_cidr }}(rw,sync,no_subtree_check,no_root_squash,anonuid=1000,anongid=1000)
+
+/data/kubernetes-retain {{ default_network_cidr }}(rw,sync,no_subtree_check,no_root_squash,anonuid=1000,anongid=1000) \
+                        {{ Kubernetes_network_cidr }}(rw,sync,no_subtree_check,no_root_squash,anonuid=1000,anongid=1000) \
+                        {{ vpn_cidr }}(rw,sync,no_subtree_check,no_root_squash,anonuid=1000,anongid=1000)

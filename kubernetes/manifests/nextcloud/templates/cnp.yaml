@@ -4,11 +4,10 @@ metadata:
   name: default
 spec:
   egress:
-  - toEntities:
-    - ingress
   - toEndpoints:
     - {}
   - toFQDNs:
+    - matchName: docs.nullservers.com
     - matchName: auth.nullservers.com
     - matchName: api.met.no
     - matchPattern: '*.nextcloud.com'
@@ -22,6 +21,8 @@ spec:
   - toEndpoints:
     - matchLabels:
         io.kubernetes.pod.namespace: pgsql
+    - matchLabels:
+        io.kubernetes.pod.namespace: collabora
   - toEndpoints:
     - matchLabels:
         io.kubernetes.pod.namespace: kube-system
