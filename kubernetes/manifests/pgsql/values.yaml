@@ -17,7 +17,7 @@ postgresql:
           userPasswordKey: immich-password
           replicationPasswordKey: replication-password
   metrics:
-    enabled: true
+    enabled: false
   primary:
     containerSecurityContext:
       readOnlyRootFilesystem: false
