@@ -1,21 +1,22 @@
 apiVersion: gateway.networking.k8s.io/v1
 kind: HTTPRoute
 metadata:
-  name: glance-http-route
-  namespace: kube-system
+  name: flux-http-route
+  namespace: cilium-gateway-system
   annotations:
-    external-dns.alpha.kubernetes.io/hostname: glance.nullservers.com
+    external-dns.alpha.kubernetes.io/hostname: flux.nullservers.com
 spec:
   parentRefs:
   - name: cilium-gateway
     namespace: cilium-gateway-system
   hostnames:
-  - "glance.nullservers.com"
+  - "flux.nullservers.com"
   rules:
   - matches:
     - path:
         type: PathPrefix
         value: /
     backendRefs:
-    - name: glance
-      port: 80
+    - name: capacitor
+      namespace: flux-system
+      port: 9001

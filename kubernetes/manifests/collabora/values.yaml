@@ -2,7 +2,7 @@ collabora-online:
   replicaCount: 1
 
   ingress:
-    enabled: true
+    enabled: false
     className: "cilium"
     annotations:
       kubernetes.io/tls-acme: "true"

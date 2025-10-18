@@ -1,20 +1,41 @@
 apiVersion: gateway.networking.k8s.io/v1beta1
 kind: ReferenceGrant
 metadata:
-  name: cilium-gateway-referencegrant
-  namespace: cilium-gateway-system
+  name: allow-cilium-gateway-httproutes
+  namespace: kube-system
 spec:
   from:
   - group: gateway.networking.k8s.io
     kind: HTTPRoute
-    namespace: plex
-  - group: gateway.networking.k8s.io
-    kind: HTTPRoute
-    namespace: glance
-  - group: gateway.networking.k8s.io
-    kind: HTTPRoute
-    namespace: kube-system
+    namespace: cilium-gateway-system
   to:
+  - group: ""
+    kind: Service
+---
+apiVersion: gateway.networking.k8s.io/v1beta1
+kind: ReferenceGrant
+metadata:
+  name: allow-cilium-gateway-httproutes
+  namespace: flux-system
+spec:
+  from:
   - group: gateway.networking.k8s.io
-    kind: Gateway
-    name: cilium-gateway
+    kind: HTTPRoute
+    namespace: cilium-gateway-system
+  to:
+  - group: ""
+    kind: Service
+---
+apiVersion: gateway.networking.k8s.io/v1beta1
+kind: ReferenceGrant
+metadata:
+  name: allow-cilium-gateway-httproutes
+  namespace: collabora
+spec:
+  from:
+  - group: gateway.networking.k8s.io
+    kind: HTTPRoute
+    namespace: cilium-gateway-system
+  to:
+  - group: ""
+    kind: Service

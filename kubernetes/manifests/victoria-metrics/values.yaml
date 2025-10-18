@@ -43,7 +43,7 @@ victoria-metrics-k8s-stack:
       extraArgs:
         maxLabelsPerTimeseries: "160"
     ingress:
-      enabled: true
+      enabled: false
       annotations:
         kubernetes.io/tls-acme: "true"
         cert-manager.io/cluster-issuer: letsencrypt-prod
@@ -91,12 +91,8 @@ victoria-metrics-k8s-stack:
     grafanaOperator:
       enabled: true
     redis:
-      ingress-controller:
-        name: ingress-controller
-        orgid: 9614
-      redis:
-        name: redis
-        orgid: 12776
+      name: redis
+      orgid: 12776
   defaultDatasources:
     grafanaOperator:
       enabled: true

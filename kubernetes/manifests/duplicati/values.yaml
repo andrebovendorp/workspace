@@ -81,7 +81,7 @@ common:
       type: ClusterIP
 
   ingress:
-    enabled: true
+    enabled: false
     class: cilium
     hosts:
     - host: backup.nullservers.com
