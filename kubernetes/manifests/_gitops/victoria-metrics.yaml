@@ -7,6 +7,10 @@ spec:
   interval: 1h
   chart:
     spec:
+      install:
+        timeout: 20m
+      upgrade:
+        timeout: 20m
       chart: kubernetes/manifests/victoria-metrics
       sourceRef:
         kind: GitRepository
