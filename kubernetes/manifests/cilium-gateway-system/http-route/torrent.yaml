@@ -4,13 +4,13 @@ metadata:
   name: qbittorrent-http-route
   namespace: cilium-gateway-system
   annotations:
-    external-dns.alpha.kubernetes.io/hostname: qbittorrent.nullservers.com
+    external-dns.alpha.kubernetes.io/hostname: torrent.nullservers.com
 spec:
   parentRefs:
   - name: cilium-gateway
     namespace: cilium-gateway-system
   hostnames:
-  - "qbittorrent.nullservers.com"
+  - "torrent.nullservers.com"
   rules:
   - matches:
     - path:
