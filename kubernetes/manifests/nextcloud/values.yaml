@@ -51,4 +51,4 @@ common:
     enabled: false
     class: cilium
     hosts:
-    - host: nextcloud.nullservers.com
+    - host: drive.nullservers.com

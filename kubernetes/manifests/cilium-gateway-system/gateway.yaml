@@ -98,7 +98,7 @@ spec:
       namespaces:
         from: All
   - name: https-nextcloud
-    hostname: "nextcloud.nullservers.com"
+    hostname: "drive.nullservers.com"
     port: 443
     protocol: HTTPS
     tls:
