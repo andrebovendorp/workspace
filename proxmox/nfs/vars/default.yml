@@ -1,0 +1,6 @@
+# Default network CIDR variables for NFS exports
+default_network_cidr: "192.168.20.0/24"
+kubernetes_network_cidr: "192.168.50.0/24"
+vpn_cidr: "192.168.3.0/24"
+# Base config
+nfs_share_dir_base: /data

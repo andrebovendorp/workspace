@@ -1,0 +1,44 @@
+---
+- name: Configure and Install NFS Server on Alpine Containers
+  hosts: nfs_servers
+  become: yes
+  vars_files:
+    - vars/default.yml
+
+  collections:
+    - community.general
+
+  tasks:
+
+    - name: Install NFS server package (NFSv4 only)
+      community.general.apk:
+        name: nfs-utils
+        state: present
+        update_cache: yes
+
+    - name: Ensure base share directory exists
+      file:
+        path: "{{ nfs_share_dir_base }}"
+        state: directory
+        mode: '0755'
+
+    - name: Copy and template /etc/exports
+      template:
+        src: "templates/exports_{{ inventory_hostname | replace('-', '_') }}.j2"
+        dest: /etc/exports
+        owner: root
+        group: root
+        mode: '0644'
+      notify: Reload NFS Exports
+    
+    - name: Ensure NFS service is started and enabled
+      ansible.builtin.service:
+        name: nfs
+        state: started
+        enabled: yes
+
+  handlers:
+
+    - name: Reload NFS Exports
+      ansible.builtin.command: exportfs -ra
+      listen: "Reload NFS Exports"
