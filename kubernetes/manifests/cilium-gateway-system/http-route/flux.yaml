@@ -19,4 +19,4 @@ spec:
     backendRefs:
     - name: capacitor
       namespace: flux-system
-      port: 9001
+      port: 9000

@@ -18,5 +18,5 @@ spec:
         value: /
     backendRefs:
     - name: hubble-ui
-      namespace: glance
+      namespace: kube-system
       port: 80
