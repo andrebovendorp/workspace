@@ -18,5 +18,5 @@ spec:
         value: /
     backendRefs:
     - name: glance
-      namespace: kube-system
+      namespace: glance
       port: 80
