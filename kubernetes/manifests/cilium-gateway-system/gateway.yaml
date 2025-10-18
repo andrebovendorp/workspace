@@ -188,19 +188,6 @@ spec:
     allowedRoutes:
       namespaces:
         from: Same
-  - name: https-authentik
-    hostname: "auth.nullservers.com"
-    port: 443
-    protocol: HTTPS
-    tls:
-      mode: Terminate
-      certificateRefs:
-      - name: authentik-tls
-        kind: Secret
-        namespace: cilium-gateway-system
-    allowedRoutes:
-      namespaces:
-        from: Same
   - name: http
     port: 80
     protocol: HTTP
