@@ -5,12 +5,12 @@ metadata:
   namespace: victoria-metrics
 spec:
   interval: 1h
+  install:
+    timeout: 20m
+  upgrade:
+    timeout: 20m
   chart:
     spec:
-      install:
-        timeout: 20m
-      upgrade:
-        timeout: 20m
       chart: kubernetes/manifests/victoria-metrics
       sourceRef:
         kind: GitRepository
