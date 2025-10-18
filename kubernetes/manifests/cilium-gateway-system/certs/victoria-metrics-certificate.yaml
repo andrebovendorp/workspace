@@ -1,12 +1,14 @@
 apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
-  name: qbittorrent-tls
+  name: victoria-metrics-tls
   namespace: cilium-gateway-system
 spec:
-  secretName: qbittorrent-tls
+  secretName: victoria-metrics-tls
   issuerRef:
     name: letsencrypt-prod
     kind: ClusterIssuer
   dnsNames:
-  - qbittorrent.nullservers.com
+  - logs.nullservers.com
+  - grafana.nullservers.com
+  - metrics.nullservers.com

@@ -4,13 +4,13 @@ metadata:
   name: audiobook-http-route
   namespace: cilium-gateway-system
   annotations:
-    external-dns.alpha.kubernetes.io/hostname: audiobook.nullservers.com
+    external-dns.alpha.kubernetes.io/hostname: bookshelf.nullservers.com
 spec:
   parentRefs:
   - name: cilium-gateway
     namespace: cilium-gateway-system
   hostnames:
-  - "audiobook.nullservers.com"
+  - "bookshelf.nullservers.com"
   rules:
   - matches:
     - path:
