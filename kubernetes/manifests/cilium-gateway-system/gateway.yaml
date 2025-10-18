@@ -84,21 +84,8 @@ spec:
     allowedRoutes:
       namespaces:
         from: All
-  - name: https-homepage
-    hostname: "homepage.nullservers.com"
-    port: 443
-    protocol: HTTPS
-    tls:
-      mode: Terminate
-      certificateRefs:
-      - name: homepage-tls
-        kind: Secret
-        namespace: cilium-gateway-system
-    allowedRoutes:
-      namespaces:
-        from: All
   - name: https-immich
-    hostname: "immich.nullservers.com"
+    hostname: "photos.nullservers.com"
     port: 443
     protocol: HTTPS
     tls:
@@ -137,7 +124,7 @@ spec:
       namespaces:
         from: All
   - name: https-qbittorrent
-    hostname: "qbittorrent.nullservers.com"
+    hostname: "torrent.nullservers.com"
     port: 443
     protocol: HTTPS
     tls:
@@ -163,7 +150,7 @@ spec:
       namespaces:
         from: All
   - name: https-collabora
-    hostname: "collabora.nullservers.com"
+    hostname: "docs.nullservers.com"
     port: 443
     protocol: HTTPS
     tls:
@@ -176,7 +163,7 @@ spec:
       namespaces:
         from: All
   - name: https-audiobook
-    hostname: "audiobook.nullservers.com"
+    hostname: "bookshelf.nullservers.com"
     port: 443
     protocol: HTTPS
     tls:
