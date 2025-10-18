@@ -9,6 +9,7 @@ spec:
         - {}
     - fromEntities:
         - ingress
+        - cluster
   egress:
     - toEndpoints:
         - {}
