@@ -12,30 +12,30 @@ spec:
       template:
         spec:
           containers:
-            - name: dns-updater
-              image: ghcr.io/boveloco/cloudflare-dns-updater:latest
-              env:
-                - name: CLOUDFLARE_ZONE_ID
-                  valueFrom:
-                    secretKeyRef:
-                      name: cf-dns-updater-credentials
-                      key: zone-id
-                - name: CLOUDFLARE_ACCOUNT_ID
-                  valueFrom:
-                    secretKeyRef:
-                      name: cf-dns-updater-credentials
-                      key: account-id
-                - name: CLOUDFLARE_API_TOKEN
-                  valueFrom:
-                    secretKeyRef:
-                      name: cf-dns-updater-credentials
-                      key: api-key
-              volumeMounts:
-                - name: cloudflare-dns-updater
-                  mountPath: /app/domains.yaml
-                  subPath: domains.yaml
+          - name: dns-updater
+            image: ghcr.io/boveloco/cloudflare-dns-updater:latest
+            env:
+            - name: CLOUDFLARE_ZONE_ID
+              valueFrom:
+                secretKeyRef:
+                  name: cf-dns-updater-credentials
+                  key: zone-id
+            - name: CLOUDFLARE_ACCOUNT_ID
+              valueFrom:
+                secretKeyRef:
+                  name: cf-dns-updater-credentials
+                  key: account-id
+            - name: CLOUDFLARE_API_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: cf-dns-updater-credentials
+                  key: api-key
+            volumeMounts:
+            - name: cloudflare-dns-updater
+              mountPath: /app/domains.yaml
+              subPath: domains.yaml
           restartPolicy: OnFailure
           volumes:
-            - name: cloudflare-dns-updater
-              configMap:
-                name: domains
+          - name: cloudflare-dns-updater
+            configMap:
+              name: domains

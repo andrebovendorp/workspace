@@ -5,20 +5,20 @@ metadata:
   namespace: dns-updater
 spec:
   endpointSelector: {}
-  ingress: 
-   - {}
+  ingress:
+  - {}
   egress:
-    - toEndpoints:
-        - matchLabels:
-            io.kubernetes.pod.namespace: kube-system
-            k8s-app: kube-dns
-      toPorts:
-        - ports:
-            - port: "53"
-              protocol: UDP
-          rules:
-            dns:
-              - matchPattern: "*"
-    - toFQDNs:
-      - matchPattern: "ifconfig.me"
-      - matchPattern: "api.cloudflare.com"
+  - toEndpoints:
+    - matchLabels:
+        io.kubernetes.pod.namespace: kube-system
+        k8s-app: kube-dns
+    toPorts:
+    - ports:
+      - port: "53"
+        protocol: UDP
+      rules:
+        dns:
+        - matchPattern: "*"
+  - toFQDNs:
+    - matchPattern: "ifconfig.me"
+    - matchPattern: "api.cloudflare.com"
