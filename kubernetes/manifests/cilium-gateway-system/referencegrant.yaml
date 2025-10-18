@@ -1,7 +1,7 @@
 apiVersion: gateway.networking.k8s.io/v1beta1
 kind: ReferenceGrant
 metadata:
-  name: allow-cilium-gateway-httproutes
+  name: allow-cilium-gateway-httproutes-kube-system
   namespace: kube-system
 spec:
   from:
@@ -15,7 +15,7 @@ spec:
 apiVersion: gateway.networking.k8s.io/v1beta1
 kind: ReferenceGrant
 metadata:
-  name: allow-cilium-gateway-httproutes
+  name: allow-cilium-gateway-httproutes-audiobook
   namespace: audiobook
 spec:
   from:
@@ -29,7 +29,7 @@ spec:
 apiVersion: gateway.networking.k8s.io/v1beta1
 kind: ReferenceGrant
 metadata:
-  name: allow-cilium-gateway-httproutes
+  name: allow-cilium-gateway-httproutes-duplicati
   namespace: duplicati
 spec:
   from:
@@ -43,7 +43,7 @@ spec:
 apiVersion: gateway.networking.k8s.io/v1beta1
 kind: ReferenceGrant
 metadata:
-  name: allow-cilium-gateway-httproutes
+  name: allow-cilium-gateway-httproutes-glance
   namespace: glance
 spec:
   from:
@@ -57,7 +57,7 @@ spec:
 apiVersion: gateway.networking.k8s.io/v1beta1
 kind: ReferenceGrant
 metadata:
-  name: allow-cilium-gateway-httproutes
+  name: allow-cilium-gateway-httproutes-hass
   namespace: home-assistant
 spec:
   from:
@@ -71,7 +71,7 @@ spec:
 apiVersion: gateway.networking.k8s.io/v1beta1
 kind: ReferenceGrant
 metadata:
-  name: allow-cilium-gateway-httproutes
+  name: allow-cilium-gateway-httproutes-immich
   namespace: immich
 spec:
   from:
@@ -85,7 +85,7 @@ spec:
 apiVersion: gateway.networking.k8s.io/v1beta1
 kind: ReferenceGrant
 metadata:
-  name: allow-cilium-gateway-httproutes
+  name: allow-cilium-gateway-httproutes-nextcloud
   namespace: nextcloud
 spec:
   from:
@@ -99,7 +99,7 @@ spec:
 apiVersion: gateway.networking.k8s.io/v1beta1
 kind: ReferenceGrant
 metadata:
-  name: allow-cilium-gateway-httproutes
+  name: allow-cilium-gateway-httproutes-plex
   namespace: plex
 spec:
   from:
@@ -113,7 +113,7 @@ spec:
 apiVersion: gateway.networking.k8s.io/v1beta1
 kind: ReferenceGrant
 metadata:
-  name: allow-cilium-gateway-httproutes
+  name: allow-cilium-gateway-httproutes-flux
   namespace: flux-system
 spec:
   from:
@@ -127,7 +127,7 @@ spec:
 apiVersion: gateway.networking.k8s.io/v1beta1
 kind: ReferenceGrant
 metadata:
-  name: allow-cilium-gateway-httproutes
+  name: allow-cilium-gateway-httproutes-collabora
   namespace: collabora
 spec:
   from:
