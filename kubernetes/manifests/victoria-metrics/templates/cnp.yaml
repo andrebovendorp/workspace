@@ -27,8 +27,20 @@ spec:
             dns:
               - matchPattern: "*"
     - toFQDNs:
+        - matchPattern: "*.pgsql.nullservers.com"
         - matchPattern: "*.nullservers.com"
+      toPorts:
+        - ports:
+            - port: "8080"
+            - port: "9100"
+            - port: "9187"
+    - toFQDNs:
         - matchName: "grafana.com"
-        - matchPattern: "*.grafana.com"
+        - matchName: "api.grafana.com"
+        - matchName: "auth.nullservers.com"
+      toPorts:
+        - ports:
+            - port: "443"
+              protocol: TCP
 
       
