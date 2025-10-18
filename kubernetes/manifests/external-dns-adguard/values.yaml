@@ -6,7 +6,6 @@ external-dns:
   logFormat: json
   sources:
   - service
-  - ingress
   - gateway-httproute
   provider:
     name: webhook
