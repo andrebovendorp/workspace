@@ -18,7 +18,7 @@ spec:
         namespace: cilium-gateway-system
     allowedRoutes:
       namespaces:
-        from: All
+        from: Same
   - name: https-plex
     hostname: "plex.nullservers.com"
     port: 443
@@ -31,7 +31,7 @@ spec:
         namespace: cilium-gateway-system
     allowedRoutes:
       namespaces:
-        from: All
+        from: Same
   - name: https-hubble
     hostname: "hubble.nullservers.com"
     port: 443
@@ -44,7 +44,7 @@ spec:
         namespace: cilium-gateway-system
     allowedRoutes:
       namespaces:
-        from: All
+        from: Same
   - name: https-grafana
     hostname: "grafana.nullservers.com"
     port: 443
@@ -57,7 +57,7 @@ spec:
         namespace: cilium-gateway-system
     allowedRoutes:
       namespaces:
-        from: All
+        from: Same
   - name: https-victoria-logs
     hostname: "logs.nullservers.com"
     port: 443
@@ -70,7 +70,7 @@ spec:
         namespace: cilium-gateway-system
     allowedRoutes:
       namespaces:
-        from: All
+        from: Same
   - name: https-flux
     hostname: "flux.nullservers.com"
     port: 443
@@ -83,7 +83,7 @@ spec:
         namespace: cilium-gateway-system
     allowedRoutes:
       namespaces:
-        from: All
+        from: Same
   - name: https-immich
     hostname: "photos.nullservers.com"
     port: 443
@@ -96,7 +96,7 @@ spec:
         namespace: cilium-gateway-system
     allowedRoutes:
       namespaces:
-        from: All
+        from: Same
   - name: https-nextcloud
     hostname: "drive.nullservers.com"
     port: 443
@@ -109,7 +109,7 @@ spec:
         namespace: cilium-gateway-system
     allowedRoutes:
       namespaces:
-        from: All
+        from: Same
   - name: https-recipes
     hostname: "recipes.nullservers.com"
     port: 443
@@ -122,7 +122,7 @@ spec:
         namespace: cilium-gateway-system
     allowedRoutes:
       namespaces:
-        from: All
+        from: Same
   - name: https-qbittorrent
     hostname: "torrent.nullservers.com"
     port: 443
@@ -135,9 +135,9 @@ spec:
         namespace: cilium-gateway-system
     allowedRoutes:
       namespaces:
-        from: All
+        from: Same
   - name: https-duplicati
-    hostname: "duplicati.nullservers.com"
+    hostname: "backup.nullservers.com"
     port: 443
     protocol: HTTPS
     tls:
@@ -148,7 +148,7 @@ spec:
         namespace: cilium-gateway-system
     allowedRoutes:
       namespaces:
-        from: All
+        from: Same
   - name: https-collabora
     hostname: "docs.nullservers.com"
     port: 443
@@ -161,7 +161,7 @@ spec:
         namespace: cilium-gateway-system
     allowedRoutes:
       namespaces:
-        from: All
+        from: Same
   - name: https-audiobook
     hostname: "bookshelf.nullservers.com"
     port: 443
@@ -174,7 +174,7 @@ spec:
         namespace: cilium-gateway-system
     allowedRoutes:
       namespaces:
-        from: All
+        from: Same
   - name: https-home-assistant
     hostname: "home.nullservers.com"
     port: 443
@@ -187,10 +187,23 @@ spec:
         namespace: cilium-gateway-system
     allowedRoutes:
       namespaces:
-        from: All
+        from: Same
+  - name: https-authentik
+    hostname: "auth.nullservers.com"
+    port: 443
+    protocol: HTTPS
+    tls:
+      mode: Terminate
+      certificateRefs:
+      - name: authentik-tls
+        kind: Secret
+        namespace: cilium-gateway-system
+    allowedRoutes:
+      namespaces:
+        from: Same
   - name: http
     port: 80
     protocol: HTTP
     allowedRoutes:
       namespaces:
-        from: All
+        from: Same
