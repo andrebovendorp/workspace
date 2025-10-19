@@ -5,7 +5,6 @@ external-dns:
   logLevel: debug
   logFormat: json
   sources:
-  - service
   - gateway-httproute
   - crd
   provider:
