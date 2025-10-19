@@ -10,9 +10,11 @@
 
   tasks:
 
-    - name: Install NFS server package (NFSv4 only)
+    - name: Install required packages
       community.general.apk:
-        name: nfs-utils
+        name:
+          - nfs-utils
+          - prometheus-node-exporter
         state: present
         update_cache: yes
 
@@ -34,6 +36,12 @@
     - name: Ensure NFS service is started and enabled
       ansible.builtin.service:
         name: nfs
+        state: started
+        enabled: yes
+
+    - name: Ensure Prometheus node exporter service is started and enabled
+      ansible.builtin.service:
+        name: node-exporter
         state: started
         enabled: yes
 
