@@ -1,0 +1,23 @@
+---
+apiVersion: operator.victoriametrics.com/v1beta1
+kind: VMStaticScrape
+metadata:
+  name: node-exporters-nfs
+  namespace: victoria-metrics
+spec:
+  jobName: node-exporter-nfs
+  targetEndpoints:
+    # Node Exporter for NFS server
+    - targets:
+        - "nfs.nullservers.com:9100"
+      labels:
+        instance: "nfs"
+        service: "node"
+        role: "nfs-server"
+    # Node Exporter for NAS server
+    - targets:
+        - "nas.nullservers.com:9100"
+      labels:
+        instance: "nas"
+        service: "node"
+        role: "nfs-server"
