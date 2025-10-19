@@ -21,7 +21,7 @@ spec:
           rules:
             dns:
               - matchPattern: "*"
-    - toCIDRSet:
-        - cidr: "172.16.0.240/32" # adguard
+    - toFQDNs:
+        - matchName: adguard.nullservers.com
     - toEntities:
         - kube-apiserver
