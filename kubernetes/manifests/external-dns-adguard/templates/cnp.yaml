@@ -6,6 +6,9 @@ spec:
   endpointSelector: {}
   ingress:
     - {}
+    - fromEndpoints:
+        - matchLabels:
+            io.kubernetes.pod.namespace: victoria-metrics
   egress:
     - toEndpoints:
         - matchLabels:
@@ -20,3 +23,5 @@ spec:
               - matchPattern: "*"
     - toCIDRSet:
         - cidr: "172.16.0.240/32" # adguard
+    - toEntities:
+        - kube-apiserver

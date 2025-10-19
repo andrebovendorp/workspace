@@ -7,6 +7,7 @@ external-dns:
   sources:
   - service
   - gateway-httproute
+  - crd
   provider:
     name: webhook
     webhook:
