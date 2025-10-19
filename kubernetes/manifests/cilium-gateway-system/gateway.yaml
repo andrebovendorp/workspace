@@ -123,19 +123,6 @@ spec:
     allowedRoutes:
       namespaces:
         from: Same
-  - name: https-qbittorrent
-    hostname: "torrent.nullservers.com"
-    port: 443
-    protocol: HTTPS
-    tls:
-      mode: Terminate
-      certificateRefs:
-      - name: qbittorrent-tls
-        kind: Secret
-        namespace: cilium-gateway-system
-    allowedRoutes:
-      namespaces:
-        from: Same
   - name: https-duplicati
     hostname: "backup.nullservers.com"
     port: 443

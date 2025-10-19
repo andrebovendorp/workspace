@@ -1,0 +1,14 @@
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: GitRepository
+metadata:
+  name: workspace-private
+  namespace: flux-system
+  labels:
+    app.kubernetes.io/managed-by: fluxcd
+spec:
+  interval: 5m
+  url: https://github.com/boveloco/workspace-private
+  ref:
+    branch:  main
+  secretRef:
+    name: workspace-private-auth
