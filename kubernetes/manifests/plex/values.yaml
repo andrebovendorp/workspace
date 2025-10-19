@@ -43,10 +43,6 @@ common:
       value: "Stockholm/Europe"
 
   hostVolumeMounts:
-  - mountPath: /data/media
-    name: plex-media
-    hostPath: /mnt/external-drive/
-    readOnly: true
   - mountPath: /dev/dri
     name: quicksync
     hostPath: /dev/dri
@@ -61,6 +57,8 @@ common:
   existingClaimVolumeMounts:
   - name: nfs-plex-config
     mountPath: /config
+  - name: plex-media
+    mountPath: /data/media
 
   service:
     enabled: true
