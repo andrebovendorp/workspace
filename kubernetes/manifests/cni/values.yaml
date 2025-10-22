@@ -1,10 +1,8 @@
 cilium:
   ingressController:
+    enabled: false
+  gatewayAPI:
     enabled: true
-    default: true
-    loadbalancerMode: shared
-    service:
-      loadBalancerIP: 192.168.50.239
   ipam:
     operator:
       clusterPoolIPv4PodCIDRList: [ "10.10.0.0/16" ]
@@ -21,6 +19,9 @@ cilium:
       - http
       serviceMonitor:
         enabled: true
+      dashboards:
+        enabled: true
+        namespace: victoria-metrics
     relay:
       enabled: true
     ui:
@@ -32,9 +33,17 @@ cilium:
     enabled: true
   operator:
     enabled: true
+    prometheus:
+      enabled: true
+      serviceMonitor:
+        enabled: true
     replicas: 2
   egressGateway:
     enabled: true
   bpf:
     masquerade: true
   externalTrafficPolicy: Local
+  prometheus:
+    enabled: true
+    serviceMonitor:
+      enabled: true

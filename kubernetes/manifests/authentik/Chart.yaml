@@ -1,6 +1,6 @@
 apiVersion: v2
 name: Authentik
-version: 0.1.14
+version: 0.1.15
 type: application
 dependencies:
 - name: authentik
