@@ -4,10 +4,10 @@ version: 0.1.17
 type: application
 dependencies:
 - name: victoria-metrics-k8s-stack
-  version: 0.61.8
+  version: 0.61.9
   repository: https://victoriametrics.github.io/helm-charts/
 - name: grafana-operator
-  version: v5.19.4
+  version: v5.20.0
   repository: oci://ghcr.io/grafana/helm-charts
 - name: victoria-logs-single
   version: ">=0.9.7"
