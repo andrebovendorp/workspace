@@ -38,6 +38,7 @@ spec:
         - matchName: "grafana.com"
         - matchName: "api.grafana.com"
         - matchName: "auth.nullservers.com"
+        - matchName: "storage.googleapis.com" # plugins
       toPorts:
         - ports:
             - port: "443"
