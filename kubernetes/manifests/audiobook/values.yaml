@@ -36,6 +36,8 @@ common:
     mountPath: /data
     size: 10Gi
     storageClassName: nfs-retain
+  - name: audiobook-media-nas
+    mountPath: /audiobooks
 
   service:
     enabled: true
