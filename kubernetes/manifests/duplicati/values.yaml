@@ -54,12 +54,6 @@ common:
     subPath: "./duplicati-config"
     readOnly: "false"
 
-  hostVolumeMounts:
-  - name: external-drive
-    hostPath: /mnt/external-drive/
-    mountPath: /backups/external-drive
-    readOnly: true
-
   pvcVolumeMounts:
 
   emptyDirVolumeMounts:
