@@ -22,11 +22,6 @@ common:
         memory: 1Gi
         cpu: 500m
 
-  hostVolumeMounts:
-  - name: audiobooks
-    hostPath: /mnt/external-drive/audiobooks
-    mountPath: /audiobooks
-
   existingClaimVolumeMounts:
   - name: audiobook-config-nfs
     mountPath: /config

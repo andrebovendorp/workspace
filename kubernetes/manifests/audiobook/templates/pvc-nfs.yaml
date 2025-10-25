@@ -9,7 +9,7 @@ spec:
   resources:
     requests:
       storage: 10Gi
-  storageClassName: nfs
+  storageClassName: nfs-retain
 --- 
 apiVersion: v1
 kind: PersistentVolume
@@ -21,10 +21,10 @@ spec:
   accessModes:
     - ReadWriteMany
   persistentVolumeReclaimPolicy: Delete
-  storageClassName: nfs
+  storageClassName: nfs-retain
   csi:
     driver: nfs.csi.k8s.io
-    volumeHandle: audiobook-data-nfs-pv
+    volumeHandle: audiobook-data-nfs
     volumeAttributes:
       server: nfs.nullservers.com
       share: /data/kubernetes-retain/audiobook-data
@@ -40,7 +40,7 @@ spec:
   resources:
     requests:
       storage: 1Gi
-  storageClassName: nfs
+  storageClassName: nfs-retain
 --- 
 apiVersion: v1
 kind: PersistentVolume
@@ -51,8 +51,8 @@ spec:
     storage: 1Gi
   accessModes:
     - ReadWriteMany
-  persistentVolumeReclaimPolicy: Delete
-  storageClassName: nfs
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: nfs-retain
   csi:
     driver: nfs.csi.k8s.io
     volumeHandle: pv-authentik-config-nfs
