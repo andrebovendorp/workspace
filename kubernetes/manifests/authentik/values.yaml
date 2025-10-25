@@ -1,4 +1,12 @@
 authentik:
+  global:
+    topologySpreadConstraints:
+    - maxSkew: 1
+      topologyKey: "kubernetes.io/hostname"
+      whenUnsatisfiable: ScheduleAnyway
+      labelSelector:
+        matchLabels:
+          app.kubernetes.io/name: authentik
   securityContext:
     fsGroup: 1000
     runAsUser: 1000
@@ -20,6 +28,7 @@ authentik:
     redis:
       host: redis-headless.redis.svc.cluster.local
   worker:
+    replicas: 1
     volumes:
     - name: authentik-credentials
       secret:
@@ -31,6 +40,7 @@ authentik:
     metrics:
       enabled: true
   server:
+    replicas: 2
     env:
     - name: AUTHENTIK_DISABLE_STARTUP_ANALYTICS
       value: "true"
