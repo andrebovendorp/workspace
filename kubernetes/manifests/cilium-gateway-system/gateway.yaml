@@ -175,6 +175,19 @@ spec:
     allowedRoutes:
       namespaces:
         from: Same
+  - name: https-jellyfin
+    hostname: "jellyfin.nullservers.com"
+    port: 443
+    protocol: HTTPS
+    tls:
+      mode: Terminate
+      certificateRefs:
+      - name: jellyfin-tls
+        kind: Secret
+        namespace: cilium-gateway-system
+    allowedRoutes:
+      namespaces:
+        from: Same
   - name: http
     port: 80
     protocol: HTTP
