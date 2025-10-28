@@ -1,0 +1,111 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: example-name
+  labels:
+    app: adventure
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: adventure
+  template:
+    metadata:
+      name: adventure
+      labels:
+        app: adventure
+    spec:
+      volumes:
+      - name: adventure-journal
+        persistentVolumeClaim:
+          claimName: adventure-journal-pvc
+      containers:
+      - name: adventure-frontend
+        image: ghcr.io/seanmorley15/adventurelog-frontend:latest
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 3000
+        env:
+        - name: PUBLIC_SERVER_URL
+          value: "https://trips.nullservers.com:443"
+        - name: ORIGIN
+          value: "http://trips.nullservers.com:80"
+        - name: BODY_SIZE_LIMIT
+          value: "15M"
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: example-name
+  labels:
+    app: adventure
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: adventure
+  template:
+    metadata:
+      name: adventure
+      labels:
+        app: adventure
+    spec:
+      containers:
+      - name: adventure-backend
+        image: ghcr.io/seanmorley15/adventurelog-backend:latest
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 80
+        - containerPort: 8000
+        volumeMounts:
+        - name: adventure-journal
+          mountPath: /code/media
+        env:
+        - name: PGHOST
+          value: "adventure-db-svc"
+        - name: PGDATABASE
+          value: "database"
+        - name: PGUSER
+          value: "adventure"
+        - name: PGPASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: adventurelog-secret
+              key: adventure-postgres-password
+        - name: SECRET_KEY
+          valueFrom:
+            secretKeyRef:
+              name: adventurelog-secret
+              key: adventure-postgres-password
+        - name: PUBLIC_URL
+          value: "http://internally-and-externally.reachable.io:80" # Match the outward port, used for the creation of image urls
+        - name: FRONTEND_URL
+          value: "http://url-typed-into-browser.io:80"
+        - name: CSRF_TRUSTED_ORIGINS
+          value: "http://url-typed-into-browser.io:80, http://internally-and-externally.reachable.io:80"
+        - name: DJANGO_ADMIN_USERNAME
+          value: "admin"
+        - name: DJANGO_ADMIN_PASSWORD
+          value: "admin"
+        - name: DJANGO_ADMIN_EMAIL
+          value: "admin@example.com"
+        - name: DEBUG
+          value: "True"
+      restartPolicy: Always
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: server
+spec:
+  selector:
+    app: adventure
+  ports:
+  - name: http
+    protocol: TCP
+    port: 80
+    targetPort: 80
+  - name: base
+    protocol: TCP
+    port: 8000
+    targetPort: 8000

@@ -1,0 +1,86 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: adventurelog-backend
+  namespace: adventurelog
+  labels:
+    app: adventurelog-backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: adventurelog-backend
+  template:
+    metadata:
+      name: adventurelog-backend
+      labels:
+        app: adventurelog-backend
+    spec:
+      volumes:
+      - name: adventurelog-media
+        persistentVolumeClaim:
+          claimName: adventurelog-media
+      containers:
+      - name: adventure-backend
+        image: ghcr.io/seanmorley15/adventurelog-backend:latest
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 80
+        - containerPort: 8000
+        env:
+        - name: PGHOST
+          valueFrom:
+            secretKeyRef:
+              name: adventurelog-db-credentials
+              key: host
+        - name: PGDATABASE
+          valueFrom:
+            secretKeyRef:
+              name: adventurelog-db-credentials
+              key: database
+        - name: PGUSER
+          valueFrom:
+            secretKeyRef:
+              name: adventurelog-db-credentials
+              key: username
+        - name: PGPASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: adventurelog-db-credentials
+              key: password
+        - name: SECRET_KEY
+          valueFrom:
+            secretKeyRef:
+              name: adventurelog-app-credentials
+              key: secret-key
+        - name: PUBLIC_URL
+          value: "https://backend.trips.nullservers.com"
+        - name: FRONTEND_URL
+          value: "https://trips.nullservers.com"
+        - name: CSRF_TRUSTED_ORIGINS
+          value: "https://trips.nullservers.com,https://backend.trips.nullservers.com,http://adventurelog-backend.adventurelog.svc.cluster.local"
+        - name: DJANGO_ADMIN_USERNAME
+          valueFrom:
+            secretKeyRef:
+              name: adventurelog-app-credentials
+              key: admin-username
+        - name: DJANGO_ADMIN_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: adventurelog-app-credentials
+              key: admin-password
+        - name: DJANGO_ADMIN_EMAIL
+          valueFrom:
+            secretKeyRef:
+              name: adventurelog-app-credentials
+              key: admin-email
+        - name: DEBUG
+          value: "False"
+        resources:
+          requests:
+            cpu: 200m
+            memory: 256Mi
+          limits:
+            cpu: 1000m
+            memory: 1Gi
+      restartPolicy: Always

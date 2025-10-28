@@ -1,0 +1,58 @@
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: default
+  namespace: adventurelog
+spec:
+  endpointSelector: {}
+  ingress:
+  # Allow ingress traffic (from Cilium Gateway)
+  - fromEntities:
+    - ingress
+  # Allow communication within the namespace (frontend <-> backend)
+  - fromEndpoints:
+    - {}
+  # Allow monitoring from Victoria Metrics
+  - fromEndpoints:
+    - matchLabels:
+        io.kubernetes.pod.namespace: victoria-metrics
+  # Allow traffic from Cloudflare tunnel
+  - fromEndpoints:
+    - matchLabels:
+        io.kubernetes.pod.namespace: cloudflare
+    toPorts:
+    - ports:
+      - port: "3000" # Frontend port
+      - port: "80" # Backend HTTP port
+      - port: "8000" # Backend API port
+  egress:
+  # Allow communication within the namespace
+  - toEndpoints:
+    - {}
+  # Allow DNS resolution
+  - toEndpoints:
+    - matchLabels:
+        io.kubernetes.pod.namespace: kube-system
+        k8s-app: kube-dns
+    toPorts:
+    - ports:
+      - port: "53"
+        protocol: UDP
+      rules:
+        dns:
+        - matchPattern: "*"
+  # Allow external HTTPS connections for various APIs and services
+  - toFQDNs:
+    - matchName: pgsql.nullservers.com
+    toPorts:
+    - ports:
+      - port: "5432"
+  - toFQDNs:
+    - matchName: flagcdn.com
+    - matchName: "raw.githubusercontent.com"
+  # Allow HTTP connections if needed
+  - toFQDNs:
+    - matchPattern: "*.openstreetmap.org"
+    toPorts:
+    - ports:
+      - port: "80"

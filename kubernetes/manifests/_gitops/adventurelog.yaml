@@ -1,0 +1,17 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: adventurelog
+  namespace: adventurelog
+spec:
+  interval: 1h
+  chart:
+    spec:
+      chart: kubernetes/manifests/adventurelog
+      sourceRef:
+        kind: GitRepository
+        name: workspace
+        namespace: flux-system
+      version: ">=0.1.0"
+
+  values:
