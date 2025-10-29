@@ -19,4 +19,4 @@ spec:
     backendRefs:
     - name: adventurelog-frontend
       namespace: adventurelog
-      port: 3000
+      port: 80
