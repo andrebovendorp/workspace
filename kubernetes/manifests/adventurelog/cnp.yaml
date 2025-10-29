@@ -50,9 +50,11 @@ spec:
   - toFQDNs:
     - matchName: flagcdn.com
     - matchName: "raw.githubusercontent.com"
+    - matchName: auth.nullservers.com
   # Allow HTTP connections if needed
   - toFQDNs:
     - matchPattern: "*.openstreetmap.org"
     toPorts:
     - ports:
       - port: "80"
+      - port: "443"
