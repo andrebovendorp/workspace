@@ -92,20 +92,3 @@ spec:
         - name: DEBUG
           value: "True"
       restartPolicy: Always
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: server
-spec:
-  selector:
-    app: adventure
-  ports:
-  - name: http
-    protocol: TCP
-    port: 80
-    targetPort: 80
-  - name: base
-    protocol: TCP
-    port: 8000
-    targetPort: 8000

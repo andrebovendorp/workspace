@@ -175,20 +175,7 @@ spec:
     allowedRoutes:
       namespaces:
         from: Same
-  - name: https-backend-adventurelog
-    hostname: "backend.trips.nullservers.com"
-    port: 443
-    protocol: HTTPS
-    tls:
-      mode: Terminate
-      certificateRefs:
-      - name: adventurelog-backend-tls
-        kind: Secret
-        namespace: cilium-gateway-system
-    allowedRoutes:
-      namespaces:
-        from: Same
-  - name: https-frontend-adventurelog
+  - name: https-adventurelog-frontend
     hostname: "trips.nullservers.com"
     port: 443
     protocol: HTTPS
@@ -196,6 +183,19 @@ spec:
       mode: Terminate
       certificateRefs:
       - name: adventurelog-frontend-tls
+        kind: Secret
+        namespace: cilium-gateway-system
+    allowedRoutes:
+      namespaces:
+        from: Same
+  - name: https-adventurelog-backend
+    hostname: "backend.trips.nullservers.com"
+    port: 443
+    protocol: HTTPS
+    tls:
+      mode: Terminate
+      certificateRefs:
+      - name: adventurelog-backend-tls
         kind: Secret
         namespace: cilium-gateway-system
     allowedRoutes:
