@@ -20,7 +20,7 @@ PGSQL still requires a bit of work to function.
 - Database backup setup
 - Databases Migrated.
 
-Follow [this](https://github.com/boveloco/workspace/issues/253) Issue to be up to date.
+Follow [this](https://github.com/andrebovendorp/workspace/issues/253) Issue to be up to date.
 
 ## Rationale
 
