@@ -1,6 +1,6 @@
 apiVersion: v2
 name: tibia-statistics
-version: 0.1.6
+version: 0.1.7
 type: application
 dependencies:
 - name: common
