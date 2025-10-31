@@ -35,12 +35,6 @@ spec:
               - matchPattern: "*"
     - toEndpoints:
         - matchLabels:
-            io.kubernetes.pod.namespace: pgsql
-      toPorts:
-        - ports:
-            - port: "5432"
-    - toEndpoints:
-        - matchLabels:
             io.kubernetes.pod.namespace: redis
       toPorts:
         - ports:
@@ -53,3 +47,8 @@ spec:
       toPorts:
         - ports:
             - port: "443"
+    - toFQDNs:
+        - matchName: immich.pgsql.nullservers.com
+      toPorts:
+        - ports:
+            - port: "5432"

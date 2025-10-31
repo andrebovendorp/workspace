@@ -1,6 +1,6 @@
 immich:
   image:
-    tag: v1.143.1
+    tag: v2.0.1
   immich:
     metrics:
       enabled: true
@@ -10,7 +10,7 @@ immich:
 
   env:
     REDIS_HOSTNAME: redis-headless.redis.svc.cluster.local
-    DB_HOSTNAME: pgsql-postgresql.pgsql.svc.cluster.local
+    DB_HOSTNAME: immich.pgsql.nullservers.com
     DB_USERNAME:
       valueFrom:
         secretKeyRef:
