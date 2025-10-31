@@ -16,7 +16,7 @@ spec:
         conversionStrategy: Default
         metadataPolicy: None
         key: authentik-credentials
-        property: password
+        property: password-new
         decodingStrategy: None
     - secretKey: username
       remoteRef:

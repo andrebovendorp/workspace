@@ -21,7 +21,7 @@ authentik:
       use_tls: true
       from: "no-reply@nullservers.com"
     postgresql:
-      host: pgsql-postgresql-hl.pgsql.svc.cluster.local
+      host: pgsql.nullservers.com
       name: authentik
       user: file:///authentik-credentials/username
       password: file:///authentik-credentials/password
