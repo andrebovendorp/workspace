@@ -2,7 +2,7 @@ apiVersion: cilium.io/v2
 kind: CiliumNetworkPolicy
 metadata:
   name: default
-  namespace: {{ .Release.Namespace }}
+  namespace: immich
 spec:
   endpointSelector: {}
   ingress:
@@ -44,6 +44,8 @@ spec:
         - matchName: auth.nullservers.com
         - matchName: huggingface.co
         - matchName: cas-server.xethub.hf.co
+        - matchPattern: "*.modelscope.cn"
+        - matchName: "modelscope.cn"
       toPorts:
         - ports:
             - port: "443"
