@@ -1,6 +1,6 @@
 apiVersion: v2
 name: redis
-version: 0.1.8
+version: 1.0.0
 type: application
 dependencies:
 - name: redis
