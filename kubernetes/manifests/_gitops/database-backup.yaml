@@ -1,14 +1,14 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
 kind: Kustomization
 metadata:
-  name: mongodb-backup
+  name: database-backup
   namespace: flux-system
 spec:
   interval: 1h
-  path: ./kubernetes/manifests/mongodb-backup
+  path: ./kubernetes/manifests/database-backup
   prune: true
   sourceRef:
     kind: GitRepository
     name: workspace
     namespace: flux-system
-  targetNamespace: mongodb-backup
+  targetNamespace: database-backup
