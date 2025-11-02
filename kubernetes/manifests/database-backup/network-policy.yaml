@@ -1,0 +1,82 @@
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: database-backup-network-policy
+  namespace: database-backup
+  labels:
+    app.kubernetes.io/name: database-backup
+    app.kubernetes.io/instance: database-backup
+    app.kubernetes.io/version: "2.1.0"
+    app.kubernetes.io/component: network-security
+    app.kubernetes.io/part-of: infrastructure
+    app.kubernetes.io/managed-by: kubectl
+spec:
+  endpointSelector:
+    matchLabels:
+      app.kubernetes.io/name: database-backup
+  ingress:
+  - {}
+  - fromCIDRSet:
+    - cidr: 192.168.50.1/32
+  egress:
+  # Allow DNS resolution
+  - toEndpoints:
+    - matchLabels:
+        io.kubernetes.pod.namespace: kube-system
+        k8s-app: kube-dns
+    toPorts:
+    - ports:
+      - port: "53"
+        protocol: UDP
+      rules:
+        dns:
+        - matchPattern: "*"
+
+  # Allow access to PostgreSQL databases
+  - toFQDNs:
+    - matchName: "immich.pgsql.nullservers.com"
+    - matchName: "pgsql.nullservers.com"
+    toPorts:
+    - ports:
+      - port: "5432"
+        protocol: TCP
+  - toCIDRSet:
+    - cidr: 172.16.0.20/32
+    - cidr: 172.16.0.25/32
+    toPorts:
+    - ports:
+      - port: "5432"
+
+  # Allow access to MongoDB (if configured)
+  - toFQDNs:
+    - matchName: "mongodb.nullservers.com"
+    toPorts:
+    - ports:
+      - port: "27017"
+        protocol: TCP
+
+  # Allow access to FTP server (if configured)
+  - toFQDNs:
+    - matchName: "storage.nullservers.com"
+
+  # Allow access to Telegram API
+  - toFQDNs:
+    - matchName: "api.telegram.org"
+    toPorts:
+    - ports:
+      - port: "443"
+        protocol: TCP
+
+  - toEndpoints:
+    - matchLabels:
+        k8s:io.kubernetes.pod.namespace: 1password
+
+  # Allow access to Kubernetes API server for External Secrets
+  - toEntities:
+    - "kube-apiserver"
+    toPorts:
+    - ports:
+      - port: "443"
+        protocol: TCP
+      - port: "6443"
+        protocol: TCP

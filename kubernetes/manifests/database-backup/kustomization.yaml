@@ -1,0 +1,42 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+metadata:
+  name: database-backup
+  namespace: database-backup
+
+resources:
+- namespace.yaml
+- rbac.yaml
+- external-secret.yaml
+- cronjob.yaml
+- network-policy.yaml
+
+commonLabels:
+  app.kubernetes.io/name: database-backup
+  app.kubernetes.io/instance: database-backup
+  app.kubernetes.io/version: "2.1.0"
+  app.kubernetes.io/component: backup-system
+  app.kubernetes.io/part-of: infrastructure
+  app.kubernetes.io/managed-by: kustomize
+
+images:
+- name: ghcr.io/andrebovendorp/database-backup
+  newTag: latest
+
+configMapGenerator:
+- name: database-backup-info
+  literals:
+  - version=2.1.0
+  - description="Cross-platform database backup system with Windows optimization"
+  - repository=https://github.com/andrebovendorp/database-backup
+  - documentation=https://github.com/andrebovendorp/database-backup/blob/main/README.md
+
+patches:
+- target:
+    kind: CronJob
+    name: database-backup-cronjob
+  patch: |-
+    - op: replace
+      path: /spec/jobTemplate/spec/template/spec/containers/0/image
+      value: ghcr.io/andrebovendorp/database-backup/database-backup:latest

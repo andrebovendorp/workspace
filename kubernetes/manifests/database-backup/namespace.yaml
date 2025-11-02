@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: database-backup
+  labels:
+    name: database-backup
+    app.kubernetes.io/name: database-backup
+    app.kubernetes.io/instance: database-backup
+    app.kubernetes.io/version: "2.1.0"
+    app.kubernetes.io/component: backup-system
+    app.kubernetes.io/part-of: infrastructure
+    app.kubernetes.io/managed-by: kubectl
