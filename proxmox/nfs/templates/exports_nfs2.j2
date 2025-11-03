@@ -2,4 +2,4 @@
 
 /data/media {{ default_network_cidr }}(rw,sync,no_subtree_check,no_root_squash,anonuid=1000,anongid=1000) \
             {{ kubernetes_network_cidr }}(rw,sync,no_subtree_check,no_root_squash,anonuid=1000,anongid=1000)
-
+/data/minio {{ kubernetes_network_cidr }}(rw,sync,no_subtree_check,no_root_squash,anonuid=1000,anongid=1000)

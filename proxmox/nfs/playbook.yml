@@ -17,6 +17,7 @@
           - prometheus-node-exporter
         state: present
         update_cache: yes
+      run_once: true
 
     - name: Ensure base share directory exists
       file:
