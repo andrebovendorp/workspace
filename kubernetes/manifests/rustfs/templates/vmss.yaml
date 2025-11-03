@@ -1,0 +1,22 @@
+{{- if and .Values.rustfs.metrics.enabled .Values.rustfs.metrics.vmServiceScrape.enabled }}
+apiVersion: operator.victoriametrics.com/v1beta1
+kind: VMServiceScrape
+metadata:
+  name: rustfs-metrics
+  namespace: {{ .Release.Namespace }}
+  labels:
+    app.kubernetes.io/name: rustfs
+    app.kubernetes.io/instance: {{ .Release.Name }}
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: rustfs
+      app.kubernetes.io/instance: {{ .Release.Name }}
+  namespaceSelector:
+    matchNames:
+      - {{ .Release.Namespace }}
+  endpoints:
+    - port: http
+      path: {{ .Values.rustfs.metrics.vmServiceScrape.path }}
+      interval: {{ .Values.rustfs.metrics.vmServiceScrape.interval }}
+{{- end }}

@@ -1,12 +1,12 @@
 apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
-  name: minio-tls
+  name: rustfs-tls
   namespace: cilium-gateway-system
 spec:
-  secretName: minio-tls
+  secretName: rustfs-tls
   issuerRef:
     name: letsencrypt-prod
     kind: ClusterIssuer
   dnsNames:
-  - minio.nullservers.com
+  - s3.nullservers.com

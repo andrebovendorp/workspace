@@ -1,0 +1,79 @@
+rustfs:
+  # RustFS configuration using official chart
+
+  # Node selector
+  nodeSelector:
+    kubernetes.io/hostname: slave03
+
+  podSecurityContext:
+    fsGroup: 1000
+  
+  containerSecurityContext:
+    runAsUser: 1000
+    runAsGroup: 1000
+
+  # Resource configuration
+  resources:
+    requests:
+      memory: 256Mi
+      cpu: 250m
+    limits:
+      memory: 1024Mi
+      cpu: 500m
+
+  # Service configuration
+  service:
+    type: ClusterIP
+    ports:
+      http: 8080
+      s3: 9000
+
+  # Authentication
+  auth:
+    enabled: true
+    existingSecret: "rustfs-credentials"
+    existingSecretAccessKeyKey: "username"
+    existingSecretSecretKeyKey: "password"
+
+  # Storage configuration
+  dataPersistence:
+    enabled: true
+    existingClaim: "rustfs-data"
+    size: 500Gi
+    storageClass: "nas-minio"
+
+  # Configuration
+  config:
+    server:
+      bind_address: "0.0.0.0:8080"
+      s3_port: 9000
+    s3:
+      enabled: true
+      endpoint: "s3.nullservers.com"
+    metrics:
+      enabled: true
+      prometheus_endpoint: "/metrics"
+
+  # Environment variables
+  extraEnvVars:
+  - name: RUSTFS_S3_COMPATIBLE
+    value: "true"
+  - name: RUSTFS_PROMETHEUS_METRICS
+    value: "true"
+  # Ingress configuration
+  ingress:
+    enabled: false
+
+  # Network Policy
+  networkPolicy:
+    enabled: true
+
+  # Metrics
+  metrics:
+    enabled: true
+    serviceMonitor:
+      enabled: false
+    vmServiceScrape:
+      enabled: true
+      interval: 15s
+      path: "/metrics"

@@ -183,8 +183,8 @@ spec:
 apiVersion: gateway.networking.k8s.io/v1beta1
 kind: ReferenceGrant
 metadata:
-  name: allow-cilium-gateway-httproutes-minio
-  namespace: minio
+  name: allow-cilium-gateway-httproutes-rustfs
+  namespace: rustfs
 spec:
   from:
   - group: gateway.networking.k8s.io
