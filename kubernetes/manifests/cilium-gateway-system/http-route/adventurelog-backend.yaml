@@ -4,13 +4,13 @@ metadata:
   name: adventurelog-backend-http-route
   namespace: cilium-gateway-system
   annotations:
-    external-dns.alpha.kubernetes.io/hostname: backend.trips.nullservers.com
+    external-dns.alpha.kubernetes.io/hostname: backend-trips.nullservers.com
 spec:
   parentRefs:
   - name: cilium-gateway
     namespace: cilium-gateway-system
   hostnames:
-  - "backend.trips.nullservers.com"
+  - "backend-trips.nullservers.com"
   rules:
   - matches:
     - path:

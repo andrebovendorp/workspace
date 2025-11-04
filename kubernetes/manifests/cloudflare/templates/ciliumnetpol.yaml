@@ -39,6 +39,8 @@ spec:
             io.kubernetes.pod.namespace: nextcloud
         - matchLabels:
             io.kubernetes.pod.namespace: collabora
+        - matchLabels:
+            io.kubernetes.pod.namespace: adventurelog
         
     # Allow Cloudflare 
     - toFQDNs:

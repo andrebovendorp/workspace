@@ -9,4 +9,4 @@ spec:
     name: letsencrypt-prod
     kind: ClusterIssuer
   dnsNames:
-  - backend.trips.nullservers.com
+  - backend-trips.nullservers.com

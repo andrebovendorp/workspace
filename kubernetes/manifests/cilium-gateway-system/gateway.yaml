@@ -189,7 +189,7 @@ spec:
       namespaces:
         from: Same
   - name: https-adventurelog-backend
-    hostname: "backend.trips.nullservers.com"
+    hostname: "backend-trips.nullservers.com"
     port: 443
     protocol: HTTPS
     tls:
