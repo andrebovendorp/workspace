@@ -1,6 +1,6 @@
 dependencies:
 - name: common
   repository: https://andrebovendorp.github.io/charts/
-  version: 0.2.0
-digest: sha256:68f1ca1f2546fd84ac10ad6e13221940e69ee216acbcf71a2fab2f7352ac2263
-generated: "2025-05-20T11:28:17.334715279+02:00"
+  version: 0.2.3
+digest: sha256:5f2e874fffa22f66509fd3dc1e998dc292bdd411e237b57e5514112ccf491ac6
+generated: "2025-11-02T14:25:19.055374223Z"
