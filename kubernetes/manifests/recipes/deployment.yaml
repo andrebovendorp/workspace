@@ -1,0 +1,137 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: recipes
+  namespace: recipes
+  labels:
+    app: recipes
+spec:
+  revisionHistoryLimit: 3
+  replicas: 1
+  selector:
+    matchLabels:
+      app: recipes
+  template:
+    metadata:
+      labels:
+        app: recipes
+    spec:
+      securityContext:
+        fsGroup: 1000
+        runAsGroup: 1000
+        runAsNonRoot: true
+        runAsUser: 1000
+      containers:
+      - name: recipes-container
+        image: vabene1111/recipes
+        securityContext:
+          allowPrivilegeEscalation: false
+          privileged: false
+          readOnlyRootFilesystem: false
+        resources:
+          requests:
+            memory: 500Mi
+            cpu: 500m
+          limits:
+            memory: 1Gi
+        env:
+        - name: DEBUG
+          value: "1"
+        - name: SOCIAL_PROVIDERS
+          value: "allauth.socialaccount.providers.openid_connect"
+        - name: DB_ENGINE
+          value: "django.db.backends.postgresql"
+        - name: POSTGRES_HOST
+          value: "pgsql.nullservers.com"
+        - name: POSTGRES_PORT
+          value: "5432"
+        - name: POSTGRES_USER
+          value: "recipes"
+        - name: POSTGRES_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              key: password
+              name: recipes-db-pwd
+        - name: POSTGRES_DB
+          value: "recipes"
+        - name: SECRET_KEY
+          valueFrom:
+            secretKeyRef:
+              key: secret-key
+              name: recipes-db-pwd
+        - name: EMAIL_HOST
+          value: "smtp.resend.com"
+        - name: EMAIL_PORT
+          value: "587"
+        - name: EMAIL_HOST_USER
+          value: "resend"
+        - name: EMAIL_HOST_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              key: email-api-key
+              name: recipes-db-pwd
+        - name: EMAIL_USE_TLS
+          value: "1"
+        - name: DEFAULT_FROM_EMAIL
+          value: "no-reply@nullservers.com"
+        - name: GUNICORN_MEDIA
+          value: "1"
+        startupProbe:
+          httpGet:
+            path: /
+            port: 8080
+            scheme: HTTP
+          initialDelaySeconds: 10
+          periodSeconds: 10
+          timeoutSeconds: 5
+          failureThreshold: 30
+          successThreshold: 1
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 8080
+            scheme: HTTP
+          initialDelaySeconds: 30
+          periodSeconds: 30
+          timeoutSeconds: 5
+          failureThreshold: 3
+          successThreshold: 1
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 8080
+            scheme: HTTP
+          initialDelaySeconds: 5
+          periodSeconds: 10
+          timeoutSeconds: 5
+          failureThreshold: 3
+          successThreshold: 1
+        volumeMounts:
+        - name: recipes-media-pvc
+          mountPath: /opt/recipes/mediafiles
+        - name: tmp
+          mountPath: /tmp
+        - name: static-files
+          mountPath: /opt/recipes/staticfiles
+        - name: static-files-media
+          mountPath: /static
+        - name: static-cookbook
+          mountPath: /opt/recipes/cookbook/static
+      imagePullSecrets:
+      - name: dockerhub-token
+      volumes:
+      - name: recipes-media-pvc
+        persistentVolumeClaim:
+          claimName: recipes-media-pvc
+      - name: tmp
+        emptyDir:
+          sizeLimit: 500Mi
+      - name: static-files
+        emptyDir:
+          sizeLimit: 500Mi
+      - name: static-cookbook
+        emptyDir:
+          sizeLimit: 500Mi
+      - name: static-files-media
+        emptyDir:
+          sizeLimit: 500Mi

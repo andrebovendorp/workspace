@@ -1,0 +1,21 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+- namespace.yaml
+- pv.yaml
+- service.yaml
+- deployment.yaml
+- cnp.yaml
+- dockerhub-token.yaml
+- credentials.yaml
+
+commonLabels:
+  app: recipes
+  component: recipes-app
+
+namespace: recipes
+
+images:
+- name: vabene1111/recipes
+  newTag: "1.5.17"
