@@ -18,9 +18,8 @@ spec:
     - matchName: api.met.no
     - matchName: smtp.resend.com
     - matchName: raw.githubusercontent.com
+    - matchName: pgsql.nullservers.com
   - toEndpoints:
-    - matchLabels:
-        io.kubernetes.pod.namespace: pgsql
     - matchLabels:
         io.kubernetes.pod.namespace: collabora
   - toEndpoints:
