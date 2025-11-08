@@ -17,16 +17,14 @@ common:
     replicaCount: 1
     image: linuxserver/plex
     nodeSelector:
-      kubernetes.io/hostname: slave01
+      kubernetes.io/hostname: slave03
     resources:
       requests:
-        gpu.intel.com/i915: "1"
         cpu: 500m
         memory: 1Gi
       limits:
         cpu: 4
         memory: 8Gi
-        gpu.intel.com/i915: "1"
     env:
     - name: PUID
       value: "0"

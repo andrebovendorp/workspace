@@ -11,6 +11,8 @@ spec:
             io.kubernetes.pod.namespace: cloudflare
         - matchLabels:
             io.kubernetes.pod.namespace: victoria-metrics
+        - matchLabels:
+            io.kubernetes.pod.namespace: authentik
     - fromEntities:
         - ingress
   egress:

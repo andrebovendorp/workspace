@@ -2,6 +2,7 @@ apiVersion: cilium.io/v2
 kind: CiliumNetworkPolicy
 metadata:
   name: default
+  namespace: authentik
 spec:
   endpointSelector: {}
   ingress:
@@ -18,6 +19,8 @@ spec:
   - toEndpoints:
     - matchLabels:
         io.kubernetes.pod.namespace: redis
+    - matchLabels:
+        io.kubernetes.pod.namespace: plex
   - toFQDNs:
     # https://docs.goauthentik.io/docs/install-config/air-gapped#outbound-connections
     - matchName: updates.maxmind.com
