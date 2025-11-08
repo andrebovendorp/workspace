@@ -7,6 +7,16 @@ All servers runs in my house. This means that I have to take care of the power c
 - Usability
 
 ----------------------------------------
+# K3s Datastore Migration to PostgreSQL - 2025-11-08
+
+K3s datastore is being migrated from SQLite to PostgreSQL running on Proxmox. This change improves cluster reliability by moving the critical datastore to a dedicated, backed-up database instance while maintaining the single-master architecture, ensuring that cluster state is protected by the same backup infrastructure used for other critical databases.
+
+Also enables me to have more than one API server in the future if needed, as PostgreSQL can handle concurrent connections better than SQLite.
+
+# RustFS Moved to Proxmox LXC - 2025-11-08
+
+RustFS (S3-compatible storage) has been relocated from Kubernetes to a Proxmox LXC container. As a critical component of the backup infrastructure, RustFS must remain operational and independent of the Kubernetes cluster to ensure backups can function even during cluster maintenance or failures, creating a reliable backup destination for both Kubernetes workloads and other infrastructure components.
+
 # Database Strategy: Run Databases on Proxmox Level - 2025-10-17
 
 All databases should be deployed and managed at the Proxmox virtualization level rather than within the Kubernetes cluster. This decision applies to all stateful database workloads including PostgreSQL, MongoDB, and any other persistent data stores.
