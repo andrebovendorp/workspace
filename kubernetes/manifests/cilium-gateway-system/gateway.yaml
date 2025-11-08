@@ -201,19 +201,6 @@ spec:
     allowedRoutes:
       namespaces:
         from: Same
-  - name: https-rustfs
-    hostname: "s3.nullservers.com"
-    port: 443
-    protocol: HTTPS
-    tls:
-      mode: Terminate
-      certificateRefs:
-      - name: rustfs-tls
-        kind: Secret
-        namespace: cilium-gateway-system
-    allowedRoutes:
-      namespaces:
-        from: Same
   - name: http
     port: 9000
     protocol: HTTP

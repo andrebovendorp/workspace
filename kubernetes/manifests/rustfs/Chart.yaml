@@ -1,8 +1,0 @@
-apiVersion: v2
-name: RustFS
-version: 0.1.0
-type: application
-dependencies:
-- name: rustfs
-  version: 0.1.0
-  repository: oci://registry-1.docker.io/cloudpirates

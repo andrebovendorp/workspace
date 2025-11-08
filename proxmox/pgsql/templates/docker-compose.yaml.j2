@@ -1,0 +1,56 @@
+
+name: postgres-service
+services:
+  postgres:
+    container_name: postgres
+    # Image determined dynamically based on host group
+    # pgsql-immich hosts use the immich specialized image with vector extensions
+    # pgsql-standard hosts use the standard PostgreSQL image
+    image: {{ postgres_image }}
+    environment:
+      POSTGRES_PASSWORD: {{database_password}}
+      POSTGRES_USER: default
+      POSTGRES_DB: default
+      POSTGRES_INITDB_ARGS: '--data-checksums'
+    volumes:
+      - /opt/postgres:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
+    shm_size: 128mb
+    restart: always
+  node_exporter:
+    image: quay.io/prometheus/node-exporter:latest
+    container_name: node_exporter
+    command:
+      - '--path.rootfs=/host'
+    network_mode: host
+    pid: host
+    restart: unless-stopped
+    volumes:
+      - '/:/host:ro,rslave'
+    ports:
+      - "9100:9100"
+  postgres_exporter:
+    image: prometheuscommunity/postgres-exporter
+    container_name: postgres_exporter
+    restart: always
+    environment:
+      DATA_SOURCE_NAME: postgresql://default:{{database_password}}@postgres:5432/default?sslmode=disable
+    ports:
+      - "9187:9187"
+    depends_on:
+      - postgres
+  cadvisor:
+    image: gcr.io/cadvisor/cadvisor:latest
+    container_name: cadvisor
+    restart: unless-stopped
+    privileged: true
+    ports:
+      - "8080:8080"
+    volumes:
+      - /:/rootfs:ro
+      - /var/run:/var/run:ro
+      - /sys:/sys:ro
+      - /var/lib/docker/:/var/lib/docker:ro
+      - /dev/disk/:/dev/disk:ro
+

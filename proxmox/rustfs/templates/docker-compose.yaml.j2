@@ -1,0 +1,60 @@
+# Copyright 2024 RustFS Team
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+version: "3.8"
+
+services:
+  rustfs:
+    user: "1000:1000"
+    security_opt:
+      - "no-new-privileges:true"
+    image: rustfs/rustfs:latest
+    container_name: rustfs-server
+    ports:
+      - "9000:9000" # S3 API port
+      - "9001:9001" # Console port
+    environment:
+      - RUSTFS_VOLUMES=/data/s3
+      - RUSTFS_ADDRESS=0.0.0.0:9000
+      - RUSTFS_CONSOLE_ADDRESS=0.0.0.0:9001
+      - RUSTFS_CONSOLE_ENABLE=true
+      - RUSTFS_EXTERNAL_ADDRESS=:9000  # Same as internal since no port mapping
+      - RUSTFS_CORS_ALLOWED_ORIGINS=s3.nullservers.com
+      - RUSTFS_CONSOLE_CORS_ALLOWED_ORIGINS=s3.nullservers.com
+      - RUSTFS_ACCESS_KEY={{username}}
+      - RUSTFS_SECRET_KEY={{password}}
+      - RUSTFS_LOG_LEVEL=info
+      - RUSTFS_TLS_PATH=/opt/tls
+    #  - RUSTFS_OBS_ENDPOINT=http://otel-collector:4317
+    volumes:
+      - /data:/data
+      - /workspace/logs:/app/logs
+      - /etc/ssl/rustfs:/opt/tls:ro # TLS configuration, you should create tls directory and put your tls files in it and then specify the path here
+    restart: unless-stopped
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "sh", "-c",
+          "curl -f http://localhost:9000/health && curl -f http://localhost:9001/health"
+        ]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+
+
+
+
