@@ -11,13 +11,9 @@ metadata:
     app.kubernetes.io/part-of: infrastructure
     app.kubernetes.io/managed-by: kubectl
 spec:
-  endpointSelector:
-    matchLabels:
-      app.kubernetes.io/name: database-backup
+  endpointSelector: {}
   ingress:
   - {}
-  - fromCIDRSet:
-    - cidr: 192.168.50.1/32
   egress:
   # Allow DNS resolution
   - toEndpoints:
@@ -54,10 +50,18 @@ spec:
     - ports:
       - port: "27017"
         protocol: TCP
+  - toCIDRSet:
+    - cidr: 172.16.0.10/32
+    toPorts:
+    - ports:
+      - port: "27017"
+        protocol: TCP
 
   # Allow access to FTP server (if configured)
   - toFQDNs:
     - matchName: "storage.nullservers.com"
+  - toCIDRSet:
+    - cidr: 192.168.22.222/32
 
   # Allow access to Telegram API
   - toFQDNs:
