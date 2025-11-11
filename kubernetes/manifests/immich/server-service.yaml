@@ -9,8 +9,7 @@ metadata:
     app.kubernetes.io/instance: immich
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: server
-    app.kubernetes.io/version: v1.119.0
-    helm.sh/chart: immich-0.9.3
+
   annotations:
 spec:
   type: ClusterIP
