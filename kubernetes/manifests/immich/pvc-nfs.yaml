@@ -1,16 +1,4 @@
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: immich-data-nfs
-spec:
-  accessModes:
-  - ReadWriteMany
-  volumeName: pv-immich-data-nfs
-  resources:
-    requests:
-      storage: 500Gi
-  storageClassName: nfs-retain
---- 
+---
 apiVersion: v1
 kind: PersistentVolume
 metadata:
@@ -19,7 +7,7 @@ spec:
   capacity:
     storage: 500Gi
   accessModes:
-    - ReadWriteMany
+  - ReadWriteMany
   persistentVolumeReclaimPolicy: Retain
   storageClassName: nfs-retain
   csi:
@@ -28,3 +16,17 @@ spec:
     volumeAttributes:
       server: nfs.nullservers.com
       share: /data/kubernetes-retain/immich-data
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: immich-data-nfs
+  namespace: immich
+spec:
+  accessModes:
+  - ReadWriteMany
+  volumeName: pv-immich-data-nfs
+  resources:
+    requests:
+      storage: 500Gi
+  storageClassName: nfs-retain

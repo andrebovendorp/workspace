@@ -1,0 +1,23 @@
+---
+apiVersion: operator.victoriametrics.com/v1beta1
+kind: VMServiceScrape
+metadata:
+  name: immich-server
+  namespace: immich
+  labels:
+    app.kubernetes.io/instance: immich
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: server
+    app.kubernetes.io/version: v1.119.0
+    helm.sh/chart: immich-0.9.3
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/service: immich-server
+      app.kubernetes.io/name: server
+      app.kubernetes.io/instance: immich
+  endpoints:
+  - port: metrics-api
+    scheme: http
+  - port: metrics-ms
+    scheme: http
