@@ -23,7 +23,7 @@ spec:
         runAsUser: 1000
       containers:
       - name: recipes-container
-        image: vabene1111/recipes
+        image: vabene1111/recipes:2.3.3
         securityContext:
           allowPrivilegeEscalation: false
           privileged: false
