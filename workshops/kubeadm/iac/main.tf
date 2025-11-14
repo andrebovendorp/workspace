@@ -81,7 +81,7 @@ module "natgateway" {
 
 module "vnet" {
   source  = "Azure/avm-res-network-virtualnetwork/azurerm"
-  version = "0.15.0"
+  version = "0.16.0"
 
   resource_group_name = azurerm_resource_group.this_rg.name
   address_space       = ["192.168.0.0/16"]
