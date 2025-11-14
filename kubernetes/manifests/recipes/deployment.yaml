@@ -17,16 +17,21 @@ spec:
         app: recipes
     spec:
       securityContext:
-        fsGroup: 1000
-        runAsGroup: 1000
-        runAsNonRoot: true
-        runAsUser: 1000
+        fsGroup: 0
+        runAsGroup: 0
+        runAsNonRoot: false
+        runAsUser: 0
       containers:
       - name: recipes-container
         image: vabene1111/recipes:2.3.3
+        ports:
+        - containerPort: 8080
+          protocol: TCP
+        - containerPort: 80
+          protocol: TCP
         securityContext:
-          allowPrivilegeEscalation: false
-          privileged: false
+          allowPrivilegeEscalation: true
+          privileged: true
           readOnlyRootFilesystem: false
         resources:
           requests:
@@ -35,8 +40,8 @@ spec:
           limits:
             memory: 1Gi
         env:
-        - name: DEBUG
-          value: "1"
+        - name: GUNICORN_LOG_LEVEL
+          value: "debug"
         - name: SOCIAL_PROVIDERS
           value: "allauth.socialaccount.providers.openid_connect"
         - name: DB_ENGINE
@@ -76,12 +81,14 @@ spec:
           value: "no-reply@nullservers.com"
         - name: GUNICORN_MEDIA
           value: "1"
+        - name: PLUGINS_BUILD
+          value: "1"
         startupProbe:
           httpGet:
             path: /
-            port: 8080
+            port: 80
             scheme: HTTP
-          initialDelaySeconds: 10
+          initialDelaySeconds: 300
           periodSeconds: 10
           timeoutSeconds: 5
           failureThreshold: 30
@@ -89,7 +96,7 @@ spec:
         livenessProbe:
           httpGet:
             path: /
-            port: 8080
+            port: 80
             scheme: HTTP
           initialDelaySeconds: 30
           periodSeconds: 30
@@ -99,7 +106,7 @@ spec:
         readinessProbe:
           httpGet:
             path: /
-            port: 8080
+            port: 80
             scheme: HTTP
           initialDelaySeconds: 5
           periodSeconds: 10
