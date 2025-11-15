@@ -7,6 +7,14 @@ authentik:
       labelSelector:
         matchLabels:
           app.kubernetes.io/name: authentik
+          app.kubernetes.io/component: server
+    - maxSkew: 1
+      topologyKey: "kubernetes.io/hostname"
+      whenUnsatisfiable: DoNotSchedule
+      labelSelector:
+        matchLabels:
+          app.kubernetes.io/name: authentik
+          app.kubernetes.io/component: worker
   securityContext:
     fsGroup: 1000
     runAsUser: 1000
