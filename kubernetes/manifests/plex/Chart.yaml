@@ -1,9 +1,0 @@
-apiVersion: v2
-name: PlexServer
-version: 1.0.0
-type: application
-dependencies:
-- name: common
-  version: 0.2.3
-  repository: https://andrebovendorp.github.io/charts/
-  condition: chart.enabled

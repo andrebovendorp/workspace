@@ -1,0 +1,72 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: plex
+  namespace: plex
+  labels:
+    app: plex
+spec:
+  revisionHistoryLimit: 3
+  replicas: 1
+  selector:
+    matchLabels:
+      app: plex
+  template:
+    metadata:
+      labels:
+        app: plex
+    spec:
+      imagePullSecrets:
+      - name: plex-dockerhub-token
+      nodeSelector:
+        kubernetes.io/hostname: slave03
+      containers:
+      - name: plex-container
+        image: linuxserver/plex:1.42.2
+        ports:
+        - containerPort: 32400
+        resources:
+          requests:
+            memory: 1Gikg 
+            cpu: 500m
+          limits:
+            memory: 8Gi
+        env:
+        - name: PUID
+          value: "0"
+        - name: PGID
+          value: "0"
+        - name: VERSION
+          value: "docker"
+        - name: PLEX_CLAIM
+          valueFrom:
+            secretKeyRef:
+              key: token
+              name: plex-claim-token
+        - name: TZ
+          value: "Stockholm/Europe"
+        volumeMounts:
+        - name: quicksync
+          mountPath: /dev/dri
+          readOnly: true
+        - name: nfs-plex-config
+          mountPath: /config
+        - name: plex-media
+          mountPath: /data/media
+        - name: plex-transcode
+          mountPath: /transcode
+
+      volumes:
+      - name: quicksync
+        hostPath:
+          path: /dev/dri
+          type: Directory
+      - name: nfs-plex-config
+        persistentVolumeClaim:
+          claimName: nfs-plex-config
+      - name: plex-media
+        persistentVolumeClaim:
+          claimName: plex-media
+      - name: plex-transcode
+        emptyDir:
+          sizeLimit: 20Gi
