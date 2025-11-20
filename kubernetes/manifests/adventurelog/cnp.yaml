@@ -51,6 +51,7 @@ spec:
     - matchName: flagcdn.com
     - matchName: "raw.githubusercontent.com"
     - matchName: auth.nullservers.com
+    - matchPattern: "*.wikipedia.org"
   # Allow HTTP connections if needed
   - toFQDNs:
     - matchPattern: "*.openstreetmap.org"
