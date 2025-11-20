@@ -35,7 +35,7 @@ spec:
             app.kubernetes.io/instance: immich
       containers:
       - name: immich-server
-        image: ghcr.io/immich-app/immich-server:v2.2.0
+        image: ghcr.io/immich-app/immich-server:v2.3.1
         imagePullPolicy: IfNotPresent
         env:
         - name: DB_DATABASE_NAME
