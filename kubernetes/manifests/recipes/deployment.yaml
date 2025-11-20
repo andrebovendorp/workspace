@@ -39,7 +39,7 @@ spec:
             memory: 1Gi
         env:
         - name: GUNICORN_LOG_LEVEL
-          value: "debug"
+          value: "info"
         - name: SOCIAL_PROVIDERS
           value: "allauth.socialaccount.providers.openid_connect"
         - name: DB_ENGINE
