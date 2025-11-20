@@ -23,10 +23,8 @@ spec:
         runAsUser: 0
       containers:
       - name: recipes-container
-        image: vabene1111/recipes:2.3.3
+        image: vabene1111/recipes:2.3.5
         ports:
-        - containerPort: 8080
-          protocol: TCP
         - containerPort: 80
           protocol: TCP
         securityContext:
@@ -79,10 +77,6 @@ spec:
           value: "1"
         - name: DEFAULT_FROM_EMAIL
           value: "no-reply@nullservers.com"
-        - name: GUNICORN_MEDIA
-          value: "1"
-        - name: PLUGINS_BUILD
-          value: "1"
         startupProbe:
           httpGet:
             path: /
@@ -116,29 +110,14 @@ spec:
         volumeMounts:
         - name: recipes-media-pvc
           mountPath: /opt/recipes/mediafiles
-        - name: tmp
-          mountPath: /tmp
         - name: static-files
           mountPath: /opt/recipes/staticfiles
-        - name: static-files-media
-          mountPath: /static
-        - name: static-cookbook
-          mountPath: /opt/recipes/cookbook/static
       imagePullSecrets:
       - name: dockerhub-token
       volumes:
       - name: recipes-media-pvc
         persistentVolumeClaim:
           claimName: recipes-media-pvc
-      - name: tmp
-        emptyDir:
-          sizeLimit: 500Mi
       - name: static-files
-        emptyDir:
-          sizeLimit: 500Mi
-      - name: static-cookbook
-        emptyDir:
-          sizeLimit: 500Mi
-      - name: static-files-media
         emptyDir:
           sizeLimit: 500Mi
