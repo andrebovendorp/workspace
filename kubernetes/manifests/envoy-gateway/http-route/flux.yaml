@@ -1,0 +1,22 @@
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: flux-http-route
+  namespace: envoy-gateway
+  annotations:
+    external-dns.alpha.kubernetes.io/hostname: flux.nullservers.com
+spec:
+  parentRefs:
+  - name: cilium-gateway
+    namespace: envoy-gateway
+  hostnames:
+  - "flux.nullservers.com"
+  rules:
+  - matches:
+    - path:
+        type: PathPrefix
+        value: /
+    backendRefs:
+    - name: capacitor
+      namespace: flux-system
+      port: 9000
