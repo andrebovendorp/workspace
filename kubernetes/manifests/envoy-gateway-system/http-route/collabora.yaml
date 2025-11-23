@@ -1,0 +1,22 @@
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: collabora-http-route
+  namespace: envoy-gateway-system
+  annotations:
+    external-dns.alpha.kubernetes.io/hostname: docs.nullservers.com
+spec:
+  parentRefs:
+  - name: envoy-gateway
+    namespace: envoy-gateway-system
+  hostnames:
+  - "docs.nullservers.com"
+  rules:
+  - matches:
+    - path:
+        type: PathPrefix
+        value: /
+    backendRefs:
+    - name: collabora-collabora-online
+      namespace: collabora
+      port: 9980

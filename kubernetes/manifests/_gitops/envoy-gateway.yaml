@@ -1,14 +1,14 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
 kind: Kustomization
 metadata:
-  name: envoy-gateway
+  name: envoy-gateway-system
   namespace: flux-system
 spec:
   interval: 1h
-  path: ./kubernetes/manifests/envoy-gateway
+  path: ./kubernetes/manifests/envoy-gateway-system
   prune: true
   sourceRef:
     kind: GitRepository
     name: workspace
     namespace: flux-system
-  targetNamespace: envoy-gateway
+  targetNamespace: envoy-gateway-system

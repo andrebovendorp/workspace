@@ -9,8 +9,8 @@ spec:
     - fromEndpoints:
         - matchLabels:
             io.kubernetes.pod.namespace: cloudflare
-    - fromEntities:
-        - ingress
+        - matchLabels:
+            io.kubernetes.pod.namespace: envoy-gateway-system
   egress:
     - toEntities:
       - ingress

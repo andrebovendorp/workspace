@@ -1,0 +1,24 @@
+---
+apiVersion: operator.victoriametrics.com/v1beta1
+kind: VMServiceScrape
+metadata:
+  name: envoy-gateway
+  namespace: envoy-gateway-system
+  labels:
+    app.kubernetes.io/name: gateway-helm
+    app.kubernetes.io/instance: eg
+    control-plane: envoy-gateway
+spec:
+  selector:
+    matchLabels:
+      control-plane: envoy-gateway
+      app.kubernetes.io/name: gateway-helm
+      app.kubernetes.io/instance: eg
+  namespaceSelector:
+    matchNames:
+      - envoy-gateway-system
+  endpoints:
+    - port: metrics
+      path: /metrics
+      interval: 30s
+      scheme: http

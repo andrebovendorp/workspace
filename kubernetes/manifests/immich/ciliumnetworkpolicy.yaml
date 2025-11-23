@@ -7,8 +7,9 @@ metadata:
 spec:
   endpointSelector: {}
   ingress:
-  - fromEntities:
-    - ingress
+  - fromEndpoints:
+    - matchLabels:
+        io.kubernetes.pod.namespace: envoy-gateway-system
   - fromEndpoints:
     - {}
   - fromEndpoints:

@@ -14,8 +14,8 @@ spec:
                 io.kubernetes.pod.namespace: nextcloud
           - matchLabels:
                 io.kubernetes.pod.namespace: cloudflare
-      - fromEntities:
-          - ingress
+          - matchLabels:
+                io.kubernetes.pod.namespace: envoy-gateway-system
     egress:
       - toFQDNs:
           - matchPattern: "*.nullservers.com"

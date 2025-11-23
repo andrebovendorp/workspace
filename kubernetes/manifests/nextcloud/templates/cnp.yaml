@@ -43,5 +43,5 @@ spec:
         io.kubernetes.pod.namespace: cloudflare
     - matchLabels:
         io.kubernetes.pod.namespace: victoria-metrics
-  - fromEntities:
-    - ingress
+    - matchLabels:
+        io.kubernetes.pod.namespace: envoy-gateway-system

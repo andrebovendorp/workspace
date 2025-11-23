@@ -2,7 +2,7 @@ cilium:
   ingressController:
     enabled: false
   gatewayAPI:
-    enabled: true
+    enabled: false
   ipam:
     operator:
       clusterPoolIPv4PodCIDRList: [ "10.10.0.0/16" ]

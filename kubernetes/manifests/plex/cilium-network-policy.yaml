@@ -11,8 +11,8 @@ spec:
         io.kubernetes.pod.namespace: victoria-metrics
     - matchLabels:
         io.kubernetes.pod.namespace: authentik
-  - fromEntities:
-    - ingress
+    - matchLabels:
+        io.kubernetes.pod.namespace: envoy-gateway-system
   egress:
   # Plex metadata and authentication services
   - toFQDNs:

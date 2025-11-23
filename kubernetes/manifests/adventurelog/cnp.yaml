@@ -6,9 +6,10 @@ metadata:
 spec:
   endpointSelector: {}
   ingress:
-  # Allow ingress traffic (from Cilium Gateway)
-  - fromEntities:
-    - ingress
+  # Allow ingress traffic (from Envoy Gateway)
+  - fromEndpoints:
+    - matchLabels:
+        io.kubernetes.pod.namespace: envoy-gateway-system
   # Allow communication within the namespace (frontend <-> backend)
   - fromEndpoints:
     - {}

@@ -7,8 +7,10 @@ spec:
   ingress:
     - fromEndpoints:
         - {}
+    - fromEndpoints:
+        - matchLabels:
+            io.kubernetes.pod.namespace: envoy-gateway-system
     - fromEntities:
-        - ingress
         - cluster
   egress:
     - toEndpoints:
