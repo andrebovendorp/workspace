@@ -1,4 +1,6 @@
 cilium:
+  multicast:
+    enabled: true
   ingressController:
     enabled: false
   gatewayAPI:
