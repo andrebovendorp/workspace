@@ -11,6 +11,14 @@ spec:
     - fromEndpoints:
         - matchLabels:
             io.kubernetes.pod.namespace: authentik
+    - fromCIDR:
+        - "192.168.50.0/24"
+        - "192.168.20.0/24"
+        - "192.168.200.0/24"
+      icmps:
+        - fields:
+            - family: IPv4
+              type: 0
   egress:
     - toEndpoints:
         - matchLabels:
@@ -24,6 +32,10 @@ spec:
             dns:
               - matchPattern: "*"        
     - toFQDNs:
+        - matchPattern: '*.roborock.com'
+        - matchName: api.github.com
+        - matchName: github.com
+        - matchName: raw.githubusercontent.com
         - matchPattern: "*.tuyaeu.com"
         - matchPattern: "*.*.noaa.gov"
         - matchPattern: "*.met.no"
