@@ -1,0 +1,20 @@
+---
+# Source: cloudflared/charts/common/templates/service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: cloudflared
+  namespace: cloudflare
+  labels:
+    app: cloudflared
+spec:
+  selector:
+    app: cloudflared
+  ports:
+
+    - protocol: TCP
+      port: 2000
+      targetPort: 2000
+      name: "http"
+
+  type: ClusterIP
