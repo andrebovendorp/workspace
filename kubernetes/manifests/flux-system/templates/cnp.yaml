@@ -2,15 +2,19 @@ apiVersion: cilium.io/v2
 kind: CiliumNetworkPolicy
 metadata:
   name: default
+  namespace: flux-system
 spec:
   endpointSelector: {}
   ingress:
+    - fromEndpoints: 
+      - {}
     - fromEntities:
         - ingress
     - fromCIDRSet:
         - cidr: 192.168.20.0/24
-
   egress:
+    - toEndpoints: 
+      - {}
     - toEntities:
         - kube-apiserver
         - cluster
@@ -18,6 +22,7 @@ spec:
         - matchPattern: "*.ghcr.io"
         - matchPattern: "*.github.com"
         - matchPattern: "*.github.io"
+        - matchName: github.com
         - matchName: "charts.jetstack.io"
         - matchName: "charts.external-secrets.io"
     - toEndpoints:
