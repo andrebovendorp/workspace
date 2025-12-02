@@ -53,6 +53,7 @@ spec:
           mountPath: /config
         - name: plex-media
           mountPath: /data/media
+          readOnly: true
         - name: plex-transcode
           mountPath: /transcode
 
