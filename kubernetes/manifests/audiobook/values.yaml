@@ -11,7 +11,7 @@ common:
     enabled: true
     port: 80
     replicaCount: 1
-    image: ghcr.io/advplyr/audiobookshelf:2.30.0
+    image: ghcr.io/advplyr/audiobookshelf:2.31.0
     nodeSelector:
       kubernetes.io/hostname: slave01
     resources:
@@ -28,7 +28,7 @@ common:
     size: 1Gi
     storageClassName: nfs-retain
   - name: audiobook-data-nfs
-    mountPath: /data
+    mountPath: /metadata/items
     size: 10Gi
     storageClassName: nfs-retain
   - name: audiobook-media-nas
