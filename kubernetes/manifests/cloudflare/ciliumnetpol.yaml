@@ -30,8 +30,6 @@ spec:
         - matchLabels:
             io.kubernetes.pod.namespace: audiobook
         - matchLabels:
-            io.kubernetes.pod.namespace: bsk-lead
-        - matchLabels:
             io.kubernetes.pod.namespace: immich
         - matchLabels:
             io.kubernetes.pod.namespace: authentik
@@ -41,7 +39,8 @@ spec:
             io.kubernetes.pod.namespace: collabora
         - matchLabels:
             io.kubernetes.pod.namespace: adventurelog
-        
+        - matchLabels:
+            io.kubernetes.pod.namespace: plex
     # Allow Cloudflare 
     - toFQDNs:
       - matchPattern: "*.cloudflare.com"
