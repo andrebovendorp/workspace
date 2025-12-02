@@ -28,6 +28,10 @@ cilium:
       enabled: true
     ui:
       enabled: true
+    prometheus:
+      enabled: true
+      serviceMonitor:
+        enabled: true
   kubeProxyReplacement: true
   k8sServiceHost: "192.168.50.100"
   k8sServicePort: 6443
@@ -49,3 +53,9 @@ cilium:
     enabled: true
     serviceMonitor:
       enabled: true
+  envoy:
+    enabled: true
+    prometheus:
+      enabled: true
+      serviceMonitor:
+        enabled: true
