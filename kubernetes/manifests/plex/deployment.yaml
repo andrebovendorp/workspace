@@ -16,6 +16,11 @@ spec:
       labels:
         app: plex
     spec:
+      securityContext:
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
+        fsGroupChangePolicy: "OnRootMismatch"
       imagePullSecrets:
       - name: plex-dockerhub-token
       nodeSelector:
@@ -27,15 +32,15 @@ spec:
         - containerPort: 32400
         resources:
           requests:
-            memory: 1Gikg 
+            memory: 1Gi 
             cpu: 500m
           limits:
             memory: 8Gi
         env:
         - name: PUID
-          value: "0"
+          value: "1000"
         - name: PGID
-          value: "0"
+          value: "1000"
         - name: VERSION
           value: "docker"
         - name: PLEX_CLAIM
@@ -44,11 +49,8 @@ spec:
               key: token
               name: plex-claim-token
         - name: TZ
-          value: "Stockholm/Europe"
+          value: "Europe/Stockholm"
         volumeMounts:
-        - name: quicksync
-          mountPath: /dev/dri
-          readOnly: true
         - name: nfs-plex-config
           mountPath: /config
         - name: plex-media
@@ -56,12 +58,7 @@ spec:
           readOnly: true
         - name: plex-transcode
           mountPath: /transcode
-
       volumes:
-      - name: quicksync
-        hostPath:
-          path: /dev/dri
-          type: Directory
       - name: nfs-plex-config
         persistentVolumeClaim:
           claimName: nfs-plex-config
