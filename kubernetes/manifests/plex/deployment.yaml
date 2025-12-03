@@ -53,8 +53,17 @@ spec:
         volumeMounts:
         - name: nfs-plex-config
           mountPath: /config
-        - name: plex-media
-          mountPath: /data/media
+        - name: plex-media-movies
+          mountPath: /data/media/movies
+          readOnly: true
+        - name: plex-media-youtube
+          mountPath: /data/media/youtube
+          readOnly: true
+        - name: plex-media-desenhos
+          mountPath: /data/media/desenhos
+          readOnly: true
+        - name: plex-media-series
+          mountPath: /data/media/series
           readOnly: true
         - name: plex-transcode
           mountPath: /transcode
@@ -62,9 +71,18 @@ spec:
       - name: nfs-plex-config
         persistentVolumeClaim:
           claimName: nfs-plex-config
-      - name: plex-media
+      - name: plex-media-movies
         persistentVolumeClaim:
-          claimName: plex-media
+          claimName: plex-media-movies
+      - name: plex-media-youtube
+        persistentVolumeClaim:
+          claimName: plex-media-youtube
+      - name: plex-media-desenhos
+        persistentVolumeClaim:
+          claimName: plex-media-desenhos
+      - name: plex-media-series
+        persistentVolumeClaim:
+          claimName: plex-media-series
       - name: plex-transcode
         emptyDir:
           sizeLimit: 20Gi

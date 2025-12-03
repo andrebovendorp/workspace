@@ -1,17 +1,71 @@
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: plex-media
+  name: plex-media-series
 spec:
   capacity:
     storage: 4000Gi
   accessModes:
-  - ReadWriteMany
+  - ReadOnlyMany
   persistentVolumeReclaimPolicy: Retain
   storageClassName: nas-media
   csi:
     driver: nfs.csi.k8s.io
-    volumeHandle: plex-media
+    volumeHandle: plex-media-series
     volumeAttributes:
       server: nas.nullservers.com
-      share: /data/media
+      share: /data/media/series
+---      
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: plex-media-desenhos
+spec:
+  capacity:
+    storage: 4000Gi
+  accessModes:
+  - ReadOnlyMany
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: nas-media
+  csi:
+    driver: nfs.csi.k8s.io
+    volumeHandle: plex-media-desenhos
+    volumeAttributes:
+      server: nas.nullservers.com
+      share: /data/media/desenhos
+---      
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: plex-media-youtube
+spec:
+  capacity:
+    storage: 4000Gi
+  accessModes:
+  - ReadOnlyMany
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: nas-media
+  csi:
+    driver: nfs.csi.k8s.io
+    volumeHandle: plex-media-youtube
+    volumeAttributes:
+      server: nas.nullservers.com
+      share: /data/media/youtube
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: plex-media-movies
+spec:
+  capacity:
+    storage: 4000Gi
+  accessModes:
+  - ReadOnlyMany
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: nas-media
+  csi:
+    driver: nfs.csi.k8s.io
+    volumeHandle: plex-media-movies
+    volumeAttributes:
+      server: nas.nullservers.com
+      share: /data/media2/movies
