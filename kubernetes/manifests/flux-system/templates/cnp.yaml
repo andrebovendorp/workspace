@@ -22,9 +22,12 @@ spec:
         - matchPattern: "*.ghcr.io"
         - matchPattern: "*.github.com"
         - matchPattern: "*.github.io"
+        - matchName: ghcr.io
         - matchName: github.com
-        - matchName: "charts.jetstack.io"
-        - matchName: "charts.external-secrets.io"
+        - matchName: charts.jetstack.io
+        - matchName: charts.external-secrets.io
+        - matchName: release-assets.githubusercontent.com
+        - matchNme: pkg-containers.githubusercontent.com 
     - toEndpoints:
         - matchLabels:
             io.kubernetes.pod.namespace: kube-system
