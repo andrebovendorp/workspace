@@ -47,6 +47,7 @@ spec:
     - matchName: cas-server.xethub.hf.co
     - matchPattern: "*.modelscope.cn"
     - matchName: "modelscope.cn"
+    - matchName: transfer.xethub.hf.co 
     toPorts:
     - ports:
       - port: "443"

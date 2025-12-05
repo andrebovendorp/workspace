@@ -10,18 +10,3 @@ spec:
     kind: ClusterIssuer
   dnsNames:
   - "*.nullservers.com" # Fallback
-  - "trips.nullservers.com"
-  - "backend-trips.nullservers.com"
-  - "bookshelf.nullservers.com"
-  - "docs.nullservers.com"
-  - "backup.nullservers.com"
-  - "flux.nullservers.com"
-  - "start.nullservers.com"
-  - "home.nullservers.com"
-  - "photos.nullservers.com"
-  - "drive.nullservers.com"
-  - "hubble.nullservers.com"
-  - "grafana.nullservers.com"
-  - "logs.nullservers.com"
-  - "metrics.nullservers.com"
-  - "hello.nullservers.com"
