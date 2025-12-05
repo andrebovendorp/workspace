@@ -9,6 +9,7 @@ spec:
     name: letsencrypt-prod
     kind: ClusterIssuer
   dnsNames:
+  - "*.nullservers.com" # Fallback
   - "trips.nullservers.com"
   - "backend-trips.nullservers.com"
   - "bookshelf.nullservers.com"
