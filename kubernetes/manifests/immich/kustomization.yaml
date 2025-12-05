@@ -12,3 +12,5 @@ resources:
 - server-deployment.yaml
 - server-service.yaml
 - servicemonitor.yaml
+- http-route.yaml
+- referencegrant.yaml
