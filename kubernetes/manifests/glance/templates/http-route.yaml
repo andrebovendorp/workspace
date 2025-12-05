@@ -1,22 +1,22 @@
 apiVersion: gateway.networking.k8s.io/v1
 kind: HTTPRoute
 metadata:
-  name: duplicati-http-route
-  namespace: cilium-gateway-system
+  name: glance-http-route
+  namespace: glance
   annotations:
-    external-dns.alpha.kubernetes.io/hostname: backup.nullservers.com
+    external-dns.alpha.kubernetes.io/hostname: start.nullservers.com
 spec:
   parentRefs:
   - name: cilium-gateway
     namespace: cilium-gateway-system
+    sectionName: https-wildcard
   hostnames:
-  - "backup.nullservers.com"
+  - "start.nullservers.com"
   rules:
   - matches:
     - path:
         type: PathPrefix
         value: /
     backendRefs:
-    - name: duplicati
-      namespace: duplicati
+    - name: glance
       port: 80

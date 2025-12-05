@@ -1,0 +1,26 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: wildcard-certificate
+  namespace: cilium-gateway-system
+spec:
+  secretName: wildcard-nullservers-tls
+  issuerRef:
+    name: letsencrypt-prod
+    kind: ClusterIssuer
+  dnsNames:
+  - "trips.nullservers.com"
+  - "backend-trips.nullservers.com"
+  - "bookshelf.nullservers.com"
+  - "docs.nullservers.com"
+  - "backup.nullservers.com"
+  - "flux.nullservers.com"
+  - "start.nullservers.com"
+  - "home.nullservers.com"
+  - "photos.nullservers.com"
+  - "drive.nullservers.com"
+  - "hubble.nullservers.com"
+  - "grafana.nullservers.com"
+  - "logs.nullservers.com"
+  - "metrics.nullservers.com"
+  - "hello.nullservers.com"

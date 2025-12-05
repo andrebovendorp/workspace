@@ -1,22 +1,22 @@
 apiVersion: gateway.networking.k8s.io/v1
 kind: HTTPRoute
 metadata:
-  name: immich-http-route
-  namespace: cilium-gateway-system
+  name: home-assistant-http-route
+  namespace: home-assistant
   annotations:
-    external-dns.alpha.kubernetes.io/hostname: photos.nullservers.com
+    external-dns.alpha.kubernetes.io/hostname: home.nullservers.com
 spec:
   parentRefs:
   - name: cilium-gateway
     namespace: cilium-gateway-system
+    sectionName: https-wildcard
   hostnames:
-  - "photos.nullservers.com"
+  - "home.nullservers.com"
   rules:
   - matches:
     - path:
         type: PathPrefix
         value: /
     backendRefs:
-    - name: immich-server
-      namespace: immich
-      port: 2283
+    - name: home-assistant
+      port: 8080
