@@ -10,7 +10,7 @@ common:
     enabled: true
     port: 8200
     replicaCount: 1
-    image: linuxserver/duplicati
+    image: linuxserver/duplicati:2.2.0
     resources:
       requests:
         cpu: 100m
