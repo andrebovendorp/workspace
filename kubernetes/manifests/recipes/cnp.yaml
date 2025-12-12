@@ -11,7 +11,7 @@ spec:
         io.kubernetes.pod.namespace: cloudflare
     toPorts:
     - ports:
-      - port: "8080"
+      - port: "80"
   egress:
   - toEndpoints:
     - matchLabels:
