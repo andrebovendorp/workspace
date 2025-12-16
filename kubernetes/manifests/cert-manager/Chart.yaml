@@ -5,5 +5,5 @@ version: 0.1.5
 type: application
 dependencies:
 - name: cert-manager
-  version: v1.19.1
+  version: v1.19.2
   repository: https://charts.jetstack.io
