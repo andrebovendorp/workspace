@@ -1,0 +1,32 @@
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: pv-joplin-saml-config
+spec:
+  capacity:
+    storage: 100Mi
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: nfs-retain
+  csi:
+    driver: nfs.csi.k8s.io
+    volumeHandle: pv-immich-data-nfs
+    volumeAttributes:
+      server: nfs.nullservers.com
+      share: /data/kubernetes-retain/joplin-saml-config
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: joplin-saml-config
+  namespace: joplin
+spec:
+  accessModes:
+    - ReadWriteOnce
+  volumeName: pv-joplin-saml-config
+  resources:
+    requests:
+      storage: 100Mi
+  storageClassName: nfs-retain

@@ -1,0 +1,150 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: joplin
+  namespace: joplin
+  labels:
+    app: joplin
+spec:
+  revisionHistoryLimit: 3
+  replicas: 1
+  selector:
+    matchLabels:
+      app: joplin
+  template:
+    metadata:
+      labels:
+        app: joplin
+    spec:
+      securityContext:
+        fsGroup: 1001
+        runAsGroup: 1001
+        runAsNonRoot: true
+        runAsUser: 1001
+      containers:
+      - name: joplin-container
+        image: joplin/server:3.4.3
+        ports:
+        - containerPort: 22300
+          protocol: TCP
+        securityContext:
+          allowPrivilegeEscalation: false
+          privileged: false
+          readOnlyRootFilesystem: false
+        resources:
+          requests:
+            memory: 256Mi
+            cpu: 250m
+          limits:
+            memory: 512Mi
+            cpu: 500m
+        env:
+        - name: APP_BASE_URL
+          value: "https://notes.nullservers.com"
+        - name: SIGNUP_ENABLED
+          value: "false"
+        - name: RUNNING_IN_DOCKER
+          value: "true"
+        - name: APP_PORT
+          value: "22300"
+        ## Database configuration
+        - name: DB_CLIENT
+          value: "pg"
+        - name: POSTGRES_HOST
+          value: "pgsql.nullservers.com"
+        - name: POSTGRES_PORT
+          value: "5432"
+        - name: POSTGRES_USER
+          valueFrom:
+            secretKeyRef:
+              key: username
+              name: joplin-credentials
+        - name: POSTGRES_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              key: password
+              name: joplin-credentials
+        - name: POSTGRES_DATABASE
+          value: "joplin"
+        ## SMTP configuration
+        - name: MAILER_ENABLED
+          value: "true"
+        - name: MAILER_HOST
+          value: "smtp.resend.com"
+        - name: MAILER_PORT
+          value: "587"
+        - name: MAILER_NOREPLY_NAME
+          value: "Nullserver Notes"
+        - name: MAILER_NOREPLY_EMAIL
+          value: "no-reply@nullservers.com"
+        - name: SUPPORT_NAME
+          value: "Nullserver Support"
+        - name: BUSINESS_EMAIL
+          value: "support@nullservers.com"
+        - name: MAILER_AUTH_USER
+          value: resend
+        - name: MAILER_AUTH_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              key: resend-apikey
+              name: joplin-credentials
+        ## SAML config
+        - name: LOCAL_AUTH_ENABLED
+          value: "false"
+        - name: SAML_ENABLED
+          value: "true"
+        - name: SAML_ORGANIZATION_DISPLAY_NAME
+          value: "Nullservers"
+        - name: SAML_SP_CONFIG_FILE
+          value: "/opt/saml/config/joplin-sp.xml"
+        - name: SAML_IDP_CONFIG_FILE
+          value: "/opt/saml/config/joplin-idp.xml"
+        volumeMounts:
+        - name: saml-config
+          mountPath: /opt/saml/config
+          readOnly: true
+        startupProbe:
+          httpGet:
+            path: /api/ping
+            port: 22300
+            scheme: HTTP
+            httpHeaders:
+            - name: Host
+              value: notes.nullservers.com
+          initialDelaySeconds: 30
+          periodSeconds: 10
+          timeoutSeconds: 5
+          failureThreshold: 30
+          successThreshold: 1
+        livenessProbe:
+          httpGet:
+            path: /api/ping
+            port: 22300
+            scheme: HTTP
+            httpHeaders:
+            - name: Host
+              value: notes.nullservers.com
+          initialDelaySeconds: 30
+          periodSeconds: 30
+          timeoutSeconds: 5
+          failureThreshold: 3
+          successThreshold: 1
+        readinessProbe:
+          httpGet:
+            path: /api/ping
+            port: 22300
+            scheme: HTTP
+            httpHeaders:
+            - name: Host
+              value: notes.nullservers.com
+          initialDelaySeconds: 5
+          periodSeconds: 10
+          timeoutSeconds: 5
+          failureThreshold: 3
+          successThreshold: 1
+      volumes:
+      - name: saml-config
+        persistentVolumeClaim:
+          claimName: joplin-saml-config
+      imagePullSecrets:
+      - name: dockerhub-token

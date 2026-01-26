@@ -53,6 +53,8 @@ data:
       service: http://adventurelog-backend.adventurelog.svc.cluster.local:80
     - hostname: watch.nullservers.com
       service: http://plex.plex.svc.cluster.local:80
+    - hostname: notes.nullservers.com
+      service: http://joplin.joplin.svc.cluster.local:22300
     # This rule sends traffic to the built-in hello-world HTTP server. This can help debug connectivity
     # issues. If hello.example.com resolves and tunnel.example.com does not, then the problem is
     # in the connection from cloudflared to your local service, not from the internet to cloudflared.

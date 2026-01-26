@@ -41,6 +41,8 @@ spec:
             io.kubernetes.pod.namespace: adventurelog
         - matchLabels:
             io.kubernetes.pod.namespace: plex
+        - matchLabels:
+            io.kubernetes.pod.namespace: joplin
     # Allow Cloudflare 
     - toFQDNs:
       - matchPattern: "*.cloudflare.com"

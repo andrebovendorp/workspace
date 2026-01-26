@@ -1,0 +1,23 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+- namespace.yaml
+- service.yaml
+- deployment.yaml
+- pvc-saml.yaml
+- cnp.yaml
+- credentials.yaml
+- dockerhub-token.yaml
+- http-route.yaml
+- referencegrant.yaml
+
+commonLabels:
+  app: joplin
+  component: joplin-app
+
+namespace: joplin
+
+images:
+- name: joplin/server
+  newTag: "3.4.3"
