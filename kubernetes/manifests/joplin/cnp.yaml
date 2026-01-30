@@ -35,4 +35,5 @@ spec:
     - ports:
       - port: "5432"
   - toFQDNs:
+      - matchName: pool.ntp.org
       - matchName: smtp.resend.com
