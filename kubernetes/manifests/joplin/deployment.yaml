@@ -99,6 +99,8 @@ spec:
           value: "/opt/saml/config/joplin-sp.xml"
         - name: SAML_IDP_CONFIG_FILE
           value: "/opt/saml/config/joplin-idp.xml"
+        - name: DELETE_EXPIRED_SESSIONS_SCHEDULE
+          value: "0 0 1 1/3 *" # Every 3 months
         volumeMounts:
         - name: saml-config
           mountPath: /opt/saml/config
