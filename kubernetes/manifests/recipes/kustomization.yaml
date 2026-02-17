@@ -18,4 +18,4 @@ namespace: recipes
 
 images:
 - name: vabene1111/recipes
-  newTag: "2.5.0"
+  newTag: "2.5.3"
