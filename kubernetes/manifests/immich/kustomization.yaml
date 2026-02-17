@@ -6,11 +6,21 @@ namespace: immich
 resources:
 - ciliumnetworkpolicy.yaml
 - externalsecret.yaml
+- http-route.yaml
 - machine-learning-deployment.yaml
 - machine-learning-service.yaml
 - pvc-nfs.yaml
+- referencegrant.yaml
 - server-deployment.yaml
 - server-service.yaml
 - servicemonitor.yaml
-- http-route.yaml
-- referencegrant.yaml
+
+commonLabels:
+  app: immich
+  component: immich-app
+
+images:
+- name: ghcr.io/immich-app/immich-server
+  newTag: v2.5.5
+- name: ghcr.io/immich-app/immich-machine-learning
+  newTag: v2.5.5
