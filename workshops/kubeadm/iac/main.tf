@@ -65,7 +65,7 @@ resource "azurerm_resource_group" "this_rg" {
 
 module "natgateway" {
   source  = "Azure/avm-res-network-natgateway/azurerm"
-  version = "0.2.1"
+  version = "0.3.0"
 
   name                = module.naming.nat_gateway.name_unique
   enable_telemetry    = false
