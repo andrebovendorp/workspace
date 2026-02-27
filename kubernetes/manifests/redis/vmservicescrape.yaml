@@ -2,7 +2,7 @@ apiVersion: operator.victoriametrics.com/v1beta1
 kind: VMServiceScrape
 metadata:
   name: redis-metrics
-  namespace: {{ .Release.Namespace }}
+  namespace: vaultwarden
 spec:
   selector:
     matchLabels:
