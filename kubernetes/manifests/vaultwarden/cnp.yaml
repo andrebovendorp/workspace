@@ -1,0 +1,37 @@
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: vaultwarden-network-policy
+  namespace: vaultwarden
+spec:
+  endpointSelector: {}
+  ingress:
+  - fromEntities:
+      - ingress
+  - fromEndpoints:
+    - matchLabels:
+        io.kubernetes.pod.namespace: envoy-gateway-system
+  - fromEndpoints:
+    - matchLabels:
+        io.kubernetes.pod.namespace: cloudflare
+    toPorts:
+    - ports:
+      - port: "80"
+  egress:
+  - toFQDNs:
+      - matchName: "pgsql.nullservers.com"
+      - matchName: "auth.nullservers.com"
+      - matchName: "smtp.resend.com"
+      - matchName: "api.bitwarden.eu"
+      - matchName: "identity.bitwarden.eu"
+  - toEndpoints:
+    - matchLabels:
+        io.kubernetes.pod.namespace: kube-system
+        k8s-app: kube-dns
+    toPorts:
+    - ports:
+      - port: "53"
+        protocol: UDP
+      rules:
+        dns:
+        - matchPattern: "*"

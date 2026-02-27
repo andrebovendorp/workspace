@@ -1,0 +1,142 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: vaultwarden
+  namespace: vaultwarden
+  labels:
+    app: vaultwarden
+spec:
+  revisionHistoryLimit: 3
+  replicas: 1
+  selector:
+    matchLabels:
+      app: vaultwarden
+  template:
+    metadata:
+      labels:
+        app: vaultwarden
+    spec:
+      containers:
+      - name: vaultwarden-container
+        image: ghcr.io/dani-garcia/vaultwarden:1.35.4
+        ports:
+        - containerPort: 80
+          protocol: TCP
+        securityContext:
+          allowPrivilegeEscalation: false
+          privileged: false
+          readOnlyRootFilesystem: false
+        resources:
+          requests:
+            memory: 64Mi
+            cpu: 50m
+          limits:
+            memory: 512Mi
+            cpu: 500m
+        env:
+        - name: DOMAIN
+          value: "https://pm.nullservers.com"
+        - name: SIGNUPS_ALLOWED
+          value: "false"
+        - name: ADMIN_TOKEN
+          valueFrom:
+            secretKeyRef:
+              key: admin-token
+              name: vaultwarden-credentials
+        - name: PUSH_ENABLED
+          value: "true"
+        - name: PUSH_INSTALLATION_ID
+          valueFrom:
+            secretKeyRef:
+              key: PUSH_INSTALLATION_ID
+              name: vaultwarden-credentials
+        - name: PUSH_INSTALLATION_KEY
+          valueFrom:
+            secretKeyRef:
+              key: PUSH_INSTALLATION_KEY
+              name: vaultwarden-credentials
+        - name: PUSH_RELAY_URI
+          value: "https://api.bitwarden.eu"
+        - name: PUSH_IDENTITY_URI
+          value: "https://identity.bitwarden.eu"
+        - name: SMTP_HOST
+          value: "smtp.resend.com"
+        - name: SMTP_PORT
+          value: "587"
+        - name: SMTP_USERNAME
+          value: "resend"
+        - name: SMTP_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              key: SMTP_PASSWORD
+              name: vaultwarden-credentials
+        - name: SMTP_FROM
+          value: "no-reply@nullservers.com"
+        - name: SMTP_SECURITY
+          value: "starttls"
+        - name: DATABASE_URL
+          valueFrom:
+            secretKeyRef:
+              key: DATABASE_URL
+              name: vaultwarden-credentials
+        - name: SSO_ENABLED
+          value: "true"
+        - name: SSO_AUTHORITY
+          value: https://auth.nullservers.com/application/o/vaultwarden/
+        - name: SSO_CLIENT_ID
+          valueFrom:
+            secretKeyRef:
+              key: SSO_CLIENT_ID
+              name: vaultwarden-credentials
+        - name: SSO_CLIENT_SECRET
+          valueFrom:
+            secretKeyRef:
+              key: SSO_CLIENT_SECRET
+              name: vaultwarden-credentials
+        - name: SSO_SCOPES
+          value: "openid email profile offline_access"
+        - name: SSO_ALLOW_UNKNOWN_EMAIL_VERIFICATION
+          value: "false"
+        - name: SSO_CLIENT_CACHE_EXPIRATION
+          value: "0"
+        - name: SSO_ONLY
+          value: "true"
+        - name: SSO_SIGHNUPS_MATCH_EMAIL
+          value: "true" 
+        volumeMounts:
+        - name: vaultwarden-data
+          mountPath: /data
+        startupProbe:
+          httpGet:
+            path: /alive
+            port: 80
+            scheme: HTTP
+          initialDelaySeconds: 10
+          periodSeconds: 10
+          timeoutSeconds: 5
+          failureThreshold: 30
+          successThreshold: 1
+        livenessProbe:
+          httpGet:
+            path: /alive
+            port: 80
+            scheme: HTTP
+          initialDelaySeconds: 10
+          periodSeconds: 30
+          timeoutSeconds: 5
+          failureThreshold: 3
+          successThreshold: 1
+        readinessProbe:
+          httpGet:
+            path: /alive
+            port: 80
+            scheme: HTTP
+          initialDelaySeconds: 5
+          periodSeconds: 10
+          timeoutSeconds: 5
+          failureThreshold: 3
+          successThreshold: 1
+      volumes:
+      - name: vaultwarden-data
+        persistentVolumeClaim:
+          claimName: vaultwarden-data
