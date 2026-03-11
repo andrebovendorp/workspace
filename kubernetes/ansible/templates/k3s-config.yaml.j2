@@ -1,0 +1,18 @@
+# /etc/rancher/k3s/config.yaml
+# K3s server configuration
+write-kubeconfig-mode: "0644"
+
+# Disable default components
+disable:
+  - traefik
+  - local-storage
+node-label:
+  - "type=master"
+
+# Networking configuration
+flannel-backend: none
+disable-network-policy: true
+
+# Kubelet configuration
+kubelet-arg:
+  - "config=/etc/rancher/k3s/kubelet.yaml"

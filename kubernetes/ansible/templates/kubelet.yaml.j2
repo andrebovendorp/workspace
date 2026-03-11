@@ -1,0 +1,35 @@
+# /etc/rancher/k3s/kubelet.yaml
+# Kubelet configuration for memory-constrained environments
+apiVersion: kubelet.config.k8s.io/v1beta1
+kind: KubeletConfiguration
+
+# Reserve resources for system processes and K3s components
+# Prevents pods from consuming all available memory
+systemReserved:
+  cpu: "250m"
+  memory: "256Mi"
+  ephemeral-storage: "1Gi"
+
+# Reserve resources for Kubernetes system components
+kubeReserved:
+  cpu: "250m"
+  memory: "256Mi"
+  ephemeral-storage: "1Gi"
+
+# Hard eviction thresholds - pods are evicted when these are breached
+evictionHard:
+  memory.available: "100Mi"
+  nodefs.available: "10%"
+  imagefs.available: "15%"
+
+# Soft eviction with grace period - provides warning before hard eviction
+evictionSoft:
+  memory.available: "200Mi"
+  nodefs.available: "15%"
+  imagefs.available: "20%"
+
+# Grace period before soft eviction triggers
+evictionSoftGracePeriod:
+  memory.available: "1m30s"
+  nodefs.available: "1m30s"
+  imagefs.available: "1m30s"

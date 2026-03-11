@@ -47,9 +47,29 @@
         - iptables
         - nfs-common
 
+    - name: Deploy kubelet config template
+      template:
+        src: templates/kubelet.yaml.j2
+        dest: /etc/rancher/k3s/kubelet.yaml
+        owner: root
+        group: root
+        mode: '0644'
+      delegate_to: master
+      when: inventory_hostname == groups['master'][0]
+
+    - name: Deploy k3s config template
+      template:
+        src: templates/k3s-config.yaml.j2
+        dest: /etc/rancher/k3s/config.yaml
+        owner: root
+        group: root
+        mode: '0644'
+      delegate_to: master
+      when: inventory_hostname == groups['master'][0]
+
     - name: Install K3s Server
       shell: |
-        curl -sfL https://get.k3s.io | INSTALL_K3S_VERSION={{k8s_version}} INSTALL_K3S_EXEC='--flannel-backend=none --disable-network-policy --disable=traefik --disable local-storage' sh -
+        curl -sfL https://get.k3s.io | INSTALL_K3S_VERSION={{k8s_version}} sh -
       delegate_to: master
       when: inventory_hostname == groups['master'][0]
       
