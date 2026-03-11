@@ -19,11 +19,17 @@ spec:
         - kube-apiserver
         - cluster
     - toFQDNs:
+        - matchPattern: "*.docker.io"
         - matchPattern: "*.ghcr.io"
         - matchPattern: "*.github.com"
+        - matchPattern: "*.gitlab.com"
         - matchPattern: "*.github.io"
+        - matchPattern: "*.*.hashicorp.com"
+        - matchName: raw.githubusercontent.com
+        - matchName: charts.goauthentik.io
         - matchName: ghcr.io
         - matchName: github.com
+        - matchName: gitlab.com
         - matchName: charts.jetstack.io
         - matchName: charts.external-secrets.io
         - matchName: release-assets.githubusercontent.com
