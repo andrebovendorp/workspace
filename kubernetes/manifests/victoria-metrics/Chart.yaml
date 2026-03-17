@@ -7,7 +7,7 @@ dependencies:
   version: 0.72.4
   repository: https://victoriametrics.github.io/helm-charts/
 - name: grafana-operator
-  version: 5.22.0
+  version: 5.22.2
   repository: oci://ghcr.io/grafana/helm-charts
 - name: victoria-logs-single
   version: ">=0.9.7"
