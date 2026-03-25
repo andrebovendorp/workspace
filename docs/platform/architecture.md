@@ -23,10 +23,10 @@ Key characteristics:
 | Datastore | SQLite embedded | Cluster state | Avoid etcd complexity | Scale / HA limits |
 | Worker Runtime | containerd | Container execution | Upstream default, minimal overhead | N/A |
 | Networking | Cilium (eBPF) | CNI, Ingress, LB, Policy | Consolidate stack | Learning curve, kernel dependency |
-| Ingress / LB | Cilium Ingress + LB IPAM | External traffic entry | Avoid separate NGINX/MetalLB | Fewer ingress features |
-| Storage | local-path / fast-local / NFS | Persistence tiers | Map tier to workload profiles | No distributed HA storage |
+| Ingress / LB | Cilium API GW + LB IPAM | External traffic entry | Avoid separate NGINX/MetalLB | More yamls to configure. |
+| Storage | NFS | Persistence tiers | Map tier to workload profiles | No distributed HA storage |
 | GitOps | FluxCD | Declarative reconciliation | Pull model, low footprint | Less GUI-centric ops |
-| Observability | Victoria Metrics / Logs | Metrics & logs | Resource efficiency | Smaller ecosystem |
+| Observability | Grafana + Victoria Metrics / Logs | Metrics & logs | Resource efficiency | Smaller ecosystem |
 
 ### Control Plane Summary
 All core control plane processes (API server, scheduler, controller manager) run inside the single K3s server binary. Datastore is a local SQLite file with nightly backup and documented restore steps (script stored outside docs). Scale boundary monitored; migration path to multi-server + external datastore defined as a future decision trigger.
@@ -48,8 +48,6 @@ Three tiers map to different workload characteristics:
 
 | Tier | Backing | Access | Primary Use | Notes |
 |------|---------|--------|-------------|-------|
-| local-path | Node SSD | RWO | Databases, stateful hot data | Fast, node affinity needed |
-| fast-local | Selected high-perf SSD | RWO | Latency sensitive DB / cache | Limited capacity |
 | nfs-client | NFS share | RWO/RWX (shared config) | Media, shared configs, lower IOPS | Network latency trade‑off |
 
 Backups leverage ZFS snapshots + offsite replication (see resilience docs).

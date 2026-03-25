@@ -119,23 +119,12 @@ Throughput Characteristics:
 
 ### Storage Classes
 ```yaml
-local-path:
-  Provisioner: Local Path Provisioner
-  VolumeBindingMode: WaitForFirstConsumer
-  StorageBackend: Local NVMe storage
-  Use Cases: Databases, high-IOPS workloads
 
 nfs-client:
   Provisioner: NFS Subdir External Provisioner  
   VolumeBindingMode: Immediate
   StorageBackend: Network NFS storage
   Use Cases: Shared data, configuration files
-
-fast-local:
-  Provisioner: Local Path Provisioner
-  VolumeBindingMode: WaitForFirstConsumer
-  StorageBackend: Dedicated high-performance tier
-  Use Cases: Critical applications, caches
 ```
 
 ### Volume Management Strategy

@@ -127,12 +127,9 @@ DNS Strategy:
 ### Storage Tiers
 ```yaml
 Storage Classes:
-  local-path:       High-IOPS local SSD storage
   nfs-client:       Shared network storage
-  fast-local:       Dedicated high-performance tier
 
 Use Case Mapping:
-  Databases:        local-path (PostgreSQL, MongoDB)
   Media Files:      nfs-client (Plex, Immich)
   Configurations:   nfs-client (shared configs)
   Temporary Data:   emptyDir (in-memory)

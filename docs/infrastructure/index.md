@@ -32,7 +32,7 @@ This section covers the underlying infrastructure layer that supports the Kubern
 │  ┌─────────────┐              ┌─────────────┐              ┌─────────────┐      │
 │  │K3s Master   │              │K3s Worker-1 │              │K3s Worker-2 │      │
 │  │Ubuntu 22.04 │              │Ubuntu 22.04 │              │Ubuntu 22.04 │      │
-│  │4 vCPU/8GB   │              │4 vCPU/8GB   │              │4 vCPU/8GB   │      │
+│  │4 vCPU/6GB   │              │4 vCPU/20GB  │              │1 vCPU/2GB   │      │
 │  └─────────────┘              └─────────────┘              └─────────────┘      │
 └─────────────────────────────────────────────────────────────────────────────────┘
 ```
@@ -51,7 +51,6 @@ This section covers the underlying infrastructure layer that supports the Kubern
 - **Firewall Integration**: Built-in packet filtering
 
 ### Storage Systems
-- **Local Storage**: High-performance NVMe/SATA SSDs
 - **Network Storage**: NFS server for shared data
 - **Backup Storage**: Dedicated backup targets
 - **Snapshot Management**: Automated ZFS snapshots

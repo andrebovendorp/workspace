@@ -102,7 +102,7 @@ body:
       - Kubernetes Version: 1.29.x
       - Node Count: 3 masters, 2 workers
       - CNI: Calico/Flannel/etc
-      - Storage: Local-path/NFS/etc
+      - Storage: NFS/etc
     value: |
       - OS: 
       - Kubernetes Version: 

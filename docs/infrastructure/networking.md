@@ -26,27 +26,27 @@ Router Configuration:
 ### Network Segments
 ```yaml
 VLAN Design:
-  VLAN 10: Management Network (192.168.10.0/24)
+  VLAN 10: Management Network
     - Proxmox management interface
     - Network equipment management
     - Administrative access
 
-  VLAN 20: Infrastructure Services (192.168.20.0/24)
+  VLAN 20: Infrastructure Services
     - DNS servers (AdGuard)
     - NTP servers
     - Monitoring systems
 
-  VLAN 30: Kubernetes Cluster (192.168.30.0/24)
+  VLAN 30: Kubernetes Cluster
     - K3s control plane nodes
     - Worker nodes
     - Inter-node communication
 
-  VLAN 40: Storage Network (192.168.40.0/24)
+  VLAN 40: Storage Network
     - NFS storage servers
     - iSCSI targets
     - Backup systems
 
-  VLAN 50: Load Balancer Pool (192.168.50.0/24)
+  VLAN 50: Load Balancer Pool
     - Cilium LB IPAM addresses
     - External service endpoints
     - Ingress controller IPs
@@ -135,15 +135,6 @@ DNS Hierarchy:
 ```yaml
 Resolution Path:
   Pod Query → CoreDNS → AdGuard → External DNS
-  
-Internal Domains:
-  *.cluster.local → CoreDNS directly
-  *.local → AdGuard DNS
-  *.lan → AdGuard DNS
-
-External Domains:
-  Public domains → AdGuard → External DNS
-  Blocked domains → AdGuard (blocked response)
 ```
 
 ## Network Security
