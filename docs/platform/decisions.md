@@ -36,10 +36,8 @@ Overview of cross-domain architectural decisions. Each entry captures the ration
 
 | Candidate | Trigger Metric / Condition | Exploration Focus | Target Review |
 |-----------|---------------------------|-------------------|---------------|
-| HA Control Plane (add etcd) | >1 critical outage / year OR need >1 master | Evaluate k3s multi-server vs kubeadm migration | 2026-Q2 |
+| HA Control Plane (add external DB/ETCD) | >1 critical outage / year OR need >1 master | Evaluate k3s multi-server vs kubeadm migration | 2026-Q2 |
 | Distributed Storage Layer | Need RWX perf + >2TB DB growth | Evaluate Ceph vs OpenEBS vs Longhorn | 2026-Q3 |
-| Trace Collection Expansion | >5 critical services needing tracing | Jaeger vs Tempo vs OTEL-only | 2026-Q2 |
-| Multi-site Edge Extension | Edge node requirement appears | Cluster federation vs K3s agents | 2026-Q4 |
 
 ---
 
@@ -48,7 +46,7 @@ Overview of cross-domain architectural decisions. Each entry captures the ration
 ### Stop Spreading Helm Charts as Default
 
 **Decision Date:** 2024  
-**Status:** Active
+**Status:** Continuously Active
 
 For simple configurations like cronjobs or basic deployments, the recommended approach is now to create a `kustomization` with FluxCD using plain YAML files instead of Helm charts.
 
