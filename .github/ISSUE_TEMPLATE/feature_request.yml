@@ -1,0 +1,102 @@
+name: 🚀 Feature Request
+description: Suggest a new feature or enhancement for the homelab infrastructure
+title: "[FEATURE] "
+labels: [ "enhancement", "feature-request" ]
+assignees:
+- boveloco
+
+body:
+- type: markdown
+  attributes:
+    value: |
+      Thanks for taking the time to suggest a new feature! Please provide as much detail as possible to help understand your request.
+
+- type: textarea
+  id: feature-description
+  attributes:
+    label: Feature Description
+    description: A clear and concise description of the feature you'd like to see implemented
+    placeholder: Describe the feature you would like to add...
+  validations:
+    required: true
+
+- type: textarea
+  id: use-case
+  attributes:
+    label: Use Case / Problem
+    description: Describe the problem this feature would solve or the use case it would enable
+    placeholder: What problem does this solve? How would you use this feature?
+  validations:
+    required: true
+
+- type: dropdown
+  id: component
+  attributes:
+    label: Component Area
+    description: Which part of the homelab infrastructure does this feature relate to?
+    options:
+    - Kubernetes Applications
+    - Infrastructure (Proxmox/VMs)
+    - Monitoring & Observability
+    - Security & Authentication
+    - Networking
+    - Storage & Backups
+    - CI/CD & GitOps
+    - Documentation
+    - Other
+    default: 0
+  validations:
+    required: true
+
+- type: textarea
+  id: proposed-solution
+  attributes:
+    label: Proposed Solution
+    description: If you have ideas about how this feature could be implemented, please describe them
+    placeholder: How do you think this could be implemented?
+  validations:
+    required: false
+
+- type: textarea
+  id: alternatives
+  attributes:
+    label: Alternative Solutions
+    description: Have you considered any alternative approaches to solve this problem?
+    placeholder: What other solutions have you considered?
+  validations:
+    required: false
+
+- type: dropdown
+  id: priority
+  attributes:
+    label: Priority Level
+    description: How important is this feature to you?
+    options:
+    - Low - Nice to have
+    - Medium - Would improve workflow
+    - High - Significantly impacts productivity
+    - Critical - Blocking current work
+    default: 1
+  validations:
+    required: true
+
+- type: checkboxes
+  id: implementation
+  attributes:
+    label: Implementation Willingness
+    description: Are you willing to help implement this feature?
+    options:
+    - label: I can help with research and planning
+    - label: I can help with implementation/coding
+    - label: I can help with testing
+    - label: I can help with documentation
+    - label: I prefer to only provide feedback
+
+- type: textarea
+  id: additional-context
+  attributes:
+    label: Additional Context
+    description: Add any other context, screenshots, diagrams, or examples that would help explain this feature request
+    placeholder: Any additional information that would be helpful...
+  validations:
+    required: false
