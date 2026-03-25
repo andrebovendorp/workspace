@@ -101,7 +101,7 @@ For professional consulting, training, or implementation services, please reach 
 
 **Contact Information:**
 - 💼 LinkedIn: [Andre Bovendorp](https://linkedin.com/in/andrebovendorp)
-- 🐙 GitHub: [@boveloco](https://github.com/boveloco)
+- 🐙 GitHub: [@andrebovendorp](andrebovendorp)
 
 ---
 

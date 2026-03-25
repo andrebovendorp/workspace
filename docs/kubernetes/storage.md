@@ -34,7 +34,7 @@ Used for shared data that needs to be accessible from multiple pods or persisted
 
 ### Storage Class Design
 
-1. **Default Class**: Keep `local-path` as default for most workloads
+1. **Default Class**: Keep `nfs` as default for most workloads
 2. **Specific Classes**: Create purpose-built classes for special requirements
 3. **Reclaim Policies**: Use `Retain` for important data, `Delete` for temporary
 
