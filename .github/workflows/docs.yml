@@ -2,49 +2,46 @@ name: Deploy MkDocs to GitHub Pages
 
 on:
   push:
-    branches:
-      - main
+    branches: [main]
     paths:
       - 'docs/**'
+      - 'mkdocs.yml'
       - '.github/workflows/docs.yml'
-  pull_request:
-    branches:
-      - main
-    paths:
-      - 'docs/**'
   workflow_dispatch:
 
-# Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
 permissions:
   contents: read
   pages: write
   id-token: write
 
-# Allow only one concurrent deployment, skipping runs queued between the run in-progress and latest queued.
-# However, do NOT cancel in-progress runs as we want to allow these production deployments to complete.
 concurrency:
   group: "pages"
   cancel-in-progress: false
 
 jobs:
-  # Build job
   build:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0  # Fetch all history for git info plugin
+          fetch-depth: 0 
 
       - name: Setup Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
           python-version: '3.11'
           cache: 'pip'
 
-      - name: Install dependencies
+      - name: Install Latest Stable Dependencies
         run: |
-          pip install -r docs/requirements.txt
+          # We pin to <2.0 to avoid the breaking MkDocs 2.0 rewrite
+          pip install "mkdocs>=1.6.1,<2.0" "mkdocs-material>=9.7.6,<10.0"
+          
+          # Optional: Install requirements if you have specific plugins
+          if [ -f docs/requirements.txt ]; then
+            pip install -r docs/requirements.txt
+          fi
 
       - name: Setup Pages
         id: pages
@@ -52,19 +49,19 @@ jobs:
 
       - name: Build MkDocs
         run: |
+          # strict mode ensures links aren't broken
           mkdocs build --clean --strict
         env:
-          # Override the base URL for GitHub Pages
-          MKDOCS_SITE_URL: ${{ steps.pages.outputs.base_url }}
+          # Disables the 2.0 incompatibility warning banner in logs
+          NO_MKDOCS_2_WARNING: "true"
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: docs/site
+          path: site
 
-  # Deployment job
   deploy:
-    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+    if: github.ref == 'refs/heads/main'
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
