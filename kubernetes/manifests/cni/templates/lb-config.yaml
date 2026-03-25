@@ -7,14 +7,6 @@ spec:
     - cidr: "192.168.50.232/27"
 ---
 apiVersion: "cilium.io/v2alpha1"
-kind: CiliumLoadBalancerIPPool
-metadata:
-  name: "red-pool"
-spec:
-  blocks:
-    - cidr: "192.168.3.232/27"
----
-apiVersion: "cilium.io/v2alpha1"
 kind: CiliumL2AnnouncementPolicy
 metadata:
   name: local-l2-announcement

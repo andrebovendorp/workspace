@@ -1,0 +1,21 @@
+apiVersion: gateway.networking.k8s.io/v1
+kind: Gateway
+metadata:
+  name: cilium-gateway
+  namespace: cilium-gateway-system
+spec:
+  gatewayClassName: cilium
+  listeners:
+  - name: https-wildcard
+    hostname: "*.nullservers.com"
+    port: 443
+    protocol: HTTPS
+    tls:
+      mode: Terminate
+      certificateRefs:
+      - name: wildcard-nullservers-tls
+        kind: Secret
+        namespace: cilium-gateway-system
+    allowedRoutes:
+      namespaces:
+        from: All

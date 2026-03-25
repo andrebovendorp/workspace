@@ -14,8 +14,6 @@ common:
     port: 80
     replicaCount: 1
     image: lscr.io/linuxserver/nextcloud:latest
-    nodeSelector:
-      kubernetes.io/hostname: slave01
     resources:
       requests:
         memory: 256Mi
@@ -48,7 +46,7 @@ common:
       targetPort: 80
       name: http
   ingress:
-    enabled: true
+    enabled: false
     class: cilium
     hosts:
     - host: drive.nullservers.com

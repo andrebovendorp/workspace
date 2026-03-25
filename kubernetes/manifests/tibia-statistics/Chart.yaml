@@ -1,8 +1,8 @@
 apiVersion: v2
 name: tibia-statistics
-version: 0.1.5
+version: 0.1.7
 type: application
 dependencies:
 - name: common
   version: 0.2.3
-  repository: https://boveloco.github.io/charts/
+  repository: https://andrebovendorp.github.io/charts/

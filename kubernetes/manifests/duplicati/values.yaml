@@ -10,7 +10,7 @@ common:
     enabled: true
     port: 8200
     replicaCount: 1
-    image: linuxserver/duplicati
+    image: linuxserver/duplicati:2.2.0
     resources:
       requests:
         cpu: 100m
@@ -54,12 +54,6 @@ common:
     subPath: "./duplicati-config"
     readOnly: "false"
 
-  hostVolumeMounts:
-  - name: external-drive
-    hostPath: /mnt/external-drive/
-    mountPath: /backups/external-drive
-    readOnly: true
-
   pvcVolumeMounts:
 
   emptyDirVolumeMounts:
@@ -81,7 +75,7 @@ common:
       type: ClusterIP
 
   ingress:
-    enabled: true
+    enabled: false
     class: cilium
     hosts:
     - host: backup.nullservers.com

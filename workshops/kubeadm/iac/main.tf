@@ -31,7 +31,7 @@ module "naming" {
 
 module "regions" {
   source  = "Azure/avm-utl-regions/azurerm"
-  version = "0.3.0"
+  version = "0.12.0"
 
   availability_zones_filter = true
 }
@@ -65,7 +65,7 @@ resource "azurerm_resource_group" "this_rg" {
 
 module "natgateway" {
   source  = "Azure/avm-res-network-natgateway/azurerm"
-  version = "0.2.1"
+  version = "0.3.2"
 
   name                = module.naming.nat_gateway.name_unique
   enable_telemetry    = false
@@ -81,7 +81,7 @@ module "natgateway" {
 
 module "vnet" {
   source  = "Azure/avm-res-network-virtualnetwork/azurerm"
-  version = "=0.8.1"
+  version = "0.17.1"
 
   resource_group_name = azurerm_resource_group.this_rg.name
   address_space       = ["192.168.0.0/16"]

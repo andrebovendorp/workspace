@@ -1,0 +1,117 @@
+- name: Configure master
+  hosts: all
+  become: yes  # Ensures commands are run as a superuser
+  vars_files:
+    - secrets.yml
+  vars:
+    join_token: ""
+    k8s_version: "v1.35.1+k3s1"
+  tasks:
+    - name: Setup Hostname
+      hostname:
+        name: "{{ inventory_hostname }}"
+    
+    - name: Disable swap on node permanently
+      command: swapoff -a
+
+    - name: Set nofile limit for the root user
+      ansible.builtin.lineinfile:
+        path: /etc/security/limits.conf
+        line: "root       hard      nofile      65536"
+        regexp: "^root\\s+hard\\s+nofile"
+        state: present
+    
+    - name: Set nofile limit for the root user (soft limit)
+      ansible.builtin.lineinfile:
+        path: /etc/security/limits.conf
+        line: "root       soft      nofile      65536"
+        regexp: "^root\\s+soft\\s+nofile"
+        state: present
+    
+    - name: Create k3s config directory
+      file:
+        path: /etc/rancher/k3s
+        state: directory
+        owner: root
+        group: root
+        mode: '0755'
+
+    - name: Install Dependencies
+      apt:
+        name: "{{ item }}"
+        state: present
+        update_cache: yes
+      with_items:
+        - curl
+        - net-tools
+        - iptables
+        - nfs-common
+
+    - name: Deploy kubelet config template
+      template:
+        src: templates/kubelet.yaml.j2
+        dest: /etc/rancher/k3s/kubelet.yaml
+        owner: root
+        group: root
+        mode: '0644'
+      delegate_to: master
+      when: inventory_hostname == groups['master'][0]
+
+    - name: Deploy k3s config template
+      template:
+        src: templates/k3s-config.yaml.j2
+        dest: /etc/rancher/k3s/config.yaml
+        owner: root
+        group: root
+        mode: '0644'
+      delegate_to: master
+      when: inventory_hostname == groups['master'][0]
+
+    - name: Install K3s Server
+      shell: |
+        curl -sfL https://get.k3s.io | INSTALL_K3S_VERSION={{k8s_version}} sh -
+      delegate_to: master
+      when: inventory_hostname == groups['master'][0]
+      
+    - name: Ensure the traefik.yaml.skip file exists
+      file:
+        path: /var/lib/rancher/k3s/server/manifests/traefik.yaml.skip
+        state: touch
+        owner: root
+        group: root
+        mode: '0644'
+      delegate_to: master
+      when: inventory_hostname == groups['master'][0]
+
+    - name: Ensure k3s is running
+      service:
+        name: k3s
+        state: started
+        enabled: yes
+      delegate_to: master
+      when: inventory_hostname == groups['master'][0]
+
+    - name: Copy Kubeconfig to host
+      fetch:
+        src: /etc/rancher/k3s/k3s.yaml
+        dest: /tmp/k3s.yaml
+        flat: yes
+      delegate_to: master
+      when: inventory_hostname == groups['master'][0]
+
+    - name: Generate Join Token
+      shell: |
+        cat /var/lib/rancher/k3s/server/node-token
+      register: join_token
+      delegate_to: master
+      when: inventory_hostname == groups['master'][0]
+
+    - name: Debug
+      debug:
+        var: join_token.stdout
+      when: inventory_hostname == groups['master'][0]
+
+    - name: Add Slaves to Cluster
+      shell: |
+        curl -sfL https://get.k3s.io | INSTALL_K3S_VERSION={{k8s_version}} K3S_URL=https://{{ hostvars[groups['master'][0]].ansible_host }}:6443 K3S_TOKEN={{ hostvars[groups['master'][0]].join_token.stdout }} sh -
+      when: inventory_hostname in groups['slaves']

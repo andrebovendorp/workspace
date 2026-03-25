@@ -2,63 +2,29 @@
   hosts: all
   become: true
   tasks:
+
     - name: Install required system packages
-      apt:
+      apk:
         name:
-          - apt-transport-https
-          - ca-certificates
           - curl
-          - software-properties-common
-          - net-tools
+          - ca-certificates
+          - openssl
+          - docker
+          - docker-compose
         state: present
         update_cache: yes
 
-    - name: Add Docker GPG key
-      apt_key:
-        url: https://download.docker.com/linux/ubuntu/gpg
-        state: present
-
-    - name: Add Docker repository
-      apt_repository:
-        repo: "deb https://download.docker.com/linux/ubuntu {{ ansible_distribution_release }} stable"
-        state: present
-
-    - name: Install Docker and dependencies
-      apt:
-        name:
-          - docker-ce
-          - docker-ce-cli
-          - containerd.io
-        state: present
-        update_cache: yes
-
-    - name: Ensure Docker service is running
-      systemd:
+    - name: Start and enable Docker service
+      service:
         name: docker
         state: started
         enabled: yes
 
     - name: Add user to the docker group (optional)
       user:
-        name: "{{ ansible_user | default('ubuntu') }}"
+        name: "{{ ansible_user | default('alpine') }}"
         groups: docker
         append: yes
-
-    - name: Get latest Docker Compose version
-      uri:
-        url: https://api.github.com/repos/docker/compose/releases/latest
-        return_content: yes
-      register: compose_release
-
-    - name: Set Docker Compose version variable
-      set_fact:
-        compose_version: "{{ compose_release.json.tag_name }}"
-
-    - name: Install Docker Compose
-      get_url:
-        url: "https://github.com/docker/compose/releases/download/{{ compose_version }}/docker-compose-linux-x86_64"
-        dest: "/usr/local/bin/docker-compose"
-        mode: '0755'
 
     - name: Verify Docker installation
       command: docker --version

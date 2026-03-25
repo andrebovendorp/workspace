@@ -1,4 +1,20 @@
 authentik:
+  global:
+    topologySpreadConstraints:
+    - maxSkew: 1
+      topologyKey: "kubernetes.io/hostname"
+      whenUnsatisfiable: DoNotSchedule
+      labelSelector:
+        matchLabels:
+          app.kubernetes.io/name: authentik
+          app.kubernetes.io/component: server
+    - maxSkew: 1
+      topologyKey: "kubernetes.io/hostname"
+      whenUnsatisfiable: DoNotSchedule
+      labelSelector:
+        matchLabels:
+          app.kubernetes.io/name: authentik
+          app.kubernetes.io/component: worker
   securityContext:
     fsGroup: 1000
     runAsUser: 1000
@@ -13,13 +29,14 @@ authentik:
       use_tls: true
       from: "no-reply@nullservers.com"
     postgresql:
-      host: pgsql-postgresql-hl.pgsql.svc.cluster.local
+      host: pgsql.nullservers.com
       name: authentik
       user: file:///authentik-credentials/username
       password: file:///authentik-credentials/password
     redis:
       host: redis-headless.redis.svc.cluster.local
   worker:
+    replicas: 1
     volumes:
     - name: authentik-credentials
       secret:
@@ -31,6 +48,7 @@ authentik:
     metrics:
       enabled: true
   server:
+    replicas: 2
     env:
     - name: AUTHENTIK_DISABLE_STARTUP_ANALYTICS
       value: "true"

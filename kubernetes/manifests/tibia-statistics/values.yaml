@@ -26,7 +26,7 @@ common:
     schedule: "0 12,23 * * *"
     successfulJobsHistoryLimit: 3
     failedJobsHistoryLimit: 2
-    image: ghcr.io/boveloco/tibia-statistics:latest
+    image: ghcr.io/andrebovendorp/tibia-statistics:latest
     env:
     - name: DB_TYPE
       value: mongodb

@@ -1,13 +1,13 @@
 apiVersion: v2
 name: victoria-metrics
-version: 0.1.10
+version: 0.1.18
 type: application
 dependencies:
 - name: victoria-metrics-k8s-stack
-  version: 0.61.6
+  version: 0.72.5
   repository: https://victoriametrics.github.io/helm-charts/
 - name: grafana-operator
-  version: v5.19.4
+  version: 5.22.2
   repository: oci://ghcr.io/grafana/helm-charts
 - name: victoria-logs-single
   version: ">=0.9.7"

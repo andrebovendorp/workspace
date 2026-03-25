@@ -1,9 +1,0 @@
-apiVersion: v2
-name: immich
-description: Photos storage
-version: 0.1.13
-type: application
-dependencies:
-- name: immich
-  version: 0.9.3
-  repository: https://immich-app.github.io/immich-charts

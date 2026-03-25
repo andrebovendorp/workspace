@@ -2,24 +2,38 @@ apiVersion: cilium.io/v2
 kind: CiliumNetworkPolicy
 metadata:
   name: default
+  namespace: flux-system
 spec:
   endpointSelector: {}
   ingress:
+    - fromEndpoints: 
+      - {}
     - fromEntities:
         - ingress
     - fromCIDRSet:
         - cidr: 192.168.20.0/24
-
   egress:
+    - toEndpoints: 
+      - {}
     - toEntities:
         - kube-apiserver
         - cluster
     - toFQDNs:
+        - matchPattern: "*.docker.io"
         - matchPattern: "*.ghcr.io"
         - matchPattern: "*.github.com"
+        - matchPattern: "*.gitlab.com"
         - matchPattern: "*.github.io"
-        - matchName: "charts.jetstack.io"
-        - matchName: "charts.external-secrets.io"
+        - matchPattern: "*.*.hashicorp.com"
+        - matchName: raw.githubusercontent.com
+        - matchName: charts.goauthentik.io
+        - matchName: ghcr.io
+        - matchName: github.com
+        - matchName: gitlab.com
+        - matchName: charts.jetstack.io
+        - matchName: charts.external-secrets.io
+        - matchName: release-assets.githubusercontent.com
+        - matchName: pkg-containers.githubusercontent.com
     - toEndpoints:
         - matchLabels:
             io.kubernetes.pod.namespace: kube-system

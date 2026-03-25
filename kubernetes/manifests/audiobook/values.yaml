@@ -11,7 +11,7 @@ common:
     enabled: true
     port: 80
     replicaCount: 1
-    image: ghcr.io/advplyr/audiobookshelf:latest
+    image: ghcr.io/advplyr/audiobookshelf:2.33.1
     nodeSelector:
       kubernetes.io/hostname: slave01
     resources:
@@ -20,12 +20,6 @@ common:
         cpu: 250m
       limits:
         memory: 1Gi
-        cpu: 500m
-
-  hostVolumeMounts:
-  - name: audiobooks
-    hostPath: /mnt/external-drive/audiobooks
-    mountPath: /audiobooks
 
   existingClaimVolumeMounts:
   - name: audiobook-config-nfs
@@ -33,9 +27,11 @@ common:
     size: 1Gi
     storageClassName: nfs-retain
   - name: audiobook-data-nfs
-    mountPath: /data
+    mountPath: /metadata/items
     size: 10Gi
     storageClassName: nfs-retain
+  - name: audiobook-media-nas
+    mountPath: /audiobooks
 
   service:
     enabled: true
@@ -44,7 +40,7 @@ common:
       targetPort: 80
       name: http
   ingress:
-    enabled: true
+    enabled: false
     class: cilium
     hosts:
     - host: bookshelf.nullservers.com

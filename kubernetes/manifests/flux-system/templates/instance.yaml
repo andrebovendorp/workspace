@@ -37,7 +37,7 @@ spec:
             value: --requeue-dependency=5s          
   sync:
     kind: GitRepository
-    url: "https://github.com/boveloco/workspace.git"
+    url: "https://github.com/andrebovendorp/workspace.git"
     ref: "latest"
     path: "kubernetes_manifests/_gitops"
     pullSecret: "ghcr-auth"

@@ -1,0 +1,74 @@
+apiVersion: grafana.integreatly.org/v1beta1
+kind: GrafanaDashboard
+metadata:
+  name: hubble-cilium-dns
+  namespace: victoria-metrics
+spec:
+  instanceSelector:
+    matchLabels:
+      dashboards: "grafana"
+  grafanaCom:
+    id: 19425
+  datasources:
+  - inputName: DS_PROMETHEUS
+    datasourceName: prometheus
+---
+apiVersion: grafana.integreatly.org/v1beta1
+kind: GrafanaDashboard
+metadata:
+  name: cilium-agent
+  namespace: victoria-metrics
+spec:
+  instanceSelector:
+    matchLabels:
+      dashboards: "grafana"
+  grafanaCom:
+    id: 16611
+  datasources:
+  - inputName: DS_PROMETHEUS
+    datasourceName: prometheus
+---
+apiVersion: grafana.integreatly.org/v1beta1
+kind: GrafanaDashboard
+metadata:
+  name: hubble-metrics
+  namespace: victoria-metrics
+spec:
+  instanceSelector:
+    matchLabels:
+      dashboards: "grafana"
+  grafanaCom:
+    id: 16613
+  datasources:
+  - inputName: DS_PROMETHEUS
+    datasourceName: prometheus
+---
+apiVersion: grafana.integreatly.org/v1beta1
+kind: GrafanaDashboard
+metadata:
+  name: cilium-operator-metrics
+  namespace: victoria-metrics
+spec:
+  instanceSelector:
+    matchLabels:
+      dashboards: "grafana"
+  grafanaCom:
+    id: 16612
+  datasources:
+  - inputName: DS_PROMETHEUS
+    datasourceName: prometheus
+---
+apiVersion: grafana.integreatly.org/v1beta1
+kind: GrafanaDashboard
+metadata:
+  name: cilium-policy-veredicts
+  namespace: victoria-metrics
+spec:
+  instanceSelector:
+    matchLabels:
+      dashboards: "grafana"
+  grafanaCom:
+    id: 18015
+  datasources:
+  - inputName: DS_PROMETHEUS
+    datasourceName: prometheus

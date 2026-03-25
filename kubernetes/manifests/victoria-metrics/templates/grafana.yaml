@@ -74,36 +74,4 @@ spec:
                   value: "sub"  
                 - name: GF_AUTH_GENERIC_OAUTH_NAME_ATTRIBUTE_PATH
                   value: "name"
-  ingress:
-    spec:
-      ingressClassName: cilium
-      rules:
-        - host: {{ .Values.grafana.hostname }}
-          http:
-            paths:
-              - backend:
-                  service:
-                    name: grafana-service
-                    port:
-                      number: 3000
-                path: /
-                pathType: Prefix
-{{ range .Values.grafana.additionalHosts }}
-        - host: {{ .name }}
-          http:
-            paths:
-              - backend:
-                  service:
-                    name: grafana-service
-                    port:
-                      number: 3000
-                pathType: Prefix
-                path: /
-{{ end }}
-      tls:
-        - hosts:
-            - {{ .Values.grafana.hostname }}
-{{ range .Values.grafana.additionalHosts }}
-            - {{ .name }}
-{{ end }}
-          secretName: {{ .Release.Name }}-grafana-tls
+

@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: joplin
+  namespace: joplin
+  labels:
+    app: joplin
+spec:
+  selector:
+    app: joplin
+  ports:
+  - protocol: TCP
+    port: 22300
+    targetPort: 22300
+    name: http
+  type: ClusterIP

@@ -2,32 +2,23 @@ apiVersion: cilium.io/v2
 kind: CiliumNetworkPolicy
 metadata:
   name: default
-  namespace: {{.Release.Namespace }}
 spec:
   endpointSelector: {}
   ingress:
+    - fromEndpoints:
+        - {}
     - fromEntities:
         - ingress
-    - fromEndpoints:
-        - matchLabels:
-            io.kubernetes.pod.namespace: kube-system
-            k8s-app: kube-dns
-        - matchLabels:
-            io.kubernetes.pod.namespace: opentelemetry
-      toPorts:
-        - ports:
-            - port: "53"
-              protocol: UDP
-          rules:
-            dns:
-              - matchPattern: "*"
+        - cluster
   egress:
+    - toEndpoints:
+        - {}
+    - toEntities:
+        - cluster
     - toEndpoints:
         - matchLabels:
             io.kubernetes.pod.namespace: kube-system
             k8s-app: kube-dns
-        - matchLabels:
-            io.kubernetes.pod.namespace: redis
       toPorts:
         - ports:
             - port: "53"
@@ -36,5 +27,21 @@ spec:
             dns:
               - matchPattern: "*"
     - toFQDNs:
+        - matchPattern: "*.pgsql.nullservers.com"
+        - matchPattern: "*.nullservers.com"
+      toPorts:
+        - ports:
+            - port: "8080"
+            - port: "9100"
+            - port: "9187"
+    - toFQDNs:
+        - matchName: "grafana.com"
+        - matchName: "api.grafana.com"
         - matchName: "auth.nullservers.com"
+        - matchName: "storage.googleapis.com" # plugins
+      toPorts:
+        - ports:
+            - port: "443"
+              protocol: TCP
+
       

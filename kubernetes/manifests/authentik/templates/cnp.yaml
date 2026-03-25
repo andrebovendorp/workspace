@@ -2,7 +2,7 @@ apiVersion: cilium.io/v2
 kind: CiliumNetworkPolicy
 metadata:
   name: default
-  namespace: {{ .Release.Namespace }}
+  namespace: authentik
 spec:
   endpointSelector: {}
   ingress:
@@ -18,21 +18,15 @@ spec:
     - kube-apiserver
   - toEndpoints:
     - matchLabels:
-        io.kubernetes.pod.namespace: pgsql
-    - matchLabels:
         io.kubernetes.pod.namespace: redis
-    ## Reverse proxy OAUTH
-    - matchLabels:
-        io.kubernetes.pod.namespace: home-assistant
   - toFQDNs:
     # https://docs.goauthentik.io/docs/install-config/air-gapped#outbound-connections
     - matchName: updates.maxmind.com
-    - matchName: version.goauthentik.io # Version check
-    - matchName: secure.gravatar.com # Avatar for users
-    - matchName: smtp.resend.com # Email
-    - matchName: mm-prod-geoip-databases.a2649acb697e2c09b632799562c076f2.r2.cloudflarestorage.com 
-    - matchPattern: "*.nullservers.com" # Auth
-    # - matchName: goauthentik.io ## Analytics
+    - matchName: version.goauthentik.io
+    - matchName: secure.gravatar.com
+    - matchName: smtp.resend.com
+    - matchName: mm-prod-geoip-databases.a2649acb697e2c09b632799562c076f2.r2.cloudflarestorage.com
+    - matchPattern: "*.nullservers.com"
   - toEndpoints:
     - matchLabels:
         io.kubernetes.pod.namespace: kube-system

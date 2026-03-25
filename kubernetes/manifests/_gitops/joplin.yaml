@@ -1,0 +1,12 @@
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: joplin
+  namespace: flux-system
+spec:
+  interval: 1h
+  path: ./kubernetes/manifests/joplin
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: workspace

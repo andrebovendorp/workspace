@@ -1,3 +1,6 @@
+chart:
+  enabled: false
+
 external-dns:
   serviceMonitor:
     enabled: true

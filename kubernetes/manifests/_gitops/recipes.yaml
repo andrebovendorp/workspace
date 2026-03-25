@@ -1,17 +1,13 @@
-apiVersion: helm.toolkit.fluxcd.io/v2
-kind: HelmRelease
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
 metadata:
   name: recipes
-  namespace: recipes
+  namespace: flux-system
 spec:
   interval: 1h
-  chart:
-    spec:
-      chart: kubernetes/manifests/recipes
-      sourceRef:
-        kind: GitRepository
-        name: workspace
-        namespace: flux-system
-      version: ">=0.1.0"
-
-  values:
+  path: ./kubernetes/manifests/recipes
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: workspace
+  targetNamespace: recipes

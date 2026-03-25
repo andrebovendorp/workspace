@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: adventurelog-backend
+  namespace: adventurelog
+spec:
+  selector:
+    app: adventurelog-backend
+  ports:
+  - name: http
+    protocol: TCP
+    port: 80
+    targetPort: 80
+  - name: api
+    protocol: TCP
+    port: 8000
+    targetPort: 8000

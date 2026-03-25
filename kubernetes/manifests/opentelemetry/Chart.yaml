@@ -1,7 +1,7 @@
 apiVersion: v2
 name: opentelemetry
-version: 0.1.5
+version: 0.1.6
 dependencies:
 - name: opentelemetry-operator
-  version: 0.97.1
+  version: 0.108.0
   repository: https://open-telemetry.github.io/opentelemetry-helm-charts/

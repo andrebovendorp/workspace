@@ -1,0 +1,51 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: adventurelog-frontend
+  namespace: adventurelog
+  labels:
+    app: adventurelog-frontend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: adventurelog-frontend
+  template:
+    metadata:
+      name: adventurelog-frontend
+      labels:
+        app: adventurelog-frontend
+    spec:
+      containers:
+      - name: adventure-frontend
+        image: ghcr.io/seanmorley15/adventurelog-frontend:latest
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 3000
+        env:
+        - name: PUBLIC_SERVER_URL
+          value: "http://adventurelog-backend.adventurelog.svc.cluster.local:80"
+        - name: BODY_SIZE_LIMIT
+          value: "15M"
+        - name: DJANGO_ADMIN_USERNAME
+          valueFrom:
+            secretKeyRef:
+              name: adventurelog-app-credentials
+              key: admin-username
+        - name: DJANGO_ADMIN_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: adventurelog-app-credentials
+              key: admin-password
+        - name: DJANGO_ADMIN_EMAIL
+          valueFrom:
+            secretKeyRef:
+              name: adventurelog-app-credentials
+              key: admin-email
+        resources:
+          requests:
+            cpu: 100m
+            memory: 128Mi
+          limits:
+            cpu: 500m
+            memory: 512Mi

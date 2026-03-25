@@ -142,7 +142,7 @@ data:
                     - title: Github
                       url: https://github.com/boveloco
                     - title: Workspace
-                      url: https://github.com/boveloco/workspace
+                      url: https://github.com/andrebovendorp/workspace
       - name: News
         columns:
           - size: small # Noticias Brazil
