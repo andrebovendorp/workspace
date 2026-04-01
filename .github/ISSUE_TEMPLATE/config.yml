@@ -1,0 +1,11 @@
+blank_issues_enabled: false
+contact_links:
+- name: 📚 Documentation
+  url: https://boveloco.github.io/workspace
+  about: Check the comprehensive documentation for setup guides and troubleshooting
+- name: 💬 Discussions
+  url: https://github.com/boveloco/workspace/discussions
+  about: Ask questions, share ideas, or discuss homelab best practices
+- name: 🔧 Professional Services
+  url: https://github.com/boveloco/workspace#-professional-services
+  about: Contact for professional consulting, training, or implementation services
