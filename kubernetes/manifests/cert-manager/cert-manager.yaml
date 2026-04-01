@@ -13158,6 +13158,8 @@ metadata:
     helm.sh/chart: cert-manager-v1.16.3
 spec:
   replicas: 1
+  strategy:
+    type: Recreate
   selector:
     matchLabels:
       app.kubernetes.io/name: cainjector
@@ -13221,6 +13223,8 @@ metadata:
     helm.sh/chart: cert-manager-v1.16.3
 spec:
   replicas: 1
+  strategy:
+    type: Recreate
   selector:
     matchLabels:
       app.kubernetes.io/name: cert-manager
@@ -13305,6 +13309,8 @@ metadata:
     helm.sh/chart: cert-manager-v1.16.3
 spec:
   replicas: 1
+  strategy:
+    type: Recreate
   selector:
     matchLabels:
       app.kubernetes.io/name: webhook
