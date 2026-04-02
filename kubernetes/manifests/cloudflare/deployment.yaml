@@ -53,8 +53,8 @@ spec:
             - name: cloudflare-tunnel-token
               mountPath: /etc/cloudflared/creds
               readOnly: true
-          imagePullSecrets:
-            - name: cloudflared-dockerhub-token
+      imagePullSecrets:
+        - name: cloudflared-dockerhub-token
       volumes:
         - name: cloudflare-config
           configMap:
