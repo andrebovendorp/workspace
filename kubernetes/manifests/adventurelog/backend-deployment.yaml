@@ -7,6 +7,8 @@ metadata:
     app: adventurelog-backend
 spec:
   replicas: 1
+  strategy:
+    type: Recreate
   selector:
     matchLabels:
       app: adventurelog-backend

@@ -1,5 +1,7 @@
 authentik:
   global:
+    deploymentStrategy: 
+      type: Recreate
     topologySpreadConstraints:
     - maxSkew: 1
       topologyKey: "kubernetes.io/hostname"
