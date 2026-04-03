@@ -1,0 +1,32 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: bunkerweb
+
+resources:
+  - namespace.yaml
+  - rbac.yaml
+  - external-secret.yaml
+  - http-route.yaml
+  - referencegrant.yaml
+  - api-service.yaml
+  - bunkerweb-service-external.yaml
+  - bunkerweb-service-internal.yaml
+  - ui-service.yaml
+  - api-deployment.yaml
+  - bunkerweb-deployment.yaml
+  - controller-deployment.yaml
+  - scheduler-deployment.yaml
+  - ui-deployment.yaml
+
+images:
+  - name: docker.io/bunkerity/bunkerweb-api
+    newTag: "1.6.9"
+  - name: docker.io/bunkerity/bunkerweb
+    newTag: "1.6.9"
+  - name: docker.io/bunkerity/bunkerweb-autoconf
+    newTag: "1.6.9"
+  - name: docker.io/bunkerity/bunkerweb-scheduler
+    newTag: "1.6.9"
+  - name: docker.io/bunkerity/bunkerweb-ui
+    newTag: "1.6.9"

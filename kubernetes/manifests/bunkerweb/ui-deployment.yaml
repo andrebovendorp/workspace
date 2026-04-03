@@ -1,0 +1,85 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ui-bunkerweb
+  namespace: bunkerweb
+  labels:
+    helm.sh/chart: bunkerweb-1.0.16
+    app.kubernetes.io/name: bunkerweb
+    app.kubernetes.io/instance: bunkerweb
+    app.kubernetes.io/version: "1.6.9"
+    app.kubernetes.io/managed-by: Helm
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: bunkerweb
+      app.kubernetes.io/instance: bunkerweb
+      bunkerweb.io/component: "ui"
+  template:
+    metadata:
+      labels:
+        helm.sh/chart: bunkerweb-1.0.16
+        app.kubernetes.io/name: bunkerweb
+        app.kubernetes.io/instance: bunkerweb
+        app.kubernetes.io/version: "1.6.9"
+        app.kubernetes.io/managed-by: Helm
+        bunkerweb.io/component: "ui"
+    spec:
+      containers:
+        - name: bunkerweb-ui
+          image: docker.io/bunkerity/bunkerweb-ui:1.6.9
+          imagePullPolicy: IfNotPresent
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - ALL
+            runAsGroup: 101
+            runAsUser: 101
+          livenessProbe:
+            exec:
+              command:
+                - /usr/share/bunkerweb/helpers/healthcheck-ui.sh
+            failureThreshold: 3
+            initialDelaySeconds: 30
+            periodSeconds: 5
+            timeoutSeconds: 1
+          readinessProbe:
+            exec:
+              command:
+                - /usr/share/bunkerweb/helpers/healthcheck-ui.sh
+            failureThreshold: 3
+            initialDelaySeconds: 30
+            periodSeconds: 1
+            timeoutSeconds: 1
+          env:
+            - name: DATABASE_URI
+              valueFrom:
+                secretKeyRef:
+                  name: bunkerweb-credentials
+                  key: database-uri
+            - name: ADMIN_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: "bunkerweb-credentials"
+                  key: admin-username
+            - name: ADMIN_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: "bunkerweb-credentials"
+                  key: admin-password
+            - name: TOTP_SECRETS
+              valueFrom:
+                secretKeyRef:
+                  name: "bunkerweb-credentials"
+                  key: totp-secret
+            - name: FLASK_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: "bunkerweb-credentials"
+                  key: flask-secret
+            - name: OVERRIDE_ADMIN_CREDS
+              value: "no"

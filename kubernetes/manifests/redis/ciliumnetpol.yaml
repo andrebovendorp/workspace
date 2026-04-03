@@ -7,6 +7,8 @@ spec:
   ingress:
     - fromEndpoints:
         - matchLabels:
+            io.kubernetes.pod.namespace: bunkerweb
+        - matchLabels:
             io.kubernetes.pod.namespace: victoria-metrics
         - matchLabels:
             io.kubernetes.pod.namespace: immich
