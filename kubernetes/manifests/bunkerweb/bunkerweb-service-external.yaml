@@ -12,14 +12,11 @@ metadata:
 spec:
   type: LoadBalancer
   externalTrafficPolicy: Local
+  loadBalancerIP: 192.168.50.225
   selector:
     bunkerweb.io/component: "bunkerweb"
   ports:
-    - port: 80
-      targetPort: 8080
-      protocol: TCP
-      name: http
-    - port: 443
+    - port: 8443
       targetPort: 8443
       protocol: TCP
       name: https
