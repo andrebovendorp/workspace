@@ -1,0 +1,80 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: api-bunkerweb
+  namespace: bunkerweb
+  labels:
+    helm.sh/chart: bunkerweb-1.0.16
+    app.kubernetes.io/name: bunkerweb
+    app.kubernetes.io/instance: bunkerweb
+    app.kubernetes.io/version: "1.6.9"
+    app.kubernetes.io/managed-by: Helm
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: bunkerweb
+      app.kubernetes.io/instance: bunkerweb
+      bunkerweb.io/component: "api"
+  template:
+    metadata:
+      labels:
+        helm.sh/chart: bunkerweb-1.0.16
+        app.kubernetes.io/name: bunkerweb
+        app.kubernetes.io/instance: bunkerweb
+        app.kubernetes.io/version: "1.6.9"
+        app.kubernetes.io/managed-by: Helm
+        bunkerweb.io/component: "api"
+    spec:
+      containers:
+        - name: bunkerweb-api
+          image: docker.io/bunkerity/bunkerweb-api:1.6.9
+          imagePullPolicy: IfNotPresent
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - ALL
+            runAsGroup: 101
+            runAsUser: 101
+          livenessProbe:
+            exec:
+              command:
+                - /usr/share/bunkerweb/helpers/healthcheck-api.sh
+            failureThreshold: 3
+            initialDelaySeconds: 30
+            periodSeconds: 5
+            timeoutSeconds: 1
+          env:
+            - name: DATABASE_URI
+              valueFrom:
+                secretKeyRef:
+                  name: bunkerweb-credentials
+                  key: database-uri
+            - name: API_WHITELIST_ENABLED
+              value: "true"
+            - name: API_WHITELIST_IPS
+              value: "10.0.0.0/8 127.0.0.1/32 127.0.0.0/8"
+            - name: FORWARDED_ALLOW_IPS
+              value: "*"
+            - name: API_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: bunkerweb-credentials
+                  key: api-token
+            - name: API_ROOT_PATH
+              value: ""
+            - name: API_DOCS_URL
+              value: "/docs"
+            - name: API_REDOC_URL
+              value: "/redoc"
+            - name: API_OPENAPI_URL
+              value: "/openapi.json"
+            - name: API_RATE_LIMIT_ENABLED
+              value: "false"
+            - name: API_RATE_LIMIT_STRATEGY
+              value: "fixed-window"
+            - name: API_RATE_LIMIT_DEFAULTS
+              value: "[100/minute]"
