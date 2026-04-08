@@ -1,0 +1,76 @@
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: bunkerweb-network-policy
+  namespace: bunkerweb
+spec:
+  endpointSelector: {}
+  ingress:
+    - fromEntities:
+        - world
+      toPorts:
+        - ports:
+            - port: "8443"
+    - fromEntities:
+        - ingress
+      toPorts:
+        - ports:
+            - port: "7000"
+    - fromEndpoints:
+        - matchLabels:
+            io.kubernetes.pod.namespace: cilium-gateway-system
+      toPorts:
+        - ports:
+            - port: "7000"
+    - fromEndpoints:
+        - {}
+  egress:
+    - toEndpoints:
+        - {}
+    - toEndpoints:
+        - matchLabels:
+            io.kubernetes.pod.namespace: immich
+            app.kubernetes.io/name: server
+      toPorts:
+        - ports:
+            - port: "2283"
+              protocol: TCP
+    - toFQDNs:
+        - matchName: api.github.com
+        - matchName: db-ip.com
+        - matchName: raw.githubusercontent.com
+        - matchName: api.bunkerweb.io
+        - matchPattern: "*.*.letsencrypt.org"
+        - matchPattern: "*.letsencrypt.org"
+      toPorts:
+        - ports:
+            - port: "443"
+    - toEndpoints:
+        - matchLabels:
+            io.kubernetes.pod.namespace: kube-system
+            k8s-app: kube-dns
+      toPorts:
+        - ports:
+            - port: "53"
+              protocol: UDP
+          rules:
+            dns:
+              - matchPattern: "*"
+    - toEndpoints:
+        - matchLabels:
+            io.kubernetes.pod.namespace: redis
+      toPorts:
+        - ports:
+            - port: "6379"
+    - toEntities:
+        - kube-apiserver
+    - toFQDNs:
+        - matchName: "mariadb.nullservers.com"
+      toPorts:
+        - ports:
+            - port: "3306"
+    - toCIDRSet:
+        - cidr: 172.16.0.30/24
+      toPorts:
+        - ports:
+            - port: "3306"

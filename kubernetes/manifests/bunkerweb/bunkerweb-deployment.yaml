@@ -1,0 +1,90 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bunkerweb
+  namespace: bunkerweb
+  labels:
+    helm.sh/chart: bunkerweb-1.0.16
+    app.kubernetes.io/name: bunkerweb
+    app.kubernetes.io/instance: bunkerweb
+    app.kubernetes.io/version: "1.6.9"
+    app.kubernetes.io/managed-by: Helm
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: bunkerweb
+      app.kubernetes.io/instance: bunkerweb
+      bunkerweb.io/component: "bunkerweb"
+  template:
+    metadata:
+      annotations:
+        # mandatory annotation
+        bunkerweb.io/INSTANCE: "yes"
+      labels:
+        helm.sh/chart: bunkerweb-1.0.16
+        app.kubernetes.io/name: bunkerweb
+        app.kubernetes.io/instance: bunkerweb
+        app.kubernetes.io/version: "1.6.9"
+        app.kubernetes.io/managed-by: Helm
+        bunkerweb.io/component: "bunkerweb"
+    spec:
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - weight: 1
+              podAffinityTerm:
+                topologyKey: kubernetes.io/hostname
+                labelSelector:
+                  matchLabels:
+                    bunkerweb.io/component: "bunkerweb"
+      containers:
+        # using bunkerweb as name is mandatory
+        - name: bunkerweb
+          image: docker.io/bunkerity/bunkerweb:1.6.9
+          imagePullPolicy: IfNotPresent
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - ALL
+            runAsGroup: 101
+            runAsUser: 101
+          ports:
+            - containerPort: 5000
+              name: bwapi
+            - containerPort: 8080
+            - containerPort: 8443
+          env:
+            # Mandatory for k8s integration
+            - name: KUBERNETES_MODE
+              value: "yes"
+            # DNS resolver
+            - name: DNS_RESOLVERS
+              value: "kube-dns.kube-system.svc.cluster.local"
+            # Internal subnet(s) + localhost
+            - name: API_WHITELIST_IP
+              value: "127.0.0.0/8 10.0.0.0/8 172.16.0.0/12 192.168.0.0/16"
+            - name: USE_REDIS
+              value: "yes"
+            - name: REDIS_HOST
+              value: "redis-headless.redis.svc.cluster.local"
+          livenessProbe:
+            exec:
+              command:
+                - /usr/share/bunkerweb/helpers/healthcheck.sh
+            failureThreshold: 3
+            initialDelaySeconds: 30
+            periodSeconds: 5
+            timeoutSeconds: 1
+          readinessProbe:
+            exec:
+              command:
+                - /usr/share/bunkerweb/helpers/healthcheck.sh
+                - ok
+            failureThreshold: 3
+            initialDelaySeconds: 30
+            periodSeconds: 1
+            timeoutSeconds: 1

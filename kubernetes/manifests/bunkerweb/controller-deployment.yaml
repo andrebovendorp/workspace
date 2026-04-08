@@ -1,0 +1,79 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: controller-bunkerweb
+  namespace: bunkerweb
+  labels:
+    helm.sh/chart: bunkerweb-1.0.16
+    app.kubernetes.io/name: bunkerweb
+    app.kubernetes.io/instance: bunkerweb
+    app.kubernetes.io/version: "1.6.9"
+    app.kubernetes.io/managed-by: Helm
+spec:
+  strategy:
+    type: Recreate
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: bunkerweb
+      app.kubernetes.io/instance: bunkerweb
+      bunkerweb.io/component: "controller"
+  template:
+    metadata:
+      labels:
+        helm.sh/chart: bunkerweb-1.0.16
+        app.kubernetes.io/name: bunkerweb
+        app.kubernetes.io/instance: bunkerweb
+        app.kubernetes.io/version: "1.6.9"
+        app.kubernetes.io/managed-by: Helm
+        bunkerweb.io/component: "controller"
+    spec:
+      serviceAccountName: bunkerweb
+      containers:
+        - name: bunkerweb-controller
+          image: docker.io/bunkerity/bunkerweb-autoconf:1.6.9
+          imagePullPolicy: IfNotPresent
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - ALL
+            runAsGroup: 101
+            runAsUser: 101
+          livenessProbe:
+            exec:
+              command:
+                - /usr/share/bunkerweb/helpers/healthcheck-autoconf.sh
+            failureThreshold: 3
+            initialDelaySeconds: 30
+            periodSeconds: 5
+            timeoutSeconds: 1
+          readinessProbe:
+            exec:
+              command:
+                - /usr/share/bunkerweb/helpers/healthcheck-autoconf.sh
+            failureThreshold: 3
+            initialDelaySeconds: 120
+            periodSeconds: 1
+            timeoutSeconds: 1
+          env:
+            # Mandatory for k8s integration
+            - name: KUBERNETES_MODE
+              value: "yes"
+            - name: KUBERNETES_REVERSE_PROXY_SUFFIX_START
+              value: "0"
+            - name: DATABASE_URI
+              valueFrom:
+                secretKeyRef:
+                  name: bunkerweb-credentials
+                  key: database-uri
+            - name: NAMESPACES
+              value: ""
+            - name: KUBERNETES_INGRESS_CLASS
+              value: ""
+            - name: KUBERNETES_DOMAIN_NAME
+              value: "cluster.local"
+            - name: KUBERNETES_IGNORE_ANNOTATIONS
+              value: ""
+            - name: BUNKERWEB_SERVICE_NAME
+              value: "bunkerweb-external"

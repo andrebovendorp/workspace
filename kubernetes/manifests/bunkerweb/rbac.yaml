@@ -1,0 +1,71 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: bunkerweb
+  namespace: bunkerweb
+  labels:
+    helm.sh/chart: bunkerweb-1.0.16
+    app.kubernetes.io/name: bunkerweb
+    app.kubernetes.io/instance: bunkerweb
+    app.kubernetes.io/version: "1.6.9"
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/component: controller
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: bunkerweb
+  labels:
+    helm.sh/chart: bunkerweb-1.0.16
+    app.kubernetes.io/name: bunkerweb
+    app.kubernetes.io/instance: bunkerweb
+    app.kubernetes.io/version: "1.6.9"
+    app.kubernetes.io/managed-by: Helm
+rules:
+  - apiGroups: [""]
+    resources: ["services", "pods", "configmaps", "secrets"]
+    verbs: ["get", "watch", "list"]
+  - apiGroups: ["networking.k8s.io"]
+    resources: ["ingresses"]
+    verbs: ["get", "watch", "list"]
+  - apiGroups: ["networking.k8s.io"]
+    resources: ["ingresses/status"]
+    verbs: ["get", "watch", "list", "patch"]
+  - apiGroups: ["gateway.networking.k8s.io"]
+    resources:
+      - gatewayclasses
+      - gatewayclasses/status
+      - gateways
+      - gateways/status
+      - httproutes
+      - httproutes/status
+      - tlsroutes
+      - tlsroutes/status
+      - tcproutes
+      - tcproutes/status
+      - udproutes
+      - udproutes/status
+      - grpcroutes
+      - grpcroutes/status
+      - referencegrants
+    verbs: ["get", "watch", "list", "patch", "update"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: bunkerweb
+  labels:
+    helm.sh/chart: bunkerweb-1.0.16
+    app.kubernetes.io/name: bunkerweb
+    app.kubernetes.io/instance: bunkerweb
+    app.kubernetes.io/version: "1.6.9"
+    app.kubernetes.io/managed-by: Helm
+subjects:
+  - kind: ServiceAccount
+    name: bunkerweb
+    namespace: bunkerweb
+    apiGroup: ""
+roleRef:
+  kind: ClusterRole
+  name: bunkerweb
+  apiGroup: rbac.authorization.k8s.io
