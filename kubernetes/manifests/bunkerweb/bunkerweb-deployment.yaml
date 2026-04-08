@@ -88,3 +88,11 @@ spec:
             initialDelaySeconds: 30
             periodSeconds: 1
             timeoutSeconds: 1
+          volumeMounts:
+            - name: wildcard-tls
+              mountPath: /etc/ssl/bunkerweb
+              readOnly: true
+      volumes:
+        - name: wildcard-tls
+          secret:
+            secretName: wildcard-nullservers-tls

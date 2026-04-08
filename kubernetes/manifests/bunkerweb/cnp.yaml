@@ -17,12 +17,6 @@ spec:
         - ports:
             - port: "7000"
     - fromEndpoints:
-        - matchLabels:
-            io.kubernetes.pod.namespace: cilium-gateway-system
-      toPorts:
-        - ports:
-            - port: "7000"
-    - fromEndpoints:
         - {}
   egress:
     - toEndpoints:

@@ -16,7 +16,7 @@ spec:
         io.kubernetes.pod.namespace: victoria-metrics
   - fromEndpoints:
     - matchLabels:
-        io.kubernetes.pod.namespace: cloudflare
+        io.kubernetes.pod.namespace: bunkerweb
     toPorts:
     - ports:
       - port: "2283"
