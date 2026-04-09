@@ -78,11 +78,3 @@ spec:
               value: "fixed-window"
             - name: API_RATE_LIMIT_DEFAULTS
               value: "[100/minute]"
-          volumeMounts:
-            - name: wildcard-tls
-              mountPath: /etc/ssl/bunkerweb
-              readOnly: true
-      volumes:
-        - name: wildcard-tls
-          secret:
-            secretName: wildcard-nullservers-tls

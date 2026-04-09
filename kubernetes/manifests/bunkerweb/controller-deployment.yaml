@@ -77,11 +77,3 @@ spec:
               value: ""
             - name: BUNKERWEB_SERVICE_NAME
               value: "bunkerweb-external"
-          volumeMounts:
-            - name: wildcard-tls
-              mountPath: /etc/ssl/bunkerweb
-              readOnly: true
-      volumes:
-        - name: wildcard-tls
-          secret:
-            secretName: wildcard-nullservers-tls

@@ -8,7 +8,6 @@ metadata:
     app.kubernetes.io/name: bunkerweb
     app.kubernetes.io/instance: bunkerweb
     app.kubernetes.io/version: "1.6.9"
-    app.kubernetes.io/managed-by: Helm
 spec:
   replicas: 1
   strategy:
@@ -28,7 +27,6 @@ spec:
         app.kubernetes.io/name: bunkerweb
         app.kubernetes.io/instance: bunkerweb
         app.kubernetes.io/version: "1.6.9"
-        app.kubernetes.io/managed-by: Helm
         bunkerweb.io/component: "bunkerweb"
     spec:
       affinity:
@@ -56,8 +54,12 @@ spec:
             - containerPort: 5000
               name: bwapi
             - containerPort: 8080
+              name: http
             - containerPort: 8443
+              name: https
           env:
+            - name: AUTO_REDIRECT_HTTP_TO_HTTPS
+              value: "no"
             # Mandatory for k8s integration
             - name: KUBERNETES_MODE
               value: "yes"
@@ -88,11 +90,3 @@ spec:
             initialDelaySeconds: 30
             periodSeconds: 1
             timeoutSeconds: 1
-          volumeMounts:
-            - name: wildcard-tls
-              mountPath: /etc/ssl/bunkerweb
-              readOnly: true
-      volumes:
-        - name: wildcard-tls
-          secret:
-            secretName: wildcard-nullservers-tls

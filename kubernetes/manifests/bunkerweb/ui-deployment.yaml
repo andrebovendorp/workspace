@@ -83,11 +83,3 @@ spec:
                   key: flask-secret
             - name: OVERRIDE_ADMIN_CREDS
               value: "no"
-          volumeMounts:
-            - name: wildcard-tls
-              mountPath: /etc/ssl/bunkerweb
-              readOnly: true
-      volumes:
-        - name: wildcard-tls
-          secret:
-            secretName: wildcard-nullservers-tls
