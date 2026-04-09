@@ -62,7 +62,11 @@ CloudflareD Tunnel has a 100MB upload size limit which is insufficient for certa
 
 **Issues Faced:**
 - Initial configuration of Bunkerweb comes with a service type `LoadBalancer` configured with `trafficPolicy: Local`, which apparently is a limitation by cilium version 1.19.2, which is the version used in the cluster. This configuration causes the service to be only accessible from the node where the pod is running, which is not ideal for a reverse proxy. The workaround was to change the service type to `ClusterIP` and use Cilium's Gatway API to expose the service externally, which allows for proper load balancing and high availability. It also enables hubble to properly monitor the traffic going through Bunkerweb, which is also a good addition to it. 
-Important to remember that, by default, Cilium API GW creates its `LoadBalancer` service with `trafficPolicy: Cluster`, which allows for proper load balancing across all nodes, and is the recommended configuration for services that need to be exposed externally.
+- Important to remember that, by default, Cilium API GW creates its `LoadBalancer` service with `trafficPolicy: Cluster`, which allows for proper load balancing across all nodes, but also removes Bunkerweb's IP address visibility, which can limit its WAF capabilities.
+
+Issues for reference:
+- https://github.com/cilium/cilium/issues/27800
+- https://github.com/cilium/cilium/issues/45252
 
 ### Stop Spreading Helm Charts as Default
 
