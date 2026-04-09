@@ -43,6 +43,27 @@ Overview of cross-domain architectural decisions. Each entry captures the ration
 
 ## Detailed Decision Records
 
+### Bypass CloudflareD Tunnel upload size limiation using Bunkerweb WAF
+**Decision Date:** 2026-04-10
+**Status:** Implemented
+
+**Summary:**
+CloudflareD Tunnel has a 100MB upload size limit which is insufficient for certain workloads, specially for large videos needed for media uploads and backuping with immich. This creates a realibility issue for users who need to upload large files through the tunnel.
+
+**Rationale:**
+- Need a WAF in front of exposed services for security
+- Bunkerweb can handle larger uploads and provides WAF capabilities
+- Cilium Network Policies can be used to restrict access to Bunkerweb, ensuring it only serves as a proxy for the intended services
+
+**Implementation:**
+- Deploy Bunkerweb as a reverse proxy in front of the affected services
+- Configure another Gateway to avoid exposing internal services to the public internet
+- Use Cilium policies to restrict access to Bunkerweb from the public internet and allow it to forward traffic to the internal services
+
+**Issues Faced:**
+- Initial configuration of Bunkerweb comes with a service type `LoadBalancer` configured with `trafficPolicy: Local`, which apparently is a limitation by cilium version 1.19.2, which is the version used in the cluster. This configuration causes the service to be only accessible from the node where the pod is running, which is not ideal for a reverse proxy. The workaround was to change the service type to `ClusterIP` and use Cilium's Gatway API to expose the service externally, which allows for proper load balancing and high availability. It also enables hubble to properly monitor the traffic going through Bunkerweb, which is also a good addition to it. 
+Important to remember that, by default, Cilium API GW creates its `LoadBalancer` service with `trafficPolicy: Cluster`, which allows for proper load balancing across all nodes, and is the recommended configuration for services that need to be exposed externally.
+
 ### Stop Spreading Helm Charts as Default
 
 **Decision Date:** 2024  

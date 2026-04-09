@@ -7,15 +7,11 @@ spec:
   endpointSelector: {}
   ingress:
     - fromEntities:
-        - world
-      toPorts:
-        - ports:
-            - port: "8443"
-    - fromEntities:
         - ingress
       toPorts:
         - ports:
             - port: "7000"
+            - port: "8080"
     - fromEndpoints:
         - {}
   egress:

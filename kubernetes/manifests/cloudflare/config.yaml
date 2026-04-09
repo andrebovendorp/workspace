@@ -27,12 +27,6 @@ data:
     # E.g. `cloudflared tunnel route dns example-tunnel tunnel.example.com`.
     ingress:
     # The first rule proxies traffic to the httpbin sample Service defined in app.yaml
-    - hostname: nullservers.com
-      service: http://nginx-service.bsk-lead.svc.cluster.local:80
-    - hostname: api.nullservers.com
-      service: http://bsk-api.bsk-api.svc.cluster.local:80
-    - hostname: photos.nullservers.com
-      service: http://immich-server.immich.svc.cluster.local:2283
     - hostname: bookshelf.nullservers.com
       service: http://audiobook.audiobook.svc.cluster.local:80
     - hostname: recipes.nullservers.com
@@ -43,14 +37,8 @@ data:
       service: http://authentik-server.authentik.svc.cluster.local:80
     - hostname: drive.nullservers.com
       service: http://nextcloud.nextcloud.svc.cluster.local:80
-    - hostname: rss.nullservers.com
-      service: http://freshrss.freshrss.svc.cluster.local:80
     - hostname: docs.nullservers.com
       service: http://collabora-collabora-online.collabora.svc.cluster.local:9980
-    - hostname: trips.nullservers.com
-      service: http://adventurelog-frontend.adventurelog.svc.cluster.local:80
-    - hostname: backend-trips.nullservers.com
-      service: http://adventurelog-backend.adventurelog.svc.cluster.local:80
     - hostname: watch.nullservers.com
       service: http://plex.plex.svc.cluster.local:80
     - hostname: notes.nullservers.com

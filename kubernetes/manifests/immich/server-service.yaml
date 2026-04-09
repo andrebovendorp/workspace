@@ -9,21 +9,27 @@ metadata:
     app.kubernetes.io/instance: immich
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: server
+  annotations:
+    bunkerweb.io/SERVER_NAME: "photos.nullservers.com"
+    bunkerweb.io/USE_REVERSE_PROXY: "yes"
+    bunkerweb.io/REVERSE_PROXY_URL: "/"
+    bunkerweb.io/REVERSE_PROXY_HOST: "http://immich-server.immich.svc.cluster.local:2283"
+    bunkerweb.io/AUTO_REDIRECT_HTTP_TO_HTTPS: "no"
 spec:
   type: ClusterIP
   ports:
-  - port: 2283
-    targetPort: http
-    protocol: TCP
-    name: http
-  - port: 8081
-    targetPort: metrics-api
-    protocol: TCP
-    name: metrics-api
-  - port: 8082
-    targetPort: metrics-ms
-    protocol: TCP
-    name: metrics-ms
+    - port: 2283
+      targetPort: http
+      protocol: TCP
+      name: http
+    - port: 8081
+      targetPort: metrics-api
+      protocol: TCP
+      name: metrics-api
+    - port: 8082
+      targetPort: metrics-ms
+      protocol: TCP
+      name: metrics-ms
   selector:
     app.kubernetes.io/instance: immich
     app.kubernetes.io/name: server

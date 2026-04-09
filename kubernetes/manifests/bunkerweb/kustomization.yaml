@@ -9,10 +9,11 @@ resources:
   - external-secret.yaml
   - wildcard-certificate.yaml
   - cnp.yaml
+  - bunkerweb-gateway.yaml
   - http-route.yaml
+  - httproute-bunkerweb-gateway.yaml
   - referencegrant.yaml
   - api-service.yaml
-  - bunkerweb-service-external.yaml
   - bunkerweb-service-internal.yaml
   - ui-service.yaml
   - api-deployment.yaml
