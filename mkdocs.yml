@@ -1,10 +1,10 @@
 site_name: Workspace Documentation
 site_description: Documentation for the workspace infrastructure and applications
-site_author: boveloco
-site_url: https://boveloco.github.io/workspace
+site_author: andrebovendorp
+site_url: https://andrebovendorp.github.io/workspace
 
-repo_name: boveloco/workspace
-repo_url: https://github.com/boveloco/workspace
+repo_name: andrebovendorp/workspace
+repo_url: https://github.com/andrebovendorp/workspace
 edit_uri: edit/main/docs/
 
 theme:
@@ -65,21 +65,9 @@ nav:
   - Observability: platform/observability.md
   - Non-Functional Requirements: platform/nfr.md
   - Risk Register: decisions/risk-register.md
-- Kubernetes:
-  - Overview: kubernetes/index.md
-  - K3s Implementation: kubernetes/k3s.md
-  - Networking (CNI): kubernetes/networking.md
-  - Storage (CSI): kubernetes/storage.md
-  - Load Balancing: kubernetes/load-balancing.md
-  - Applications: kubernetes/applications.md
-- Infrastructure:
-  - Overview: infrastructure/index.md
-  - Proxmox Platform: infrastructure/proxmox.md
-  - Networking: infrastructure/networking.md
-  - Storage: infrastructure/storage.md
 - Learning:
   - Overview: learning/index.md
-  - Research & Studies: learning/studies.md
+  - Research & Studies: decisions/studies.md
   - Training Workshops: learning/workshops.md
 
 extra:
