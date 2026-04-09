@@ -9,7 +9,6 @@ The learning section captures outcomes from technology evaluations, training pro
 ## Contents
 
 ### Research & Evaluations
-- **[Studies](studies.md)** - Technology evaluation outcomes and research findings
 - **[Workshops](workshops.md)** - Professional training programs and service offerings
 
 ## Purpose

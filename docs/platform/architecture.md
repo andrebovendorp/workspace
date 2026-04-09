@@ -80,8 +80,7 @@ Potential future enhancements: multi-server control plane, distributed storage l
 This architecture emphasizes operational simplicity, resource efficiency, and incremental hardening. Detailed implementation manifests are managed through GitOps and intentionally excluded here.
 
 Related pages:
-- [K3s Implementation](../kubernetes/k3s.md)
-- [Networking](../kubernetes/networking.md)
-- [Storage](../kubernetes/storage.md)
-- [Load Balancing](../kubernetes/load-balancing.md)
+- [NFR](nfr.md)
+- [Decisions](decisions.md)
+- [Observability](observability.md)
 - [Security Architecture](security.md)
