@@ -40,17 +40,17 @@ Comprehensive documentation is available at **[boveloco.github.io/workspace](htt
 
 ### Application Layer
 ```
-🏠 Home & Productivity        📱 Media & Entertainment       🔧 Development & Ops
-├── Home Assistant          ├── Plex Media Server          ├── GitOps (Flux)
-├── Nextcloud               ├── Immich Photo Management    ├── Container Registry
-├── Collabora Office        ├── Audiobook Server           ├── CI/CD Pipelines
-└── Recipe Management       └── QBittorrent                └── Monitoring Stack
+🏠 Home & Productivity      🔧 Development & Ops    🔐 Security & Infrastructure
+├── Home Assistant          ├── GitOps (Flux)        ├── Authentik SSO            
+├── Nextcloud               ├── Container Registry   ├── AdGuard DNS Filtering
+├── Collabora Office        ├── CI/CD Pipelines      ├── External DNS
+└── Recipe Management       └── Monitoring Stack     └── Backup Solutions
 
-🔐 Security & Infrastructure  🗄️ Data & Databases
-├── Authentik SSO            ├── PostgreSQL Cluster
-├── AdGuard DNS Filtering    ├── MongoDB
-├── External DNS             ├── Redis
-└── Backup Solutions         └── Automated Backups
+🗄️ Data & Databases
+├── PostgreSQL Cluster
+├── MongoDB
+├── Redis
+└── Automated Backups
 ```
 
 ## 📊 Key Metrics & Features
