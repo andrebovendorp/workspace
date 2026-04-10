@@ -41,6 +41,7 @@
 
 ### Deployment Method
 - [ ] GitOps (Flux will automatically deploy)
+- [ ] Workflow Deployment
 - [ ] Manual deployment required
 - [ ] Infrastructure change (Ansible/Terraform)
 - [ ] No deployment needed
