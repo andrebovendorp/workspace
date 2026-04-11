@@ -21,6 +21,6 @@ commonLabels:
 
 images:
 - name: ghcr.io/immich-app/immich-server
-  newTag: v2.7.3
+  newTag: v2.7.4
 - name: ghcr.io/immich-app/immich-machine-learning
-  newTag: v2.7.3
+  newTag: v2.7.4
