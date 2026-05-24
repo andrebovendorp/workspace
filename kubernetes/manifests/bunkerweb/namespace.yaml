@@ -1,8 +1,0 @@
-apiVersion: v1
-kind: Namespace
-metadata:
-  name: bunkerweb
-  labels:
-    name: bunkerweb
-    app.kubernetes.io/name: bunkerweb
-    app.kubernetes.io/managed-by: kubectl
