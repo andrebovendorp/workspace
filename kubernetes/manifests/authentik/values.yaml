@@ -1,22 +1,24 @@
 authentik:
   global:
-    deploymentStrategy: 
+    image:
+      tag: 2026.5.2
+    deploymentStrategy:
       type: Recreate
     topologySpreadConstraints:
-    - maxSkew: 1
-      topologyKey: "kubernetes.io/hostname"
-      whenUnsatisfiable: DoNotSchedule
-      labelSelector:
-        matchLabels:
-          app.kubernetes.io/name: authentik
-          app.kubernetes.io/component: server
-    - maxSkew: 1
-      topologyKey: "kubernetes.io/hostname"
-      whenUnsatisfiable: DoNotSchedule
-      labelSelector:
-        matchLabels:
-          app.kubernetes.io/name: authentik
-          app.kubernetes.io/component: worker
+      - maxSkew: 1
+        topologyKey: "kubernetes.io/hostname"
+        whenUnsatisfiable: DoNotSchedule
+        labelSelector:
+          matchLabels:
+            app.kubernetes.io/name: authentik
+            app.kubernetes.io/component: server
+      - maxSkew: 1
+        topologyKey: "kubernetes.io/hostname"
+        whenUnsatisfiable: DoNotSchedule
+        labelSelector:
+          matchLabels:
+            app.kubernetes.io/name: authentik
+            app.kubernetes.io/component: worker
   securityContext:
     fsGroup: 1000
     runAsUser: 1000
@@ -40,37 +42,37 @@ authentik:
   worker:
     replicas: 1
     volumes:
-    - name: authentik-credentials
-      secret:
-        secretName: authentik-credentials
+      - name: authentik-credentials
+        secret:
+          secretName: authentik-credentials
     volumeMounts:
-    - name: authentik-credentials
-      mountPath: /authentik-credentials
-      readOnly: true
+      - name: authentik-credentials
+        mountPath: /authentik-credentials
+        readOnly: true
     metrics:
       enabled: true
   server:
     replicas: 2
     env:
-    - name: AUTHENTIK_DISABLE_STARTUP_ANALYTICS
-      value: "true"
-    - name: AUTHENTIK_ERROR_REPORTING__ENABLED
-      value: "false"
-    - name: AUTHENTIK_DISABLE_UPDATE_CHECK
-      value: "true"
+      - name: AUTHENTIK_DISABLE_STARTUP_ANALYTICS
+        value: "true"
+      - name: AUTHENTIK_ERROR_REPORTING__ENABLED
+        value: "false"
+      - name: AUTHENTIK_DISABLE_UPDATE_CHECK
+        value: "true"
     volumes:
-    - name: authentik-credentials
-      secret:
-        secretName: authentik-credentials
-    - name: authentik-data-nfs
-      persistentVolumeClaim:
-        claimName: authentik-data-nfs
+      - name: authentik-credentials
+        secret:
+          secretName: authentik-credentials
+      - name: authentik-data-nfs
+        persistentVolumeClaim:
+          claimName: authentik-data-nfs
     volumeMounts:
-    - name: authentik-credentials
-      mountPath: /authentik-credentials
-      readOnly: true
-    - name: authentik-data-nfs
-      mountPath: /data
+      - name: authentik-credentials
+        mountPath: /authentik-credentials
+        readOnly: true
+      - name: authentik-data-nfs
+        mountPath: /data
     metrics:
       enabled: true
     serviceMonitor:
@@ -82,11 +84,11 @@ authentik:
         cert-manager.io/cluster-issuer: letsencrypt-prod
       ingressClassName: cilium
       hosts:
-      - auth.nullservers.com
-      tls:
-      - secretName: authentik-ingress-tls
-        hosts:
         - auth.nullservers.com
+      tls:
+        - secretName: authentik-ingress-tls
+          hosts:
+            - auth.nullservers.com
   geoip:
     enabled: false
     existingSecret:
