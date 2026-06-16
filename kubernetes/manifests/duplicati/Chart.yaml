@@ -4,6 +4,6 @@ description: Backup service with a web interface
 version: 0.1.14
 type: application
 dependencies:
-- name: common
-  version: 0.2.3
-  repository: https://andrebovendorp.github.io/charts/
+  - name: common
+    version: 0.2.4
+    repository: https://andrebovendorp.github.io/charts/
