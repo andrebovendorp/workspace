@@ -43,25 +43,11 @@ spec:
     - ports:
       - port: "5432"
 
-  # Allow access to MongoDB (if configured)
-  - toFQDNs:
-    - matchName: "mongodb.nullservers.com"
-    toPorts:
-    - ports:
-      - port: "27017"
-        protocol: TCP
-  - toCIDRSet:
-    - cidr: 172.16.0.10/32
-    toPorts:
-    - ports:
-      - port: "27017"
-        protocol: TCP
-
   # Allow access to FTP server (if configured)
   - toFQDNs:
-    - matchName: "storage.nullservers.com"
+    - matchName: "ftp.nullservers.com"
   - toCIDRSet:
-    - cidr: 192.168.22.222/32
+    - cidr: 192.168.20.56/32
 
   # Allow access to Telegram API
   - toFQDNs:
