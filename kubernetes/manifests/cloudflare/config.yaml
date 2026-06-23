@@ -35,10 +35,6 @@ data:
       service: http://glance.glance.svc.cluster.local:80
     - hostname: auth.nullservers.com
       service: http://authentik-server.authentik.svc.cluster.local:80
-    - hostname: drive.nullservers.com
-      service: http://nextcloud.nextcloud.svc.cluster.local:80
-    - hostname: docs.nullservers.com
-      service: http://collabora-collabora-online.collabora.svc.cluster.local:9980
     - hostname: watch.nullservers.com
       service: http://plex.plex.svc.cluster.local:80
     - hostname: photos.nullservers.com

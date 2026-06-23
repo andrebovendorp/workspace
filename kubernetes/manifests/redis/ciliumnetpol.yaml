@@ -16,8 +16,6 @@ spec:
             io.kubernetes.pod.namespace: external-secrets
         - matchLabels:
             io.kubernetes.pod.namespace: authentik
-        - matchLabels:
-            io.kubernetes.pod.namespace: nextcloud
   egress:
     - toEntities:
         - cluster
