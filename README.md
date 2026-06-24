@@ -42,13 +42,12 @@ Comprehensive documentation is available at **[boveloco.github.io/workspace](htt
 ```
 🏠 Home & Productivity      🔧 Development & Ops    🔐 Security & Infrastructure
 ├── Home Assistant          ├── GitOps (Flux)        ├── Authentik SSO            
-├── Nextcloud               ├── Container Registry   ├── AdGuard DNS Filtering
-├── Collabora Office        ├── CI/CD Pipelines      ├── External DNS
-└── Recipe Management       └── Monitoring Stack     └── Backup Solutions
+└── Recipe Management       ├── Container Registry   ├── AdGuard DNS Filtering
+                            ├── CI/CD Pipelines      ├── External DNS
+                            └── Monitoring Stack     └── Backup Solutions
 
 🗄️ Data & Databases
 ├── PostgreSQL Cluster
-├── MongoDB
 ├── Redis
 └── Automated Backups
 ```
