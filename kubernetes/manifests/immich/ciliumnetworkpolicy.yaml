@@ -44,11 +44,14 @@ spec:
         - matchName: api.github.com
         - matchName: version.immich.cloud
         - matchName: auth.nullservers.com
+        ## Machine learning models
         - matchName: huggingface.co
-        - matchName: cas-server.xethub.hf.co
         - matchPattern: "*.modelscope.cn"
         - matchName: "modelscope.cn"
-        - matchName: transfer.xethub.hf.co
+        - matchPattern: "*.*.*.*.hf.co"
+        - matchPattern: "*.*.*.hf.co"
+        - matchPattern: "*.*.hf.co"
+        - matchPattern: "*.hf.co"
       toPorts:
         - ports:
             - port: "443"
