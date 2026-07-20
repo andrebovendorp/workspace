@@ -32,7 +32,7 @@ spec:
       enableServiceLinks: true
       containers:
         - name: immich-machine-learning
-          image: ghcr.io/immich-app/immich-machine-learning:v2.5.5
+          image: ghcr.io/immich-app/immich-machine-learning:v2.5.5-openvino
           imagePullPolicy: IfNotPresent
           env:
             - name: DB_DATABASE_NAME
@@ -67,6 +67,8 @@ spec:
           volumeMounts:
             - name: cache
               mountPath: /cache
+            - name: device-dri
+              mountPath: /dev/dri
           livenessProbe:
             failureThreshold: 3
             httpGet:
@@ -95,9 +97,15 @@ spec:
             requests:
               memory: "1Gi"
               cpu: "250m"
+              gpu.intel.com/i915: "1"
             limits:
-              cpu: 3
+              cpu: "3"
               memory: "2Gi"
+              gpu.intel.com/i915: "1"
       volumes:
         - name: cache
           emptyDir: {}
+        - name: device-dri
+          hostPath:
+            path: /dev/dri
+            type: Directory
