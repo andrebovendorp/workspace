@@ -1,9 +1,9 @@
 apiVersion: v2
 name: Audiobook
 description: Audiobook
-version: 0.1.20
+version: 0.1.21
 type: application
 dependencies:
-- name: common
-  version: 0.2.3
-  repository: https://andrebovendorp.github.io/charts/
+  - name: common
+    version: 0.2.3
+    repository: https://andrebovendorp.github.io/charts/
