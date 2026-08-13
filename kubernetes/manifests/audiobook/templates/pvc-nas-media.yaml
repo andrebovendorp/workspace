@@ -27,4 +27,4 @@ spec:
     volumeHandle: pv-audiobook-media-nas
     volumeAttributes:
       server: nas.nullservers.com
-      share: /data/media/audiobooks
+      share: /mnt/media/audiobooks
