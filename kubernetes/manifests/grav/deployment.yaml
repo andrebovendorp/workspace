@@ -1,0 +1,97 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: grav
+  namespace: grav
+  labels:
+    app: grav
+spec:
+  revisionHistoryLimit: 3
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: grav
+  template:
+    metadata:
+      labels:
+        app: grav
+    spec:
+      securityContext:
+        fsGroup: 1000
+        runAsGroup: 1000
+        runAsNonRoot: true
+        runAsUser: 1000
+      containers:
+      - name: grav-container
+        image: docker.io/linuxserver/grav:latest
+        ports:
+        - containerPort: 80
+          protocol: TCP
+        securityContext:
+          allowPrivilegeEscalation: false
+          privileged: false
+          readOnlyRootFilesystem: false
+        env:
+        - name: PUID
+          value: "1000"
+        - name: PGID
+          value: "1000"
+        - name: TZ
+          value: "Europe/Amsterdam"
+        resources:
+          requests:
+            memory: 256Mi
+            cpu: 250m
+          limits:
+            memory: 512Mi
+            cpu: 500m
+        startupProbe:
+          httpGet:
+            path: /
+            port: 80
+            scheme: HTTP
+            httpHeaders:
+            - name: Host
+              value: blog.nullservers.com
+          initialDelaySeconds: 30
+          periodSeconds: 10
+          timeoutSeconds: 5
+          failureThreshold: 30
+          successThreshold: 1
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 80
+            scheme: HTTP
+            httpHeaders:
+            - name: Host
+              value: blog.nullservers.com
+          initialDelaySeconds: 30
+          periodSeconds: 30
+          timeoutSeconds: 5
+          failureThreshold: 3
+          successThreshold: 1
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 80
+            scheme: HTTP
+            httpHeaders:
+            - name: Host
+              value: blog.nullservers.com
+          initialDelaySeconds: 5
+          periodSeconds: 10
+          timeoutSeconds: 5
+          failureThreshold: 3
+          successThreshold: 1
+        volumeMounts:
+        - name: grav-data
+          mountPath: /config
+      volumes:
+      - name: grav-data
+        persistentVolumeClaim:
+          claimName: grav-data-pvc
+      imagePullSecrets:
+      - name: dockerhub-token

@@ -60,6 +60,7 @@ nav:
 - Platform:
   - Overview: platform/index.md
   - Architecture: platform/architecture.md
+  - Grav Deployment: platform/grav.md
   - Decisions: platform/decisions.md
   - Security: platform/security.md
   - Observability: platform/observability.md

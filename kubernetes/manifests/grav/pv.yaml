@@ -1,0 +1,31 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: pv-grav-data
+spec:
+  capacity:
+    storage: 10Gi
+  accessModes:
+  - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: nfs-retain
+  csi:
+    driver: nfs.csi.k8s.io
+    volumeHandle: grav-nfs-retain
+    volumeAttributes:
+      server: nfs.nullservers.com
+      share: /data/kubernetes-retain/grav-data
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: grav-data-pvc
+  namespace: grav
+spec:
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 10Gi
+  storageClassName: nfs-retain
+  volumeName: pv-grav-data

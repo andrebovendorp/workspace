@@ -26,6 +26,8 @@ spec:
         - matchLabels:
             io.kubernetes.pod.namespace: recipes
         - matchLabels:
+            io.kubernetes.pod.namespace: grav
+        - matchLabels:
             io.kubernetes.pod.namespace: glance
         - matchLabels:
             io.kubernetes.pod.namespace: audiobook
@@ -33,10 +35,6 @@ spec:
             io.kubernetes.pod.namespace: immich
         - matchLabels:
             io.kubernetes.pod.namespace: authentik
-        - matchLabels:
-            io.kubernetes.pod.namespace: collabora
-        - matchLabels:
-            io.kubernetes.pod.namespace: adventurelog
         - matchLabels:
             io.kubernetes.pod.namespace: plex
         - matchLabels:
