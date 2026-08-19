@@ -8,6 +8,7 @@ The platform consists of integrated systems providing container orchestration, o
 
 ### Core Architecture
 - **[Architecture](architecture.md)** - High-level platform design and component integration
+- **[Grav Deployment](grav.md)** - Grav CMS deployment model and rollout runbook
 - **[Decisions](decisions.md)** - Architectural decisions and technical choices with rationale
 - **[Non-Functional Requirements](nfr.md)** - Performance targets, constraints, and operational requirements
 
