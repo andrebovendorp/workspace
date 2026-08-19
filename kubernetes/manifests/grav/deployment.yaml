@@ -20,12 +20,9 @@ spec:
     spec:
       securityContext:
         fsGroup: 1000
-        runAsGroup: 1000
-        runAsNonRoot: true
-        runAsUser: 1000
       containers:
       - name: grav-container
-        image: docker.io/linuxserver/grav:latest
+        image: lscr.io/linuxserver/grav:latest
         ports:
         - containerPort: 80
           protocol: TCP

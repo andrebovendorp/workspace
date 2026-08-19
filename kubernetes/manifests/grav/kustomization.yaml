@@ -6,6 +6,8 @@ resources:
 - pv.yaml
 - service.yaml
 - deployment.yaml
+- hpa.yaml
+- dnsendpoint.yaml
 - cnp.yaml
 - dockerhub-token.yaml
 - http-route.yaml
