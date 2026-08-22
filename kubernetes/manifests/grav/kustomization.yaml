@@ -2,15 +2,14 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
 resources:
-- namespace.yaml
-- pv.yaml
-- service.yaml
-- deployment.yaml
-- hpa.yaml
-- dnsendpoint.yaml
-- cnp.yaml
-- dockerhub-token.yaml
-- http-route.yaml
+  - namespace.yaml
+  - pv.yaml
+  - service.yaml
+  - deployment.yaml
+  - hpa.yaml
+  - cnp.yaml
+  - dockerhub-token.yaml
+  - http-route.yaml
 
 commonLabels:
   app: grav
@@ -19,5 +18,5 @@ commonLabels:
 namespace: grav
 
 images:
-- name: docker.io/linuxserver/grav
-  newTag: "2.0.19"
+  - name: docker.io/linuxserver/grav
+    newTag: "2.0.19"
