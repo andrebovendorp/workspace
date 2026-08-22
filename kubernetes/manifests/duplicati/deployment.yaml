@@ -20,7 +20,7 @@ spec:
         runAsNonRoot: true
         runAsUser: 1000
         runAsGroup: 1000
-        fsGroup: 1000
+        fsGroup: 0
       nodeSelector:
         kubernetes.io/hostname: slave01
       containers:
