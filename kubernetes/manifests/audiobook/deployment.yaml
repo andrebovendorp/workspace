@@ -1,0 +1,60 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: audiobook
+  namespace: audiobook
+  labels:
+    app: audiobook
+spec:
+  revisionHistoryLimit: 3
+  replicas: 1
+  selector:
+    matchLabels:
+      app: audiobook
+  template:
+    metadata:
+      labels:
+        app: audiobook
+    spec:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
+      nodeSelector:
+        kubernetes.io/hostname: slave01
+      containers:
+        - name: audiobook-container
+          image: ghcr.io/advplyr/audiobookshelf:latest
+          securityContext:
+            allowPrivilegeEscalation: false
+            privileged: false
+            readOnlyRootFilesystem: true
+          ports:
+            - containerPort: 80
+          resources:
+            requests:
+              memory: 64Mi
+              cpu: 250m
+            limits:
+              memory: 1Gi
+              cpu: 500m
+          volumeMounts:
+            - name: audiobook-config-nfs
+              mountPath: /config
+            - name: audiobook-data-nfs
+              mountPath: /metadata/items
+            - name: audiobook-media-nas
+              mountPath: /audiobooks
+      imagePullSecrets:
+        - name: dockerhub-token
+      volumes:
+        - name: audiobook-config-nfs
+          persistentVolumeClaim:
+            claimName: audiobook-config-nfs
+        - name: audiobook-data-nfs
+          persistentVolumeClaim:
+            claimName: audiobook-data-nfs
+        - name: audiobook-media-nas
+          persistentVolumeClaim:
+            claimName: audiobook-media-nas

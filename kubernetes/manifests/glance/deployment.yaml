@@ -1,0 +1,55 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: glance
+  namespace: glance
+  labels:
+    app: glance
+spec:
+  revisionHistoryLimit: 3
+  replicas: 2
+  selector:
+    matchLabels:
+      app: glance
+  template:
+    metadata:
+      labels:
+        app: glance
+    spec:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
+      containers:
+        - name: glance-container
+          image: glanceapp/glance
+          securityContext:
+            allowPrivilegeEscalation: false
+            privileged: false
+            readOnlyRootFilesystem: true
+          ports:
+            - containerPort: 8080
+          resources:
+            requests:
+              memory: 64Mi
+              cpu: 50m
+            limits:
+              memory: 256Mi
+              cpu: 200m
+          env:
+            - name: PUID
+              value: "1000"
+            - name: PGID
+              value: "1000"
+          volumeMounts:
+            - name: glance
+              mountPath: /app/config/glance.yml
+              subPath: glance.yml
+              readOnly: true
+      imagePullSecrets:
+        - name: dockerhub-token
+      volumes:
+        - name: glance
+          configMap:
+            name: glance

@@ -1,0 +1,23 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+  - namespace.yaml
+  - pvc-nas-media.yaml
+  - pvc-nfs.yaml
+  - service.yaml
+  - deployment.yaml
+  - cnp.yaml
+  - dockerhub-token.yaml
+  - http-route.yaml
+  - referencegrant.yaml
+
+commonLabels:
+  app: audiobook
+  component: audiobook-app
+
+namespace: audiobook
+
+images:
+  - name: ghcr.io/advplyr/audiobookshelf
+    newTag: "2.36.0"
