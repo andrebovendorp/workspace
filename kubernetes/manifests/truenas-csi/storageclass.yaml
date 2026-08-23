@@ -1,0 +1,13 @@
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: truenas-nfs
+provisioner: csi.truenas.io
+parameters:
+  protocol: "nfs"
+  pool: "media"
+  compression: "lz4"
+  sync: "standard"
+allowVolumeExpansion: true
+reclaimPolicy: Delete
+volumeBindingMode: Immediate

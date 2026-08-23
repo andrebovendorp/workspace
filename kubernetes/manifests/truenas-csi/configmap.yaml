@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: truenas-csi-config
+  namespace: truenas-csi
+data:
+  truenasURL: wss://truenas.nullservers.com
+  truenasInsecure: "true"
+  defaultPool: media
+  nfsServer: truenas.nullservers.com
+  iscsiPortal: truenas.nullservers.com:3260

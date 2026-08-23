@@ -1,0 +1,23 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+  - namespace.yaml
+  - serviceaccount-controller.yaml
+  - serviceaccount-node.yaml
+  - clusterrole-controller.yaml
+  - clusterrolebinding-controller.yaml
+  - clusterrole-node.yaml
+  - clusterrolebinding-node.yaml
+  - csidriver.yaml
+  - externalsecret-credentials.yaml
+  - configmap.yaml
+  - deployment-controller.yaml
+  - daemonset-node.yaml
+  - storageclass.yaml
+
+namespace: truenas-csi
+
+commonLabels:
+  app: truenas-csi
+  component: storage-csi
