@@ -5,7 +5,7 @@ metadata:
 provisioner: csi.truenas.io
 parameters:
   protocol: "nfs"
-  pool: "media"
+  pool: "nvme"
   compression: "lz4"
   sync: "standard"
 allowVolumeExpansion: true
