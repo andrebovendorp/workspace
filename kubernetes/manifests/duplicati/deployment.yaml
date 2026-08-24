@@ -18,10 +18,6 @@ spec:
     spec:
       securityContext:
         fsGroupChangePolicy: "OnRootMismatch"
-        runAsNonRoot: true
-        runAsUser: 1000
-        runAsGroup: 1000
-        fsGroup: 0
       nodeSelector:
         kubernetes.io/hostname: slave01
       containers:
@@ -29,9 +25,6 @@ spec:
           image: linuxserver/duplicati:2.3.0
           securityContext:
             fsGroupChangePolicy: "OnRootMismatch"
-            allowPrivilegeEscalation: false
-            privileged: false
-            readOnlyRootFilesystem: true
           ports:
             - containerPort: 8200
           resources:
