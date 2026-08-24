@@ -6,6 +6,6 @@ metadata:
 data:
   truenasURL: wss://truenas.nullservers.com
   truenasInsecure: "true"
-  defaultPool: media
+  defaultPool: nvme
   nfsServer: truenas.nullservers.com
   iscsiPortal: truenas.nullservers.com:3260
