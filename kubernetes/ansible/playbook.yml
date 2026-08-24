@@ -46,6 +46,13 @@
         - net-tools
         - iptables
         - nfs-common
+        - open-iscsi
+
+    - name: Ensure iscsid is enabled and running
+      service:
+        name: iscsid
+        state: started
+        enabled: yes
 
     - name: Deploy kubelet config template
       template:
