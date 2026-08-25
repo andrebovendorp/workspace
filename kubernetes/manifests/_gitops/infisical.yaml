@@ -1,0 +1,17 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: infisical
+  namespace: infisical
+spec:
+  interval: 1h
+  chart:
+    spec:
+      chart: kubernetes/manifests/infisical
+      sourceRef:
+        kind: GitRepository
+        name: workspace
+        namespace: flux-system
+      version: ">=0.1.0"
+
+  values:

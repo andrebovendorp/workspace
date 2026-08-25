@@ -1,2 +1,13 @@
 external-secrets:
   installCRDs: true
+
+infisical:
+  hostAPI: http://infisical.infisical.svc.cluster.local:8080/api
+  projectSlug: platform
+  environmentSlug: prod
+  secretsPath: /
+  recursive: false
+  authSecret:
+    name: infisical-universal-auth
+    clientIdKey: client-id
+    clientSecretKey: client-secret

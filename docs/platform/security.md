@@ -12,7 +12,7 @@ Provide baseline protection (confidentiality, integrity, availability) with mini
 | Identity & Auth | Central auth, SSO, MFA capable | Authentik | Lightweight vs heavier Keycloak; chosen for simplicity |
 | Access (RBAC) | Least-privilege namespace & role scoping | Kubernetes RBAC, ServiceAccounts | Namespace admin cluster role pattern |
 | Network Segmentation | Policy-driven isolation | Cilium Network Policies (deny-by-default model) | Unified CNI + policy engine |
-| Secrets Management | External source sync, minimal plaintext | External Secrets Operator + secret store (future) | Avoid manual secret drift |
+| Secrets Management | External source sync, minimal plaintext | External Secrets Operator + Infisical ClusterSecretStore | Avoid manual secret drift |
 | Certificates | Automated lifecycle | cert-manager (ACME) | Reduce manual renewal risk |
 | Runtime Controls | Container isolation & security baseline | containerd + default seccomp/AppArmor (future hardening) | Favor simplicity initially |
 | Data Encryption | In-transit TLS, at-rest selective | TLS ingress termination; ZFS checksums & optional encryption | Encryption where value-add |
@@ -33,7 +33,7 @@ Future Considerations: Add short-lived credentials issuance and audit dashboard.
 Future Considerations: Expand policy coverage to 100% namespaces; implement egress controls for supply-chain protection.
 
 ## Secrets & Certificates
-- External Secrets Operator sync model: source-of-truth outside cluster (future integration with vault/password store).
+- External Secrets Operator sync model: source-of-truth outside cluster via Infisical ClusterSecretStore (transition from 1Password in progress).
 - All external ingress endpoints terminate TLS (ACME), internal mTLS not yet required (trade-off simplicity vs complexity).
 
 Future Considerations: Evaluate secret rotation automation & in-cluster encryption provider if threat model tightens.

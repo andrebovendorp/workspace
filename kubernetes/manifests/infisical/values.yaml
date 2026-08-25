@@ -1,0 +1,27 @@
+infisical-standalone:
+  infisical:
+    replicaCount: 2
+    kubeSecretRef: infisical-secrets
+    resources:
+      requests:
+        cpu: 100m
+        memory: 256Mi
+      limits:
+        cpu: 500m
+        memory: 1Gi
+
+  ingress:
+    enabled: false
+
+  postgresql:
+    enabled: false
+
+  redis:
+    enabled: false
+
+httpRoute:
+  enabled: true
+  hostname: infisical.nullservers.com
+
+secrets:
+  useExternalSecret: true

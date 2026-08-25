@@ -1,0 +1,50 @@
+{{- if .Values.secrets.useExternalSecret }}
+apiVersion: external-secrets.io/v1
+kind: ExternalSecret
+metadata:
+  name: infisical-secrets
+  namespace: {{ .Release.Namespace }}
+spec:
+  secretStoreRef:
+    kind: ClusterSecretStore
+    name: onepassword
+  target:
+    creationPolicy: Owner
+    name: infisical-secrets
+  data:
+    - secretKey: AUTH_SECRET
+      remoteRef:
+        conversionStrategy: Default
+        metadataPolicy: None
+        key: infisical-secrets
+        property: AUTH_SECRET
+        decodingStrategy: None
+    - secretKey: ENCRYPTION_KEY
+      remoteRef:
+        conversionStrategy: Default
+        metadataPolicy: None
+        key: infisical-secrets
+        property: ENCRYPTION_KEY
+        decodingStrategy: None
+    - secretKey: DB_CONNECTION_URI
+      remoteRef:
+        conversionStrategy: Default
+        metadataPolicy: None
+        key: infisical-secrets
+        property: DB_CONNECTION_URI
+        decodingStrategy: None
+    - secretKey: REDIS_URL
+      remoteRef:
+        conversionStrategy: Default
+        metadataPolicy: None
+        key: infisical-secrets
+        property: REDIS_URL
+        decodingStrategy: None
+    - secretKey: SITE_URL
+      remoteRef:
+        conversionStrategy: Default
+        metadataPolicy: None
+        key: infisical-secrets
+        property: SITE_URL
+        decodingStrategy: None
+{{- end }}
