@@ -1,17 +1,18 @@
 infisical-standalone:
   infisical:
-    replicaCount: 2
+    replicaCount: 1
     kubeSecretRef: infisical-secrets
     resources:
       requests:
         cpu: 100m
         memory: 256Mi
       limits:
-        cpu: 500m
         memory: 1Gi
 
   ingress:
     enabled: false
+    nginx:
+      enabled: false
 
   postgresql:
     enabled: false
