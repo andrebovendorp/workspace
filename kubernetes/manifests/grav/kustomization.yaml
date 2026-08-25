@@ -19,4 +19,4 @@ namespace: grav
 
 images:
   - name: docker.io/linuxserver/grav
-    newTag: "2.0.19"
+    newTag: "2.0.21"
