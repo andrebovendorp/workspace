@@ -4,23 +4,24 @@ kind: Kustomization
 namespace: immich
 
 resources:
-- ciliumnetworkpolicy.yaml
-- externalsecret.yaml
-- http-route.yaml
-- machine-learning-deployment.yaml
-- machine-learning-service.yaml
-- pvc-nfs.yaml
-- referencegrant.yaml
-- server-deployment.yaml
-- server-service.yaml
-- servicemonitor.yaml
+  - ciliumnetworkpolicy.yaml
+  - externalsecret.yaml
+  - externalsecret-infisical.yaml
+  - http-route.yaml
+  - machine-learning-deployment.yaml
+  - machine-learning-service.yaml
+  - pvc-nfs.yaml
+  - referencegrant.yaml
+  - server-deployment.yaml
+  - server-service.yaml
+  - servicemonitor.yaml
 
 commonLabels:
   app: immich
   component: immich-app
 
 images:
-- name: ghcr.io/immich-app/immich-server
-  newTag: v3.1.0
-- name: ghcr.io/immich-app/immich-machine-learning
-  newTag: v3.1.0
+  - name: ghcr.io/immich-app/immich-server
+    newTag: v3.1.0
+  - name: ghcr.io/immich-app/immich-machine-learning
+    newTag: v3.1.0

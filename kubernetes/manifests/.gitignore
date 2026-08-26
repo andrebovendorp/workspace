@@ -1,2 +1,3 @@
 *.secret
 *.lock
+external-secrets/infisical-universal-auth.yaml.secret

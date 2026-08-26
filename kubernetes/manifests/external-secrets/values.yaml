@@ -2,8 +2,8 @@ external-secrets:
   installCRDs: true
 
 infisical:
-  hostAPI: http://infisical.infisical.svc.cluster.local:8080/api
-  projectSlug: platform
+  hostAPI: http://infisical-infisical-standalone-infisical.infisical.svc.cluster.local:8080/api
+  projectSlug: nullservers-pplv
   environmentSlug: prod
   secretsPath: /
   recursive: false
