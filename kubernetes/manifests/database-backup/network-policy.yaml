@@ -13,60 +13,68 @@ metadata:
 spec:
   endpointSelector: {}
   ingress:
-  - {}
+    - {}
   egress:
-  # Allow DNS resolution
-  - toEndpoints:
-    - matchLabels:
-        io.kubernetes.pod.namespace: kube-system
-        k8s-app: kube-dns
-    toPorts:
-    - ports:
-      - port: "53"
-        protocol: UDP
-      rules:
-        dns:
-        - matchPattern: "*"
+    # Allow DNS resolution
+    - toEndpoints:
+        - matchLabels:
+            io.kubernetes.pod.namespace: kube-system
+            k8s-app: kube-dns
+      toPorts:
+        - ports:
+            - port: "53"
+              protocol: UDP
+          rules:
+            dns:
+              - matchPattern: "*"
 
-  # Allow access to PostgreSQL databases
-  - toFQDNs:
-    - matchName: "immich.pgsql.nullservers.com"
-    - matchName: "pgsql.nullservers.com"
-    toPorts:
-    - ports:
-      - port: "5432"
-        protocol: TCP
-  - toCIDRSet:
-    - cidr: 172.16.0.20/32
-    - cidr: 172.16.0.25/32
-    toPorts:
-    - ports:
-      - port: "5432"
+    # Allow access to PostgreSQL databases
+    - toFQDNs:
+        - matchName: "immich.pgsql.nullservers.com"
+        - matchName: "pgsql.nullservers.com"
+      toPorts:
+        - ports:
+            - port: "5432"
+              protocol: TCP
+    - toCIDRSet:
+        - cidr: 172.16.0.20/32
+        - cidr: 172.16.0.25/32
+      toPorts:
+        - ports:
+            - port: "5432"
 
-  # Allow access to FTP server (if configured)
-  - toFQDNs:
-    - matchName: "ftp.nullservers.com"
-  - toCIDRSet:
-    - cidr: 192.168.20.56/32
+    # Allow access to Grav MySQL/MariaDB database
+    - toFQDNs:
+        - matchName: "mysql.nullservers.com"
+      toPorts:
+        - ports:
+            - port: "3306"
+              protocol: TCP
 
-  # Allow access to Telegram API
-  - toFQDNs:
-    - matchName: "api.telegram.org"
-    toPorts:
-    - ports:
-      - port: "443"
-        protocol: TCP
+    # Allow access to FTP server (if configured)
+    - toFQDNs:
+        - matchName: "ftp.nullservers.com"
+    - toCIDRSet:
+        - cidr: 192.168.20.56/32
 
-  - toEndpoints:
-    - matchLabels:
-        k8s:io.kubernetes.pod.namespace: 1password
+    # Allow access to Telegram API
+    - toFQDNs:
+        - matchName: "api.telegram.org"
+      toPorts:
+        - ports:
+            - port: "443"
+              protocol: TCP
 
-  # Allow access to Kubernetes API server for External Secrets
-  - toEntities:
-    - "kube-apiserver"
-    toPorts:
-    - ports:
-      - port: "443"
-        protocol: TCP
-      - port: "6443"
-        protocol: TCP
+    - toEndpoints:
+        - matchLabels:
+            k8s:io.kubernetes.pod.namespace: 1password
+
+    # Allow access to Kubernetes API server for External Secrets
+    - toEntities:
+        - "kube-apiserver"
+      toPorts:
+        - ports:
+            - port: "443"
+              protocol: TCP
+            - port: "6443"
+              protocol: TCP

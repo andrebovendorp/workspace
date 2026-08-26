@@ -8,7 +8,7 @@ This page documents how Grav is deployed in this environment using FluxCD, Ciliu
 - Delivery: FluxCD `Kustomization`
 - Ingress: `HTTPRoute` via Cilium Gateway
 - Persistence: NFS CSI-backed `PersistentVolume` and `PersistentVolumeClaim`
-- Secrets: External Secrets + 1Password ClusterSecretStore
+- Secrets: External Secrets + Infisical ClusterSecretStore
 
 > Grav is deployed in **flat-file mode** (no SQL database required).
 
@@ -60,5 +60,5 @@ At that point, provide these inputs:
 1. DB engine (`postgres` or `mysql`)
 2. DB hostname and port
 3. Database name
-4. 1Password item/key names for username/password
+4. Infisical secret path/keys for username/password
 5. TLS requirement for DB connection
