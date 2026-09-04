@@ -46,6 +46,8 @@ spec:
               mountPath: /metadata/items
             - name: audiobook-logs
               mountPath: /metadata/logs
+            - name: audiobook-streams
+              mountPath: /metadata/streams
             - name: audiobook-media-nas
               mountPath: /audiobooks
       imagePullSecrets:
@@ -62,4 +64,7 @@ spec:
             claimName: audiobook-media-nas
         - name: audiobook-logs
           emptyDir:
-            sizeLimit: 500Mi
+            sizeLimit: 200Mi
+        - name: audiobook-logs
+          emptyDir:
+            sizeLimit: 1Gi
