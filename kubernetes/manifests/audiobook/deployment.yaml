@@ -65,6 +65,6 @@ spec:
         - name: audiobook-logs
           emptyDir:
             sizeLimit: 200Mi
-        - name: audiobook-logs
+        - name: audiobook-streams
           emptyDir:
             sizeLimit: 1Gi
