@@ -34,6 +34,7 @@ spec:
         - matchName: charts.external-secrets.io
         - matchName: release-assets.githubusercontent.com
         - matchName: pkg-containers.githubusercontent.com
+        - matchName: dl.cloudsmith.io
     - toEndpoints:
         - matchLabels:
             io.kubernetes.pod.namespace: kube-system
