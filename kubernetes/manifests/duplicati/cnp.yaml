@@ -29,3 +29,5 @@ spec:
         - matchName: nfs.nullservers.com
     - toCIDRSet:
       - cidr: 192.168.20.56/32
+    ## RASPI
+      - cidr: 192.168.20.103/32
