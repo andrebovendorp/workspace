@@ -20,4 +20,4 @@ namespace: audiobook
 
 images:
   - name: ghcr.io/advplyr/audiobookshelf
-    newTag: "2.36.0"
+    newTag: "2.36.1"
