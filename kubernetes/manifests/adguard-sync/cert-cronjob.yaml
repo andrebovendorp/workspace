@@ -1,0 +1,71 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: adguard-cert-sync
+  namespace: adguard-sync
+---
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: adguard-cert-sync
+  namespace: adguard-sync
+spec:
+  schedule: "0 3 * * 0" # Weekly, Sunday 03:00
+  concurrencyPolicy: Forbid
+  successfulJobsHistoryLimit: 3
+  failedJobsHistoryLimit: 3
+  jobTemplate:
+    spec:
+      backoffLimit: 2
+      template:
+        spec:
+          serviceAccountName: adguard-cert-sync
+          restartPolicy: OnFailure
+          containers:
+            - name: adguard-cert-sync
+              image: docker.io/badouralix/curl-jq
+              env:
+                - name: ADGUARD_HOSTS
+                  value: "192.168.50.240 172.16.0.240"
+                - name: CERT_NAMESPACE
+                  value: cert-manager
+                - name: CERT_SECRET
+                  value: adguard-nullservers-com-tls
+                - name: ADGUARD_USERNAME
+                  valueFrom:
+                    secretKeyRef:
+                      name: adguard-credentials
+                      key: username
+                - name: ADGUARD_PASSWORD
+                  valueFrom:
+                    secretKeyRef:
+                      name: adguard-credentials
+                      key: password
+              command: ["/bin/sh", "-c"]
+              args:
+                - |
+                  set -eu
+                  SA=/var/run/secrets/kubernetes.io/serviceaccount
+                  SECRET=$(curl -sSf --cacert "$SA/ca.crt" \
+                    -H "Authorization: Bearer $(cat "$SA/token")" \
+                    "https://kubernetes.default.svc/api/v1/namespaces/$CERT_NAMESPACE/secrets/$CERT_SECRET")
+                  # Secret data is already base64 PEM, which is what AdGuard's TLS API expects
+                  CRT=$(echo "$SECRET" | jq -r '.data["tls.crt"]')
+                  KEY=$(echo "$SECRET" | jq -r '.data["tls.key"]')
+
+                  FAILED=0
+                  for HOST in $ADGUARD_HOSTS; do
+                    echo "Updating $HOST"
+                    if STATUS=$(curl -sSfk -u "$ADGUARD_USERNAME:$ADGUARD_PASSWORD" "https://$HOST/control/tls/status") \
+                      && echo "$STATUS" | jq --arg crt "$CRT" --arg key "$KEY" \
+                        '{enabled, server_name, force_https, port_https, port_dns_over_tls, port_dns_over_quic, port_dnscrypt, dnscrypt_config_file, serve_plain_dns}
+                         + {certificate_chain: $crt, private_key: $key, private_key_saved: false, certificate_path: "", private_key_path: ""}' \
+                      | curl -sSfk -u "$ADGUARD_USERNAME:$ADGUARD_PASSWORD" -H "Content-Type: application/json" \
+                        --data @- "https://$HOST/control/tls/configure" > /dev/null; then
+                      echo "$HOST updated"
+                    else
+                      echo "$HOST FAILED"
+                      FAILED=1
+                    fi
+                  done
+                  exit $FAILED

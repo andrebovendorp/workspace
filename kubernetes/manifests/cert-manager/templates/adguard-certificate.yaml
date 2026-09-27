@@ -1,0 +1,38 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: adguard
+  namespace: cert-manager
+spec:
+  secretName: adguard-nullservers-com-tls
+  issuerRef:
+    name: letsencrypt-prod
+    kind: ClusterIssuer
+  dnsNames:
+  - adguard.nullservers.com
+---
+# Lets the adguard-sync cert job read only this secret
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: adguard-cert-reader
+  namespace: cert-manager
+rules:
+- apiGroups: [""]
+  resources: ["secrets"]
+  resourceNames: ["adguard-nullservers-com-tls"]
+  verbs: ["get"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: adguard-cert-reader
+  namespace: cert-manager
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: adguard-cert-reader
+subjects:
+- kind: ServiceAccount
+  name: adguard-cert-sync
+  namespace: adguard-sync

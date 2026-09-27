@@ -1,0 +1,19 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+  - ns.yaml
+  - adguard-credentials.yaml
+  - cnp.yaml
+  - cronjob.yaml
+  - cert-cronjob.yaml
+
+commonLabels:
+  app: adguard-sync
+  component: adguard-sync
+
+namespace: adguard-sync
+
+images:
+  - name: ghcr.io/bakito/adguardhome-sync
+    newTag: "v0.9.3"
