@@ -31,5 +31,5 @@ spec:
                       name: tibia-statistics-mongo-credentials
                       key: username
                 - name: MONGO_DB_NAME
-                  value: tibia-statistics
+                  value: statistics
           restartPolicy: OnFailure
