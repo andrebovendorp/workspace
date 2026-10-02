@@ -9,15 +9,21 @@ spec:
   jobTemplate:
     spec:
       template:
+        metadata:
+          labels:
+            app.kubernetes.io/name: tibia-statistics
         spec:
           imagePullSecrets:
             - name: gh-docker-pat
           containers:
             - name: tibia-statistics
               image: ghcr.io/andrebovendorp/tibia-statistics:latest
+              imagePullPolicy: Always
               env:
                 - name: DB_TYPE
                   value: mongodb
+                - name: API_BASE_URL
+                  value: http://tibiadata-api-go:8080
                 - name: MONGO_DB_HOST
                   value: mongodb.nullservers.com
                 - name: MONGO_DB_PASSWORD

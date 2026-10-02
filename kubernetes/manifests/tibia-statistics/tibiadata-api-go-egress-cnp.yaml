@@ -1,0 +1,17 @@
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: tibiadata-api-go-egress
+spec:
+  endpointSelector:
+    matchLabels:
+      app.kubernetes.io/name: tibiadata-api-go
+  egress:
+    - toFQDNs:
+        - matchName: "assets.tibiadata.com"
+        - matchName: "www.tibia.com"
+        - matchName: "tibia.com"
+      toPorts:
+        - ports:
+            - port: "443"
+              protocol: TCP

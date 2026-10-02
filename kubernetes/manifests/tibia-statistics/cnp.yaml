@@ -1,11 +1,14 @@
 apiVersion: cilium.io/v2
 kind: CiliumNetworkPolicy
 metadata:
-  name: default
+  name: tibia-statistics
+  namespace: tibia-statistics
 spec:
   endpointSelector: {}
   ingress:
-    - {}
+    - fromEndpoints:
+        - matchLabels:
+            io.kubernetes.pod.namespace: tibia-statistics
   egress:
     - toEndpoints:
         - matchLabels:
@@ -18,6 +21,11 @@ spec:
           rules:
             dns:
               - matchPattern: "*"
+    - toEndpoints:
+        - matchLabels:
+            io.kubernetes.pod.namespace: tibia-statistics
     - toFQDNs:
-        - matchName: "api.tibiadata.com"
         - matchName: "mongodb.nullservers.com"
+        - matchName: "assets.tibiadata.com"
+        - matchName: "www.tibia.com"
+        - matchName: "tibia.com"

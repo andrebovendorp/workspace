@@ -1,0 +1,11 @@
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: tibia-statistics-egress
+spec:
+  endpointSelector:
+    matchLabels:
+      app.kubernetes.io/name: tibia-statistics
+  egress:
+    - toFQDNs:
+        - matchName: "mongodb.nullservers.com"

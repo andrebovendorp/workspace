@@ -4,7 +4,11 @@ kind: Kustomization
 resources:
   - namespace.yaml
   - cronjob.yaml
+  - tibiadata-api-go-deployment.yaml
+  - tibiadata-api-go-service.yaml
   - cnp.yaml
+  - tibia-statistics-egress-cnp.yaml
+  - tibiadata-api-go-egress-cnp.yaml
   - github-token.yaml
   - tibia-statistics-mongo-credentials.yaml
 
@@ -16,4 +20,6 @@ namespace: tibia-statistics
 
 images:
   - name: ghcr.io/andrebovendorp/tibia-statistics
+    newTag: latest
+  - name: ghcr.io/andrebovendorp/tibiadata-api-go
     newTag: latest
