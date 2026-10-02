@@ -1,0 +1,35 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: tibia-statistics
+spec:
+  schedule: "0 12,23 * * *"
+  successfulJobsHistoryLimit: 3
+  failedJobsHistoryLimit: 2
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          imagePullSecrets:
+            - name: gh-docker-pat
+          containers:
+            - name: tibia-statistics
+              image: ghcr.io/andrebovendorp/tibia-statistics:latest
+              env:
+                - name: DB_TYPE
+                  value: mongodb
+                - name: MONGO_DB_HOST
+                  value: mongodb.nullservers.com
+                - name: MONGO_DB_PASSWORD
+                  valueFrom:
+                    secretKeyRef:
+                      name: tibia-statistics-mongo-credentials
+                      key: password
+                - name: MONGO_DB_USER
+                  valueFrom:
+                    secretKeyRef:
+                      name: tibia-statistics-mongo-credentials
+                      key: username
+                - name: MONGO_DB_NAME
+                  value: tibia-statistics
+          restartPolicy: OnFailure

@@ -16,18 +16,18 @@ spec:
           {
             "auths": {
               "ghcr.io": {
-                "username": "{{ `{{ .username }}` }}",
-                "password": "{{ `{{ .password }}` }}"
+                "username": "{{ .username }}",
+                "password": "{{ .password }}"
               }
             }
           }
     creationPolicy: Owner
   data:
-  - secretKey: password
-    remoteRef:
-      key: gh-docker-pat
-      property: password
-  - secretKey: username
-    remoteRef:
-      key: gh-docker-pat
-      property: username
+    - secretKey: password
+      remoteRef:
+        key: gh-docker-pat
+        property: password
+    - secretKey: username
+      remoteRef:
+        key: gh-docker-pat
+        property: username
