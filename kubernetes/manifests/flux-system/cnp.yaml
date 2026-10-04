@@ -6,13 +6,13 @@ metadata:
 spec:
   endpointSelector: {}
   ingress:
-    - fromEndpoints: 
-      - {}
+    - fromEndpoints:
+        - {}
     - fromCIDRSet:
         - cidr: 192.168.20.0/24
   egress:
-    - toEndpoints: 
-      - {}
+    - toEndpoints:
+        - {}
     - toEntities:
         - kube-apiserver
         - cluster
@@ -33,6 +33,7 @@ spec:
         - matchName: release-assets.githubusercontent.com
         - matchName: pkg-containers.githubusercontent.com
         - matchName: dl.cloudsmith.io
+        - matchName: external-secrets.io
     - toEndpoints:
         - matchLabels:
             io.kubernetes.pod.namespace: kube-system

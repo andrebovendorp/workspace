@@ -1,0 +1,16 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: flux-system
+resources:
+  - operator
+  - app-of-apps.yaml
+  - app-of-apps-private.yaml
+  - capacitor.yaml
+  - cnp.yaml
+  - common.yaml
+  - externalsecret-workspace-private.yaml
+  - http-route.yaml
+  - instance.yaml
+  - referencegrant.yaml
+  - repo-workspace-private.yaml
+  - repo-workspace.yaml
