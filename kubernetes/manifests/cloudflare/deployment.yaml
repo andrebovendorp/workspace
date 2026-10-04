@@ -54,7 +54,7 @@ spec:
               mountPath: /etc/cloudflared/creds
               readOnly: true
       imagePullSecrets:
-        - name: cloudflared-dockerhub-token
+        - name: dockerhub-token
       volumes:
         - name: cloudflare-config
           configMap:

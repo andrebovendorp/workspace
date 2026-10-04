@@ -4,17 +4,16 @@ kind: Kustomization
 namespace: redis
 
 resources:
-- serviceaccount-master.yaml
-- serviceaccount-replica.yaml
-- configmap.yaml
-- configmap-health.yaml
-- configmap-scripts.yaml
-- service-headless.yaml
-- service-master.yaml
-- service-metrics.yaml
-- service-replicas.yaml
-- statefulset-master.yaml
-- statefulset-replicas.yaml
-- ciliumnetpol.yaml
-- externalsecret-dockerhub.yaml
-- vmservicescrape.yaml
+  - serviceaccount-master.yaml
+  - serviceaccount-replica.yaml
+  - configmap.yaml
+  - configmap-health.yaml
+  - configmap-scripts.yaml
+  - service-headless.yaml
+  - service-master.yaml
+  - service-metrics.yaml
+  - service-replicas.yaml
+  - statefulset-master.yaml
+  - statefulset-replicas.yaml
+  - ciliumnetpol.yaml
+  - vmservicescrape.yaml
