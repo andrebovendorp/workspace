@@ -44,7 +44,7 @@ Update these values before rollout:
 
 - Grav content and configuration are persisted at `/config` inside the container.
 - `persistentVolumeReclaimPolicy: Retain` is used to protect data during resource recreation.
-- Network policy allows ingress from both `cloudflare` and `cilium-gateway-system` namespaces, and limits egress to DNS plus common Grav update endpoints.
+- Network policy allows ingress from both `cloudflare` and `envoy-gateway-system` namespaces, and limits egress to DNS plus common Grav update endpoints.
 - Image is pinned to `linuxserver/grav:2.0.19`.
 
 ## If You Want Database-Backed Mode Later

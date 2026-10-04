@@ -7,16 +7,16 @@ metadata:
     external-dns.alpha.kubernetes.io/hostname: bookshelf.nullservers.com
 spec:
   parentRefs:
-  - name: cilium-gateway
-    namespace: cilium-gateway-system
-    sectionName: https-wildcard
+    - name: envoy-gateway
+      namespace: envoy-gateway-system
+      sectionName: https-wildcard
   hostnames:
-  - "bookshelf.nullservers.com"
+    - "bookshelf.nullservers.com"
   rules:
-  - matches:
-    - path:
-        type: PathPrefix
-        value: /
-    backendRefs:
-    - name: audiobook
-      port: 80
+    - matches:
+        - path:
+            type: PathPrefix
+            value: /
+      backendRefs:
+        - name: audiobook
+          port: 80

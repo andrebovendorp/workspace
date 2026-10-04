@@ -8,8 +8,8 @@ metadata:
     external-dns.alpha.kubernetes.io/hostname: {{ .Values.httpRoute.hostname }}
 spec:
   parentRefs:
-    - name: cilium-gateway
-      namespace: cilium-gateway-system
+    - name: envoy-gateway
+      namespace: envoy-gateway-system
       sectionName: https-wildcard
   hostnames:
     - {{ .Values.httpRoute.hostname | quote }}

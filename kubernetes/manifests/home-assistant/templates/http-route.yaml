@@ -7,8 +7,8 @@ metadata:
     external-dns.alpha.kubernetes.io/hostname: home.nullservers.com
 spec:
   parentRefs:
-  - name: cilium-gateway
-    namespace: cilium-gateway-system
+  - name: envoy-gateway
+    namespace: envoy-gateway-system
     sectionName: https-wildcard
   hostnames:
   - "home.nullservers.com"
