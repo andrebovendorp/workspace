@@ -22,6 +22,8 @@ spec:
         - matchPattern: "*.github.com"
         - matchPattern: "*.gitlab.com"
         - matchPattern: "*.github.io"
+        - matchPattern: "*.docker.com"
+        - matchPattern: "*.*.docker.com"
         - matchPattern: "*.*.hashicorp.com"
         - matchName: raw.githubusercontent.com
         - matchName: charts.goauthentik.io
