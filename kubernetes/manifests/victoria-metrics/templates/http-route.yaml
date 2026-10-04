@@ -7,8 +7,8 @@ metadata:
     external-dns.alpha.kubernetes.io/hostname: grafana.nullservers.com
 spec:
   parentRefs:
-  - name: cilium-gateway
-    namespace: cilium-gateway-system
+  - name: envoy-gateway
+    namespace: envoy-gateway-system
     sectionName: https-wildcard
   hostnames:
   - "grafana.nullservers.com"
@@ -30,8 +30,8 @@ metadata:
     external-dns.alpha.kubernetes.io/hostname: logs.nullservers.com
 spec:
   parentRefs:
-  - name: cilium-gateway
-    namespace: cilium-gateway-system
+  - name: envoy-gateway
+    namespace: envoy-gateway-system
     sectionName: https-wildcard
   hostnames:
   - "logs.nullservers.com"
@@ -53,8 +53,8 @@ metadata:
     external-dns.alpha.kubernetes.io/hostname: metrics.nullservers.com
 spec:
   parentRefs:
-  - name: cilium-gateway
-    namespace: cilium-gateway-system
+  - name: envoy-gateway
+    namespace: envoy-gateway-system
     sectionName: https-wildcard
   hostnames:
   - "metrics.nullservers.com"

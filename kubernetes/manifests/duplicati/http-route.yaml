@@ -7,16 +7,16 @@ metadata:
     external-dns.alpha.kubernetes.io/hostname: backup.nullservers.com
 spec:
   parentRefs:
-  - name: cilium-gateway
-    namespace: cilium-gateway-system
-    sectionName: https-wildcard
+    - name: envoy-gateway
+      namespace: envoy-gateway-system
+      sectionName: https-wildcard
   hostnames:
-  - "backup.nullservers.com"
+    - "backup.nullservers.com"
   rules:
-  - matches:
-    - path:
-        type: PathPrefix
-        value: /
-    backendRefs:
-    - name: duplicati
-      port: 80
+    - matches:
+        - path:
+            type: PathPrefix
+            value: /
+      backendRefs:
+        - name: duplicati
+          port: 80
