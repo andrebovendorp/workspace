@@ -1,7 +1,7 @@
 apiVersion: v2
 name: envoy-gateway-system
 description: Envoy Gateway controller chart and Gateway API configuration
-version: 0.1.0
+version: 0.1.1
 type: application
 dependencies:
   - name: gateway-helm

@@ -1,0 +1,37 @@
+apiVersion: cilium.io/v2
+kind: CiliumClusterwideNetworkPolicy
+metadata:
+  name: allow-envoy-gateway-ingress
+spec:
+  endpointSelector:
+    matchExpressions:
+      - key: io.kubernetes.pod.namespace
+        operator: In
+        values:
+          - 1password
+          - adguard-sync
+          - audiobook
+          - authentik
+          - cloudflare
+          - database-backup
+          - dns-updater
+          - duplicati
+          - external-dns-adguard
+          - external-secrets
+          - flux-system
+          - glance
+          - grav
+          - home-assistant
+          - immich
+          - infisical
+          - joplin
+          - opentelemetry
+          - recipes
+          - redis
+          - tibia-statistics
+          - vaultwarden
+          - victoria-metrics
+  ingress:
+    - fromEndpoints:
+        - matchLabels:
+            io.kubernetes.pod.namespace: envoy-gateway-system

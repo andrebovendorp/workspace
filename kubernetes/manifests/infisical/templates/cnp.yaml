@@ -6,8 +6,6 @@ metadata:
 spec:
   endpointSelector: {}
   ingress:
-    - fromEntities:
-        - ingress
     - fromEndpoints:
         - matchLabels:
             io.kubernetes.pod.namespace: victoria-metrics

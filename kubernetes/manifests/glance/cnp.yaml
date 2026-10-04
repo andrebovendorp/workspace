@@ -9,30 +9,28 @@ spec:
     - fromEndpoints:
         - matchLabels:
             io.kubernetes.pod.namespace: cloudflare
-    - fromEntities:
-        - ingress
   egress:
     - toEntities:
-      - ingress
-      - cluster
+        - ingress
+        - cluster
     - toFQDNs:
-      - matchPattern: "*.selfh.st"
-      - matchPattern: "*.twitch.tv"
-      - matchPattern: "*.youtube.com"
-      - matchPattern: "*.googlevideo.com"
-      - matchPattern: "*.*.nullservers.com"
-      - matchPattern: "*.nullservers.com"
-      - matchPattern: "*.finance.yahoo.com"
-      - matchPattern: "*.open-meteo.com"
-      - matchPattern: "*.github.com"
-      - matchPattern: "hacker-news.firebaseio.com"
-      - matchPattern: "selfh.st"
-      - matchPattern: "lobste.rs"
-      - matchPattern: "*.globo.com"
-      - matchPattern: "*.unt.se"
-      - matchPattern: "*.dn.se"
+        - matchPattern: "*.selfh.st"
+        - matchPattern: "*.twitch.tv"
+        - matchPattern: "*.youtube.com"
+        - matchPattern: "*.googlevideo.com"
+        - matchPattern: "*.*.nullservers.com"
+        - matchPattern: "*.nullservers.com"
+        - matchPattern: "*.finance.yahoo.com"
+        - matchPattern: "*.open-meteo.com"
+        - matchPattern: "*.github.com"
+        - matchPattern: "hacker-news.firebaseio.com"
+        - matchPattern: "selfh.st"
+        - matchPattern: "lobste.rs"
+        - matchPattern: "*.globo.com"
+        - matchPattern: "*.unt.se"
+        - matchPattern: "*.dn.se"
     - toCIDRSet:
-        - cidr: 192.168.20.0/24 # Internal network 
+        - cidr: 192.168.20.0/24 # Internal network
     - toEndpoints:
         - matchLabels:
             io.kubernetes.pod.namespace: kube-system

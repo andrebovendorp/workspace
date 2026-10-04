@@ -6,30 +6,28 @@ metadata:
 spec:
     endpointSelector: {}
     ingress:
-      - fromEntities:
-          - ingress
-      - fromEndpoints:
-          - matchLabels:
-                io.kubernetes.pod.namespace: cloudflare
+        - fromEndpoints:
+              - matchLabels:
+                    io.kubernetes.pod.namespace: cloudflare
     egress:
-      - toEndpoints:
-          - matchLabels:
-                io.kubernetes.pod.namespace: kube-system
-                k8s-app: kube-dns
-        toPorts:
-          - ports:
-              - port: "53"
-                protocol: UDP
-            rules:
-                dns:
-                  - matchPattern: "*"
-      - toFQDNs:
-          - matchPattern: smtp.resend.com
-          - matchName: auth.nullservers.com
-          - matchPattern: "api.audible.*"
-          - matchPattern: "*.googleapis.com"
-          - matchName: books.google.com
-          - matchName: openlibrary.org
-          - matchName: api.audnex.us
-          - matchName: m.media-amazon.com
-          - matchName: itunes.apple.com
+        - toEndpoints:
+              - matchLabels:
+                    io.kubernetes.pod.namespace: kube-system
+                    k8s-app: kube-dns
+          toPorts:
+              - ports:
+                    - port: "53"
+                      protocol: UDP
+                rules:
+                    dns:
+                        - matchPattern: "*"
+        - toFQDNs:
+              - matchPattern: smtp.resend.com
+              - matchName: auth.nullservers.com
+              - matchPattern: "api.audible.*"
+              - matchPattern: "*.googleapis.com"
+              - matchName: books.google.com
+              - matchName: openlibrary.org
+              - matchName: api.audnex.us
+              - matchName: m.media-amazon.com
+              - matchName: itunes.apple.com

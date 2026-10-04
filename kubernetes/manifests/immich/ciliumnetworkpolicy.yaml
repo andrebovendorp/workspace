@@ -7,8 +7,6 @@ metadata:
 spec:
   endpointSelector: {}
   ingress:
-    - fromEntities:
-        - ingress
     - fromEndpoints:
         - {}
     - fromEndpoints:

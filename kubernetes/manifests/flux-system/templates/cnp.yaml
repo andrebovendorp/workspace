@@ -8,8 +8,6 @@ spec:
   ingress:
     - fromEndpoints: 
       - {}
-    - fromEntities:
-        - ingress
     - fromCIDRSet:
         - cidr: 192.168.20.0/24
   egress:
