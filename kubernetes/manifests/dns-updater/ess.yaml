@@ -21,7 +21,7 @@ spec:
       remoteRef:
         conversionStrategy: Default
         metadataPolicy: None
-        key: cloudflare/account-id
+        key: cloudflare/AccountTag
         decodingStrategy: None
     - secretKey: api-key
       remoteRef:
