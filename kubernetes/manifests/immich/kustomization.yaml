@@ -6,7 +6,6 @@ namespace: immich
 resources:
   - ciliumnetworkpolicy.yaml
   - externalsecret.yaml
-  - externalsecret-infisical.yaml
   - http-route.yaml
   - machine-learning-deployment.yaml
   - machine-learning-service.yaml

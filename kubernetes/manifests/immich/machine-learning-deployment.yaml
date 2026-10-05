@@ -58,7 +58,7 @@ spec:
             - name: HF_TOKEN
               valueFrom:
                 secretKeyRef:
-                  key: hf-token
+                  key: HF_TOKEN
                   name: immich-credentials
           ports:
             - name: http
