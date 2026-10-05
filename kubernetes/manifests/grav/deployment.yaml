@@ -90,5 +90,3 @@ spec:
         - name: grav-data
           persistentVolumeClaim:
             claimName: grav-data-pvc
-      imagePullSecrets:
-        - name: dockerhub-token

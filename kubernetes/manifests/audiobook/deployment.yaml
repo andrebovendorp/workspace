@@ -54,8 +54,6 @@ spec:
               mountPath: /metadata/backups
             - name: audiobook-media-nas
               mountPath: /audiobooks
-      imagePullSecrets:
-        - name: dockerhub-token
       volumes:
         - name: audiobook-config-nfs
           persistentVolumeClaim:

@@ -6,37 +6,21 @@ metadata:
 spec:
   secretStoreRef:
     kind: ClusterSecretStore
-    name: onepassword
+    name: infisical
   target:
     creationPolicy: Owner
     name: authentik-credentials
   data:
     - secretKey: password
       remoteRef:
-        conversionStrategy: Default
-        metadataPolicy: None
-        key: authentik-credentials
-        property: password-new
-        decodingStrategy: None
+        key: authentik/password
     - secretKey: username
       remoteRef:
-        conversionStrategy: Default
-        metadataPolicy: None
-        key: authentik-credentials
-        property: username
-        decodingStrategy: None
+        key: authentik/username
     - secretKey: encryption-key
       remoteRef:
-        conversionStrategy: Default
-        metadataPolicy: None
-        key: authentik-credentials
-        property: secret-key
-        decodingStrategy: None
+        key: authentik/encryption-key
     - secretKey: resend-key
       remoteRef:
-        conversionStrategy: Default
-        metadataPolicy: None
-        key: authentik-credentials
-        property: resend-key
-        decodingStrategy: None
+        key: authentik/resend-key
 

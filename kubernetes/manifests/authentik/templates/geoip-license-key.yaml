@@ -2,26 +2,18 @@ apiVersion: external-secrets.io/v1
 kind: ExternalSecret
 metadata:
   name: geoip-license-key
-  namespace: {{ .Release.Nsamespace }}
+  namespace: {{ .Release.Namespace }}
 spec:
   secretStoreRef:
     kind: ClusterSecretStore
-    name: onepassword
+    name: infisical
   target:
     creationPolicy: Owner
     name: geoip-license-key
   data:
   - secretKey: password
     remoteRef:
-      conversionStrategy: Default
-      metadataPolicy: None
-      key: geoip-license-key
-      property: password
-      decodingStrategy: None
+      key: authentik/geoip-license-key
   - secretKey: accountid
     remoteRef:
-      conversionStrategy: Default
-      metadataPolicy: None
-      key: geoip-license-key
-      property: accountid
-      decodingStrategy: None
+      key: authentik/geoip-account-id
