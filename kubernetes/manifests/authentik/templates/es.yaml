@@ -19,7 +19,7 @@ spec:
         key: authentik/username
     - secretKey: encryption-key
       remoteRef:
-        key: authentik/encryption-key
+        key: authentik/secret-key
     - secretKey: resend-key
       remoteRef:
         key: authentik/resend-key
