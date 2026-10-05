@@ -52,7 +52,7 @@ authentik:
     metrics:
       enabled: true
   server:
-    replicas: 2
+    replicas: 1
     env:
       - name: AUTHENTIK_DISABLE_STARTUP_ANALYTICS
         value: "true"
