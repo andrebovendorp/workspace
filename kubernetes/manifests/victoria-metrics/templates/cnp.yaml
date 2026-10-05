@@ -2,6 +2,7 @@ apiVersion: cilium.io/v2
 kind: CiliumNetworkPolicy
 metadata:
   name: default
+  namespace: victoria-metrics
 spec:
   endpointSelector: {}
   ingress:
