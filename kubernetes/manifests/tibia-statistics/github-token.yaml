@@ -5,7 +5,7 @@ metadata:
 spec:
   refreshInterval: 1m
   secretStoreRef:
-    name: onepassword
+    name: infisical
     kind: ClusterSecretStore
   target:
     name: gh-docker-pat
@@ -25,9 +25,7 @@ spec:
   data:
     - secretKey: password
       remoteRef:
-        key: gh-docker-pat
-        property: password
+        key: github/pat
     - secretKey: username
       remoteRef:
-        key: gh-docker-pat
-        property: username
+        key: github/username

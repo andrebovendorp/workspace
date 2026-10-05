@@ -6,15 +6,20 @@ metadata:
 spec:
   secretStoreRef:
     kind: ClusterSecretStore
-    name: onepassword
+    name: infisical
   target:
     creationPolicy: Owner
     name: cloudflare-tunnel-token
+    template:
+      data:
+        credentials.json: '{{ dict "AccountTag" .AccountTag "TunnelSecret" .TunnelSecret "TunnelID" .TunnelID | toJson }}'
   data:
-  - secretKey: credentials.json
-    remoteRef:
-      conversionStrategy: Default
-      metadataPolicy: None
-      key: cloudflared-token
-      property: credentials.json
-      decodingStrategy: None
+    - secretKey: AccountTag
+      remoteRef:
+        key: cloudflare/AccountTag
+    - secretKey: TunnelSecret
+      remoteRef:
+        key: cloudflare/tunnel/TunnelSecret
+    - secretKey: TunnelID
+      remoteRef:
+        key: cloudflare/tunnel/TunnelID

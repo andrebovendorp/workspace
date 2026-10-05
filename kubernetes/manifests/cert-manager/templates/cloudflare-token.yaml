@@ -13,8 +13,4 @@ spec:
   data:
     - secretKey: password
       remoteRef:
-        conversionStrategy: Default
-        metadataPolicy: None
-        key: cloudflare-api-token
-        property: password
-        decodingStrategy: None
+        key: cloudflare/cert-manager/apikey

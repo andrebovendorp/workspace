@@ -6,29 +6,26 @@ metadata:
 spec:
   secretStoreRef:
     kind: ClusterSecretStore
-    name: onepassword
+    name: infisical
   target:
     creationPolicy: Owner
     name: cf-dns-updater-credentials
   data:
-  - secretKey: zone-id
-    remoteRef:
-      conversionStrategy: Default
-      metadataPolicy: None
-      key: cloudflare-dns-updater
-      property: zone-id
-      decodingStrategy: None
-  - secretKey: account-id
-    remoteRef:
-      conversionStrategy: Default
-      metadataPolicy: None
-      key: cloudflare-dns-updater
-      property: account-id
-      decodingStrategy: None
-  - secretKey: api-key
-    remoteRef:
-      conversionStrategy: Default
-      metadataPolicy: None
-      key: cloudflare-dns-updater
-      property: api-key
-      decodingStrategy: None
+    - secretKey: zone-id
+      remoteRef:
+        conversionStrategy: Default
+        metadataPolicy: None
+        key: cloudflare/dns-updater/zone-id
+        decodingStrategy: None
+    - secretKey: account-id
+      remoteRef:
+        conversionStrategy: Default
+        metadataPolicy: None
+        key: cloudflare/account-id
+        decodingStrategy: None
+    - secretKey: api-key
+      remoteRef:
+        conversionStrategy: Default
+        metadataPolicy: None
+        key: cloudflare/dns-updater/api-key
+        decodingStrategy: None

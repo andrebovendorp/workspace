@@ -6,22 +6,14 @@ metadata:
 spec:
   secretStoreRef:
     kind: ClusterSecretStore
-    name: onepassword
+    name: infisical
   target:
     creationPolicy: Owner
-    name: grafana-admin-password
+    name: grafana-login
   data:
   - secretKey: admin-user
     remoteRef:
-      conversionStrategy: Default
-      metadataPolicy: None
-      decodingStrategy: None
-      key: grafana-login
-      property: username
+      key: grafana/username
   - secretKey: admin-password
     remoteRef:
-      conversionStrategy: Default
-      metadataPolicy: None
-      decodingStrategy: None
-      key: grafana-login
-      property: password
+      key: grafana/password
