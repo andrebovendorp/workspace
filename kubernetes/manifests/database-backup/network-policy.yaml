@@ -65,10 +65,6 @@ spec:
             - port: "443"
               protocol: TCP
 
-    - toEndpoints:
-        - matchLabels:
-            k8s:io.kubernetes.pod.namespace: 1password
-
     # Allow access to Kubernetes API server for External Secrets
     - toEntities:
         - "kube-apiserver"

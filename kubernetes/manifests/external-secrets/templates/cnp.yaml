@@ -18,10 +18,8 @@ spec:
         - kube-apiserver
         - cluster
     - toEndpoints:
-        - matchLabels:
-            io.kubernetes.pod.namespace: 1password
-        - matchLabels:
-            io.kubernetes.pod.namespace: infisical
+      - matchLabels:
+        io.kubernetes.pod.namespace: infisical
     - toEndpoints:
         - matchLabels:
             io.kubernetes.pod.namespace: kube-system

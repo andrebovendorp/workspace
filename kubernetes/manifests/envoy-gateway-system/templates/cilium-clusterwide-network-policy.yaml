@@ -8,7 +8,6 @@ spec:
       - key: io.kubernetes.pod.namespace
         operator: In
         values:
-          - 1password
           - adguard-sync
           - audiobook
           - authentik

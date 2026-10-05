@@ -1,9 +1,10 @@
+
 apiVersion: v1
 kind: ConfigMap
 metadata:
   name: glance
   namespace: glance
-data:
+data: 
   glance.yml: |-
     server:
       #assets-path: /app/assets

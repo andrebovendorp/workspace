@@ -33,7 +33,7 @@ Future Considerations: Add short-lived credentials issuance and audit dashboard.
 Future Considerations: Expand policy coverage to 100% namespaces; implement egress controls for supply-chain protection.
 
 ## Secrets & Certificates
-- External Secrets Operator sync model: source-of-truth outside cluster via Infisical ClusterSecretStore (transition from 1Password in progress).
+- External Secrets Operator syncs secrets from Infisical through a ClusterSecretStore authenticated with Infisical Universal Auth.
 - All external ingress endpoints terminate TLS (ACME), internal mTLS not yet required (trade-off simplicity vs complexity).
 
 Future Considerations: Evaluate secret rotation automation & in-cluster encryption provider if threat model tightens.
