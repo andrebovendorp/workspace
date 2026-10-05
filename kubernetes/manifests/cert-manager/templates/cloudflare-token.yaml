@@ -6,7 +6,7 @@ metadata:
 spec:
   secretStoreRef:
     kind: ClusterSecretStore
-    name: onepassword
+    name: infisical
   target:
     creationPolicy: Owner
     name: cloudflare-api-token-secret
