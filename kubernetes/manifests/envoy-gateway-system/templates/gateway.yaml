@@ -5,17 +5,20 @@ metadata:
   namespace: envoy-gateway-system
 spec:
   gatewayClassName: eg
+  addresses:
+  - type: IPAddress
+    value: 192.168.50.224
   listeners:
-    - name: https-wildcard
-      hostname: "*.nullservers.com"
-      port: 443
-      protocol: HTTPS
-      tls:
-        mode: Terminate
-        certificateRefs:
-          - name: wildcard-nullservers-tls
-            kind: Secret
-            namespace: envoy-gateway-system
-      allowedRoutes:
-        namespaces:
-          from: All
+  - name: https-wildcard
+    hostname: "*.nullservers.com"
+    port: 443
+    protocol: HTTPS
+    tls:
+      mode: Terminate
+      certificateRefs:
+      - name: wildcard-nullservers-tls
+        kind: Secret
+        namespace: envoy-gateway-system
+    allowedRoutes:
+      namespaces:
+        from: All
