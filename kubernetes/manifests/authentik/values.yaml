@@ -49,6 +49,15 @@ authentik:
       - name: authentik-credentials
         mountPath: /authentik-credentials
         readOnly: true
+    livenessProbe:
+      timeoutSeconds: 6
+      failureThreshold: 20
+    startupProbe:
+      timeoutSeconds: 6
+      failureThreshold: 20
+    readinessProbe:
+      timeoutSeconds: 6
+      failureThreshold: 20
     metrics:
       enabled: true
   server:
@@ -73,6 +82,15 @@ authentik:
         readOnly: true
       - name: authentik-data-nfs
         mountPath: /data
+    livenessProbe:
+      timeoutSeconds: 6
+      failureThreshold: 20
+    startupProbe:
+      timeoutSeconds: 6
+      failureThreshold: 20
+    readinessProbe:
+      timeoutSeconds: 6
+      failureThreshold: 20
     metrics:
       enabled: true
     serviceMonitor:
