@@ -1,0 +1,23 @@
+# A classic networking.k8s.io/v1 Ingress is an alternative. TLS terminates at
+# the Gateway; the internal backend speaks plain HTTP.
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: tibiary-web
+  annotations:
+    external-dns.alpha.kubernetes.io/hostname: tibiary.nullservers.com
+spec:
+  parentRefs:
+    - name: envoy-gateway
+      namespace: envoy-gateway-system
+      sectionName: https-wildcard
+  hostnames:
+    - tibiary.nullservers.com
+  rules:
+    - matches:
+        - path:
+            type: PathPrefix
+            value: /
+      backendRefs:
+        - name: tibiary-web
+          port: 80

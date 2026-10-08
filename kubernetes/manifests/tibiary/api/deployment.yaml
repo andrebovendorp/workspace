@@ -1,0 +1,112 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tibiary-api
+  labels:
+    app.kubernetes.io/name: tibiary-api
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: tibiary-api
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: tibiary-api
+    spec:
+      imagePullSecrets:
+        - name: gitlab-pat
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 65532
+        seccompProfile:
+          type: RuntimeDefault
+      initContainers:
+        - name: migrate
+          image: registry.gitlab.com/tibiary/api
+          args: ["migrate", "up"]
+          envFrom:
+            - configMapRef:
+                name: tibiary-api-config
+          env:
+            - name: DATABASE_URL
+              valueFrom:
+                secretKeyRef:
+                  name: tibiary-credentials
+                  key: DB_CONNECTION_STRING
+            - name: JWT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: tibiary-credentials
+                  key: JWT_SECRET
+            - name: KILL_STATS_MONGO_URI
+              valueFrom:
+                secretKeyRef:
+                  name: mongo-credentials
+                  key: mongo_uri
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities:
+              drop: ["ALL"]
+          resources:
+            requests:
+              cpu: 50m
+              memory: 64Mi
+            limits:
+              cpu: 500m
+              memory: 256Mi
+      containers:
+        - name: api
+          image: registry.gitlab.com/tibiary/api
+          args: ["serve"]
+          ports:
+            - name: http
+              containerPort: 8080
+          envFrom:
+            - configMapRef:
+                name: tibiary-api-config
+          env:
+            - name: DATABASE_URL
+              valueFrom:
+                secretKeyRef:
+                  name: tibiary-credentials
+                  key: DB_CONNECTION_STRING
+            - name: JWT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: tibiary-credentials
+                  key: JWT_SECRET
+            - name: RESEND_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: tibiary-credentials
+                  key: RESEND_APIKEY
+            - name: EMAIL_FROM
+              value: no-reply@nullservers.com
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: http
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          readinessProbe:
+            httpGet:
+              path: /readyz
+              port: http
+            initialDelaySeconds: 3
+            periodSeconds: 5
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities:
+              drop: ["ALL"]
+          resources:
+            requests:
+              cpu: 100m
+              memory: 128Mi
+            limits:
+              cpu: 1000m
+              memory: 512Mi

@@ -36,6 +36,8 @@ spec:
                             io.kubernetes.pod.namespace: joplin
                     - matchLabels:
                             io.kubernetes.pod.namespace: infisical
+                    - matchLabels:
+                            io.kubernetes.pod.namespace: tibiary
             # Allow Cloudflare
             - toFQDNs:
                     - matchPattern: "*.cloudflare.com"

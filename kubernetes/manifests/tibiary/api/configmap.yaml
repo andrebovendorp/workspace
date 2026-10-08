@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: tibiary-api-config
+data:
+  HTTP_ADDR: ":8080"
+  AUTO_MIGRATE: "false"
+  LOG_LEVEL: "info"
+  CORS_ALLOWED_ORIGINS: "*"
+  API_BASE_URL: "https://tibiary-api.nullservers.com/api/v1"
+  APP_BASE_URL: "https://tibiary.nullservers.com"

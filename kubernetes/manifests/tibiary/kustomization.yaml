@@ -1,0 +1,49 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: tibiary
+
+resources:
+  - externalsecret-gitlab-pat.yaml
+  - cnp.yaml
+  - api/configmap.yaml
+  - api/deployment.yaml
+  - api/service.yaml
+  - api/httproute.yaml
+  - api/external-secret.yaml
+  - api/mongo-credentials.yaml
+  - web/configmap.yaml
+  - web/deployment.yaml
+  - web/service.yaml
+  - web/httproute.yaml
+
+configMapGenerator:
+  - name: tibiary-api-config
+    behavior: merge
+    literals:
+      - LOG_LEVEL=info
+      - CORS_ALLOWED_ORIGINS=https://tibiary.nullservers.com
+  - name: tibiary-web-config
+    behavior: merge
+    literals:
+      - API_BASE_URL=https://tibiary-api.nullservers.com/api/v1
+
+generatorOptions:
+  disableNameSuffixHash: true
+
+replicas:
+  - count: 2
+    name: tibiary-web
+
+images:
+  - name: tibiary-api
+    newName: registry.gitlab.com/tibiary/api
+    newTag: latest
+  - name: tibiary-web
+    newName: registry.gitlab.com/tibiary/web
+    newTag: latest
+
+labels:
+  - includeSelectors: true
+    pairs:
+      app.kubernetes.io/part-of: tibiary

@@ -1,0 +1,46 @@
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: tibiary
+  namespace: tibiary
+spec:
+  endpointSelector: {}
+  ingress:
+    - fromEndpoints:
+        - matchLabels:
+            io.kubernetes.pod.namespace: cloudflare
+        - matchLabels:
+            io.kubernetes.pod.namespace: envoy-gateway-system
+      toPorts:
+        - ports:
+            - port: "8080"
+              protocol: TCP
+  egress:
+    - toEndpoints:
+        - matchLabels:
+            io.kubernetes.pod.namespace: kube-system
+            k8s-app: kube-dns
+      toPorts:
+        - ports:
+            - port: "53"
+              protocol: UDP
+          rules:
+            dns:
+              - matchPattern: "*"
+    - toFQDNs:
+        - matchName: "pgsql.nullservers.com"
+      toPorts:
+        - ports:
+            - port: "5432"
+              protocol: TCP
+    - toFQDNs:
+        - matchName: "mongodb.nullservers.com"
+      toPorts:
+        - ports:
+            - port: "27017"
+              protocol: TCP
+    - toFQDNs:
+        - matchName: "smtp.resend.com"
+        - matchName: "guildstats.eu"
+        - matchName: "exevopan.com"
+        - matchName: "www.tibia.com"
