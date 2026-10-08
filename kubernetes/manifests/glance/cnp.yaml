@@ -13,6 +13,9 @@ spec:
     - toEntities:
         - ingress
         - cluster
+    - toEndpoints:
+        - matchLabels:
+            io.kubernetes.pod.namespace: tautulli
     - toFQDNs:
         - matchPattern: "*.selfh.st"
         - matchPattern: "*.twitch.tv"
@@ -29,8 +32,18 @@ spec:
         - matchPattern: "*.globo.com"
         - matchPattern: "*.unt.se"
         - matchPattern: "*.dn.se"
+        - matchPattern: "api.cloudflare.com"
+        - matchPattern: "store-site-backend-static.ak.epicgames.com"
+        - matchName: "feeds.feedburner.com"
     - toCIDRSet:
         - cidr: 192.168.20.0/24 # Internal network
+    - toCIDRSet:
+        - cidr: 172.16.0.240/32
+        - cidr: 192.168.50.240/32
+      toPorts:
+        - ports:
+            - port: "443"
+              protocol: TCP
     - toEndpoints:
         - matchLabels:
             io.kubernetes.pod.namespace: kube-system

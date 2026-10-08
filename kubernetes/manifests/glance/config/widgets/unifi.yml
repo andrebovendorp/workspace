@@ -1,0 +1,32 @@
+- type: custom-api
+  title: UniFi
+  title-url: https://router.nullservers.com
+  cache: 1m
+  allow-insecure: true
+  url: https://router.nullservers.com/proxy/network/api/stat/sites
+  headers:
+    X-API-KEY: ${UNIFI_API_KEY}
+    Accept: application/json
+  template: |
+    {{ if and (eq .Response.StatusCode 200) (eq (.JSON.String "meta.rc") "ok") }}
+      {{ range .JSON.Array "data" }}
+        <div class="margin-block-2">
+          <div class="size-h4 color-highlight text-truncate">{{ .String "health.#(subsystem=\"wan\").gw_name" }}</div>
+          <div class="{{ if eq (.String "health.#(subsystem=\"wan\").status") "ok" }}color-positive{{ else }}color-negative{{ end }}">
+            WAN {{ .String "health.#(subsystem=\"wan\").status" }}
+          </div>
+          <ul class="list list-gap-10 margin-top-10">
+            <li class="flex justify-between"><span>Uptime</span><span>{{ printf "%.1f" (div (.Float "health.#(subsystem=\"wan\").gw_system-stats.uptime") 86400) }} days</span></li>
+            <li class="flex justify-between"><span>Wired clients</span><span>{{ .Int "health.#(subsystem=\"lan\").num_user" }}</span></li>
+            <li class="flex justify-between"><span>Wireless clients</span><span>{{ .Int "health.#(subsystem=\"wlan\").num_user" }}</span></li>
+            <li class="flex justify-between"><span>WAN latency</span><span>{{ .Int "health.#(subsystem=\"wan\").uptime_stats.WAN.latency_average" }} ms</span></li>
+            <li class="flex justify-between"><span>Gateway CPU</span><span>{{ .String "health.#(subsystem=\"wan\").gw_system-stats.cpu" }}%</span></li>
+            <li class="flex justify-between"><span>Gateway RAM</span><span>{{ .String "health.#(subsystem=\"wan\").gw_system-stats.mem" }}%</span></li>
+          </ul>
+        </div>
+      {{ else }}
+        <p class="color-dim">No UniFi sites returned.</p>
+      {{ end }}
+    {{ else }}
+      <p class="color-negative">UniFi status unavailable (HTTP {{ .Response.StatusCode }}).</p>
+    {{ end }}

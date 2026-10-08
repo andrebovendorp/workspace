@@ -1,0 +1,16 @@
+- name: Infrastructure
+  width: wide
+  columns:
+    - size: full
+      widgets:
+        - $include: infrastructure-platform.yml
+        - $include: infrastructure-components.yml
+    - size: full
+      widgets:
+        - $include: infrastructure-apps.yml
+    - size: small
+      widgets:
+        - $include: widget-cloudflare.yml
+        - $include: widget-unifi.yml
+        - $include: widget-truenas.yml
+        - $include: widget-adguard.yml

@@ -1,0 +1,36 @@
+- type: monitor
+  title: Applications
+  cache: 5m
+  sites:
+    - title: Home Assistant
+      url: https://home.nullservers.com
+      icon: sh:home-assistant
+    - title: Tandoor Recipes
+      url: https://recipes.nullservers.com
+      check-url: http://recipes.recipes.svc.cluster.local:80
+      icon: sh:tandoor-recipes
+    - title: Audiobookshelf
+      url: https://bookshelf.nullservers.com
+      icon: sh:audiobookshelf
+    - title: Immich
+      url: https://photos.nullservers.com
+      icon: sh:immich
+    - title: Joplin Server
+      url: https://notes.nullservers.com
+      icon: sh:joplin
+    - title: Grav
+      url: https://blog.nullservers.com
+      icon: sh:grav
+    - title: Vaultwarden
+      url: https://pm.nullservers.com
+      icon: sh:vaultwarden
+    - title: Glance
+      url: https://start.nullservers.com
+      check-url: http://glance.glance.svc.cluster.local:80
+      icon: sh:glance
+    - title: Plex
+      url: https://watch.nullservers.com
+      icon: sh:plex
+    - title: Tautulli
+      url: ${TAUTULLI_URL}
+      icon: sh:tautulli

@@ -7,7 +7,9 @@ metadata:
     app: glance
 spec:
   revisionHistoryLimit: 3
-  replicas: 2
+  replicas: 1
+  strategy:
+    type: Recreate
   selector:
     matchLabels:
       app: glance
@@ -42,14 +44,66 @@ spec:
               value: "1000"
             - name: PGID
               value: "1000"
+            - name: TAUTULLI_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: glance-widget-config
+                  key: TAUTULLI_URL
+          envFrom:
+            - secretRef:
+                name: glance-widget-secrets
           volumeMounts:
             - name: glance
               mountPath: /app/config/glance.yml
               subPath: glance.yml
               readOnly: true
+            - name: glance
+              mountPath: /app/config/infrastructure.yml
+              subPath: infrastructure.yml
+              readOnly: true
+            - name: glance
+              mountPath: /app/config/infrastructure-platform.yml
+              subPath: infrastructure-platform.yml
+              readOnly: true
+            - name: glance
+              mountPath: /app/config/infrastructure-apps.yml
+              subPath: infrastructure-apps.yml
+              readOnly: true
+            - name: glance
+              mountPath: /app/config/infrastructure-components.yml
+              subPath: infrastructure-components.yml
+              readOnly: true
+            - name: glance
+              mountPath: /app/config/widget-cloudflare.yml
+              subPath: widget-cloudflare.yml
+              readOnly: true
+            - name: glance
+              mountPath: /app/config/widget-truenas.yml
+              subPath: widget-truenas.yml
+              readOnly: true
+            - name: glance
+              mountPath: /app/config/widget-unifi.yml
+              subPath: widget-unifi.yml
+              readOnly: true
+            - name: glance
+              mountPath: /app/config/widget-tautulli.yml
+              subPath: widget-tautulli.yml
+              readOnly: true
+            - name: glance
+              mountPath: /app/config/widget-epic.yml
+              subPath: widget-epic.yml
+              readOnly: true
+            - name: glance
+              mountPath: /app/config/widget-adguard.yml
+              subPath: widget-adguard.yml
+              readOnly: true
       imagePullSecrets:
         - name: dockerhub-token
       volumes:
         - name: glance
-          configMap:
-            name: glance
+          projected:
+            sources:
+              - configMap:
+                  name: glance
+              - configMap:
+                  name: glance-pages

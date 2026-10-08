@@ -1,0 +1,85 @@
+- type: custom-api
+  title: Plex Activity
+  cache: 1m
+  url: ${TAUTULLI_URL}/api/v2
+  parameters:
+    apikey: ${TAUTULLI_API_KEY}
+    cmd: get_activity
+  template: |
+    {{ if and (eq .Response.StatusCode 200) (eq (.JSON.String "response.result") "success") }}
+      <ul class="list-horizontal-text margin-bottom-10">
+        <li>{{ .JSON.Int "response.data.stream_count" }} streams</li>
+        <li>{{ .JSON.Int "response.data.stream_count_transcode" }} transcodes</li>
+        <li>{{ .JSON.Int "response.data.total_bandwidth" | formatNumber }} kbps</li>
+      </ul>
+      <ul class="list list-gap-10 collapsible-container" data-collapse-after="5">
+        {{ range .JSON.Array "response.data.sessions" }}
+          <li>
+            <div class="color-highlight text-truncate">{{ if eq (.String "media_type") "episode" }}{{ .String "grandparent_title" }}: {{ end }}{{ .String "title" }}</div>
+            <ul class="list-horizontal-text">
+              <li>{{ .String "friendly_name" }}</li>
+              <li>{{ .String "state" }}</li>
+              <li>{{ .String "progress_percent" }}% watched</li>
+            </ul>
+          </li>
+        {{ else }}
+          <li class="color-dim">Nothing playing right now.</li>
+        {{ end }}
+      </ul>
+    {{ else }}
+      <p class="color-negative">Tautulli activity unavailable (HTTP {{ .Response.StatusCode }}).</p>
+    {{ end }}
+- type: custom-api
+  title: Recently Added
+  cache: 5m
+  url: ${TAUTULLI_URL}/api/v2
+  parameters:
+    apikey: ${TAUTULLI_API_KEY}
+    cmd: get_recently_added
+    count: "10"
+  template: |
+    {{ if and (eq .Response.StatusCode 200) (eq (.JSON.String "response.result") "success") }}
+      <ul class="list list-gap-10 collapsible-container" data-collapse-after="5">
+        {{ range .JSON.Array "response.data.recently_added" }}
+          <li>
+            <div class="color-highlight text-truncate">{{ if eq (.String "media_type") "episode" }}{{ .String "grandparent_title" }}: {{ end }}{{ .String "title" }}</div>
+            <ul class="list-horizontal-text">
+              <li>{{ .String "media_type" }}</li>
+              <li><span {{ parseRelativeTime "unix" (.String "added_at") }}></span> ago</li>
+            </ul>
+          </li>
+        {{ else }}
+          <li class="color-dim">No recently added media.</li>
+        {{ end }}
+      </ul>
+    {{ else }}
+      <p class="color-negative">Recently added media unavailable.</p>
+    {{ end }}
+- type: custom-api
+  title: Top Movies (90 Days)
+  cache: 1h
+  url: ${TAUTULLI_URL}/api/v2
+  parameters:
+    apikey: ${TAUTULLI_API_KEY}
+    cmd: get_home_stats
+    stat_id: top_movies
+    stats_type: duration
+    time_range: "90"
+  template: |
+    {{ if and (eq .Response.StatusCode 200) (eq (.JSON.String "response.result") "success") }}
+      <ul class="list list-gap-10 collapsible-container" data-collapse-after="5">
+        {{ range .JSON.Array "response.data.rows" }}
+          <li>
+            <div class="color-highlight text-truncate">{{ .String "title" }} ({{ .Int "year" }})</div>
+            <ul class="list-horizontal-text">
+              <li>{{ .Int "total_plays" }} plays</li>
+              <li>{{ div (.Float "total_duration") 3600 | printf "%.1f" }} hours</li>
+            </ul>
+          </li>
+        {{ else }}
+          <li class="color-dim">No movie history.</li>
+        {{ end }}
+      </ul>
+    {{ else }}
+      <p class="color-negative">Watch statistics unavailable.</p>
+    {{ end }}

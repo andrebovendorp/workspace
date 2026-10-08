@@ -1,0 +1,42 @@
+- type: custom-api
+  title: Epic Games - Free Games
+  title-url: https://store.epicgames.com/en-US/free-games
+  cache: 1h
+  url: https://store-site-backend-static.ak.epicgames.com/freeGamesPromotions
+  parameters:
+    locale: en
+    country: SE
+    allowCountries: SE
+  template: |
+    {{ if eq .Response.StatusCode 200 }}
+      {{ $found := false }}
+      <ul class="list list-gap-10">
+        {{ range .JSON.Array "data.Catalog.searchStore.elements" }}
+          {{ if and (gt (len (.Array "promotions.promotionalOffers")) 0) (eq (.Int "price.totalPrice.discountPrice") 0) }}
+            {{ $found = true }}
+            {{ $gamePage := .String "productSlug" }}
+            {{ if gt (len (.Array "offerMappings")) 0 }}{{ $gamePage = .String "offerMappings.0.pageSlug" }}{{ end }}
+            {{ $title := .String "title" }}
+            <li class="flex items-center gap-10">
+              {{ $image := "" }}
+              {{ range .Array "keyImages" }}
+                {{ if and (eq $image "") (eq (.String "type") "OfferImageWide") }}
+                  {{ $image = .String "url" }}
+                {{ end }}
+              {{ end }}
+              {{ if ne $image "" }}
+                <img src="{{ $image }}" alt="{{ $title }}" loading="lazy" width="56" height="36" style="flex-shrink: 0; object-fit: cover; border-radius: var(--border-radius);">
+              {{ end }}
+              <div class="min-width-0 grow">
+                <a href="https://store.epicgames.com/en-US/p/{{ $gamePage }}" target="_blank" rel="noopener noreferrer" class="color-primary block text-truncate" title="{{ $title }}">{{ $title }}</a>
+                {{ $endDate := .String "promotions.promotionalOffers.0.promotionalOffers.0.endDate" }}
+                <div class="size-h5 color-subdue">{{ if ge (len $endDate) 10 }}Free until {{ slice $endDate 0 10 }}{{ else }}Free this week{{ end }}</div>
+              </div>
+            </li>
+          {{ end }}
+        {{ end }}
+      </ul>
+      {{ if not $found }}<p class="color-dim">No free games available in this region.</p>{{ end }}
+    {{ else }}
+      <p class="color-negative">Epic Games promotions unavailable (HTTP {{ .Response.StatusCode }}).</p>
+    {{ end }}

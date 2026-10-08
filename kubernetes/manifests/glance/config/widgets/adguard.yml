@@ -1,0 +1,16 @@
+- type: dns-stats
+  title: AdGuard 1
+  service: adguard
+  url: https://172.16.0.240
+  allow-insecure: true
+  username: ${ADGUARD_USERNAME}
+  password: ${ADGUARD_PASSWORD}
+  hour-format: 24h
+- type: dns-stats
+  title: AdGuard 2
+  service: adguard
+  url: https://192.168.50.240
+  allow-insecure: true
+  username: ${ADGUARD_USERNAME}
+  password: ${ADGUARD_PASSWORD}
+  hour-format: 24h

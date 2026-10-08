@@ -1,0 +1,48 @@
+- type: monitor
+  title: Platform
+  cache: 5m
+  sites:
+    - title: Grafana
+      url: https://grafana.nullservers.com
+      icon: sh:grafana
+    - title: VictoriaMetrics
+      url: https://metrics.nullservers.com/vmui/
+      icon: sh:victoriametrics
+    - title: VictoriaLogs
+      url: https://logs.nullservers.com/select/vmui/
+      icon: sh:victoriametrics
+    - title: Hubble
+      url: https://hubble.nullservers.com
+      icon: sh:cilium
+    - title: FluxCD
+      url: https://flux.nullservers.com
+      icon: sh:flux-cd
+    - title: Authentik
+      url: https://auth.nullservers.com
+      icon: sh:authentik
+    - title: Infisical
+      url: https://infisical.nullservers.com
+      icon: sh:infisical
+    - title: Duplicati
+      url: https://backup.nullservers.com
+      icon: sh:duplicati
+    - title: TrueNAS
+      url: https://truenas.nullservers.com
+      icon: sh:truenas
+      allow-insecure: true
+    - title: UniFi Router
+      url: https://router.nullservers.com
+      icon: sh:ubiquiti-unifi
+      allow-insecure: true
+    - title: AdGuard 1
+      url: https://172.16.0.240
+      icon: sh:adguard-home
+      allow-insecure: true
+    - title: AdGuard 2
+      url: https://192.168.50.240
+      icon: sh:adguard-home
+      allow-insecure: true
+    - title: Proxmox
+      url: https://px.nullservers.com:8006
+      icon: sh:proxmox
+      allow-insecure: true

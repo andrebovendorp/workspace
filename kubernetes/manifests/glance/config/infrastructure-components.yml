@@ -1,0 +1,52 @@
+- type: bookmarks
+  title: Cluster Services
+  groups:
+    - title: Networking
+      links:
+        - title: Cloudflare Tunnel
+          url: https://one.dash.cloudflare.com/
+          icon: sh:cloudflare
+        - title: Cilium
+          url: https://github.com/andrebovendorp/workspace/tree/main/kubernetes/manifests/cni
+        - title: Envoy Gateway
+          url: https://github.com/andrebovendorp/workspace/tree/main/kubernetes/manifests/envoy-gateway-system
+        - title: External DNS (AdGuard)
+          url: https://github.com/andrebovendorp/workspace/tree/main/kubernetes/manifests/external-dns-adguard
+        - title: DNS Updater
+          url: https://github.com/andrebovendorp/workspace/tree/main/kubernetes/manifests/dns-updater
+        - title: AdGuard Sync
+          url: https://github.com/andrebovendorp/workspace/tree/main/kubernetes/manifests/adguard-sync
+    - title: Storage and Data
+      links:
+        - title: NFS CSI Driver
+          url: https://github.com/andrebovendorp/workspace/tree/main/kubernetes/manifests/csi-driver-nfs
+        - title: TrueNAS CSI Driver
+          url: https://github.com/andrebovendorp/workspace/tree/main/kubernetes/manifests/truenas-csi
+        - title: Redis
+          url: https://github.com/andrebovendorp/workspace/tree/main/kubernetes/manifests/redis
+        - title: Database Backup
+          url: https://github.com/andrebovendorp/workspace/tree/main/kubernetes/manifests/database-backup
+        - title: PostgreSQL
+          url: https://github.com/andrebovendorp/workspace/tree/main/proxmox/pgsql
+        - title: NFS Servers
+          url: https://github.com/andrebovendorp/workspace/tree/main/proxmox/nfs
+    - title: Controllers and Telemetry
+      links:
+        - title: cert-manager
+          url: https://github.com/andrebovendorp/workspace/tree/main/kubernetes/manifests/cert-manager
+        - title: External Secrets
+          url: https://github.com/andrebovendorp/workspace/tree/main/kubernetes/manifests/external-secrets
+        - title: Node Feature Discovery
+          url: https://github.com/andrebovendorp/workspace/tree/main/kubernetes/manifests/node-feature-discovery
+        - title: Intel Device Plugins
+          url: https://github.com/andrebovendorp/workspace/tree/main/kubernetes/manifests/inteldeviceplugins-system
+        - title: OpenTelemetry
+          url: https://github.com/andrebovendorp/workspace/tree/main/kubernetes/manifests/opentelemetry
+        - title: Tibia Statistics API
+          url: https://github.com/andrebovendorp/workspace/tree/main/kubernetes/manifests/tibia-statistics
+    - title: Proxmox Services
+      links:
+        - title: NTP
+          url: https://github.com/andrebovendorp/workspace/tree/main/proxmox/ntp
+        - title: Upgrade Notifications
+          url: https://github.com/andrebovendorp/workspace/tree/main/proxmox/mail-upgrades

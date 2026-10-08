@@ -1,0 +1,41 @@
+- type: custom-api
+  title: TrueNAS Pools
+  title-url: https://truenas.nullservers.com
+  cache: 1m
+  allow-insecure: true
+  url: https://truenas.nullservers.com/api/v2.0/pool/dataset
+  headers:
+    Authorization: Bearer ${TRUENAS_API_KEY}
+    Accept: application/json
+  template: |
+    {{ $pools := newRequest "https://truenas.nullservers.com/api/v2.0/pool"
+      | withHeader "Authorization" "Bearer ${TRUENAS_API_KEY}"
+      | withAllowInsecure true
+      | getResponse }}
+    {{ if and (eq .Response.StatusCode 200) (eq $pools.Response.StatusCode 200) }}
+      {{ range .JSON.Array "" }}
+        {{ if not (findMatch "/" (.String "name")) }}
+          {{ $used := .Float "used.parsed" }}
+          {{ $available := .Float "available.parsed" }}
+          {{ $total := add $used $available }}
+          {{ $percent := 0.0 }}
+          {{ if gt $total 0.0 }}{{ $percent = mul (div $used $total) 100 }}{{ end }}
+          {{ $query := printf "#(name==%q).healthy" (.String "name") }}
+          {{ $healthy := $pools.JSON.Bool $query }}
+          <div class="margin-block-2">
+            <div class="flex justify-between items-center">
+              <span class="color-highlight text-truncate">{{ .String "name" }}</span>
+              <span class="{{ if $healthy }}color-positive{{ else }}color-negative{{ end }}">{{ if $healthy }}Healthy{{ else }}Unhealthy{{ end }}</span>
+            </div>
+            <div class="size-h5 margin-top-10">{{ .String "used.value" }} / {{ printf "%.1f" (div $total 1099511627776) }} TiB ({{ printf "%.1f" $percent }}%)</div>
+            <div class="progress-bar progress-bar-combined margin-top-10">
+              <div class="progress-value{{ if ge $percent 80.0 }} progress-value-notice{{ end }}" style="--percent: {{ printf "%.1f" $percent }}"></div>
+            </div>
+          </div>
+        {{ end }}
+      {{ else }}
+        <p class="color-dim">No pools returned.</p>
+      {{ end }}
+    {{ else }}
+      <p class="color-negative">TrueNAS REST pool data unavailable.</p>
+    {{ end }}

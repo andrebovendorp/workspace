@@ -9,6 +9,24 @@ resources:
   - glance.yaml
   - http-route.yaml
   - referencegrant.yaml
+  - widget-secrets.yaml
+
+configMapGenerator:
+  - name: glance-widget-config
+    literals:
+      - TAUTULLI_URL=http://tautulli.tautulli.svc.cluster.local
+  - name: glance-pages
+    files:
+      - infrastructure.yml=config/infrastructure.yml
+      - infrastructure-platform.yml=config/infrastructure-platform.yml
+      - infrastructure-apps.yml=config/infrastructure-apps.yml
+      - infrastructure-components.yml=config/infrastructure-components.yml
+      - widget-cloudflare.yml=config/widgets/cloudflare.yml
+      - widget-truenas.yml=config/widgets/truenas.yml
+      - widget-unifi.yml=config/widgets/unifi.yml
+      - widget-tautulli.yml=config/widgets/tautulli.yml
+      - widget-epic.yml=config/widgets/epic.yml
+      - widget-adguard.yml=config/widgets/adguard.yml
 
 commonLabels:
   app: glance
