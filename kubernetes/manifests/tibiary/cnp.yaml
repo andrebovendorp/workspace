@@ -40,7 +40,7 @@ spec:
             - port: "27017"
               protocol: TCP
     - toFQDNs:
-        - matchName: "smtp.resend.com"
         - matchName: "guildstats.eu"
         - matchName: "exevopan.com"
         - matchName: "www.tibia.com"
+        - matchName: "api.resend.com"
