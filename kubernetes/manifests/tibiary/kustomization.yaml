@@ -36,10 +36,10 @@ replicas:
     name: tibiary-web
 
 images:
-  - name: tibiary-api
+  - name: registry.gitlab.com/tibiary/api
     newName: registry.gitlab.com/tibiary/api
     newTag: 0.2.1
-  - name: tibiary-web
+  - name: registry.gitlab.com/tibiary/tibiary-web
     newName: registry.gitlab.com/tibiary/web
     newTag: 0.2.1
 
