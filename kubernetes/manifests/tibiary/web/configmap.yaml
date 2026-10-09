@@ -4,3 +4,4 @@ metadata:
   name: tibiary-web-config
 data:
   API_BASE_URL: "/api/v1"
+  GROUP_FINDER_ENABLED: "true"
