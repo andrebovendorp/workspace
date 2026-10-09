@@ -40,7 +40,7 @@ images:
     newName: registry.gitlab.com/tibiary/api
     newTag: 0.2.1
   - name: registry.gitlab.com/tibiary/tibiary-web
-    newName: registry.gitlab.com/tibiary/web
+    newName: registry.gitlab.com/tibiary/tibiary-web
     newTag: 0.2.1
 
 labels:
