@@ -18,4 +18,4 @@ namespace: grav
 
 images:
   - name: docker.io/linuxserver/grav
-    newTag: "2.2.4"
+    newTag: "2.2.6"
