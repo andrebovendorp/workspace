@@ -6,7 +6,7 @@ metadata:
 spec:
   selector:
     matchLabels:
-      app.kubernetes.io/name: cloudflare
+      app.kubernetes.io/name: cloudflared
   namespaceSelector:
     matchNames:
       - cloudflare
