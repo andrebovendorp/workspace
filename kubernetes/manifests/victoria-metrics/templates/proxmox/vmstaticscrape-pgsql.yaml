@@ -39,7 +39,7 @@ spec:
         role: "database-server"
     # Node Exporter for main PostgreSQL server
     - targets:
-        - "pgsql.nullservers.com:9100"
+        - "pgsql.nullservers.com:9187"
       labels:
         instance: "main-pgsql"
         service: "node"
@@ -58,12 +58,5 @@ spec:
         - "immich.pgsql.nullservers.com:8080"
       labels:
         instance: "immich-pgsql"
-        service: "cadvisor"
-        role: "database-server"
-    # cAdvisor for main PostgreSQL server
-    - targets:
-        - "pgsql.nullservers.com:8080"
-      labels:
-        instance: "main-pgsql"
         service: "cadvisor"
         role: "database-server"
