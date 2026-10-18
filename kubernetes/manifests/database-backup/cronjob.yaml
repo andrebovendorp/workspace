@@ -41,59 +41,59 @@ spec:
           affinity:
             nodeAffinity:
               preferredDuringSchedulingIgnoredDuringExecution:
-              - weight: 100
-                preference:
-                  matchExpressions:
-                  - key: kubernetes.io/hostname
-                    operator: In
-                    values:
-                    - slave03
+                - weight: 100
+                  preference:
+                    matchExpressions:
+                      - key: kubernetes.io/hostname
+                        operator: In
+                        values:
+                          - slave03
           securityContext:
             runAsNonRoot: true
             runAsUser: 1000
             runAsGroup: 1000
             fsGroup: 1000
           containers:
-          - name: database-backup
-            image: ghcr.io/boveloco/database-backup/database-backup:latest
-            imagePullPolicy: IfNotPresent
-            command: [ "python", "main.py" ]
-            args: [ "--backup-all", "--verbose" ]
-            resources:
-              requests:
-                memory: "512Mi"
-                cpu: "100m"
-              limits:
-                memory: "512Mi"
-                cpu: "2"
-            env:
-            - name: PYTHONUNBUFFERED
-              value: "1"
-            - name: LOG_LEVEL
-              value: "INFO"
-            volumeMounts:
-            - name: config-volume
-              mountPath: /app/config.yaml
-              subPath: config.yaml
-              readOnly: true
-            - name: logs
-              mountPath: /app/logs
-            - name: backup-storage
-              mountPath: /app/backups
-            securityContext:
-              allowPrivilegeEscalation: false
-              readOnlyRootFilesystem: false # Set to false due to temp files
-              capabilities:
-                drop:
-                - ALL
+            - name: database-backup
+              image: ghcr.io/boveloco/database-backup/database-backup:v1.0.1
+              imagePullPolicy: IfNotPresent
+              command: ["python", "main.py"]
+              args: ["--backup-all", "--verbose"]
+              resources:
+                requests:
+                  memory: "512Mi"
+                  cpu: "100m"
+                limits:
+                  memory: "512Mi"
+                  cpu: "2"
+              env:
+                - name: PYTHONUNBUFFERED
+                  value: "1"
+                - name: LOG_LEVEL
+                  value: "INFO"
+              volumeMounts:
+                - name: config-volume
+                  mountPath: /app/config.yaml
+                  subPath: config.yaml
+                  readOnly: true
+                - name: logs
+                  mountPath: /app/logs
+                - name: backup-storage
+                  mountPath: /app/backups
+              securityContext:
+                allowPrivilegeEscalation: false
+                readOnlyRootFilesystem: false # Set to false due to temp files
+                capabilities:
+                  drop:
+                    - ALL
           volumes:
-          - name: config-volume
-            secret:
-              secretName: database-backup-config-secret
-              items:
-              - key: config.yaml
-                path: config.yaml
-          - name: backup-storage
-            emptyDir: {}
-          - name: logs
-            emptyDir: {}
+            - name: config-volume
+              secret:
+                secretName: database-backup-config-secret
+                items:
+                  - key: config.yaml
+                    path: config.yaml
+            - name: backup-storage
+              emptyDir: {}
+            - name: logs
+              emptyDir: {}
