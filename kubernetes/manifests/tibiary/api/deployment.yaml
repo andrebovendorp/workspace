@@ -26,6 +26,7 @@ spec:
       initContainers:
         - name: migrate
           image: registry.gitlab.com/tibiary/api
+          imagePullPolicy: IfNotPresent
           args: ["migrate", "up"]
           envFrom:
             - configMapRef:
@@ -61,6 +62,7 @@ spec:
       containers:
         - name: api
           image: registry.gitlab.com/tibiary/api
+          imagePullPolicy: IfNotPresent
           args: ["serve"]
           ports:
             - name: http

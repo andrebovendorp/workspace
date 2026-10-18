@@ -3,5 +3,5 @@ kind: ConfigMap
 metadata:
   name: tibiary-web-config
 data:
-  API_BASE_URL: "/api/v1"
-  GROUP_FINDER_ENABLED: "true"
+  API_BASE_URL: "https://api.tibiary.app/api/v1"
+  GROUP_FINDER_ENABLED: "false"
