@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: tibiary-web
+  labels:
+    app.kubernetes.io/name: tibiary-web
+spec:
+  type: ClusterIP
+  selector:
+    app.kubernetes.io/name: tibiary-web
+  ports:
+    - name: http
+      port: 80
+      targetPort: http
+      protocol: TCP

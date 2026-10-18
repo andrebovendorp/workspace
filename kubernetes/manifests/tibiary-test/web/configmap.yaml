@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: tibiary-web-config
+data:
+  API_BASE_URL: "https://tibiary-api.nullservers.com/api/v1"
+  GROUP_FINDER_ENABLED: "true"
