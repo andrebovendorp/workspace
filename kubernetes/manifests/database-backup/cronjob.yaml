@@ -55,7 +55,7 @@ spec:
             fsGroup: 1000
           containers:
             - name: database-backup
-              image: ghcr.io/boveloco/database-backup/database-backup:v1.0.1
+              image: ghcr.io/boveloco/database-backup/database-backup:latest
               imagePullPolicy: IfNotPresent
               command: ["python", "main.py"]
               args: ["--backup-all", "--verbose"]
