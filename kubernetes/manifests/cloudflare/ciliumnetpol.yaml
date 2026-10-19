@@ -5,6 +5,10 @@ metadata:
   namespace: cloudflare
 spec:
   endpointSelector: {}
+  ingress:
+    - fromEndpoints:
+        - matchLabels:
+            io.kubernetes.pod.namespace: victoria-metrics
   egress:
     - toEndpoints:
         - matchLabels:
@@ -38,6 +42,8 @@ spec:
             io.kubernetes.pod.namespace: infisical
         - matchLabels:
             io.kubernetes.pod.namespace: tibiary
+        - matchLabels:
+            io.kubernetes.pod.namespace: victoria-metrics
     # Allow Cloudflare
     - toFQDNs:
         - matchPattern: "*.cloudflare.com"

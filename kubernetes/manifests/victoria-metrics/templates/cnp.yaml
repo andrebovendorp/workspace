@@ -18,7 +18,6 @@ spec:
   - toEndpoints:
     - matchLabels:
         io.kubernetes.pod.namespace: opentelemetry
-  - toEndpoints:
     - matchLabels:
         io.kubernetes.pod.namespace: cloudflare
   - toEndpoints:
