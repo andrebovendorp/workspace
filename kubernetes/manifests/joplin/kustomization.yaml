@@ -19,4 +19,4 @@ namespace: joplin
 
 images:
   - name: joplin/server
-    newTag: "3.7.2"
+    newTag: "3.7.3"
