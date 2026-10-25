@@ -47,6 +47,13 @@ spec:
                 secretKeyRef:
                   name: mongo-credentials
                   key: mongo_uri
+            - name: RESEND_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: tibiary-credentials
+                  key: RESEND_APIKEY
+            - name: EMAIL_FROM
+              value: no-reply@nullservers.com
           securityContext:
             allowPrivilegeEscalation: false
             readOnlyRootFilesystem: true
