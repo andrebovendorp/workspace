@@ -16,4 +16,4 @@ namespace: adguard-sync
 
 images:
   - name: ghcr.io/bakito/adguardhome-sync
-    newTag: "v0.9.3"
+    newTag: "v0.9.4"

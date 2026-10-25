@@ -3,7 +3,7 @@ terraform {
   required_providers {
     azurerm = {
       source  = "hashicorp/azurerm"
-      version = "< 5.9"
+      version = "< 5.11"
     }
     random = {
       source  = "hashicorp/random"
@@ -31,7 +31,7 @@ module "naming" {
 
 module "regions" {
   source  = "Azure/avm-utl-regions/azurerm"
-  version = "0.12.0"
+  version = "0.13.0"
 
   availability_zones_filter = true
 }
@@ -81,7 +81,7 @@ module "natgateway" {
 
 module "vnet" {
   source  = "Azure/avm-res-network-virtualnetwork/azurerm"
-  version = "0.22.2"
+  version = "0.22.3"
 
   resource_group_name = azurerm_resource_group.this_rg.name
   address_space       = ["192.168.0.0/16"]
