@@ -36,10 +36,10 @@ replicas:
 images:
   - name: registry.gitlab.com/tibiary/api
     newName: registry.gitlab.com/tibiary/api
-    newTag: 0.2.2
+    newTag: 0.2.3
   - name: registry.gitlab.com/tibiary/tibiary-web
     newName: registry.gitlab.com/tibiary/tibiary-web
-    newTag: 0.2.2
+    newTag: 0.2.3
 
 labels:
   - includeSelectors: true

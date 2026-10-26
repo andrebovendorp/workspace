@@ -10,4 +10,4 @@ data:
   API_BASE_URL: "https://api.tibiary.app/api/v1"
   APP_BASE_URL: "https://tibiary.app"
   EMAIL_FROM: "no-reply@nullservers.com"
-  BOSS_APPEARANCE_SOURCE: "guildstats
+  BOSS_APPEARANCE_SOURCE: "guildstats"
