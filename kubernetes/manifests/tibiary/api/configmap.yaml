@@ -11,3 +11,4 @@ data:
   APP_BASE_URL: "https://tibiary.app"
   EMAIL_FROM: "no-reply@nullservers.com"
   BOSS_APPEARANCE_SOURCE: "guildstats"
+  GROUP_FINDER_ENABLED: "true"
