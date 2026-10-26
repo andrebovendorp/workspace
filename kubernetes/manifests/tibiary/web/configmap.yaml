@@ -4,4 +4,4 @@ metadata:
   name: tibiary-web-config
 data:
   API_BASE_URL: "https://api.tibiary.app/api/v1"
-  GROUP_FINDER_ENABLED: "false"
+  GROUP_FINDER_ENABLED: "true"
