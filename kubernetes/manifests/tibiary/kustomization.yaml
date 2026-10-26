@@ -30,8 +30,10 @@ generatorOptions:
   disableNameSuffixHash: true
 
 replicas:
-  - count: 1
+  - count: 2
     name: tibiary-web
+  - count: 2
+    name: tibiary-api
 
 images:
   - name: registry.gitlab.com/tibiary/api
@@ -39,7 +41,7 @@ images:
     newTag: 0.2.3
   - name: registry.gitlab.com/tibiary/tibiary-web
     newName: registry.gitlab.com/tibiary/tibiary-web
-    newTag: 0.2.3
+    newTag: 0.2.4
 
 labels:
   - includeSelectors: true
