@@ -19,10 +19,12 @@
     ".vscode/",
     "studies/",
     "workshops/",
-    "brand/"
+    "brand/",
+    "architecture/"
   ],
   "enabledManagers": [
-    "helmv3"
+    "helmv3",
+    "kubernetes"
   ],
   "customManagers": [
     {
@@ -41,13 +43,7 @@
   ],
   "packageRules": [
     {
-      "description": "Automerge everything except specific critical apps and versions ending in .0",
-      "matchDepNames": [
-        "!immich",
-        "!cilium",
-        "!k3s"
-      ],
-      "matchCurrentVersion": "!/\\.\\d+\\.0$/",
+      "description": "Automerge patch and minor updates",
       "matchUpdateTypes": [
         "patch",
         "minor"
@@ -55,11 +51,13 @@
       "automerge": true
     },
     {
-      "description": "Do not automerge specific critical apps (immich, cilium, k3s)",
-      "matchDepNames": [
-        "immich",
-        "cilium",
-        "k3s"
+      "description": "Do not automerge major or minor updates for Authentik and Immich",
+      "matchPackageNames": [
+        "/(^|\\/)(authentik|goauthentik|immich)([-\\/]|$)/i"
+      ],
+      "matchUpdateTypes": [
+        "major",
+        "minor"
       ],
       "automerge": false
     }
