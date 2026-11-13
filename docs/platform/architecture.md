@@ -4,7 +4,7 @@ Describes the current cluster architecture (what exists) and the key design deci
 
 ## High-Level Architecture
 
-Single control plane K3s cluster (SQLite datastore) with Cilium providing CNI, network policy, ingress, and load balancing; hybrid storage (local + NFS); GitOps via FluxCD.
+Single control plane K3s cluster (SQLite datastore) with Cilium providing CNI and network policy, Envoy Gateway providing Gateway API-based ingress, hybrid storage (local + NFS), and GitOps via FluxCD.
 
 ![Diagram: Infrastructure Architecture](../resources/images/architecture/infrastructure.drawio.svg)
 
@@ -22,8 +22,8 @@ Key characteristics:
 | Control Plane | K3s single server | API / scheduling / controllers | Single node (simplicity) | Reduced HA, faster recovery path required |
 | Datastore | SQLite embedded | Cluster state | Avoid etcd complexity | Scale / HA limits |
 | Worker Runtime | containerd | Container execution | Upstream default, minimal overhead | N/A |
-| Networking | Cilium (eBPF) | CNI, Ingress, LB, Policy | Consolidate stack | Learning curve, kernel dependency |
-| Ingress / LB | Cilium API GW + LB IPAM | External traffic entry | Avoid separate NGINX/MetalLB | More yamls to configure. |
+| Networking | Cilium (eBPF) | CNI, service load balancing, network policy | Consolidate networking and policy | Learning curve, kernel dependency |
+| Ingress | Envoy Gateway (Gateway API) | External HTTP(S) traffic entry | Dedicated Gateway API controller | Additional controller to operate |
 | Storage | NFS | Persistence tiers | Map tier to workload profiles | No distributed HA storage |
 | GitOps | FluxCD | Declarative reconciliation | Pull model, low footprint | Less GUI-centric ops |
 | Observability | Grafana + Victoria Metrics / Logs | Metrics & logs | Resource efficiency | Smaller ecosystem |
@@ -36,8 +36,8 @@ Workers use containerd + systemd cgroups; defaults retained except tuned pod den
 
 ## Networking
 
-### Cilium Architecture
-eBPF data path handles service load balancing, network policy enforcement, and ingress without kube-proxy. This reduces context switches and component count.
+### Cilium and Envoy Gateway
+Cilium provides the eBPF networking data path, service load balancing, and network policy enforcement. Envoy Gateway implements the Gateway API resources that route external HTTP(S) traffic into the cluster.
 
 ### Network Policy Strategy
 Baseline approach: *deny-by-default* in sensitive namespaces (databases, identity) and progressively expand coverage. Representative policy pattern (not exhaustive): allow only specific app → database traffic + DNS egress. Full manifests reside in GitOps repo.

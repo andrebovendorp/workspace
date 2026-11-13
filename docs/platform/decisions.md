@@ -18,18 +18,19 @@ Overview of cross-domain architectural decisions. Each entry captures the ration
 | Domain | Decision | Options Considered | Rationale (Why Chosen) | Key Consequences | Status | Review |
 |--------|----------|--------------------|------------------------|------------------|--------|--------|
 | Platform | K3s (single control plane, SQLite) | kubeadm+etcd, k0s, MicroK8s | Lowest operational overhead, resource efficiency, fast patching | Single point of failure, SQLite scale ceiling | Accepted | 2026-01 |
-| Networking | Cilium (eBPF CNI + Ingress + LB) | Flannel, Calico, Cilium | Unified networking + policy + LB; modern eBPF features | Learning curve, kernel dependency | Accepted | 2025-12 |
+| Networking | Cilium (eBPF CNI + network policy) | Flannel, Calico, Cilium | Unified networking and policy; modern eBPF features | Learning curve, kernel dependency | Accepted | 2025-12 |
 | Storage | Hybrid: local-path + NFS + fast-local tier | All-local SSD, Pure NFS, Ceph | Matches workload profiles (DB perf + shared media) with low complexity | No distributed HA storage; manual data placement | Accepted | 2025-11 |
 | Observability | Victoria Metrics + Victoria Logs | Prometheus+Loki, Thanos, ClickHouse stack | Lower RAM/CPU, simpler stack for scale | Less ecosystem tooling parity vs Prometheus | Accepted | 2026-03 |
 | GitOps | FluxCD | ArgoCD, Manual kubectl, Helm CI | Lower footprint, native multi-tenancy patterns | Less GUI-driven workflow | Accepted | 2025-12 |
 | Identity & Access | Authentik SSO + RBAC | Keycloak, Dex, Internal-only | Lightweight SSO with good integrations | Smaller community vs Keycloak | Accepted | 2025-12 |
 | Secrets Mgmt | External Secrets Operator | SOPS-only, Manual K8s Secrets | Syncs external secret stores seamlessly | Controller dependency, sync latency | Accepted | 2025-12 |
 | Certificates | cert-manager (ACME) | Manual renewals, Caddy, Traefik | Automated issuance & rotation | Additional CRDs & controller | Accepted | 2025-11 |
+| Storage Migration | Migrate all Kubernetes StorageClasses to TrueNAS CSI | Retain separate NFS CSI and local-path classes | Standardize storage provisioning through the TrueNAS CSI integration | PVC data and storage-class behavior must be migrated and validated before retiring existing classes | Planned | — |
 | Metrics Collection | Agent scraping → Victoria Metrics | Prometheus server, Thanos sidecar | Efficiency + consolidated setup | Potential migration if scale >1M series | Accepted | 2026-03 |
 | Logging | Victoria Logs + Fluent Bit | Loki, Elastic Stack | Lower resource usage, simpler ops | Less mature search UX vs Elastic | Accepted | 2025-12 |
 | Backup Strategy | ZFS snapshots + offsite replication | Restic-only, Ceph RBD snapshots | Fast local rollback + integrity | Requires ZFS management expertise | Accepted | 2025-12 |
 | Deployment Pattern | Single cluster (prod+lab workloads segmented by policy) | Separate clusters, namespaces only | Simplicity, resource consolidation | Blast radius if misconfigured policies | Accepted | 2026-02 |
-| Ingress & LB | Cilium Ingress + LB IPAM | NGINX Ingress, Traefik, MetalLB | Integrated stack, fewer moving parts | Feature parity gaps vs mature ingress controllers | Accepted | 2025-12 |
+| Ingress | Envoy Gateway (Gateway API) | Cilium Gateway API, NGINX Ingress, Traefik | Dedicated Gateway API controller; Cilium remains the CNI and network-policy engine | Additional controller to operate | Accepted | — |
 | Database Strategy | Local persistent volumes per service | Central DB cluster, Managed DB (N/A) | Isolation, simple backup surfaces | No shared HA cluster benefits | Accepted | 2026-01 |
 
 ## Pending / Future Decisions
@@ -42,6 +43,21 @@ Overview of cross-domain architectural decisions. Each entry captures the ration
 ---
 
 ## Detailed Decision Records
+
+### Migrate All StorageClasses to TrueNAS CSI
+**Status:** Planned
+
+**Decision:**
+Migrate all Kubernetes StorageClasses to TrueNAS CSI and update their workloads to use the corresponding TrueNAS-backed classes.
+
+**Implementation:**
+- Map each existing class to a TrueNAS CSI class with equivalent storage and lifecycle behavior where required.
+- Migrate existing PVC data and validate workloads before retiring their current StorageClasses or CSI drivers.
+- Keep existing classes available until their PVCs and data have been migrated and verified.
+
+**Consequences:**
+- Storage provisioning will depend on TrueNAS and its CSI driver.
+- The migration must account for each class's access, retention, and data requirements to avoid data loss or workload disruption.
 
 ### Bypass CloudflareD Tunnel upload size limiation using Bunkerweb WAF
 **Decision Date:** 2026-04-10
@@ -59,10 +75,11 @@ CloudflareD Tunnel has a 100MB upload size limit which is insufficient for certa
 - Deploy Bunkerweb as a reverse proxy in front of the affected services
 - Configure another Gateway to avoid exposing internal services to the public internet
 - Use Cilium policies to restrict access to Bunkerweb from the public internet and allow it to forward traffic to the internal services
+- Envoy Gateway is the current Gateway API controller; Cilium remains responsible for CNI and network policy.
 
 **Issues Faced:**
-- Initial configuration of Bunkerweb comes with a service type `LoadBalancer` configured with `trafficPolicy: Local`, which apparently is a limitation by cilium version 1.19.2, which is the version used in the cluster. This configuration causes the service to be only accessible from the node where the pod is running, which is not ideal for a reverse proxy. The workaround was to change the service type to `ClusterIP` and use Cilium's Gatway API to expose the service externally, which allows for proper load balancing and high availability. It also enables hubble to properly monitor the traffic going through Bunkerweb, which is also a good addition to it. 
-- Important to remember that, by default, Cilium API GW creates its `LoadBalancer` service with `trafficPolicy: Cluster`, which allows for proper load balancing across all nodes, but also removes Bunkerweb's IP address visibility, which can limit its WAF capabilities.
+- During the original Cilium Gateway API implementation, Bunkerweb's `LoadBalancer` service used `trafficPolicy: Local`, making it reachable only on the node running the pod. Changing it to `ClusterIP` and exposing it through the Gateway API resolved that limitation.
+- The original Cilium Gateway API implementation created its `LoadBalancer` service with `trafficPolicy: Cluster`, which allowed load balancing across nodes but removed Bunkerweb's IP address visibility, potentially limiting its WAF capabilities. These notes describe the previous implementation; Envoy Gateway is now used for ingress.
 
 Issues for reference:
 - https://github.com/cilium/cilium/issues/27800
@@ -179,9 +196,9 @@ ArgoCD was consuming entire Raspberry Pi node resources and causing thermal thro
 - **Rationale:** Lower resource usage compared to Prometheus, better compression
 - **Alternative Considered:** Prometheus (higher resource usage)
 
-### Ingress: Cilium Ingress
-- **Rationale:** Integrated with CNI, unified networking stack
-- **Alternative Considered:** NGINX Ingress (additional component)
+### Ingress: Envoy Gateway
+- **Rationale:** Gateway API-based ingress through a dedicated controller; Cilium remains the CNI and network-policy engine
+- **Alternative Considered:** Cilium Gateway API, NGINX Ingress
 
 ### Service Mesh: None (Future Consideration)
 - **Current Rationale:** Additional complexity not justified at current scale

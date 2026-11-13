@@ -27,7 +27,7 @@ Future Considerations: Add short-lived credentials issuance and audit dashboard.
 
 ## Network Security
 - Cilium enforces Layer 3–7 policies; baseline deny pattern for sensitive namespaces (databases, identity, secrets sync).
-- Load balancing & ingress consolidated in Cilium reduces separate NGINX/MetalLB components (smaller attack surface).
+- Envoy Gateway handles external ingress; Cilium Network Policies enforce traffic segmentation between workloads.
 - DNS flows: CoreDNS internal, AdGuard external filtering.
 
 Future Considerations: Expand policy coverage to 100% namespaces; implement egress controls for supply-chain protection.

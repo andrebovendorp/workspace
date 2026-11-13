@@ -27,6 +27,6 @@ The platform consists of integrated systems providing container orchestration, o
 
 The platform is built on Kubernetes (K3s) with carefully selected components optimized for homelab constraints while maintaining production-grade capabilities.
 
-Key technologies include Cilium for networking, Victoria Metrics for observability, FluxCD for GitOps, and Authentik for identity management.
+Key technologies include Cilium for networking and policy, Envoy Gateway for ingress, Victoria Metrics for observability, FluxCD for GitOps, and Authentik for identity management.
 
 See the [decisions document](decisions.md) for detailed rationale on technology choices.

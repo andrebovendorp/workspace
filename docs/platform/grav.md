@@ -1,12 +1,12 @@
 # Grav Deployment
 
-This page documents how Grav is deployed in this environment using FluxCD, Cilium Gateway API, NFS CSI, and External Secrets.
+This page documents how Grav is deployed in this environment using FluxCD, Envoy Gateway's Gateway API implementation, NFS CSI, and External Secrets.
 
 ## Deployment Model
 
 - Runtime: Kubernetes (k3s)
 - Delivery: FluxCD `Kustomization`
-- Ingress: `HTTPRoute` via Cilium Gateway
+- Ingress: `HTTPRoute` via the Envoy Gateway `Gateway`
 - Persistence: NFS CSI-backed `PersistentVolume` and `PersistentVolumeClaim`
 - Secrets: External Secrets + Infisical ClusterSecretStore
 

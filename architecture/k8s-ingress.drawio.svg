@@ -147,13 +147,13 @@
                         <div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 104px; height: 1px; padding-top: 490px; margin-left: 123px;">
                             <div style="box-sizing: border-box; font-size: 0; text-align: center; color: #000000; ">
                                 <div style="display: inline-block; font-size: 12px; font-family: &quot;Helvetica&quot;; color: light-dark(#000000, #ffffff); line-height: 1.2; pointer-events: all; white-space: normal; word-wrap: normal; ">
-                                    Cilium API GW
+                                    Envoy Gateway
                                 </div>
                             </div>
                         </div>
                     </foreignObject>
                     <text x="174" y="494" fill="light-dark(#000000, #ffffff)" font-family="&quot;Helvetica&quot;" font-size="12px" text-anchor="middle">
-                        Cilium API GW
+                        Envoy Gateway
                     </text>
                 </switch>
             </g>
@@ -307,7 +307,7 @@
                             <div style="box-sizing: border-box; font-size: 0; text-align: left; max-height: 206px; overflow: hidden; color: #000000; ">
                                 <div style="display: inline-block; font-size: 12px; font-family: &quot;Helvetica&quot;; color: light-dark(#000000, #ffffff); line-height: 1.2; pointer-events: all; white-space: normal; word-wrap: normal; ">
                                     <h1 style="margin-top: 0px;">
-                                        Cilium API GW
+                                        Envoy Gateway
                                     </h1>
                                     <div>
                                         Acts as an interface for my Vlans With TLS termination.
@@ -345,7 +345,7 @@
                         </div>
                     </foreignObject>
                     <text x="782" y="189" fill="light-dark(#000000, #ffffff)" font-family="&quot;Helvetica&quot;" font-size="12px">
-                        Cilium API GW...
+                        Envoy Gateway...
                     </text>
                 </switch>
             </g>
@@ -473,13 +473,13 @@
                         <div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 116px; height: 1px; padding-top: 490px; margin-left: 633px;">
                             <div style="box-sizing: border-box; font-size: 0; text-align: center; color: #000000; ">
                                 <div style="display: inline-block; font-size: 12px; font-family: &quot;Helvetica&quot;; color: light-dark(#000000, #ffffff); line-height: 1.2; pointer-events: all; white-space: normal; word-wrap: normal; ">
-                                    Cilium API GW
+                                    Envoy Gateway
                                 </div>
                             </div>
                         </div>
                     </foreignObject>
                     <text x="691" y="494" fill="light-dark(#000000, #ffffff)" font-family="&quot;Helvetica&quot;" font-size="12px" text-anchor="middle">
-                        Cilium API GW
+                        Envoy Gateway
                     </text>
                 </switch>
             </g>

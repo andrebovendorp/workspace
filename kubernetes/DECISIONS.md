@@ -90,10 +90,12 @@ By using VictoriaLogs, I'll use its own UI and can't rely on Grafana's default d
 I might be able to have the same visualization as Loki's default on grafana, but I didn't find a way to do it yet.
 Its important to mention that Loki has, by default, a better visualization of the logs compared to Victoria Logs, despite prefering VL query language, the default visualization for Loki on Grafana gives a better experience.
 
-# Migrate From Ingress Nginx to Cilium Ingress
+# Migrate From Ingress Nginx to Cilium Ingress (Superseded)
  This will allow me to have more control over the ingress traffic and also to use the Cilium network policies to secure the ingress traffic. This will help to reduce the attack surface of the cluster and make it more secure.
  
  Also will remove one of the components from the cluster and reduce the resource usage. This will help to make the setup more efficient and reduce the cost of running the cluster.
+
+**Current state:** Envoy Gateway has replaced Cilium Gateway API for ingress. Cilium remains in use as the CNI and network-policy engine.
 
 # Migrate ArgoCD to FluxCD
 ArgoCD Is using a lot of resources and is not needed for the current setup. We can use FluxCD to manage our GitOps workflow. This will help us to reduce the resource usage and make the setup more efficient.
