@@ -49,7 +49,7 @@ spec:
       automountServiceAccountToken: false
       affinity:
         podAffinity:
-          
+
         podAntiAffinity:
           preferredDuringSchedulingIgnoredDuringExecution:
             - podAffinityTerm:
@@ -61,7 +61,7 @@ spec:
                 topologyKey: kubernetes.io/hostname
               weight: 1
         nodeAffinity:
-          
+
       enableServiceLinks: true
       terminationGracePeriodSeconds: 30
       containers:
@@ -72,7 +72,7 @@ spec:
             allowPrivilegeEscalation: false
             capabilities:
               drop:
-              - ALL
+                - ALL
             readOnlyRootFilesystem: true
             runAsGroup: 1001
             runAsNonRoot: true
@@ -145,13 +145,13 @@ spec:
               mountPath: /tmp
               subPath: tmp-dir
         - name: metrics
-          image: bitnami/redis-exporter:latest
+          image: bitnami/redis-exporter@sha256:fa77ec470eb1dde7e99ca06f620ccdee8416324fec08269469ed7f5f9218ea64
           imagePullPolicy: "IfNotPresent"
           securityContext:
             allowPrivilegeEscalation: false
             capabilities:
               drop:
-              - ALL
+                - ALL
             readOnlyRootFilesystem: true
             runAsGroup: 1001
             runAsNonRoot: true
@@ -234,4 +234,4 @@ spec:
         resources:
           requests:
             storage: "8Gi"
-        storageClassName: nfs
+        storageClassName: truenas-nfs

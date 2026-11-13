@@ -25,7 +25,7 @@ spec:
         kubernetes.io/hostname: slave01
       containers:
         - name: audiobook-container
-          image: ghcr.io/advplyr/audiobookshelf:latest
+          image: ghcr.io/advplyr/audiobookshelf:2.37.2
           securityContext:
             allowPrivilegeEscalation: false
             privileged: false

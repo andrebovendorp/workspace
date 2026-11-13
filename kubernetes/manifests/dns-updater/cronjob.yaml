@@ -14,7 +14,7 @@ spec:
         spec:
           containers:
           - name: dns-updater
-            image: ghcr.io/andrebovendorp/cloudflare-dns-updater:latest
+            image: ghcr.io/andrebovendorp/cloudflare-dns-updater@sha256:d8c2f01736d77115abcd3b67d8cf8d35860a74e180d39043ef3a53a96aacf33a
             env:
             - name: CLOUDFLARE_ZONE_ID
               valueFrom:

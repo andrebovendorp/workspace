@@ -1,12 +1,11 @@
 csi-driver-nfs:
-
   driver:
     mountPermissions: "1000"
 
   controller:
     priorityClassName: high-priority
     tollerations:
-    - key: "network"
+      - key: "network"
     operator: "Equal"
     value: "nordvpn"
     effect: "NoSchedule"

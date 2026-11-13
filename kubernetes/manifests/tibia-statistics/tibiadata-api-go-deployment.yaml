@@ -24,7 +24,7 @@ spec:
         - name: gh-docker-pat
       containers:
         - name: tibiadata-api-go
-          image: ghcr.io/tibiadata/tibiadata-api-go:latest
+          image: ghcr.io/tibiadata/tibiadata-api-go:5.1.0
           securityContext:
             allowPrivilegeEscalation: false
             readOnlyRootFilesystem: true

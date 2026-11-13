@@ -22,7 +22,7 @@ commonLabels:
 
 images:
   - name: ghcr.io/andrebovendorp/database-backup
-    newTag: latest
+    newTag: v1.0.1
 
 configMapGenerator:
   - name: database-backup-info

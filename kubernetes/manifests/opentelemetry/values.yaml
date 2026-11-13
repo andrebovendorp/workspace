@@ -6,7 +6,7 @@ opentelemetry-operator:
       enabled: true
     collectorImage:
       repository: "otel/opentelemetry-collector-contrib"
-      tag: "latest"
+      tag: "0.165.0"
     resources:
       limits:
         memory: 180Mi

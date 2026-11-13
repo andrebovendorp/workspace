@@ -13,7 +13,7 @@ external-dns:
     webhook:
       image:
         repository: ghcr.io/muhlba91/external-dns-provider-adguard
-        tag: latest
+        tag: v11.2.1
         pullPolicy: IfNotPresent
       service:
         port: 8080
@@ -41,7 +41,7 @@ external-dns:
 
   sidecars:
     - name: adguard-webhook
-      image: -adguard:latest
+      image: ghcr.io/muhlba91/external-dns-provider-adguard:v11.2.1
       imagePullPolicy: IfNotPresent
       ports:
         - containerPort: 8888

@@ -116,3 +116,4 @@ authentik:
 
 storage:
   size: 10Gi
+  storageClass: truenas-nfs

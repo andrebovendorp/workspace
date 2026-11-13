@@ -158,7 +158,7 @@ spec:
               mountPath: /tmp
               subPath: tmp-dir
         - name: metrics
-          image: bitnami/redis-exporter:latest
+          image: bitnami/redis-exporter@sha256:fa77ec470eb1dde7e99ca06f620ccdee8416324fec08269469ed7f5f9218ea64
           imagePullPolicy: "IfNotPresent"
           securityContext:
             allowPrivilegeEscalation: false
