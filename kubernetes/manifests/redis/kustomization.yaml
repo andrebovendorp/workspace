@@ -15,6 +15,5 @@ resources:
   - service-replicas.yaml
   - statefulset-master.yaml
   - statefulset-replicas.yaml
-  - pvc-truenas.yaml
   - ciliumnetpol.yaml
   - vmservicescrape.yaml
