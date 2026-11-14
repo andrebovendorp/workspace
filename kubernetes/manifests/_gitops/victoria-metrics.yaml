@@ -11,6 +11,7 @@ spec:
     timeout: 20m
   chart:
     spec:
+      reconcileStrategy: Revision
       chart: kubernetes/manifests/victoria-metrics
       sourceRef:
         kind: GitRepository

@@ -3,6 +3,8 @@ kind: OpenTelemetryCollector
 metadata:
   name: agent
   namespace: {{ .Release.Namespace }}
+  annotations:
+    helm.sh/hook: post-install,post-upgrade
 spec:
   resources:
     requests:
@@ -74,27 +76,27 @@ spec:
           # Parse CRI-O format
           - type: regex_parser
             id: parser-crio
-            regex: '^(?P<time>[^ Z]+) (?P<stream>stdout|stderr) (?P<logtag>[^ ]*) ?(?P<log>.*)$'
+            regex: "^(?P<time>[^ Z]+) (?P<stream>stdout|stderr) (?P<logtag>[^ ]*) ?(?P<log>.*)$"
             output: extract_metadata_from_filepath
             timestamp:
               parse_from: attributes.time
               layout_type: gotime
-              layout: '2006-01-02T15:04:05.999999999Z07:00'
+              layout: "2006-01-02T15:04:05.999999999Z07:00"
           # Parse CRI-Containerd format
           - type: regex_parser
             id: parser-containerd
-            regex: '^(?P<time>[^ ^Z]+Z) (?P<stream>stdout|stderr) (?P<logtag>[^ ]*) ?(?P<log>.*)$'
+            regex: "^(?P<time>[^ ^Z]+Z) (?P<stream>stdout|stderr) (?P<logtag>[^ ]*) ?(?P<log>.*)$"
             output: extract_metadata_from_filepath
             timestamp:
               parse_from: attributes.time
-              layout: '%Y-%m-%dT%H:%M:%S.%LZ'
+              layout: "%Y-%m-%dT%H:%M:%S.%LZ"
           # Parse Docker format
           - type: json_parser
             id: parser-docker
             output: extract_metadata_from_filepath
             timestamp:
               parse_from: attributes.time
-              layout: '%Y-%m-%dT%H:%M:%S.%LZ'
+              layout: "%Y-%m-%dT%H:%M:%S.%LZ"
           # Extract metadata from file path
           - type: regex_parser
             id: extract_metadata_from_filepath
@@ -118,7 +120,7 @@ spec:
             to: resource["pod"]
           - type: add
             field: resource["cluster"]
-            value: 'homeserver' # Set your cluster name here
+            value: "homeserver" # Set your cluster name here
           - type: move
             from: attributes.log
             to: body
@@ -134,9 +136,9 @@ spec:
         endpoint: "https://${env:K8S_NODE_NAME}:10250"
         insecure_skip_verify: true
         metric_groups:
-        - container
-        - pod
-        - node
+          - container
+          - pod
+          - node
       hostmetrics:
         collection_interval: 60s
         scrapers:
@@ -148,10 +150,10 @@ spec:
                 enabled: true
           disk:
             include:
-              devices: [ "re:^/dev/[sv]d.+", "re:^/dev/nvme.+" ]
+              devices: ["re:^/dev/[sv]d.+", "re:^/dev/nvme.+"]
               match_type: regexp
             exclude:
-              devices: [ "re:^/dev/loop.+" ]
+              devices: ["re:^/dev/loop.+"]
               match_type: regexp
             metrics:
               system.disk.io:
@@ -162,10 +164,10 @@ spec:
                 enabled: true
           filesystem:
             include_devices:
-              devices: [ "re:^/dev/[sv]d.+", "re:^/dev/nvme.+", "tmpfs" ]
+              devices: ["re:^/dev/[sv]d.+", "re:^/dev/nvme.+", "tmpfs"]
               match_type: regexp
             exclude_mount_points:
-              mount_points: [ "re:^/(dev|proc|sys|var/lib/docker/.+)($|/)" ]
+              mount_points: ["re:^/(dev|proc|sys|var/lib/docker/.+)($|/)"]
               match_type: regexp
             metrics:
               system.filesystem.usage:
@@ -182,7 +184,7 @@ spec:
                 enabled: true
           network:
             exclude:
-              interfaces: [ "re:^lo", "re:^docker.+", "re:^br-.+", "re:^veth.+" ]
+              interfaces: ["re:^lo", "re:^docker.+", "re:^br-.+", "re:^veth.+"]
               match_type: regexp
             metrics:
               system.network.io:
@@ -207,7 +209,7 @@ spec:
             scrape_interval: 60s
           scrape_configs:
             # Scrape kubelet cAdvisor metrics for container_cpu_usage_seconds_total
-            - job_name: 'kubelet-cadvisor'
+            - job_name: "kubelet-cadvisor"
               scheme: https
               tls_config:
                 ca_file: /var/run/secrets/kubernetes.io/serviceaccount/ca.crt
@@ -226,7 +228,7 @@ spec:
                   replacement: /api/v1/nodes/$1/proxy/metrics/cadvisor
               metric_relabel_configs:
                 - source_labels: [__name__]
-                  regex: 'container_cpu_usage_seconds_total|container_memory_usage_bytes|container_network_.*|container_fs_.*'
+                  regex: "container_cpu_usage_seconds_total|container_memory_usage_bytes|container_network_.*|container_fs_.*"
                   action: keep
     processors:
       memory_limiter:
@@ -255,13 +257,13 @@ spec:
               from: namespace
         pod_association:
           - sources:
-            - from: resource_attribute
-              name: k8s.pod.ip
+              - from: resource_attribute
+                name: k8s.pod.ip
           - sources:
-            - from: resource_attribute
-              name: k8s.pod.uid
+              - from: resource_attribute
+                name: k8s.pod.uid
           - sources:
-            - from: connection
+              - from: connection
       resource/remove-attributes:
         attributes:
           - pattern: ^os.*
@@ -287,32 +289,32 @@ spec:
             action: upsert
       resourcedetection:
         detectors:
-        - env
-        - system
+          - env
+          - system
         override: true
         timeout: 15s
       resource/logs:
         attributes:
-        - key: log.type
-          action: upsert
-          value: container
+          - key: log.type
+            action: upsert
+            value: container
       transform/log-level:
         error_mode: ignore
         log_statements:
           - conditions:
-            - severity_text != ""
+              - severity_text != ""
             context: log
             statements:
-            - set(attributes["level"], severity_text)
+              - set(attributes["level"], severity_text)
       transform/toggle-export:
         error_mode: ignore
         log_statements:
           - conditions:
-            - attributes["k8s.daemonset.name"] == "cilium"
-            - attributes["k8s.deployment.name"] == "cilium-operator"
+              - attributes["k8s.daemonset.name"] == "cilium"
+              - attributes["k8s.deployment.name"] == "cilium-operator"
             context: resource
             statements:
-            - set(attributes["export-logs"], true)
+              - set(attributes["export-logs"], true)
     exporters:
       debug:
         verbosity: basic
@@ -331,33 +333,33 @@ spec:
       pipelines:
         logs/filelog:
           exporters:
-          - debug
-          - otlphttp/victoria-logs
+            - debug
+            - otlphttp/victoria-logs
           processors:
-          - memory_limiter
-          - k8sattributes
-          - resourcedetection
-          - resource/common
-          - transform/toggle-export
-          - transform/log-level
-          - resource/logs
-          - batch
+            - memory_limiter
+            - k8sattributes
+            - resourcedetection
+            - resource/common
+            - transform/toggle-export
+            - transform/log-level
+            - resource/logs
+            - batch
           receivers:
-          - filelog
+            - filelog
         metrics/kubernetes:
           exporters:
-          - debug
-          - prometheusremotewrite/victoria-metrics
+            - debug
+            - prometheusremotewrite/victoria-metrics
           processors:
-          - memory_limiter
-          - k8sattributes
-          - resourcedetection
-          - resource/common
-          - resource/remove-attributes
-          - batch
+            - memory_limiter
+            - k8sattributes
+            - resourcedetection
+            - resource/common
+            - resource/remove-attributes
+            - batch
           receivers:
-          - kubeletstats
-          - hostmetrics
-          - prometheus
-          - otlp
+            - kubeletstats
+            - hostmetrics
+            - prometheus
+            - otlp
   mode: daemonset
