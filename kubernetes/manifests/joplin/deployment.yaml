@@ -25,7 +25,7 @@ spec:
         runAsUser: 1001
       containers:
       - name: joplin-container
-        image: joplin/server:3.4.3
+        image: joplin/server:3.7.4
         ports:
         - containerPort: 22300
           protocol: TCP
