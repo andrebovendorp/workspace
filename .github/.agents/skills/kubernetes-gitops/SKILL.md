@@ -24,6 +24,7 @@ description: Use when editing K3s resources, FluxCD configuration, Kubernetes ma
 
 ## Live cluster safety
 
+- Treat infrastructure requests as repository changes by default. Implement the desired manifests without assuming live deployment or data migration is requested; describe any cutover steps or risks separately.
 - Never use `kubectl` to change anything on a live cluster, even when requested or authorized. Edit the repository's manifests and configuration instead.
 - If an operation requires a live change, ask the user to perform it. Provide the exact command, explain its purpose and impact, and identify any target or values the user must verify before running it. Do not execute it yourself.
 

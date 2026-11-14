@@ -25,6 +25,8 @@ victoria-metrics-k8s-stack:
           memory: 357Mi
   vmsingle:
     spec:
+      storage:
+        storageClassName: truenas-nfs
       resources:
         requests:
           cpu: 70m
@@ -145,6 +147,8 @@ victoria-metrics-k8s-stack:
 
 victoria-logs-single:
   server:
+    persistentVolume:
+      existingClaim: server-volume-victoria-metrics-victoria-logs-single-server-0-truenas
     serviceMonitor:
       enabled: true
     ingress:

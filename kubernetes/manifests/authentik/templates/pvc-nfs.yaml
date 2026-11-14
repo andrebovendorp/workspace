@@ -28,3 +28,15 @@ spec:
     volumeAttributes:
       server: nfs.nullservers.com
       share: /data/kubernetes/authentik-data
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: authentik-data-truenas
+spec:
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 5Gi
+  storageClassName: truenas-nfs

@@ -1,0 +1,1 @@
+Default infrastructure requests to changes in this repository. Do not assume that live deployment, reconciliation, data migration, or other runtime changes are requested or required before editing code. Identify any operational follow-up separately.

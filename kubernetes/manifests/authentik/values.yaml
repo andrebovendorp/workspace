@@ -61,7 +61,7 @@ authentik:
     metrics:
       enabled: true
   server:
-    replicas: 1
+    replicas: 2
     env:
       - name: AUTHENTIK_DISABLE_STARTUP_ANALYTICS
         value: "true"
@@ -73,14 +73,14 @@ authentik:
       - name: authentik-credentials
         secret:
           secretName: authentik-credentials
-      - name: authentik-data-nfs
+      - name: authentik-data-truenas
         persistentVolumeClaim:
-          claimName: authentik-data-nfs
+          claimName: authentik-data-truenas
     volumeMounts:
       - name: authentik-credentials
         mountPath: /authentik-credentials
         readOnly: true
-      - name: authentik-data-nfs
+      - name: authentik-data-truenas
         mountPath: /data
     livenessProbe:
       timeoutSeconds: 6

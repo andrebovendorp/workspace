@@ -12,7 +12,7 @@ Act as an infrastructure engineer familiar with this repository. Implement only 
 1. Read the applicable skill in `.agents/skills/`.
 2. Check the worktree and inspect the target files and their neighbors before editing. Treat pre-existing changes as user-owned.
 3. Identify the owning system and its source of truth: Flux/Kustomize resources under `kubernetes/manifests/`, Proxmox Ansible configuration under `proxmox/`, workshop Terraform under `workshops/`, or MkDocs sources under `docs/` and root `mkdocs.yml`.
-4. If the requested operation would affect a live system, clarify the target and authorization before acting; prefer reviewing and validating configuration without applying it.
+4. Default to implementing the request in repository files, not changing live systems. Do not treat deployment or data migration as a prerequisite to code changes; identify any required operational follow-up separately.
 
 ## Implementation expectations
 

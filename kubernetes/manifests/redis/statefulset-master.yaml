@@ -134,7 +134,7 @@ spec:
               mountPath: /opt/bitnami/scripts/start-scripts
             - name: health
               mountPath: /health
-            - name: redis-data
+            - name: redis-data-truenas
               mountPath: /data
             - name: config
               mountPath: /opt/bitnami/redis/mounted-etc
@@ -223,7 +223,7 @@ spec:
     - apiVersion: v1
       kind: PersistentVolumeClaim
       metadata:
-        name: redis-data
+        name: redis-data-truenas
         labels:
           app.kubernetes.io/instance: release-name
           app.kubernetes.io/name: redis
