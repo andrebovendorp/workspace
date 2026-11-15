@@ -39,8 +39,6 @@ spec:
         - matchLabels:
             io.kubernetes.pod.namespace: joplin
         - matchLabels:
-            io.kubernetes.pod.namespace: infisical
-        - matchLabels:
             io.kubernetes.pod.namespace: tibiary
         - matchLabels:
             io.kubernetes.pod.namespace: victoria-metrics

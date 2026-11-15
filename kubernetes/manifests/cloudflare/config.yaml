@@ -43,8 +43,6 @@ data:
       service: http://joplin.joplin.svc.cluster.local:22300
     - hostname: blog.nullservers.com
       service: http://grav.grav.svc.cluster.local:80
-    - hostname: infisical.nullservers.com
-      service: http://infisical-infisical-standalone-infisical.infisical.svc.cluster.local:8080
     - hostname: api.tibiary.app
       service: http://tibiary-api.tibiary.svc.cluster.local:80
     - hostname: tibiary.app

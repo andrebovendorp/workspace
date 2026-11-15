@@ -9,15 +9,10 @@ spec:
     - fromEndpoints:
         - matchLabels:
             io.kubernetes.pod.namespace: victoria-metrics
-    - fromEndpoints:
         - matchLabels:
             io.kubernetes.pod.namespace: envoy-gateway-system
-    - fromEndpoints:
         - matchLabels:
             io.kubernetes.pod.namespace: external-secrets
-    - fromEndpoints:
-        - matchLabels:
-            io.kubernetes.pod.namespace: cloudflare
   egress:
     - toEntities:
         - kube-apiserver
