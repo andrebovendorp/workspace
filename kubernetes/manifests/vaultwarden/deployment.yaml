@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
       - name: vaultwarden-container
-        image: ghcr.io/dani-garcia/vaultwarden:1.35.4
+        image: ghcr.io/dani-garcia/vaultwarden:1.37.5
         ports:
         - containerPort: 80
           protocol: TCP
