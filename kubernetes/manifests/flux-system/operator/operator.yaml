@@ -1752,7 +1752,7 @@ spec:
             runAsNonRoot: true
             seccompProfile:
               type: RuntimeDefault
-          image: "ghcr.io/controlplaneio-fluxcd/flux-operator:v0.28.0"
+          image: "ghcr.io/controlplaneio-fluxcd/flux-operator:v0.62.1"
           imagePullPolicy: "IfNotPresent"
           ports:
             - name: http-metrics
