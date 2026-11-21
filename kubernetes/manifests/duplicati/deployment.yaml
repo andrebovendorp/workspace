@@ -22,7 +22,7 @@ spec:
         kubernetes.io/hostname: slave01
       containers:
         - name: duplicati-container
-          image: linuxserver/duplicati:2.4.0
+          image: linuxserver/duplicati:2.4.1
           securityContext:
             fsGroupChangePolicy: "OnRootMismatch"
           ports:
